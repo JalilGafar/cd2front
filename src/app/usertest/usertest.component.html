@@ -1,0 +1,14 @@
+<p>usertest works!</p>
+<p>And the name of user is {{user}} </p>
+<button class="btn" (click)="addItem()">Add Item</button>
+
+<label for="framework">
+    Favorite Framework:
+    <input id="framework" type="text" [(ngModel)]="favoriteFramework" />
+</label>
+
+<button (click)="showFramework()">Show Framework</button>
+
+<h3>
+    {{favoriteFramework}}
+</h3>
