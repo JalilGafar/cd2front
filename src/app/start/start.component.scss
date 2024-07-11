@@ -1,0 +1,88 @@
+.player {
+    position:relative;
+    text-align : center;
+    padding-bottom: 32px;
+    
+    .title {
+        font-size: 1.8rem;
+        line-height: 1.1;
+        margin-top: 16px;
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .player-forms {
+        display: flex;
+        flex-direction: column;
+        padding-bottom: 16px;
+        padding-left: 15px;
+        padding-right: 15px;
+        position: relative;
+
+        a {
+            padding-top: 16px;
+
+            button{
+                width: 80%;
+                background-color: #ff5e00;
+                color: #fff;
+                border-radius: 19px;
+                font-size: x-large;
+                line-height: 1.3333333;
+                padding: 10px 16px;
+            }
+        }
+    }
+}
+
+@media (min-width: 768px) {
+    .player {
+        .player-forms {
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            padding-left: 16px;
+            padding-right: 16px;
+    
+            a {
+                width: 100%;
+                padding-left: 16px;
+                padding-right: 16px;
+
+                button {
+                    width: 50%;
+                    margin-left: auto;
+                    margin-right: auto;
+                    //padding: 18px 16px;
+                }
+            }
+        }
+    }
+}
+
+button {
+    margin-bottom: .5rem;
+    margin-right: .5rem;
+    width: 100%;
+   // display: block;
+}
+
+.buti {
+    display: block;
+    width: 80%;
+    margin-left: 10%;
+    margin-right: 10%;
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+:host ::ng-deep {
+    .buti{
+        .p-button {
+            width: 100%;
+        }
+    }
+}
+
+.cardBar {
+    padding-bottom: 20px;
+}

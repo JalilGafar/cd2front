@@ -7,6 +7,9 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { CarService } from './car.service';
 import { ReversePipe } from './reverse.pipe';
 import { HeaderComponent } from './header/header.component';
+import { LandingPageComponent } from './landing-page/landing-page.component';
+import { FooterComponent } from './footer/footer.component';
+import { InfoDiplomeComponent } from './informations/components/info-diplome/info-diplome.component';
 
 @Component({
     selector: 'app-root',
@@ -15,9 +18,12 @@ import { HeaderComponent } from './header/header.component';
     styleUrl: './app.component.scss',
     imports: [  RouterOutlet, 
                 RouterLink,
+                FooterComponent,
                 HeaderComponent,
                 UsertestComponent, 
                 VommentsComponent,
+                LandingPageComponent,
+                InfoDiplomeComponent,
                 NgOptimizedImage,
                 ReactiveFormsModule,
                 UpperCasePipe,

@@ -1,34 +1,3 @@
 <app-header></app-header>
 <router-outlet />
-
-<form [formGroup]="profileForm" (ngSubmit)="handleSubmit()">
-  <label>Name
-    <input type="text" formControlName="name" />
-  </label>
-  <label>Email
-    <input type="email" formControlName="email" />
-  </label>
-  <button type="submit" [disabled]="!profileForm.valid" *$>Submit</button>
-</form>
-
-...
-<h2>Profile Form</h2>
-<p>Name: {{ profileForm.value.name }}</p>
-<p>Email: {{ profileForm.value.email }}</p>
-
-<br><br>
-{{ title | uppercase }} <br>
-{{ date | date:'medium' }} <br>
-{{title | reverse}}
-<p>Car Listing: {{ display }}</p>
-
-
-<!-- 
-@defer (on viewport) {
-  <app-vomments />
-} @placeholder {
-  <p>Future comments</p>
-} @loading (minimum 5s) {
-  <p>Loading comments...</p>
-}
--->
+<app-footer></app-footer>

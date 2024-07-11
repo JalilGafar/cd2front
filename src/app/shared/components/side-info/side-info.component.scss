@@ -1,0 +1,30 @@
+.head {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+.flex-container {
+    display: flex;
+    flex-wrap: nowrap;
+    justify-content: flex-end;
+}
+
+#pipi {
+    float: right;
+    padding-right: 5px;
+}
+.head-icon {
+    float: right;
+}
+img {
+    width: 90px;
+}
+:host ::ng-deep {
+    .p-button {
+        color: #607D8B;
+        background: #e1e7f1;
+        border: none;
+        border-radius: 10px;
+    }
+}
