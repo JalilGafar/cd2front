@@ -5,11 +5,13 @@ import { PubFirstComponent } from '../../../shared/components/pub-first/pub-firs
 import { PubInterestItemComponent } from '../../../shared/components/pub-interest-item/pub-interest-item.component';
 import { PrimengModule } from '../../../shared/primeng.modules';
 import { SideInfoComponent } from '../../../shared/components/side-info/side-info.component';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-info-diplome',
   standalone: true,
   imports: [
+    CommonModule,
     HeadmsgComponent,
     StartComponent,
     PubFirstComponent,
