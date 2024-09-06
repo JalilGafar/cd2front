@@ -6,18 +6,14 @@ import { PubInterestItemComponent } from '../../../shared/components/pub-interes
 import { PrimengModule } from '../../../shared/primeng.modules';
 import { SideInfoComponent } from '../../../shared/components/side-info/side-info.component';
 import { CommonModule } from '@angular/common';
+import { SharedComponentModule } from '../../../shared/shared.modules';
 
 @Component({
   selector: 'app-info-diplome',
   standalone: true,
   imports: [
     CommonModule,
-    HeadmsgComponent,
-    StartComponent,
-    PubFirstComponent,
-    PubInterestItemComponent,
-    PrimengModule,
-    SideInfoComponent
+    SharedComponentModule
   ],
   templateUrl: './info-diplome.component.html',
   styleUrl: './info-diplome.component.scss'
@@ -26,7 +22,7 @@ export class InfoDiplomeComponent implements OnInit {
 
   titre = "Trouvez votre formation au Cameroun";
   soustitre = "Comme Fadimatou, elles sont nombreuse à utiliser Camerdiplome pour trouver leur école";
-  photo = "./../../../../assets/images/fati_lon_mini.webp";
+  photo = "./../../assets/images/fati_lon_mini.webp";
 
   products = [
     {

@@ -2,11 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { HeadmsgComponent } from '../headmsg/headmsg.component';
 import { start } from 'repl';
 import { StartComponent } from '../start/start.component';
+import { SharedComponentModule } from '../shared/shared.modules';
 
 @Component({
   selector: 'app-landing-page',
   standalone: true,
-  imports: [HeadmsgComponent, StartComponent],
+  imports: [SharedComponentModule],
   templateUrl: './landing-page.component.html',
   styleUrl: './landing-page.component.scss'
 })
