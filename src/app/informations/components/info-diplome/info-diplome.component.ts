@@ -1,10 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { HeadmsgComponent } from '../../../headmsg/headmsg.component';
-import { StartComponent } from '../../../start/start.component';
-import { PubFirstComponent } from '../../../shared/components/pub-first/pub-first.component';
-import { PubInterestItemComponent } from '../../../shared/components/pub-interest-item/pub-interest-item.component';
-import { PrimengModule } from '../../../shared/primeng.modules';
-import { SideInfoComponent } from '../../../shared/components/side-info/side-info.component';
 import { CommonModule } from '@angular/common';
 import { SharedComponentModule } from '../../../shared/shared.modules';
 

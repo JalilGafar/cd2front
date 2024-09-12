@@ -7,6 +7,8 @@ import {TableModule} from 'primeng/table';
 import {ButtonModule} from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { OrganizationChartModule } from 'primeng/organizationchart';
+import { TagModule } from 'primeng/tag';
+
 
 
 @NgModule({
@@ -18,7 +20,8 @@ import { OrganizationChartModule } from 'primeng/organizationchart';
         TableModule,
         ButtonModule,
         DialogModule,
-        OrganizationChartModule
+        OrganizationChartModule,
+        TagModule
     ]
   })
 

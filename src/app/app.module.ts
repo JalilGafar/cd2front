@@ -3,7 +3,7 @@ import { PrimengModule } from "./shared/primeng.modules";
 
 @NgModule({
     imports: [
-        PrimengModule
+       PrimengModule 
     ]
 
 })
