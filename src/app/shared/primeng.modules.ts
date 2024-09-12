@@ -8,12 +8,17 @@ import {ButtonModule} from 'primeng/button';
 import { DialogModule } from 'primeng/dialog';
 import { OrganizationChartModule } from 'primeng/organizationchart';
 import { TagModule } from 'primeng/tag';
+import { DividerModule } from 'primeng/divider';
+import { FieldsetModule} from 'primeng/fieldset';
+
 
 
 
 @NgModule({
     exports:[
         MenubarModule,
+        FieldsetModule,
+        DividerModule,
         CardModule,
         AccordionModule,
         TabViewModule,

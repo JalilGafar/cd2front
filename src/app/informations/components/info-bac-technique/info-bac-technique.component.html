@@ -1,1 +1,310 @@
-<p>info-bac-technique works!</p>
+<app-headmsg 
+    [titre]="titre"
+    [soustitre]="soustitre"
+    [photo] = "photo"
+    >
+</app-headmsg>
+<app-start ></app-start>
+<div class="container">
+    <div class="first-pub">
+        <app-pub-first></app-pub-first>
+    </div>
+    <div class="main-container">
+        <!-- <app-pub-interest-item *ngFor="let schooli of school$ | async" [school]="schooli"></app-pub-interest-item> -->
+        <div class="redaction-info">
+            <h1>Le Bac Proffessionnel et Technique</h1>
+            <p>
+                Au Cameroun, les diplômes du second cycle de l'enseignement Professionnel et ceux de l'enseignement 
+                secondaire Technique sont soit équivalent au Bac général, soit au probatoire général.
+                Ces formations mêlent cours théoriques et enseignements professionnels avec à la clé 
+                des diplômes donnant directement accès au marché du travail. Avec près de 50 séries/spécialités, 
+                les dipômes professionnels et techniques sont obtenus par un examen final organisé par 
+                l'Office du Baccalauréat du Cameroun.
+            </p>
+            <p>
+                Contrairement au bac général, les voies professionnelles et techniques vous prépareront à travailler dans un 
+                secteur particulier. Vous suivrez tout de même un enseignement général avec, par exemple, 
+                des cours de :
+            </p>
+            <ul>
+                <li>Français</li>
+                <li>Mathématique</li>
+                <li>Education civique</li>
+                <li>Education physique et sportive</li>
+                <li>etc.</li>
+            </ul>
+            
+            <div class="card ">
+                <p-button class="parcour" (click)="toggle()" label="Parcours"></p-button>
+                <p-dialog header="Header" [(visible)]="overlayVisible" [style]="{width: '95vw'}">
+                    <p-organizationChart [value]="data">
+                        <ng-template let-node pTemplate="person">
+                            <div class="p-2 text-center">
+                                <div class="font-bold">{{ node.data.label }}</div>
+                            </div>
+                        </ng-template>
+                    </p-organizationChart>
+                </p-dialog>
+            </div>                   
+            
+            
+            
+            <p-accordion [activeIndex]="" [multiple]="true">
+                <p-accordionTab header=" 2nd cycle de l'Enseignement Secondaire Technique :">
+                    <p>
+                        Les examens officiels proposés au second cycle de l'enseignement secondaire technique sont :
+                    </p>
+                    <ul>
+                        <li> 
+                            <b>Le Probatoire Technique :</b> le Probatoire est un diplôme intermédiaire obtenu 02 ans après le 
+                            BEPC ou le CAP. Ce diplôme n'est disponible que pour les filières (F1, F2,... , F8) ;
+                        </li>
+                        <li> 
+                            <b>Le Probatoire de Brevet de Technicien :</b> il est équivalent au Probatoire Technique 
+                            mais ne concerne que les filières autre que "F" ;
+                        </li>
+                        
+                        <hr>
+                        <li>
+                            <b>Le Baccalauréat de Technicien :</b> C'est un diplôme reconnu par le Ministre de l'Enseignement
+                            Supérieur du Cameroun, pour un cursus d'une année après obtention du Probatoire. Comme le Probatoire 
+                            Technique, il ne concerne que les filières dites "F" ;
+                        </li>
+                        <li>
+                            <b>Le Brevet de Technicien :</b> il est équivalent au Baccalauréat technique et ne concerne que 
+                            les filières autre que "F".
+                        </li>
+                        
+                    </ul>
+                </p-accordionTab >
+
+                <p-accordionTab header="Les filières du second cycle de l'enseignement technique">
+                    <p-fieldset legend="Section Génie Electrique, Chimie Industrielle et Sciences Biomédicales" [collapsed]="true" [toggleable]="true" >
+                        <p-table [value]="Elec" [tableStyle]="{  }"  >
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th>Spécialité</th>
+                                    <th>Dénomination</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-Elec>
+                                <tr>
+                                    <td>{{ Elec.spe }}</td>
+                                    <td>{{ Elec.deno }}</td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </p-fieldset>
+                    <p-fieldset legend="Section Génie Mécanique" [collapsed]="true" [toggleable]="true" >
+                        <p-table [value]="GenieM" [tableStyle]="{  }"  >
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th>Spécialité</th>
+                                    <th>Dénomination</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-GenieM>
+                                <tr>
+                                    <td>{{ GenieM.spe }}</td>
+                                    <td>{{ GenieM.deno }}</td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </p-fieldset>
+                    <p-fieldset legend="Section du Génie Civil, Génie Bois et Techniques Agricoles" [collapsed]="true" [toggleable]="true" >
+                        <p-table [value]="GenieC" [tableStyle]="{  }"  >
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th>Spécialité</th>
+                                    <th>Dénomination</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-GenieC>
+                                <tr>
+                                    <td>{{ GenieC.spe }}</td>
+                                    <td>{{ GenieC.deno }}</td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </p-fieldset>
+                    <p-fieldset legend="Section Arts et Modes" [collapsed]="true" [toggleable]="true" >
+                        <p-table [value]="Mode" [tableStyle]="{  }"  >
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th>Spécialité</th>
+                                    <th>Dénomination</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-Mode>
+                                <tr>
+                                    <td>{{ Mode.spe }}</td>
+                                    <td>{{ Mode.deno }}</td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </p-fieldset>
+
+                    
+                </p-accordionTab>
+
+                <p-accordionTab header="L'Enseignement Professionnel">
+                    <p>
+                        Les diplômes professionnels couronnent le perfectionnement dans un
+                        domaine précis et réservé exclusivement aux travailleurs dans
+                        le cadre de formation continue donnant lieu à une promotion
+                        sociale. Il faut donc en plus du CAP, posséder une certaine 
+                        expérience du terrain. Ici, le volet scientifique est un peu allégé, au profit des modules 
+                        professionnels. Les diplômes professionnels de l'enseignenement secondaire sont :
+                    </p>
+                    <ul>
+                        <li>
+                            <b>Le Brevet d'Etudes Professionnelles (BEP) :</b> il est lui aussi équivalent au Probatoire 
+                            technique. Pour être éligible à ce diplôme, il faut en plus du CAP, posséder une certaine 
+                            expérience du terrain. Ici, le volet scientifique est un peu allégé, au profit des modules 
+                            professionnels. 
+                        </li>
+                        <li>
+                            <b>Le Brevet Professionnel (BP) :</b> il est équivalent au baccalauréat technique et compte 
+                            trois années avec la possibilité d'obtenir un BEP en deuxième année. Contrairement au 
+                            Probatoire qui conditionne le Baccalauréat, le BEP n'est pas exigé pour obtenir un BP.
+                        </li>
+                    </ul>
+                </p-accordionTab>
+                <br>
+                <p-accordionTab header="Les filières de l'enseignement Professionnel">
+
+                    <p-fieldset legend="Brevet d'Etudes Professionnelles (BEP)" [collapsed]="true" [toggleable]="true" >
+                        <p-table [value]="Bep" [tableStyle]="{  }"  >
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th>Spécialité</th>
+                                    <th>Dénomination</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-Elec>
+                                <tr>
+                                    <td>{{ Elec.spe }}</td>
+                                    <td>{{ Elec.deno }}</td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </p-fieldset>
+                    <p-fieldset legend="Brevet d'Etudes Professionnelles (BP)" [collapsed]="true" [toggleable]="true" >
+                        <p-table [value]="Bp" [tableStyle]="{  }"  >
+                            <ng-template pTemplate="header">
+                                <tr>
+                                    <th>Spécialité</th>
+                                    <th>Dénomination</th>
+                                </tr>
+                            </ng-template>
+                            <ng-template pTemplate="body" let-Elec>
+                                <tr>
+                                    <td>{{ Elec.spe }}</td>
+                                    <td>{{ Elec.deno }}</td>
+                                </tr>
+                            </ng-template>
+                        </p-table>
+                    </p-fieldset>
+
+                </p-accordionTab>
+
+                <p-accordionTab header="Comment préparer son Bac Pro / Technique ? " >
+                    <p>
+                        Les examens Pro/Techniques peuvent se préparer de différentes manières :
+                    </p>     
+                    <ul>
+                        <li> <strong>Par la voie scolaire :</strong>  dans un lycée professionnel ou un établissement privé
+                             d'enseignement supérieur pendant trois ans. Au cours du cursus, les élèves 
+                             passeront des diplômes intermédiaires de niveau CAP ou BEP et de niveau Probatoire.
+                             Il est possible, après la seconde, d'intégrer une classe de première d'une autre 
+                             spécialité si celle-ci appartient au même champ professionnel. 
+                        </li>
+                        <li>
+                            <strong>Par la voie de la formation en apprentissage :</strong>  dans des centres de formation d'apprentis, 
+                            l'élève alternera entre théorie et pratique, en formation en alternance chez un patron. 
+                            À l'issue de la formation, il n'est pas rare que le diplômé soit engagé dans son entreprise 
+                            d'accueil.
+                        </li>
+                        <li>
+                            <strong>Par la voie de la formation professionnelle :</strong>  les salariés peuvent choisir d'obtenir un Bac Pro 
+                            grâce à la formation professionnelle continue réservée aux adultes. Les heures de cours sont parfois
+                            décalées en cours du soir pour plus de flexibilité.
+                        </li>
+                    </ul>
+                    <p>
+                        Il est nécessaire de bien se renseigner sur toutes les spécialités pour choisir celle 
+                        qui correspondra le plus à votre projet professionnel. 
+                    </p>
+                </p-accordionTab>
+
+                <p-accordionTab header="Que faire après un Bac Pro / Technique ?">
+                    <p>
+                        Si l'insertion professionnelle et l'entrée dans la vie active sont facilitées après l'obtention du diplôme, 
+                        il est également possible de poursuivre ses études après le bac.
+                    </p>
+                    <br>
+                    
+                    <h3>Les poursuites d'études possibles</h3>
+                    <p>
+                        Vous pouvez continuer avec :
+                    </p>
+                    <ul>
+                        <li>
+                            l'entré sous concours dans les grandes écoles (ENSTP, ENSET, ENSPT, FGI, IUT, ENIET...)
+                        </li>
+                        <li>
+                            le Brevet de Technicien Supérieur (BTS) 
+                            avec un BTS MCO, un BTS GPME, un BTS tourisme, etc.
+                        </li>
+                        <li>
+                            le diplôme d'Ingénieur de Travaux ou Technicien Supérieur
+                        </li>
+                        <li>
+                            le Bachelor Universitaire de Technologie (BUT), 
+                            ex-DUT (Diplôme Universitaire de Technologie)
+                        </li>
+                        <li>
+                            le Bachelor dans une école spécialisée comme une école de comptabilité par exemple
+                        </li>
+                        <li>
+                            le cycle Licence Professionnelle en trois ans
+                        </li>
+                    </ul>
+
+                    <h3>L'insertion professionnelle</h3>
+                    <p>
+                        Il est aussi possible de passer un concours pour accéder à des métiers de la fonction publique 
+                        (via les concours de la fonction publique) ou devenir aide-soignant par exemple.
+                    </p>
+                    <p>
+                        Voici quelques métiers accessibles après une formation bac pro :
+                    </p>
+                    <ul>
+                        <li> Employé de commerce  </li>
+                        <li> Technicien de maintenance </li>
+                        <li> Ouvrier du BTP </li>
+                        <li> Électromécanicien </li>
+                        <li> Mécanicien auto</li>
+                        <li> etc.</li>
+                    </ul>
+                    <p>
+                        Fort de tout ceci, l'on se rend à l'évidence qu'un diplômé de l'enseignement secondaire 
+                        technique se trouve face à un large éventail d'opportunités sur le marché de l'emploi et de 
+                        la réussite.
+                    </p>
+                </p-accordionTab>
+            </p-accordion>
+            
+        </div>
+        <app-start ></app-start>
+    </div>
+    <aside class="side-container">
+        <app-side-info></app-side-info>
+    </aside>
+</div>
+<!-- 
+<app-interest-list></app-interest-list>
+<app-interest-actualite></app-interest-actualite>
+<app-interest-avis></app-interest-avis>
+<app-interest-classification></app-interest-classification> 
+-->
