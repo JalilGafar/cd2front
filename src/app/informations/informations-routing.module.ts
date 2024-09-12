@@ -14,6 +14,7 @@ import { InfoLicenceComponent } from "./components/info-licence/info-licence.com
 import { InfoMasterComponent } from "./components/info-master/info-master.component";
 import { InfoMetierComponent } from "./components/info-metier/info-metier.component";
 import { InfoPrepaComponent } from "./components/info-prepa/info-prepa.component";
+import { InfoLicenceProComponent } from "./components/info-licence-pro/info-licence-pro.component";
 
 const routes: Routes = [
     {path: 'diplome', component: InfoDiplomeComponent},
@@ -26,6 +27,7 @@ const routes: Routes = [
     {path: 'hnd', component: InfoHndComponent},
     {path: 'dut', component: InfoDutComponent},
     {path: 'licence', component: InfoLicenceComponent},
+    {path: 'licencepro', component: InfoLicenceProComponent},
     {path: 'bachelor', component: InfoBachelorComponent},
     {path: 'master', component: InfoMasterComponent},
     {path: 'ecole', component: InfoEcoleComponent},

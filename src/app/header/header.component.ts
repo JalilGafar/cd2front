@@ -84,6 +84,11 @@ export class HeaderComponent implements OnInit {
                   icon: 'pi pi-server'
               },
               {
+                  label: 'Licence Pro',
+                  routerLink: 'info/licencepro',
+                  icon: 'pi pi-palette'
+              },
+              {
                   label: 'Bachelor\'s Degree',
                   routerLink: 'info/bachelor',
                   icon: 'pi pi-bolt'
