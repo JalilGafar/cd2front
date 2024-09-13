@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { SharedComponentModule } from '../../../shared/shared.modules';
+import { Meta, Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-info-diplome',
@@ -17,6 +18,13 @@ export class InfoDiplomeComponent implements OnInit {
   titre = "Trouvez votre formation au Cameroun";
   soustitre = "Comme Fadimatou, elles sont nombreuse à utiliser Camerdiplome pour trouver leur école";
   photo = "./../../assets/images/fati_lon_mini.webp";
+
+  constructor( 
+    private titleService:Title, 
+    private meta: Meta) {this.titleService.setTitle("Liste des Diplômes au Cameroun");
+                          this.meta.updateTag({ name: 'description', content: 'CAP, Bac, DQP, CQP, Master, BTS, Licence, Bachelor, HND, Licence pro, Prepa, Capacité' });
+                          this.meta.updateTag({ name: 'keywords', content: 'CAP, Bac, DQP, CQP, Master, BTS, Licence, Bachelor, HND, Licence pro, Prepa, Capacité' });
+                        }
 
   products = [
     {

@@ -98,17 +98,13 @@ export class InfoCapComponent implements OnInit {
   ];
 
    constructor( 
-    //private infoservice :InfoServices,
      private meta: Meta,
-     private titleService:Title
-  ) 
+     private title:Title) 
       {
-        this.titleService.setTitle("Le Certificat d'Aptitude Professionnel (CAP) au Cameroun | Camerdiplome");
-                                   this.meta.addTags([ 
-                                     { name: 'description', content: 'Optez pour une formation professionnelle avant le Bac dans l\'une des nombreuses spécialités du CAP' }, 
-                                     { name: 'keywords', content: 'CAP, métier, metier, emploie, formation, Bac' } 
-                                   ]);
-                                 }
+        this.title.setTitle("Le Certificat d'Aptitude Professionnel (CAP) au Cameroun | Camerdiplome");
+        this.meta.updateTag({ name: 'description', content: 'Optez pour une formation professionnelle avant le Bac dans l\'une des nombreuses spécialités du CAP' });
+        this.meta.updateTag({ name: 'keywords', content: 'CAP, métier, metier, emploie, formation, Bac' });
+      }
 
   ngOnInit(): void {
 

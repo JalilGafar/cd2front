@@ -3,6 +3,7 @@ import { SharedComponentModule } from '../../../shared/shared.modules';
 import { Observable } from 'rxjs';
 import { interestelt } from '../../../model/interest-item-model';
 import { TreeNode } from 'primeng/api';
+import { Meta, Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-info-bac-technique',
@@ -21,6 +22,15 @@ export class InfoBacTechniqueComponent implements OnInit {
 
   school$!: Observable<interestelt[]>;
   overlayVisible: boolean = false;
+
+  constructor(  
+    private titleService:Title,
+    private meta : Meta) 
+    {  
+      this.titleService.setTitle("Le Bac technique et Professionnelle au Cameroun | Camerdiplome");
+      this.meta.updateTag({ name: 'description', content: 'Avec près de 50 séries/spécialités, les Bac professionnels et techniques sont des diplômes donnant directement accès au marché du travail' });
+      this.meta.updateTag({ name: 'keywords', content: 'métier, metier, emploie, formation, Bac, Professionnel, Professionnelle, Technique' });
+    }
 
 
   data: TreeNode[] = [
