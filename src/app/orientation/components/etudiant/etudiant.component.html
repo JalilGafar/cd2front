@@ -1,0 +1,13 @@
+<div class="cardBar">
+    <p-progressBar [showValue]="false" [value]="90"></p-progressBar>
+</div>
+<div>
+    <h2>Quel est votre niveau d'étude actuel ?</h2>
+    <div >
+        <button class="but" pButton pRipple  
+                            *ngFor="let niveau of niveau " 
+                            type="button" 
+                            [label]="niveau"
+                            (click)="setNiveau(niveau)"></button>
+    </div>
+</div>

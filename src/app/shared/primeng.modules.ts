@@ -10,23 +10,29 @@ import { OrganizationChartModule } from 'primeng/organizationchart';
 import { TagModule } from 'primeng/tag';
 import { DividerModule } from 'primeng/divider';
 import { FieldsetModule} from 'primeng/fieldset';
+import { ProgressBarModule } from 'primeng/progressbar';
+import {DropdownModule} from 'primeng/dropdown';
+
+
 
 
 
 
 @NgModule({
     exports:[
-        MenubarModule,
-        FieldsetModule,
-        DividerModule,
-        CardModule,
-        AccordionModule,
-        TabViewModule,
-        TableModule,
-        ButtonModule,
-        DialogModule,
-        OrganizationChartModule,
-        TagModule
+      ProgressBarModule,
+      MenubarModule,
+      FieldsetModule,
+      DividerModule,
+      CardModule,
+      AccordionModule,
+      TabViewModule,
+      TableModule,
+      ButtonModule,
+      DialogModule,
+      OrganizationChartModule,
+      TagModule,
+      DropdownModule
     ]
   })
 

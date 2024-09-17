@@ -1,0 +1,12 @@
+<div class="cardBar">
+    <p-progressBar [showValue]="false" [value]="80"></p-progressBar>
+</div>
+<div  class="statuts">
+    <h2>Je suis :</h2>
+    <div >
+        <button class="but" pButton pRipple (click)="SelectStatuts('lycéen')"  type="button" label="Lycéen / Collégien" ></button>
+        <button class="but" pButton pRipple (click)="SelectStatuts('étudiant')" type="button" label="Etudiant" ></button>
+        <button class="but" pButton pRipple (click)="SelectStatuts('en activité')" type="button" label="En activité" ></button>
+        <button class="but" pButton pRipple (click)="SelectStatuts('sans emploi')" type="button" label="Sans emploi" ></button>
+    </div>
+</div>

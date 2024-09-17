@@ -9,5 +9,6 @@ export const routes: Routes = [
     {path:'view', title: 'User Set ', component: UsertestComponent},
     {path: 'about', component: AboutComponent},
     { path: 'info', loadChildren: () => import('./informations/informations.module').then(m => m.InformationsModule) },
+    { path: 'orientation', loadChildren: () => import('./orientation/orientation.module').then(m => m.OrientationModule) },
     {path:'comment', title: 'Comment Set', component: VommentsComponent}
 ];
