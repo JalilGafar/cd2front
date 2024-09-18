@@ -7,6 +7,9 @@ import { UserProfil } from "../model/user-profil-model";
 import { ville } from "../model/ville-model";
 import { environment } from "../../environments/environment";
 import { Contact } from "../model/contact-model";
+import { BEHAVIOR } from "../model/behavior";
+import { interestelt } from "../model/interest-item-model";
+
 // import { interestelt } from "src/app/core/model/interest-item-model";
 
 
@@ -42,6 +45,15 @@ export class OrientationService {
 
     private setLoadingStatus(loading: boolean) {
         this._loading$.next(loading)
+    }
+
+    scrollTo(element: string, behavior: BEHAVIOR): void {
+        if (typeof document !== 'undefined') {
+          let elementer = document.getElementById(element);
+        
+          (elementer as HTMLElement).scrollIntoView({behavior: behavior, block:"start", inline:"nearest"})
+          // Manipulating the DOM here
+       }
       }
   
 
@@ -67,6 +79,8 @@ export class OrientationService {
     get domaine$(): Observable<field[]> {
         return this._domaine$.asObservable();
     }
+
+
 
     /*Fonction qui demande de retourner les domaines pour un diplome en particulier pour toutes les villes
      Car une foi qu'o aura le diplome et le domaine d'intérêt, on enclanche getPartCyties() pour 
@@ -97,16 +111,41 @@ export class OrientationService {
         )
     }
 
+
+    private _degree$ = new BehaviorSubject<degree[]>([]);
+    get degree$(): Observable<degree[]> {
+        return this._degree$.asObservable();
+    }
+
     /**Fonction qui demande au serveur de retourner les diplomes pour une ville en particulier */
-    getDegreeCyti(degreeCyti:string): Observable<degree[]>{
+    getDegreeCyti(degreeCyti:string) {
+        this.setLoadingStatus(true);
+        console.log("la requette des diplomes !")
+        const url = `${environment.apiUrl}/api/degree`;
+        let queryParams = new HttpParams();
+        queryParams = queryParams.append('DegreeCyti', degreeCyti);
+        return this.http.get<degree[]>(url, {params: queryParams}).pipe(
+            tap(deg =>{
+                this._degree$.next(deg),
+                this.setLoadingStatus(false)
+            })
+            // tap(() => this.setLoadingStatus(false) )
+        )
+    };
+
+    getDegree(degreeCyti:string) {
         this.setLoadingStatus(true);
         const url = `${environment.apiUrl}/api/degree`;
         let queryParams = new HttpParams();
         queryParams = queryParams.append('DegreeCyti', degreeCyti);
         return this.http.get<degree[]>(url, {params: queryParams}).pipe(
-            tap(deg => this.setLoadingStatus(false) )
+            tap(deg =>{
+                this._degree$.next(deg),
+                this.setLoadingStatus(false)
+            })
+            // tap(() => this.setLoadingStatus(false) )
         )
-    };
+    }
 
     /** Fonction qui envoie demande au serveur de retourner les diplomes pour un domaine en particulier */
     getDegreeField(degreeField: string): Observable<degree[]>{
@@ -150,15 +189,15 @@ export class OrientationService {
        return this.http.post<UserProfil>(`${environment.apiUrl}/api/result`, UserInfo)
     };
 
-    // getSerchResult(): Observable<interestelt[]> {
-    //     const url = `${environment.apiUrl}/api/result`;
-    //     let queryParams = {"city":this.initialUser.city,
-    //                         "diplome":this.initialUser.degree, 
-    //                         "domaine":this.initialUser.field,
-    //                         "branche":this.initialUser.branche};
+    getSerchResult(): Observable<interestelt[]> {
+        const url = `${environment.apiUrl}/api/result`;
+        let queryParams = {"city":this.initialUser.city,
+                            "diplome":this.initialUser.degree, 
+                            "domaine":this.initialUser.field,
+                            "branche":this.initialUser.branche};
 
-    //     return this.http.get<interestelt[]>(url, {params: queryParams})
-    // }
+        return this.http.get<interestelt[]>(url, {params: queryParams})
+    }
 
     initUser() {
         this.initialUser =  {

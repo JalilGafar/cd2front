@@ -12,6 +12,9 @@ import { DividerModule } from 'primeng/divider';
 import { FieldsetModule} from 'primeng/fieldset';
 import { ProgressBarModule } from 'primeng/progressbar';
 import {DropdownModule} from 'primeng/dropdown';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import {CarouselModule} from 'primeng/carousel';
+
 
 
 
@@ -20,6 +23,8 @@ import {DropdownModule} from 'primeng/dropdown';
 
 @NgModule({
     exports:[
+      CarouselModule,
+      ProgressSpinnerModule,
       ProgressBarModule,
       MenubarModule,
       FieldsetModule,

@@ -6,6 +6,7 @@ import { OrientationService } from '../../orientation.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
+import { BEHAVIOR } from '../../../model/behavior';
 
 @Component({
   selector: 'app-degree',
@@ -21,6 +22,7 @@ export class DegreeComponent implements OnInit, AfterViewInit {
   degree$!: Observable<degree[]>;
   degreeView!: degree [];
   loading$!: Observable<boolean>;
+  testeur = "NgOnInit n'est pas lancé !"
   cap = {groupe: 'CAP ou équivalent'};
   bac = {groupe: 'Bac ou équivalent'};
   bts = {groupe: 'Bac+1 à Bac+2'};
@@ -46,18 +48,21 @@ export class DegreeComponent implements OnInit, AfterViewInit {
     private titleService:Title) {this.titleService.setTitle("quel diplome pour ma formation au Cameroun");}
 
 
-  ngOnInit(): void {
+  ngOnInit() {
 
+    this.loading$ = this.orientationService.loading$;
+    // this.testeur = "NgOnInit est lancé !";
+    this.degree$ = this.orientationService.degree$
     this.orientationService.getDegreeCyti('tous').subscribe(
-      (data:any) => {
-        this.degreeView = data
-      }
+      // data => {
+      //   this.degreeView = data
+      // }
     );
     
   }
 
   ngAfterViewInit(): void {
-    
+    this.orientationService.scrollTo('header', BEHAVIOR.auto)
   }
 
   setDegree(degree : string){

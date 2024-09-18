@@ -11,6 +11,7 @@ import { MyFilterPipe } from "./pipes/myfilter.pipe";
 import { DomFilterPipe } from "./pipes/domFilter.pipe";
 import { ReactiveFormsModule } from "@angular/forms";
 import { FormsModule } from '@angular/forms';
+
 // import { NgxIntlTelInputModule } from "ngx-intl-tel-input-gg";
 
 @NgModule({

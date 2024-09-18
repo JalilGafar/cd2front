@@ -3,10 +3,12 @@
 </div>
 <h1>Quel diplôme souhaitez-vous préparer ?</h1>
 <!-- <mat-spinner *ngIf="loading$ | async"></mat-spinner> -->
+<p-progressSpinner *ngIf="loading$ | async" ariaLabel="loading" />
+
 <p-accordion >
     <p-accordionTab header="CAP ou équivalent" [selected]="true" class="wrapper" [disabled]="capLenght === 0"> 
         <ng-container >         
-            @for (degree of degreeView | myfilter:cap; track degree.nom_cat) 
+            @for (degree of degree$ | async | myfilter:cap; track degree.nom_cat) 
                 {
                     <button pButton pRipple type="button"
                             label={{degree.nom_cat}} 
@@ -25,7 +27,7 @@
     </p-accordionTab>  
     <p-accordionTab header="Bac ou équivalent" [selected]="true" class="wrapper" [disabled]="bacLenght === 0">
         <ng-container >         
-            @for (degree of degreeView | myfilter:bac; track degree.nom_cat) 
+            @for (degree of degree$ | async | myfilter:bac; track degree.nom_cat) 
                 {
                     <button pButton pRipple type="button"
                             label={{degree.nom_cat}} 
@@ -37,7 +39,7 @@
     </p-accordionTab>  
     <p-accordionTab header="Bac+1 à Bac+2" [selected]="true"  [disabled]="btsLenght === 0">
         <ng-container >         
-            @for (degree of degreeView | myfilter:bts; track degree.nom_cat) 
+            @for (degree of degree$ | async | myfilter:bts; track degree.nom_cat) 
                 {
                     <button pButton pRipple type="button"
                             label={{degree.nom_cat}} 
@@ -48,7 +50,7 @@
     </p-accordionTab> 
     <p-accordionTab header="Bac+3" [selected]="true"  [disabled]="liLenght === 0">
         <ng-container >         
-            @for (degree of degreeView | myfilter:licence; track degree.nom_cat) 
+            @for (degree of degree$ | async | myfilter:licence; track degree.nom_cat) 
                 {
                     <button pButton pRipple type="button"
                             label={{degree.nom_cat}} 
@@ -59,7 +61,7 @@
     </p-accordionTab> 
     <p-accordionTab header="Bac+4 à Bac+5" [selected]="true"  [disabled]="masLenght === 0">
         <ng-container >         
-            @for (degree of degreeView | myfilter:master; track degree.nom_cat) 
+            @for (degree of degree$ | async | myfilter:master; track degree.nom_cat) 
                 {
                     <button pButton pRipple type="button"
                             label={{degree.nom_cat}} 
@@ -70,7 +72,7 @@
     </p-accordionTab>
     <p-accordionTab header="Bac+6 et plus" [selected]="true" [disabled]="docLenght === 0" >
         <ng-container >         
-            @for (degree of degreeView | myfilter:doctor; track degree.nom_cat) 
+            @for (degree of degree$ | async | myfilter:doctor; track degree.nom_cat) 
                 {
                     <button pButton pRipple type="button"
                             label={{degree.nom_cat}} 
@@ -81,7 +83,7 @@
     </p-accordionTab>
     <p-accordionTab header="autre" [selected]="true"  [disabled]="autLenght === 0">
         <ng-container >         
-            @for (degree of degreeView | myfilter:autre; track degree.nom_cat) 
+            @for (degree of degree$ | async | myfilter:autre; track degree.nom_cat) 
                 {
                     <button pButton pRipple type="button"
                             label={{degree.nom_cat}} 

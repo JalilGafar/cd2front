@@ -2,6 +2,7 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { SharedComponentModule } from '../../../shared/shared.modules';
 import { OrientationService } from '../../orientation.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import { BEHAVIOR } from '../../../model/behavior';
 
 @Component({
   selector: 'app-statuts',
@@ -25,7 +26,7 @@ export class StatutsComponent implements OnInit, AfterViewInit {
   }
 
   ngAfterViewInit(): void {
-    // this.topNewsService.scrollTo('header', BEHAVIOR.auto)
+    this.orientationService.scrollTo('header', BEHAVIOR.auto)
   }
 
 

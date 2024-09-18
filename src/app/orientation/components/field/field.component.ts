@@ -5,6 +5,7 @@ import { field } from '../../../model/field-model';
 import { OrientationService } from '../../orientation.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { BEHAVIOR } from '../../../model/behavior';
 
 @Component({
   selector: 'app-field',
@@ -60,7 +61,7 @@ export class FieldComponent implements OnInit, AfterViewInit{
                 // private topNewsService : TopNewsService,
                 private titleService:Title) {this.titleService.setTitle("quel sont les domaines de formation au Cameroun");}
 
-  ngOnInit():void {
+  ngOnInit() {
     const userDomaineDegree = this.route.snapshot.queryParams['degree'];
     const userDomainecyti = this.route.snapshot.queryParams['cyti'];
     //console.log(userDomaineDegree)
@@ -118,7 +119,7 @@ export class FieldComponent implements OnInit, AfterViewInit{
   }
 
   ngAfterViewInit(): void {
-    // this.topNewsService.scrollTo('header', BEHAVIOR.auto)
+    this.orientationService.scrollTo('header', BEHAVIOR.auto)
   }
 
   setNiveau(){}

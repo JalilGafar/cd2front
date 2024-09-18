@@ -5,6 +5,7 @@ import { ville } from '../../../model/ville-model';
 import { OrientationService } from '../../orientation.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
+import { BEHAVIOR } from '../../../model/behavior';
 
 @Component({
   selector: 'app-city',
@@ -43,7 +44,7 @@ export class CityComponent implements OnInit, AfterViewInit{
   }
 
   ngAfterViewInit(): void {
-    // this.topNewsService.scrollTo('header', BEHAVIOR.auto)
+    this.orientationService.scrollTo('header', BEHAVIOR.auto)
   }
 
   setNiveau(){}

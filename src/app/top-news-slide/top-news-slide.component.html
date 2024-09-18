@@ -1,0 +1,22 @@
+<div *ngIf="myTopNews$ | async as data">
+    <p-carousel [value]="data" [numVisible]="3" [numScroll]="3" [circular]="true" [autoplayInterval]="5000" [responsiveOptions]="responsiveOptions">
+        <ng-template pTemplate="header" >
+            <h2 class="actualite">Actualités de l'enseignement supérieur</h2>
+        </ng-template>
+        <ng-template let-topNews pTemplate="item">
+            <a [href]="topNews.news_link" target="_blank" rel="noopener noreferrer">
+                <div class="product-item">
+                    <div class="product-item-content">
+                        <div class="p-mb-3">
+                        </div>
+                        <div>
+                            <h4 class="p-mb-1">{{topNews.title}}</h4>
+                            <h6 class="p-mt-0 p-mb-3">{{topNews.description}}</h6>
+                            <img mat-card-xl-image [src]="topNews.imageUrl" [alt]="topNews.title" class="product-image">
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </ng-template>
+    </p-carousel>
+</div>
