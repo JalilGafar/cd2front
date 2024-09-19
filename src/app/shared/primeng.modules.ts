@@ -14,15 +14,11 @@ import { ProgressBarModule } from 'primeng/progressbar';
 import {DropdownModule} from 'primeng/dropdown';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import {CarouselModule} from 'primeng/carousel';
-
-
-
-
-
-
+import { ImageModule } from 'primeng/image';
 
 @NgModule({
     exports:[
+      ImageModule,
       CarouselModule,
       ProgressSpinnerModule,
       ProgressBarModule,

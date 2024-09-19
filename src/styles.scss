@@ -4,5 +4,10 @@ html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 @import "primeicons/primeicons.css";
 
+.mat-typography{
+    padding-left: 3%;
+    padding-right: 3%;
+}
+
 /* Importing Bootstrap SCSS file. */
 //@import 'bootstrap/scss/bootstrap';

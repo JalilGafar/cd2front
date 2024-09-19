@@ -1,0 +1,7 @@
+@import '../../orientation-style.module.scss';
+@media screen and (min-width: 600px)  {
+    button { 
+        margin-left: 5px;
+        margin-right: 5px;  
+    }
+}
