@@ -1,0 +1,16 @@
+<h1>Admin Start</h1>
+<div *ngIf="isLoggedIn">
+    <div >
+        <button pButton type="button" label="Université" (click)="univClick()"></button>
+        <button pButton type="button" label="Campus" (click)="campusClick()"></button>
+        <button pButton type="button" label="Ecoles" (click)="ecoleClick()"></button>
+        <button pButton type="button" label="Diplômes" (click)="diplomeClick()"></button>
+        <button pButton type="button" label="Formations" (click)="formationClick()"></button>
+    </div>
+    <app-list-univ *ngIf="univView" />
+    <app-list-campus *ngIf="campusView" />
+    <app-list-ecole *ngIf="ecoleView" />
+    <app-list-diplome *ngIf="diplomeView" />
+    <app-list-formation *ngIf="formationView"/>
+
+<div>

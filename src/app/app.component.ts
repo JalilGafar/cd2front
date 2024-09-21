@@ -1,14 +1,15 @@
-import { Component, inject } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID, inject } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { UsertestComponent } from "./usertest/usertest.component";
 import { VommentsComponent } from './vomments/vomments.component';
-import { DatePipe, NgOptimizedImage, UpperCasePipe, provideImgixLoader } from '@angular/common';
+import { DatePipe, NgOptimizedImage, UpperCasePipe, isPlatformBrowser, provideImgixLoader, Location, CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CarService } from './car.service';
 import { ReversePipe } from './reverse.pipe';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
+import { environment } from '../environments/environment';
 
 @Component({
     selector: 'app-root',
@@ -20,25 +21,32 @@ import { HeaderComponent } from './header/header.component';
                 FooterComponent,
                 HeaderComponent,
                 UsertestComponent, 
-                VommentsComponent,
                 LandingPageComponent,
                 NgOptimizedImage,
                 ReactiveFormsModule,
                 UpperCasePipe,
                 DatePipe,
-                ReversePipe
+                ReversePipe,
+                CommonModule
               ],
     providers: [
      // provideImgixLoader('/assets/'),
     ]
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
  // carService = inject(CarService);
  // constructor(private petCareService: CarService) {}
-  title = 'La vie est plus belle quand tu te donne à fond';
   items = new Array();
   display = '';
   date = new Date ;
+
+  private roles!: string[];
+  isLoggedIn = false;
+  showAdminBoard = false;
+  showModeratorBoard = false;
+  username!:string;
+  title = 'ecolecamer';
+  location!: Location;
   
 
   profileForm = new FormGroup({
@@ -47,9 +55,20 @@ export class AppComponent {
   });
 
 
-  constructor(private petCareService: CarService) {
+  constructor(
+    private petCareService: CarService, 
+    location: Location,
+    @Inject(PLATFORM_ID) private platformId: any
+    ) {
     this.display = this.petCareService.getCars();
+    this.location = location;
   }
+
+  ngOnInit(): void {
+    
+
+  }
+
 
   addItem(item: string) {
     this.items.push(item);
