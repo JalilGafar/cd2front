@@ -1,0 +1,16 @@
+@if (1==1){
+    <div>
+        <div >
+            <button pButton type="button" label="Université" (click)="univClick()"></button>
+            <button pButton type="button" label="Campus" (click)="campusClick()"></button>
+            <button pButton type="button" label="Ecoles" (click)="ecoleClick()"></button>
+            <button pButton type="button" label="Diplômes" (click)="diplomeClick()"></button>
+            <button pButton type="button" label="Formations" (click)="formationClick()"></button>
+        </div>
+        <app-list-univ *ngIf="univView" />
+        <app-list-campus *ngIf="campusView" />
+        <app-list-ecoles *ngIf="ecoleView" />
+        <app-list-diplomes *ngIf="diplomeView" />
+        <app-list-formations *ngIf="formationView" />
+    </div>
+}
