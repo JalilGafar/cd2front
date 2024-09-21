@@ -5,25 +5,31 @@
 :host {
     height: 100vh;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     background-color: rgba(253, 101, 133, 1);
-
 }
 
-.login-card {
-    display: flex;
-    flex-direction: column;
-    margin: 10px 10px;
-    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.3);
-    background-color: #ffffff;
-    padding: 10px;
+.signup-card {
     border-radius: 10px;
+    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.3);
     width: 40%;
-
+    height: 450px;
+    background-color: #ffffff;
+    padding: 10px 30px;
 }
 
-.login-card input {
+.card-title {
+    padding: 10px;
+}
+
+.card-title h1 {
+    font-size: 26px;
+    font-weight: bold;
+}
+
+.form-group input {
     margin: 5px 0;
     width: 100%;
     background-color: #e2e2e2;
@@ -33,7 +39,7 @@
     border-radius: 4px;
 }
 
-.login-card button {
+.form-group input[type="submit"] {
     background-color: #4796ff;
     color: #ffffff;
     font-size: 16px;
@@ -44,8 +50,13 @@
     width: 100%;
 }
 
+.card-terms {
+    display: flex;
+    align-items: center;
+    padding: 10px;
+}
 
-.card-title h1 {
-    font-size: 26px;
-    font-weight: bold;
+.card-terms span {
+    margin: 5px;
+    font-size: 13px;
 }

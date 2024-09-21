@@ -1,7 +1,6 @@
 import { Component, Inject, OnInit, PLATFORM_ID, inject } from '@angular/core';
 import { RouterLink, RouterOutlet } from '@angular/router';
 import { UsertestComponent } from "./usertest/usertest.component";
-import { VommentsComponent } from './vomments/vomments.component';
 import { DatePipe, NgOptimizedImage, UpperCasePipe, isPlatformBrowser, provideImgixLoader, Location, CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CarService } from './car.service';
@@ -9,7 +8,6 @@ import { ReversePipe } from './reverse.pipe';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
-import { tokenStorageService } from './service/token-storage.service';
 import { environment } from '../environments/environment';
 
 @Component({
@@ -22,7 +20,6 @@ import { environment } from '../environments/environment';
                 FooterComponent,
                 HeaderComponent,
                 UsertestComponent, 
-                VommentsComponent,
                 LandingPageComponent,
                 NgOptimizedImage,
                 ReactiveFormsModule,
@@ -58,8 +55,7 @@ export class AppComponent implements OnInit {
 
 
   constructor(
-    private petCareService: CarService,
-    private tokenStorageService: tokenStorageService, 
+    private petCareService: CarService, 
     location: Location,
     @Inject(PLATFORM_ID) private platformId: any
     ) {
@@ -68,35 +64,10 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.isLoggedIn = !!this.tokenStorageService.getToken();
-
-    if (environment.production) {
-      if (location.protocol === 'http:') {
-        if (isPlatformBrowser(this.platformId)) {
-          window.location.href = location.href.replace('http', 'https');
-        }
-      }
-    }
-
-    if (this.isLoggedIn) {
-      const user = this.tokenStorageService.getUser();
-      this.roles = user.roles;
-
-      this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
-      this.showModeratorBoard = this.roles.includes('ROLE_MODERATOR');
-
-      this.username = user.username;
-      
-    }
+    
 
   }
 
-  logout(){
-    this.tokenStorageService.signOut();
-    if (isPlatformBrowser(this.platformId)) {
-      window.location.reload();
-    }
-  }
 
   addItem(item: string) {
     this.items.push(item);

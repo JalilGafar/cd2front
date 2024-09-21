@@ -1,12 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { ListCampusComponent } from '../list-campus/list-campus.component';
 import { ListDiplomesComponent } from '../list-diplomes/list-diplomes.component';
 import { ListEcolesComponent } from '../list-ecoles/list-ecoles.component';
 import { ListFormationsComponent } from '../list-formations/list-formations.component';
 import { ListUnivComponent } from '../list-univ/list-univ.component';
-import { tokenStorageService } from '../../../service/token-storage.service'
 import { CommonModule } from '@angular/common';
 import { SharedComponentModule } from '../../../shared/shared.modules';
+import { AuthService } from '../../../auth/auth.service';
+import { Router } from '@angular/router';
 
 
 @Component({
@@ -26,27 +27,22 @@ import { SharedComponentModule } from '../../../shared/shared.modules';
 })
 export class AdminStartComponent implements OnInit {
 
+  authService = inject(AuthService);
+  router = inject(Router);
+  public logout(){
+    this.authService.logout();
+    this.router.navigate(['/login']);
+  }
+
   private roles!: string[];
   isLoggedIn = true;
   showAdminBoard = false;
   showModeratorBoard = false;
   username!:string;
   
-  constructor (private tokenStorageService: tokenStorageService) { }
+  constructor () { }
 
   ngOnInit(): void {
-    this.isLoggedIn = !!this.tokenStorageService.getToken();
-
-    if (this.isLoggedIn) {
-      const user = this.tokenStorageService.getUser();
-      this.roles = user.roles;
-
-      this.showAdminBoard = this.roles.includes('ROLE_ADMIN');
-      this.showModeratorBoard = this.roles.includes('ROLE_MODERATOR');
-
-      this.username = user.username;
-      
-    }
   }
 
 
