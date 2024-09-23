@@ -1,0 +1,57 @@
+<p-card class="main-form">
+    <form [formGroup]="newFormation">
+        <div class="form-group">
+            <label for="">Nom de la formation</label>
+            <input id="nom_f" type="text"  formControlName="nom_f">
+        </div>
+        <div class="form-group">
+            <label for="">Début de formation</label>
+            <input id="date_debut_f" type="text" formControlName="date_debut_f">
+        </div>
+        <div class="form-group">
+            <label for="">Durée de formation </label>
+            <input id="duree_f" type="text" formControlName="duree_f">
+        </div>
+        <div class="form-group">
+            <label for="">Coût de la formation (FCFA)</label>
+            <input id="cout_f" type="text" formControlName="cout_f">
+        </div>
+        <div class="form-group">
+            <label for="">Programme de la formation</label>
+            <p-editor formControlName="programme_f" [style]="{'height':'320px'}"></p-editor>
+        </div>
+        <div class="form-group">
+            <label for="">Descriptif de la formation</label>
+            <p-editor formControlName="descriptif_f" [style]="{'height':'320px'}"></p-editor>
+        </div>
+        <div class="form-group">
+            <label for="">Admission</label>
+            <input id="admission_diplome" type="text" formControlName="admission_diplome">
+        </div>
+        <div class="form-group">
+            <label for="">Conditions</label>
+            <input id="condition_diplome" type="text" formControlName="condition_diplome">
+        </div>
+        <div class="form-group">
+            <label for=""> Diplome</label>
+            <p-dropdown id="diplom_id" 
+                        *ngIf="diplomes$ | async as diplome" 
+                        placeholder="Quel Diplome ?" 
+                        [options]="diplome" 
+                        optionLabel="nom_dip" 
+                        optionValue="id_dip" 
+                        [filter]="true" filterBy="nom_dip" [showClear]="true"
+                        formControlName="diplom_id">
+            </p-dropdown>
+        </div>
+        <div class="form-group">
+            <label for="">Ecole</label>
+            <p-dropdown id="ecole_id" *ngIf="ecole$ | async as ecoles" placeholder="Quelle Ecole ?" [options]="ecoles" optionLabel="displayName" optionValue="id_ecol" formControlName="ecole_id"></p-dropdown>
+        </div>
+
+        <div class="action-buttons">
+            <p-button type="submit" styleClass="p-button-success" [disabled]="newFormation.invalid" (click)="onSubmitForm()">Enregistrer</p-button>
+            <p-button styleClass="p-button-danger" (click)="onGoBack()" >Annuler</p-button>
+        </div>
+    </form>
+</p-card>

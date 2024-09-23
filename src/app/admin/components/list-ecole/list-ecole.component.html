@@ -1,1 +1,44 @@
-<p>list-ecole works!</p>
+<div class="card">
+    <h2>Liste des Ecoles  
+        <button pButton type="button" label="Ajouter une Ecole" class="p-button-success" (click)="onAddEcol()"></button>
+    </h2>
+    <ng-container *ngIf="ecoles$ | async as data">
+        <p-progressSpinner *ngIf="loading$ | async" ariaLabel="loading" />
+        <p-table [value]="data" 
+                [tableStyle]="{'min-width': '30rem'}" 
+                selectionMode="single" 
+                dataKey="code" 
+                [paginator]="true"
+                [rows]="50"
+                [showCurrentPageReport]="true"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                [rowsPerPageOptions]="[10, 25, 50]"
+                (onRowSelect)="onRowSelect($event)">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="id_ecol" style="width:5%">Code <p-sortIcon field="id_ecol"></p-sortIcon></th>
+                    <th pSortableColumn="sigle_e" style="width:10%">Sigle <p-sortIcon field="sigle_e"></p-sortIcon></th>
+                    <th pSortableColumn="nom_e" style="width:20%">Name <p-sortIcon field="nom_e"></p-sortIcon></th>
+                    <th pSortableColumn="logo_e" style="width:10%">Logo <p-sortIcon field="logo_e"></p-sortIcon></th>
+                </tr>
+            </ng-template>
+            
+            <ng-template pTemplate="body" let-ecole>
+                
+                <tr [pSelectableRow]="ecole">
+                    <td>{{ecole.id_ecol}}</td>
+                    <td>{{ecole.sigle_e}}</td>
+                    <td>{{ecole.nom_e}}</td>
+                    <td> <img [src]="ecole.logo_e" alt="" style="height: 100px;"> </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="paginatorleft">
+                <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button>
+            </ng-template>
+            <ng-template pTemplate="paginatorright">
+                <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text"></p-button>
+            </ng-template>
+        </p-table>
+    </ng-container>
+</div>
+

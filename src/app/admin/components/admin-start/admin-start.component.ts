@@ -7,6 +7,8 @@ import { ListEcoleComponent } from '../list-ecole/list-ecole.component';
 import { ListFormationComponent } from '../list-formation/list-formation.component';
 import { ListUnivComponent } from '../list-univ/list-univ.component';
 import { SharedComponentModule } from '../../../shared/shared.modules';
+import { AdminService } from '../../admin.service';
+import { BEHAVIOR } from '../../../model/behavior';
 
 @Component({
   selector: 'app-admin-start',
@@ -31,7 +33,9 @@ export class AdminStartComponent implements OnInit {
   showModeratorBoard = false;
   username!:string;
   
-  constructor (private tokenStorageService: tokenStorageService) { }
+  constructor (
+    private adminService: AdminService,
+    private tokenStorageService: tokenStorageService) { }
 
   ngOnInit(): void {
     this.isLoggedIn = !!this.tokenStorageService.getToken();
@@ -97,6 +101,10 @@ export class AdminStartComponent implements OnInit {
     this.formationView = true;
     this.ecoleView = false;
     this.diplomeView = false;
+  }
+
+  ngAfterViewInit(): void {
+    this.adminService.scrollTo('header', BEHAVIOR.auto)
   }
 
 }

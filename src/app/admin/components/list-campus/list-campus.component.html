@@ -1,1 +1,41 @@
-<p>list-campus works!</p>
+<div class="card">
+    <h2>Liste des Campus 
+        <button pButton type="button" label="Ajouter un Campus" class="p-button-success" (click)="onAddCampus()"></button>
+    </h2>
+    <ng-container *ngIf="campus$ | async as data">
+        <p-progressSpinner *ngIf="loading$ | async" ariaLabel="loading" />
+        <p-table [value]="data" 
+                [tableStyle]="{'min-width': '30rem'}" 
+                selectionMode="single" 
+                dataKey="code" 
+                [paginator]="true"
+                [rows]="50"
+                [showCurrentPageReport]="true"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                [rowsPerPageOptions]="[10, 25, 50]"
+                (onRowSelect)="onRowSelect($event)">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="id_camp" style="width:5%">Code <p-sortIcon field="id_camp"></p-sortIcon></th>
+                    <th pSortableColumn="nom_camp" style="width:10%">Nom <p-sortIcon field="nom_camp"></p-sortIcon></th>
+                    <th pSortableColumn="ville_cam" style="width:20%">Ville <p-sortIcon field="ville_cam"></p-sortIcon></th>
+                </tr>
+            </ng-template>
+            
+            <ng-template pTemplate="body" let-campus>
+                
+                <tr [pSelectableRow]="campus">
+                    <td>{{campus.id_camp}}</td>
+                    <td>{{campus.nom_camp}}</td>
+                    <td>{{campus.ville_cam}}</td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="paginatorleft">
+                <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button>
+            </ng-template>
+            <ng-template pTemplate="paginatorright">
+                <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text"></p-button>
+            </ng-template>
+        </p-table>
+    </ng-container>
+</div>

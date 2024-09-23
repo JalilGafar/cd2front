@@ -54,7 +54,7 @@ export class OrientationService {
           (elementer as HTMLElement).scrollIntoView({behavior: behavior, block:"start", inline:"nearest"})
           // Manipulating the DOM here
        }
-      }
+    }
   
 
     getAllCyties(): Observable<ville[]> {

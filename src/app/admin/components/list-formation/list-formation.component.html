@@ -1,1 +1,50 @@
-<p>list-formation works!</p>
+<div class="card">
+    <h2>Liste des formations
+        <button pButton type="button" label="Ajouter une Formation" class="p-button-success" (click)="onAddFormation()"></button>
+    </h2>
+    <ng-container *ngIf="formations$ | async as data">
+        <p-progressSpinner *ngIf="loading$ | async" ariaLabel="loading" />
+        <p-table [value]="data" 
+                [tableStyle]="{'min-width': '50rem'}" 
+                [styleClass]="'p-datatable-sm'"
+                selectionMode="single" 
+                dataKey="code" 
+                [paginator]="true"
+                [rows]="25"
+                [showCurrentPageReport]="true"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                [rowsPerPageOptions]="[50, 100, 150]"
+                paginatorPosition="top"
+                (onRowSelect)="onRowSelect($event)">
+            
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="id_form" style="width:7%">Code <p-sortIcon field="id_form"></p-sortIcon></th>
+                    <th pSortableColumn="nom_f" style="width:20%">Name <p-sortIcon field="nom_f"></p-sortIcon></th>
+                    <th pSortableColumn="nom_cat" style="width:20%">Diplome <p-sortIcon field="nom_cat"></p-sortIcon></th>
+                    <th pSortableColumn="nom_univ" style="width:20%">Université <p-sortIcon field="nom_univ"></p-sortIcon></th>
+                    <th pSortableColumn="nom_camp" style="width:20%">Campus <p-sortIcon field="nom_camp"></p-sortIcon></th>
+                    <th pSortableColumn="ville_cam" style="width:20%">Ville <p-sortIcon field="ville_cam"></p-sortIcon></th>
+                </tr>
+            </ng-template>
+            
+            <ng-template pTemplate="body" let-formation>
+                
+                <tr [pSelectableRow]="formation">
+                    <td>{{formation.id_form}}</td>
+                    <td>{{formation.nom_f}}</td>
+                    <td>{{formation.nom_dip}}</td>
+                    <td>{{formation.nom_univ}}</td>
+                    <td>{{formation.nom_camp}}</td>
+                    <td>{{formation.ville_cam}}</td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="paginatorleft">
+                <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button>
+            </ng-template>
+            <ng-template pTemplate="paginatorright">
+                <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text"></p-button>
+            </ng-template>
+        </p-table>
+    </ng-container>
+</div>

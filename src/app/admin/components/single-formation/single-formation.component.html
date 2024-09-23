@@ -1,0 +1,29 @@
+<p-card>
+    <ng-container *ngIf="formation$ | async as data">
+      <div class="employee-info">
+        <h1>{{ formation.id_form }} </h1>
+        <h2 [innerHTML]="formation.nom_f"></h2>
+        <h3><strong>Catégorie :</strong>  {{ data.nom_cat }}</h3>
+        <h3><strong>Dipmome :</strong>  {{ data.nom_dip }}</h3>
+        <h3> <strong>Ville :</strong>  {{ formation.ville_cam }}</h3>
+        <h3> <strong>Cout :</strong>  {{ formation.cout_f }} FCFA</h3>
+        <h3> <strong>Début de Formation :</strong>  {{ formation.date_debut_f }}</h3>
+        <h3> <strong>Durée :</strong>  {{ formation.duree_f }} Mois</h3>
+        <h3><strong>Programme :</strong></h3> <span [innerHTML]="formation.programme_f"></span>
+        <h3><strong>Descriptif :</strong> </h3> <span [innerHTML]="formation.descriptif_f"></span>
+        <h3><strong>Université :</strong> {{ formation.nom_univ }}</h3> 
+        <h3><strong>Ecole : </strong>{{ formation.nom_e }}</h3>
+        <h3><strong>Campus : </strong>{{ formation.nom_camp }}</h3>
+      </div>
+    </ng-container>
+    <ng-template pTemplate="footer">
+        <p-progressSpinner *ngIf="loading$ | async; else buttons" ariaLabel="loading" />
+        <ng-template #buttons>            
+            <div class="action-buttons" >
+                <p-button severity="warning" label="MODIFIER"  (click)="onModif()"/>
+                <p-button  severity="danger" label="SUPRIMER" (click)="onDelet()"/>
+                <p-button  severity="success" label="RETOUR" (click)="onGoBack()"/>
+            </div>
+        </ng-template>
+    </ng-template>
+  </p-card>

@@ -1,0 +1,88 @@
+<p-card class="main-form">
+    <form [formGroup]="newEcole">
+        <div class="form-group">
+            <label for="">Nom de l'Ecole</label>
+            <input id="nom_e" type="text"  formControlName="nom_e">
+        </div>
+        <div class="form-group">
+            <label for="">Sigle</label>
+            <input id="sigle_e" type="text" formControlName="sigle_e">
+        </div>
+        <div class="form-group">
+            <label for="">Logo</label>
+            <input id="logo_e" type="text" formControlName="logo_e">
+        </div>
+        <div class="form-group">
+            <label for="">Niveau</label>
+            <input id="niveau_e" type="text" formControlName="niveau_e">
+        </div>
+        <div class="form-group">
+            <label for="">Langue</label>
+            <input id="langue_e" type="text" formControlName="langue_e">
+        </div>
+        <div class="form-group">
+            <label for="">Date d'ouverture</label>
+            <input id="date_creation" type="text" formControlName="date_creation">
+        </div>
+        <div class="form-group">
+            <label for="">Arrêté de création</label>
+            <input id="arrete_creation" type="text" formControlName="arrete_creation">
+        </div>
+        <div class="form-group">
+            <label for="">Arrêté d'ouverture</label>
+            <input id="arrete_ouverture" type="text" formControlName="arrete_ouverture">
+        </div>
+        <div class="form-group">
+            <label for="">Tel</label>
+            <input id="tel_1_e" type="text" formControlName="tel_1_e">
+        </div>
+        <div class="form-group">
+            <label for="">email</label>
+            <input id="email_e" type="text" formControlName="email_e">
+        </div>
+        <div class="form-group">
+            <label for="">Site web</label>
+            <input id="siteweb_e" type="text" formControlName="siteweb_e">
+        </div>
+        <div class="form-group">
+            <label for="">BP</label>
+            <input id="bp_e" type="text" formControlName="bp_e">
+        </div>
+        <div class="form-group">
+            <label for="">Directeur</label>
+            <input id="directeur_e" type="text" formControlName="directeur_e">
+        </div>
+        <div class="form-group">
+            <label for="">Photo du Directeur</label>
+            <input id="photo_directeur" type="text" formControlName="photo_directeur">
+        </div>
+        <div class="form-group">
+            <label for="">mot du directeur</label>
+            <p-editor formControlName="mot_directeur" [style]="{'height':'320px'}"></p-editor>
+        </div>
+        <div class="form-group">
+            <label for="">Statistiques</label>
+            <input id="stat_e" type="text" formControlName="stat_e">
+        </div>
+        <div class="form-group">
+            <label for="">Présentation de l'Ecole</label>
+            <p-editor formControlName="descriptif_e" [style]="{'height':'320px'}"></p-editor>
+        </div>
+        <div class="form-group">
+            <label for="">Images</label>
+            <input id="image_e" type="text" formControlName="image_e">
+        </div>
+        <div class="form-group">
+            <label for="">Université</label>
+            <p-dropdown id="universites_id" *ngIf="universites$ | async as universitess" [options]="universitess" optionLabel="nom_univ" optionValue="id_univ" formControlName="universites_id"></p-dropdown>
+        </div>
+        <div class="form-group">
+            <label for="">Campus</label>
+            <p-dropdown id="campus_id" *ngIf="campus$ | async as campuss" [options]="campuss" optionLabel="nom_camp" optionValue="id_camp" formControlName="campus_id"></p-dropdown>
+        </div>
+
+        <div class="action-buttons">
+            <button type="submit" (click)="onSubmitForm()">Enregistrer</button>
+        </div>
+    </form>
+</p-card>

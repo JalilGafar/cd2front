@@ -1,0 +1,24 @@
+<p-card>
+    <ng-container *ngIf="campus$ | async as campuss">
+      <div class="employee-info">
+        <h1>{{ campus.id_camp }} </h1>
+        <h2 [innerHTML]="campus.nom_camp"></h2>
+        <h3> <strong>Ville :</strong>  {{ campus.ville_cam }}</h3>
+        <h3><strong>Principal : </strong>{{ campus.principal_camp }}</h3>
+        <h3><strong>Descriptif :</strong> </h3> <span [innerHTML]="campus.descriptif_camp"></span>
+        <h3><strong>Longitude :</strong> {{ campus.lon_camp }}</h3>
+        <h3><strong>Latitude :</strong> {{ campus.lat_camp }}</h3>
+      </div>
+    </ng-container>
+    <!-- <mat-spinner *ngIf="loading$ | async; else buttons"></mat-spinner> -->
+    <ng-template pTemplate="footer">
+        <p-progressSpinner *ngIf="loading$ | async; else buttons" ariaLabel="loading" />
+        <ng-template #buttons>            
+            <div class="action-buttons" >
+                <p-button severity="warning" label="MODIFIER"  (click)="onModif()"/>
+                <p-button  severity="danger" label="SUPRIMER" (click)="onDelet()"/>
+                <p-button  severity="success" label="RETOUR" (click)="onGoBack()"/>
+            </div>
+        </ng-template>
+    </ng-template>
+  </p-card>
