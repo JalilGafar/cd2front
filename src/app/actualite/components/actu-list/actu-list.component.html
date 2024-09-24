@@ -1,0 +1,23 @@
+<!-- <app-actu *ngFor="let actui of Actualite$ | async" [actualite]="actui" ></app-actu> -->
+<div *ngIf="Actualite$ | async as data">
+    <p-carousel [value]="data" [numVisible]="3" [numScroll]="3" [circular]="true" [autoplayInterval]="5000" [responsiveOptions]="responsiveOptions">
+        <ng-template pTemplate="header" >
+            <h2 class="actualite">Actualités de l'enseignement supérieur</h2>
+        </ng-template>
+        <ng-template let-actualite pTemplate="item">
+            <a (click)="onViewActu(actualite.id_actu)" rel="noopener noreferrer">
+                <div class="product-item">
+                    <div class="product-item-content">
+                        <div class="p-mb-3">
+                        </div>
+                        <div>
+                            <h4 class="p-mb-1">{{actualite.title}}</h4>
+                            <h6 class="p-mt-0 p-mb-3">{{actualite.summary}}</h6>
+                            <img mat-card-xl-image [src]="actualite.illustration" [alt]="actualite.title" class="product-image">
+                        </div>
+                    </div>
+                </div>
+            </a>
+        </ng-template>
+    </p-carousel>
+</div>

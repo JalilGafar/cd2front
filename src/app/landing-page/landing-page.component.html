@@ -1,5 +1,5 @@
 <div fxLayout="column" class="landing">
-
+    <h1 class="title">Trouve la formation qui te correspond sur plus de <span [innerHTML]="counti" class="bruce"></span> disponibles</h1>
     <app-headmsg 
         [titre]="titre"
         [soustitre]="soustitre"
@@ -49,9 +49,11 @@
         </div>
         <app-start ></app-start>
     </div>
+
+    <app-actu-list/>
     
-    <app-top-news-slide  class="top-news-slide">
-    </app-top-news-slide>
+    <!-- <app-top-news-slide  class="top-news-slide">
+    </app-top-news-slide> -->
     
     <div class="actualite-btn">
         <button mat-raised-button color="accent" >Voir toutes les actualités</button>

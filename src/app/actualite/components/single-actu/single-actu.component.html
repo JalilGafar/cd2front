@@ -1,0 +1,7 @@
+<div class="face-snap-card" *ngIf="actualite$ | async as actualite">
+    <h2>{{actualite[0].title | uppercase}} </h2>
+    <a routerLink="/actualites">Back</a>
+    <p> Mise en ligne le {{actualite[0].createdDate | date }} </p>
+    <img [src]="actualite[0].illustration" [alt]="actualite[0].title" style="height: 200px;" >
+    <div [innerHTML]="actualite[0].content"></div>
+</div>

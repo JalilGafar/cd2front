@@ -8,11 +8,15 @@ import { TopVideoSlideComponent } from '../top-video-slide/top-video-slide.compo
 import { TopNewsSlideComponent } from '../top-news-slide/top-news-slide.component';
 import { CommonModule } from '@angular/common';
 import { FlexLayoutModule } from 'ngx-fx-layout';
+import { TopNewsService } from '../service/top-news.service';
+import { map } from 'rxjs';
+import { ActuListComponent } from '../actualite/components/actu-list/actu-list.component';
 
 @Component({
   selector: 'app-landing-page',
   standalone: true,
   imports: [
+    ActuListComponent,
     SharedComponentModule,
     TopVideoSlideComponent,
     TopNewsSlideComponent,
@@ -27,7 +31,13 @@ export class LandingPageComponent implements OnInit {
   soustitre = "... Le chômage est très souvent le résultat d'une mauvaise orientation.";
   photo = "./assets/images/home.webp";
 
+  count!: number;
+  // counter = document.querySelector('.counter');
+   counti = 0 ;
+   speed = 200; // The lower the slower
+
   constructor( 
+    private service:TopNewsService,
     private titleService:Title,
     private meta: Meta)
     {
@@ -37,6 +47,26 @@ export class LandingPageComponent implements OnInit {
     }
 
   ngOnInit(){
-    
+    this.service.countFormation().pipe(
+      map(data => {
+        this.count = data[0].cont;
+        //this.updateCount(this.count, this.counti, this.speed)
+        const updateCounto = () =>{
+          const target = +this.count;
+          const counta = +this.counti 
+          const inc = target / this.speed;
+          if (counta < target) {
+            // Add inc to count and output in counter
+            //console.log(counta +' Je SUIS '+ target)
+            this.counti = ~~ (counta + inc);
+            // Call function every ms
+            setTimeout(updateCounto, 1);
+          } else {
+            this.counti = target;
+          }
+        }
+        updateCounto()
+      })        
+    ).subscribe();
   }
 }

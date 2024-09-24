@@ -1,5 +1,5 @@
 export class TopNews {
-    id!: number;
+    id_news!: number;
     title!: string; 
     description!: string;
     imageUrl!: string;

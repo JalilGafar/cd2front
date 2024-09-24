@@ -14,6 +14,7 @@ export const routes: Routes = [
     { path: 'info', loadChildren: () => import('./informations/informations.module').then(m => m.InformationsModule) },
     { path: 'orientation', loadChildren: () => import('./orientation/orientation.module').then(m => m.OrientationModule) },
     { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
+    { path: 'actualite', loadChildren: () => import('./actualite/actualite.module').then(m => m.ActualiteModule) },
     { path: 'login', component:LoginComponent},
     {path:'comment', title: 'Comment Set', component: VommentsComponent},
     {path:'building', title: 'Page en construction', component: EnConstructionComponent}
