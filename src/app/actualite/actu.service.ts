@@ -13,11 +13,11 @@ export class ActuService {
 
   getAllActu(): Observable<Actualite[]> {
     //return this.topnewss;
-    return this.http.get<Actualite[]>(`${environment.apiUrl}/api/Actualite`); 
+    return this.http.get<Actualite[]>(`${environment.apiUrl}/api/actualite`); 
   }
 
   getActualiteById (actualiteId:number): Observable<Actualite[]> {
-    let url = `${environment.apiUrl}/api/Actualite/blog`;
+    let url = `${environment.apiUrl}/api/actualite/blog`;
     let idParams = new HttpParams();
     idParams = idParams.append('idActu', actualiteId);
     return this.http.get<Actualite[]>(url, {params: idParams})

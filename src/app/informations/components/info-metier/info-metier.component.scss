@@ -1,1 +1,13 @@
 @import '../../informations-style.module.scss';
+
+:host ::ng-deep{
+    .dolom{
+        .p-button{
+            border-radius: 50px;
+            width: auto;
+        }
+        .p-button-label{
+            font-weight: 400;
+        }
+    }
+}
