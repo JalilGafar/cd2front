@@ -54,7 +54,7 @@ export class ContactComponent implements OnInit {
   onSubmitForm(){
     this.orientationService.saveContact(this.newContact.value);
     this.appRout.navigate( ['orientation/resultats/'] );
-    // console.log(this.newContact.value)
+   // console.log(this.newContact.value)
   }
 
 

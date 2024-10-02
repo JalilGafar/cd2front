@@ -206,7 +206,6 @@
 
         </div>
         <div>
-            <h2>Liste des formations </h2>
             <p-card header="Liste des formations" >
                 <div class="dolom">
                     <p-button [raised]="true" [outlined]="true" label="Voir plus" severity="contrast"/>
@@ -215,9 +214,8 @@
             </p-card>
         </div>
             <h2>Les écoles à la une</h2>
+            <!-- <app-pub-interest-item *ngFor="let schooli of school$ | async" [school]="schooli"></app-pub-interest-item> -->
         <div>
-
-        </div>
     </div>
     <aside class="side-container">
         <app-side-info></app-side-info>

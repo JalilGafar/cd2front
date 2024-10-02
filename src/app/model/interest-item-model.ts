@@ -11,4 +11,7 @@ export class interestelt {
     descriptif_e!: string;
     descriptif_f!: string;
     descriptif_dip!: string;
+    tel_1_e!: string;
+    email_e!: string;
+    siteweb_e!: string;
 }

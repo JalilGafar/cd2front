@@ -7,7 +7,7 @@ import { Meta, Title } from '@angular/platform-browser';
 import { TopVideoSlideComponent } from '../top-video-slide/top-video-slide.component';
 import { TopNewsSlideComponent } from '../top-news-slide/top-news-slide.component';
 import { CommonModule } from '@angular/common';
-import { FlexLayoutModule } from 'ngx-fx-layout';
+// import { FlexLayoutModule } from 'ngx-fx-layout';
 import { TopNewsService } from '../service/top-news.service';
 import { map } from 'rxjs';
 import { ActuListComponent } from '../actualite/components/actu-list/actu-list.component';
@@ -20,7 +20,8 @@ import { ActuListComponent } from '../actualite/components/actu-list/actu-list.c
     SharedComponentModule,
     TopVideoSlideComponent,
     TopNewsSlideComponent,
-    FlexLayoutModule
+    // FlexLayoutModule,
+    CommonModule
   ],
   templateUrl: './landing-page.component.html',
   styleUrl: './landing-page.component.scss'

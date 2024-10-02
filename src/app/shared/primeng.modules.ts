@@ -16,10 +16,12 @@ import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import {CarouselModule} from 'primeng/carousel';
 import { ImageModule } from 'primeng/image';
 import { EditorModule } from 'primeng/editor';
+import { RadioButtonModule } from 'primeng/radiobutton'
 
 
 @NgModule({
     exports:[
+      RadioButtonModule,
       EditorModule,
       ImageModule,
       CarouselModule,

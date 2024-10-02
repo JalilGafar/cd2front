@@ -178,7 +178,7 @@ export class OrientationService {
         this.initialUser.surname = contact.prenom;
         this.initialUser.bornDate = contact.born;
         this.initialUser.email = contact.email;
-        this.initialUser.tel = contact.phone;
+        this.initialUser.tel = contact.phone.internationalNumber;
         this.initialUser.country = contact.pays;
         
         this.saveClient(this.initialUser).subscribe();

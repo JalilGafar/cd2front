@@ -17,5 +17,6 @@ export const routes: Routes = [
     { path: 'actualite', loadChildren: () => import('./actualite/actualite.module').then(m => m.ActualiteModule) },
     { path: 'login', component:LoginComponent},
     {path:'comment', title: 'Comment Set', component: VommentsComponent},
-    {path:'building', title: 'Page en construction', component: EnConstructionComponent}
+    {path:'building', title: 'Page en construction', component: EnConstructionComponent},
+    { path:'**', redirectTo:''}
 ];

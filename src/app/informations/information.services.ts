@@ -14,4 +14,11 @@ export class InfoServices {
         queryParams = queryParams.append('Page', page);
         return this.http.get<interestelt[]>(url, {params: queryParams})
     };
+
+    getAdvers(page : string): Observable<interestelt[]> {
+        const url = `${environment.apiUrl}/api/advers`;
+        let queryParams = new HttpParams();
+        queryParams = queryParams.append('Page', page);
+        return this.http.get<interestelt[]>(url, {params: queryParams})
+    }
 }

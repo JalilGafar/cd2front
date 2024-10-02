@@ -10,15 +10,15 @@
                 
             </div>
             <div class="grid-content">
-                <p-tag class="fas" [style]="{'background':'#f4f6fc', 'color':'#344cbe'}" [value]="school.groupe" icon="pi pi-user"></p-tag>
-                <p-tag [style]="{'background':'#f4f6fc', 'color':'#344cbe'}" *ngIf="school.ville_cam"  [value]="school.ville_cam" icon="pi-map-marker"></p-tag>
+                <p-tag class="fas" [style]="{'background':'#f4f6fc', 'color':'#344cbe'}" [value]="school.groupe" icon="pi pi-graduation-cap"></p-tag>
+                <p-tag [style]="{'background':'#f4f6fc', 'color':'#344cbe'}" *ngIf="school.ville_cam"  [value]="school.ville_cam" icon="pi pi-map-marker"></p-tag>
                 <p-tag [style]="{'margin-top': '7px','background':'#f4f6fc', 'color':'#344cbe'}" *ngIf="school.date_debut_f"  [value]="school.date_debut_f" icon="pi-dollar"></p-tag>
-                <p-tag [style]="{'margin-top': '7px','background':'#f4f6fc', 'color':'#344cbe'}" *ngIf="school.cout_f"  [value]="school.cout_f" icon="pi-dollar"></p-tag>
+                <p-tag [style]="{'margin-top': '7px','background':'#f4f6fc', 'color':'#344cbe'}" *ngIf="school.cout_f"  [value]="school.cout_f" icon="pi pi-dollar"></p-tag>
             </div>
         </div>
 
         <ng-template pTemplate="footer">
-            <p-button label="Demander des informations"></p-button>
+            <p-button label="En savoir plus"></p-button>
         </ng-template>
     </p-card>
     <p-dialog   header="Détail de la formation" 
@@ -33,11 +33,11 @@
                             <img alt="Card" [src]="school.logo_e" />
                         </div>
                         <div class="grid-content">
-                            <p-tag class="fas" [style]="{'background':'#f4f6fc', 'color':'#344cbe'}" [value]="school.groupe" icon="pi pi-user"></p-tag>
-                            <p-tag [style]="{'background':'#f4f6fc', 'color':'#344cbe'}" *ngIf="school.ville_cam"  [value]="school.ville_cam" icon="pi-map-marker"></p-tag>
-                            <p-tag [style]="{'margin-top': '7px','background':'#f4f6fc', 'color':'#344cbe'}" *ngIf="school.date_debut_f"  [value]="school.date_debut_f" icon="pi-dollar"></p-tag>
-                            <p-tag [style]="{'margin-top': '7px','background':'#f4f6fc', 'color':'#344cbe'}" *ngIf="school.cout_f"  [value]="school.cout_f" icon="pi-dollar"></p-tag>
-                            <p-tag [style]="{'margin-top': '7px','background':'#f4f6fc', 'color':'#344cbe'}"  value="Reconnue par l'Etat" icon="pi-dollar"></p-tag>
+                            <p-tag class="fas" [style]="{'background':'#f4f6fc', 'color':'#344cbe'}" [value]="school.groupe" icon="pi pi-graduation-cap"></p-tag>
+                            <p-tag [style]="{'background':'#f4f6fc', 'color':'#344cbe'}" *ngIf="school.ville_cam"  [value]="school.ville_cam" icon="pi pi-map-marker"></p-tag>
+                            <p-tag [style]="{'margin-top': '7px','background':'#f4f6fc', 'color':'#344cbe'}" *ngIf="school.date_debut_f"  [value]="school.date_debut_f" icon="pi pi-dollar"></p-tag>
+                            <p-tag [style]="{'margin-top': '7px','background':'#f4f6fc', 'color':'#344cbe'}" *ngIf="school.cout_f"  [value]="school.cout_f" icon="pi pi-dollar"></p-tag>
+                            <p-tag [style]="{'margin-top': '7px','background':'#f4f6fc', 'color':'#344cbe'}"  value="Reconnue par l'Etat" icon="pi pi-building-columns"></p-tag>
                         </div>
                     </div>
                 </p-card>
@@ -60,10 +60,14 @@
                             <hr>
                             <span [innerHTML]="school.descriptif_f"></span>
                         </ng-container>
+                        <p-tag  *ngIf="school.tel_1_e"  [value]="school.tel_1_e" icon="pi pi-phone"></p-tag>
+                        <p-tag  *ngIf="school.email_e"  [value]="school.email_e" icon="pi pi-at"></p-tag>
+                        <p-tag  *ngIf="school.siteweb_e"  [value]="school.siteweb_e" icon="pi pi-globe"></p-tag>
+
                     </div>
                     <div class="footer">
-                        <p-button label="Voir l'établissement" (click)="showOnePage(school.nom_e)"  styleClass="p-button-help"></p-button>
-                        <p-button label="Demander des informaions" (click)="sendNumber()"  styleClass="p-button-warning" ></p-button>
+                        <p-button label="Voir l'établissement" (click)="showOnePage(school.nom_e)" [outlined]="true" [rounded]="true"  severity="contrast"></p-button>
+                        <!-- <p-button label="Demander des informaions" (click)="sendNumber()"  styleClass="p-button-warning" ></p-button> -->
                     </div>
                 </div>
     </p-dialog>

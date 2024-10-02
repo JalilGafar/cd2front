@@ -31,7 +31,7 @@ const routes: Routes = [
     {path: 'bachelor', component: InfoBachelorComponent},
     {path: 'master', component: InfoMasterComponent},
     {path: 'ecole', component: InfoEcoleComponent},
-    {path: 'metier', component: InfoMetierComponent},
+    {path: 'metier', component: InfoMetierComponent}
 ]
 
 @NgModule({

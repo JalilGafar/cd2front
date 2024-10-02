@@ -4,5 +4,12 @@ export class Contact {
     born!: number;
     pays!: string;
     email!: string;
-    phone!:string;
+    phone!: {
+        countryCode:string;
+        dialCode:string;
+        e164Number:string;
+        internationalNumber:string;
+        nationalNumber:string;
+        number:string;
+    };
 }
