@@ -4,7 +4,7 @@ import { UsertestComponent } from "./usertest/usertest.component";
 import { VommentsComponent } from './vomments/vomments.component';
 import { DatePipe, NgOptimizedImage, UpperCasePipe, isPlatformBrowser, provideImgixLoader, Location, CommonModule } from '@angular/common';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { CarService } from './car.service';
+// import { CarService } from './general.service';
 import { ReversePipe } from './reverse.pipe';
 import { LandingPageComponent } from './landing-page/landing-page.component';
 import { FooterComponent } from './footer/footer.component';
@@ -56,11 +56,11 @@ export class AppComponent implements OnInit {
 
 
   constructor(
-    private petCareService: CarService, 
+    // private petCareService: CarService, 
     location: Location,
     @Inject(PLATFORM_ID) private platformId: any
     ) {
-    this.display = this.petCareService.getCars();
+    // this.display = this.petCareService.getCars();
     this.location = location;
   }
 

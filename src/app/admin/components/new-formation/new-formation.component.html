@@ -18,11 +18,11 @@
         </div>
         <div class="form-group">
             <label for="">Programme de la formation</label>
-            <p-editor formControlName="programme_f" [style]="{'height':'320px'}"></p-editor>
+            <p-editor formControlName="programme_f" [style]="{'height':'120px'}"></p-editor>
         </div>
         <div class="form-group">
             <label for="">Descriptif de la formation</label>
-            <p-editor formControlName="descriptif_f" [style]="{'height':'320px'}"></p-editor>
+            <p-editor formControlName="descriptif_f" [style]="{'height':'120px'}"></p-editor>
         </div>
         <div class="form-group">
             <label for="">Admission</label>
@@ -46,7 +46,15 @@
         </div>
         <div class="form-group">
             <label for="">Ecole</label>
-            <p-dropdown id="ecole_id" *ngIf="ecole$ | async as ecoles" placeholder="Quelle Ecole ?" [options]="ecoles" optionLabel="displayName" optionValue="id_ecol" formControlName="ecole_id"></p-dropdown>
+            <p-dropdown id="ecole_id" 
+                        *ngIf="ecole$ | async as ecoles" 
+                        placeholder="Quelle Ecole ?" 
+                        [options]="ecoles" 
+                        optionLabel="displayName" 
+                        optionValue="id_ecol" 
+                        [filter]="true" filterBy="displayName" [showClear]="true"
+                        formControlName="ecole_id">
+            </p-dropdown>
         </div>
 
         <div class="action-buttons">

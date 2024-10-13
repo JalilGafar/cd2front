@@ -1,4 +1,4 @@
-export class Actualite {
+export class Article {
     id_actu!: number;
     title!: string; 
     auteur!: string;

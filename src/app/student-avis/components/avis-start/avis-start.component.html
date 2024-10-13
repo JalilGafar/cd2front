@@ -1,0 +1,82 @@
+<div class="main">
+    <div class="hero-image-top">
+        <div class="hero-text">
+            <h1 style="font-size:20px">Donne ton avis d'étudiant sur ton établissement.</h1>
+            <p> <span class="pi pi-search" style="padding-right: 10px;" ></span> <b>RECHERCHE</b> ton établissement</p>
+            <p> <span class="pi pi-star" style="padding-right: 10px;"></span> <b>NOTE-LE</b> en partageant ton expérience</p>
+            <p> <span class="pi pi-users" style="padding-right: 10px;" ></span> <b>AIDE</b> des milliers d'étudiants à s'orienter</p>
+        </div>
+    </div>
+    
+    <div class="typ">
+        <h2>L'avis type</h2>
+        <p-card class="container">
+            <div class="persona">
+                <div class="image_c">
+                    <img src="./../../../../assets/images/school/logo/istdi.webp" alt="">
+                </div>
+                <div class="info_c">
+                    <p>Louise a donné son avis le 12/10/2024</p>
+                    <p>
+                        <span class="pi pi-star-fill not" ></span>
+                        <span class="pi pi-star-fill not" ></span>
+                        <span class="pi pi-star-fill not" ></span>
+                        <span class="pi pi-star-fill not" ></span>
+                        <span class="pi pi-star not" ></span>
+                    </p>
+                </div>
+            </div>
+            <div class="text">
+                <p>
+                    J'ai beaucoup apprécié cette formation malgré quelque petits bémols au niveau de l'administration.
+                    Je recommande cette école à ceux qui veulent une formation très axée pratique.
+                </p>
+            </div>
+        </p-card>
+    </div>
+    <div class="recherche">
+        <ng-container *ngIf="ecoleAvis$ | async as data"> 
+            <p-orderList 
+                [value]="data" 
+                header="Les avis d'établissement les plus recherchés">
+                    <ng-template let-data pTemplate="item">
+                        <div class="flex flex-wrap p-2 align-items-center gap-3">
+                            <img 
+                                [src]="data.logo_e" 
+                                [alt]="data.sigle_e" 
+                                class="dodo w-4rem shadow-2 flex-shrink-0 border-round" />
+                            <div class="flex-1 flex flex-column gap-2">
+                                <span class="nom-e">{{ data.nom_e }}</span>
+                                <div class="sigle">
+                                    <span>
+                                        {{ data.sigle_e }}
+                                    </span>
+                                </div>
+                            </div>
+                            <span class="font-bold text-900 moy">
+                                {{data.notes_moy}} / 5
+                            </span>
+                            <i class="pi pi-star not"></i>
+                            <span class="loto" >{{data.occurence}} avis</span>
+                        </div>
+                    </ng-template>
+            </p-orderList>
+        </ng-container>
+    </div>
+    <div class="ouvert">
+        <h2>Les avis d'établissement avec inscriptions ouvertes</h2>
+    </div>
+    <div class="note">
+        <h2>Les avis d'établissement les mieux notés</h2>
+    </div>
+    <div class="recent">
+        <h2>Les avis les plus récents</h2>
+    </div>
+
+    <div class="hero-image-top">
+        <div class="hero-text">
+            <h1 style="font-size:20px">Des téléphones portables Neuf et d'Occasion</h1>
+            <p>en exellent état.</p>
+        </div>
+    </div>
+</div>

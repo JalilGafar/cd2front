@@ -17,10 +17,12 @@ import {CarouselModule} from 'primeng/carousel';
 import { ImageModule } from 'primeng/image';
 import { EditorModule } from 'primeng/editor';
 import { RadioButtonModule } from 'primeng/radiobutton'
+import { OrderListModule } from 'primeng/orderlist';
 
 
 @NgModule({
     exports:[
+      OrderListModule,
       RadioButtonModule,
       EditorModule,
       ImageModule,

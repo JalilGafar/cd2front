@@ -1,0 +1,33 @@
+<div class="form-card">
+    <form [formGroup]="newArticle">   
+        <div class="form-group">
+            <label for="title">Titre</label>
+            <input id="title" type="text"  formControlName="title">
+        </div>
+        <div class="form-group">
+            <label for="auteur">Auteur</label>
+            <input id="auteur" type="text" formControlName="auteur">
+        </div>
+        <div class="form-group">
+            <label for="sujets">Sujets</label>
+            <input id="sujets" type="text" formControlName="sujets">
+        </div>
+        <div class="form-group">
+            <label >Visibilité</label>
+            <p-radioButton name="visible" inputId="oui" value="1" formControlName="visible"></p-radioButton><label for="oui">Oui</label>
+            <p-radioButton name="visible" inputId="non" value="0" formControlName="visible"></p-radioButton><label for="non">Non</label>
+        </div>
+        <div class="form-group">
+            <label for="summary">Résumé</label>
+            <input id="summary" type="text" formControlName="summary">
+        </div>
+        <div class="form-group">
+            <label for="content">Contenu</label>
+            <p-editor formControlName="content" [style]="{'height':'320px'}"></p-editor>
+        </div>
+        
+        <div class="action-buttons">
+            <button type="submit" (click)="onSubmitForm()">Enregistrer</button>
+        </div>
+    </form>
+</div>

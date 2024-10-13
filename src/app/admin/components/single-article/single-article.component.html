@@ -1,0 +1,25 @@
+<p-card>
+    <ng-container *ngIf="article$ | async as campuss">
+      <div class="employee-info">
+        <h1>{{ article.id_actu }} </h1>
+        <h2 [innerHTML]="article.title"></h2>
+        <h3> <strong>Auteur :</strong>  {{ article.auteur }}</h3>
+        <h3><strong>Date de création : </strong>{{ article.createdDate }}</h3>
+        <h3><strong>Visibilité :</strong> {{article.visible}} </h3>
+        <h3><strong>Sujets :</strong> {{article.sujets}} </h3>
+        <h3><strong>Résumé :</strong> {{ article.summary }}</h3>
+        <h3><strong>Contenu :</strong></h3> <div [innerHTML]="article.content" ></div>
+      </div>
+    </ng-container>
+    <!-- <mat-spinner *ngIf="loading$ | async; else buttons"></mat-spinner> -->
+    <ng-template pTemplate="footer">
+        <p-progressSpinner *ngIf="loading$ | async; else buttons" ariaLabel="loading" />
+        <ng-template #buttons>            
+            <div class="action-buttons" >
+                <p-button severity="warning" label="MODIFIER"  (click)="onModif()"/>
+                <p-button  severity="danger" label="SUPRIMER" (click)="onDelet()"/>
+                <p-button  severity="success" label="RETOUR" (click)="onGoBack()"/>
+            </div>
+        </ng-template>
+    </ng-template>
+  </p-card>

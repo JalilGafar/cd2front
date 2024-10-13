@@ -8,13 +8,14 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 
 export const routes: Routes = [
-    {path:'', title: 'Accueil', component: LandingPageComponent},
-    {path:'view', title: 'User Set ', component: UsertestComponent},
+    {path:'', component: LandingPageComponent},
+    {path:'view', component: UsertestComponent},
     {path: 'about', component: AboutComponent},
     { path: 'info', loadChildren: () => import('./informations/informations.module').then(m => m.InformationsModule) },
     { path: 'orientation', loadChildren: () => import('./orientation/orientation.module').then(m => m.OrientationModule) },
     { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },
     { path: 'actualite', loadChildren: () => import('./actualite/actualite.module').then(m => m.ActualiteModule) },
+    { path: 'avis', loadChildren: () => import('./student-avis/student-avis.module').then(m => m.StudentAvisModule) },
     { path: 'login', component:LoginComponent},
     {path:'comment', title: 'Comment Set', component: VommentsComponent},
     {path:'building', title: 'Page en construction', component: EnConstructionComponent},

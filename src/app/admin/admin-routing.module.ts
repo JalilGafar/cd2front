@@ -16,6 +16,8 @@ import { ModifDiplomeComponent } from './components/modif-diplome/modif-diplome.
 import { ModifEcoleComponent } from './components/modif-ecole/modif-ecole.component';
 import { ModifFormationComponent } from './components/modif-formation/modif-formation.component';
 import { ModifUnivComponent } from './components/modif-univ/modif-univ.component';
+import { SingleArticleComponent } from './components/single-article/single-article.component';
+import { NewArticleComponent } from './components/new-article/new-article.component';
 
 const routes: Routes = [
     { path: '', component: AdminStartComponent},
@@ -25,11 +27,13 @@ const routes: Routes = [
     { path: 'new-diplome', component: NewDiplomeComponent},
     { path: 'new-formation', component: NewFormationComponent},
     { path: 'new-universite', component: NewUnivComponent},
+    { path: 'new-article', component: NewArticleComponent},
     { path: 'campus/:id', component: SingleCampusComponent },
     { path: 'diplome/:id', component: SingleDiplomeComponent },
     { path: 'ecole/:id', component: SingleEcoleComponent },
     { path: 'universite/:id', component: SingleUnivComponent },
     { path: 'formation/:id', component: SingleFormationComponent },
+    { path: 'article/:id', component: SingleArticleComponent },
     { path: 'modif-univ/:id', component: ModifUnivComponent },
     { path: 'modif-diplome/:id', component: ModifDiplomeComponent },
     { path: 'modif-ecole/:id', component: ModifEcoleComponent },

@@ -1,0 +1,45 @@
+<div class="card">
+    <h2>Liste des Articles 
+        <button pButton type="button" label="Ajouter un Article" class="p-button-success" (click)="onAddArticle()"></button>
+    </h2>
+    <ng-container *ngIf="article$ | async as data">
+        <p-progressSpinner *ngIf="loading$ | async" ariaLabel="loading" />
+        <p-table [value]="data" 
+                [tableStyle]="{'min-width': '30rem'}" 
+                selectionMode="single" 
+                dataKey="code" 
+                [paginator]="true"
+                [rows]="50"
+                [showCurrentPageReport]="true"
+                currentPageReportTemplate="Showing {first} to {last} of {totalRecords} entries"
+                [rowsPerPageOptions]="[10, 25, 50]"
+                (onRowSelect)="onRowSelect($event)">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="id_actu" style="width:5%">ID <p-sortIcon field="id_actu"></p-sortIcon></th>
+                    <th pSortableColumn="title" style="width:10%">Titre <p-sortIcon field="title"></p-sortIcon></th>
+                    <th pSortableColumn="auteur" style="width:20%">Auteur <p-sortIcon field="auteur"></p-sortIcon></th>
+                    <th pSortableColumn="createdDate" style="width:20%">Date création <p-sortIcon field="createdDate"></p-sortIcon></th>
+                    <th pSortableColumn="sujets" style="width:20%">Sujets <p-sortIcon field="sujets"></p-sortIcon></th>
+                </tr>
+            </ng-template>
+            
+            <ng-template pTemplate="body" let-article>
+                
+                <tr [pSelectableRow]="article">
+                    <td>{{article.id_actu}}</td>
+                    <td>{{article.title}}</td>
+                    <td>{{article.auteur}}</td>
+                    <td>{{article.cratedDate}}</td>
+                    <td>{{article.sujets}}</td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="paginatorleft">
+                <p-button type="button" icon="pi pi-plus" styleClass="p-button-text"></p-button>
+            </ng-template>
+            <ng-template pTemplate="paginatorright">
+                <p-button type="button" icon="pi pi-cloud" styleClass="p-button-text"></p-button>
+            </ng-template>
+        </p-table>
+    </ng-container>
+</div>

@@ -9,6 +9,8 @@ import { ListUnivComponent } from '../list-univ/list-univ.component';
 import { SharedComponentModule } from '../../../shared/shared.modules';
 import { AdminService } from '../../admin.service';
 import { BEHAVIOR } from '../../../model/behavior';
+import { ListArticleComponent } from '../list-article/list-article.component';
+import { ListAvisComponent } from '../list-avis/list-avis.component';
 
 @Component({
   selector: 'app-admin-start',
@@ -20,6 +22,8 @@ import { BEHAVIOR } from '../../../model/behavior';
     ListEcoleComponent,
     ListFormationComponent,
     ListUnivComponent,
+    ListArticleComponent,
+    ListAvisComponent,
     SharedComponentModule
   ],
   templateUrl: './admin-start.component.html',
@@ -52,16 +56,13 @@ export class AdminStartComponent implements OnInit {
     }
   }
 
-
-
   univView: boolean = true ;
   campusView!: boolean;
   formationView!: boolean;
   ecoleView!: boolean;
   diplomeView!: boolean;
-  
-
- 
+  articleView!: boolean;
+  avisView!: boolean;
 
   univClick(){
     this.univView = true;
@@ -69,6 +70,8 @@ export class AdminStartComponent implements OnInit {
     this.formationView = false;
     this.ecoleView = false;
     this.diplomeView = false;
+    this.articleView = false;
+    this.avisView = false;
   };
 
   ecoleClick(){
@@ -77,6 +80,8 @@ export class AdminStartComponent implements OnInit {
     this.campusView = false;
     this.formationView = false;
     this.diplomeView = false;
+    this.articleView = false;
+    this.avisView = false;
   };
 
   diplomeClick(){
@@ -85,6 +90,8 @@ export class AdminStartComponent implements OnInit {
     this.ecoleView = false;
     this.campusView = false;
     this.formationView = false;
+    this.articleView = false;
+    this.avisView = false;
   };
 
   campusClick(){
@@ -93,6 +100,8 @@ export class AdminStartComponent implements OnInit {
     this.formationView = false;
     this.ecoleView = false;
     this.diplomeView = false;
+    this.articleView = false;
+    this.avisView = false;
   };
 
   formationClick(){
@@ -101,6 +110,28 @@ export class AdminStartComponent implements OnInit {
     this.formationView = true;
     this.ecoleView = false;
     this.diplomeView = false;
+    this.articleView = false;
+    this.avisView = false;
+  }
+  
+  ArticleClick(){
+    this.univView = false;
+    this.campusView = false;
+    this.formationView = false;
+    this.ecoleView = false;
+    this.diplomeView = false;
+    this.articleView = true;
+    this.avisView = false;
+  }
+
+  AvisClick(){
+    this.univView = false;
+    this.campusView = false;
+    this.formationView = false;
+    this.ecoleView = false;
+    this.diplomeView = false;
+    this.articleView = false;
+    this.avisView = true;
   }
 
   ngAfterViewInit(): void {
