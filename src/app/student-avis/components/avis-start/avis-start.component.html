@@ -37,7 +37,9 @@
     <div class="recherche">
         <ng-container *ngIf="ecoleAvis$ | async as data"> 
             <p-orderList 
-                [value]="data" 
+                [value]="data"
+                [metaKeySelection]="true"
+                (onSelectionChange)="elmtClick($event)"
                 header="Les avis d'établissement les plus recherchés">
                     <ng-template let-data pTemplate="item">
                         <div class="flex flex-wrap p-2 align-items-center gap-3">

@@ -3,6 +3,7 @@ import { Injectable } from "@angular/core";
 import { BehaviorSubject, Observable, tap } from "rxjs";
 import { EcoleAvis } from "../model/ecole-avis-model";
 import { environment } from "../../environments/environment";
+import { Avis } from "../model/avis-model";
 
 @Injectable ({
     providedIn: 'root'
@@ -25,5 +26,13 @@ export class AvisService{
       })
     ).subscribe();
   };
+
+  getAvisForSchoolId(schoolId:number): Observable<Avis[]>{
+    let url = `${environment.apiUrl}/api/ecoleavis/school`;
+    let idParams = new HttpParams();
+    idParams = idParams.append('idSchool', schoolId);
+    return this.http.get<Avis[]>(url, {params: idParams})
+    //return this.http.get<Avis[]>(`${environment.apiUrl}/api/campus`)
+  }
     
 }

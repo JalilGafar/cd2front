@@ -6,6 +6,7 @@ import { AvisService } from '../../avis.service';
 import { EcoleAvis } from '../../../model/ecole-avis-model';
 import { Observable } from 'rxjs';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-avis-start',
@@ -23,7 +24,8 @@ export class AvisStartComponent implements OnInit{
 
   constructor(
     private generalService : GeneralService,
-    private avisService : AvisService
+    private avisService : AvisService,
+    private appRout : Router
   ){}
 
   ngOnInit(): void {
@@ -39,5 +41,9 @@ export class AvisStartComponent implements OnInit{
     this.ecoleAvis$ = this.avisService.ecoleAvis$;
   }
 
+  elmtClick(event:any){
+    this.appRout.navigateByUrl('avis/avisSchool/'+ event.value[0].id_ecol.toString());
+    console.log(event.value[0].id_ecol)
+  }
 
 }

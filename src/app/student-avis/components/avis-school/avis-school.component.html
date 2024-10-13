@@ -1,1 +1,5 @@
-<p>avis-school works!</p>
+@for (item of avisList; track item.auteur_avis) {
+    <app-avis-single [avis]="item" />
+    } @empty {
+    <li>There are no items.</li>
+}

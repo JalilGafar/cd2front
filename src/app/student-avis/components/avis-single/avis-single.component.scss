@@ -1,0 +1,22 @@
+.coltainer{
+    border: 4px solid rgb(171, 172, 236);
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+    margin: 10px;
+
+    .auteur{
+        display: flex;
+        flex-direction: row;
+        margin-bottom: 10px;
+    }
+
+    .detail{
+        display: none;
+    }
+
+    .lecours{
+        font-weight: 700;
+    }
+}

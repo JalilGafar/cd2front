@@ -1,1 +1,20 @@
-<p>avis-single works!</p>
+<div class="coltainer">
+    <div class="auteur">
+        <div class="descript">
+            <div class="name">{{avis.auteur_avis}}</div>
+            <div class="date">
+                a donné son avis le <br>
+                {{avis.date}}
+            </div>
+        </div>
+        <div class="note"> Note {{avis.note}} </div>
+    </div>
+    <div class="content"> {{avis.content}} </div>
+    <div [style.display]="seemore" class="detail">
+        <div class="cours">
+            <div class="lecours">Enseignement, cours et professeurs</div>
+            <div class="notecours"> {{avis.content_cours}} </div>
+        </div>
+    </div>
+    <p-button (click)="deroule()" [outlined]="true" >{{textMore}}</p-button>
+</div>
