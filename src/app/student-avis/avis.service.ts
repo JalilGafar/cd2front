@@ -27,12 +27,24 @@ export class AvisService{
     ).subscribe();
   };
 
+  //** Fonction qui permetd'avoir le résumé des avis sur une école */
+  getEcoleAvisById(schoolId:number): Observable<EcoleAvis[]>{
+    let url = `${environment.apiUrl}/api/ecoleavis/notes`;
+    let idParams = new HttpParams();
+    idParams = idParams.append('idSchool', schoolId);
+    return this.http.get<EcoleAvis[]>(url, {params: idParams})
+  }
+
   getAvisForSchoolId(schoolId:number): Observable<Avis[]>{
     let url = `${environment.apiUrl}/api/ecoleavis/school`;
     let idParams = new HttpParams();
     idParams = idParams.append('idSchool', schoolId);
     return this.http.get<Avis[]>(url, {params: idParams})
     //return this.http.get<Avis[]>(`${environment.apiUrl}/api/campus`)
+  }
+
+  sendAvis(UserAvis : Avis ){
+    return this.http.post<Avis>(`${environment.apiUrl}/api/result`, UserAvis)
   }
     
 }

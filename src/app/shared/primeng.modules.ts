@@ -18,10 +18,16 @@ import { ImageModule } from 'primeng/image';
 import { EditorModule } from 'primeng/editor';
 import { RadioButtonModule } from 'primeng/radiobutton'
 import { OrderListModule } from 'primeng/orderlist';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { RatingModule } from 'primeng/rating';
+import { FileUploadModule } from 'primeng/fileupload';
 
 
 @NgModule({
     exports:[
+      FileUploadModule,
+      RatingModule,
+      InputTextareaModule,
       OrderListModule,
       RadioButtonModule,
       EditorModule,

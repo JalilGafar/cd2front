@@ -1,7 +1,9 @@
 export class Avis {
     id_avis!: number;
     id_ecole!: number;
+    campus_id!: number;
     auteur_avis!: string; 
+    formation_id!: number;
     promotion!: number;
     date!: Date;
     filiere!: string;
@@ -16,4 +18,8 @@ export class Avis {
     note_locaux!: number;
     content_insert!: string;
     note_insert!: number;
+    recommande!: string;
+    born!: number;
+    email!: string;
+    justif!: string;
 }

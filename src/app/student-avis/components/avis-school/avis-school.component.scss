@@ -1,0 +1,50 @@
+.school-header{
+    .school-logo{
+        img{
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+            height: 100px;
+        }
+    }
+    .school-name{
+        text-align: center;
+        color: rgb(55, 55, 55);
+        .sigle{
+            font-size: larger;
+            font-weight: 700;
+        }
+        .name{
+            font-weight: 300;
+        }
+    }
+    .school-note{
+        border: 3px solid rgb(138, 63, 237);
+        border-radius: 15px;
+        padding: 5px;
+        text-align: center;
+
+        .not{
+            color: orangered;
+        }
+        .count{
+            h3{
+                margin: 0;
+            }
+        }
+    }
+    .ton-avis{
+        text-align: center;
+        margin-top: 10px;
+
+        button{
+            border-radius: 30px;
+        }
+    }
+}
+
+:host ::ng-deep{
+    .p-button{
+        border-radius: 30px;
+    }
+}

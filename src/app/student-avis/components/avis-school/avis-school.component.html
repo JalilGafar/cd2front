@@ -1,3 +1,29 @@
+<div class="school-header">
+    <ng-container *ngIf="schoolNote$ | async as schoolNote">
+        <div class="school-logo">
+            <img [src]="schoolNote[0].logo_e" [alt]="schoolNote[0].sigle_e">
+        </div>
+        <div class="school-name">
+            <span class="sigle" >Avis sur {{schoolNote[0].sigle_e}} </span> <br>
+            <span class="name" > {{schoolNote[0].nom_e}} </span>
+        </div>
+        <div class="school-note">
+            <div class="moy">{{schoolNote[0].notes_moy}} / 5</div>
+            <div class="start">
+                @for (item of [].constructor(note) ; track $index) {
+                    <i class="pi pi-star-fill not"></i>
+                }
+            </div>
+            <div class="count">
+                <h3> {{schoolNote[0].occurence}} avis </h3>
+                <h4> dont {{schoolNote[0].occurence}} certifiés </h4>
+            </div>
+        </div>
+        <div class="ton-avis">
+            <p-button label="Donne ton avis" [rounded]="true" severity="help" (click)="tonAvis()"/>
+        </div>
+    </ng-container>
+</div>
 @for (item of avisList; track item.auteur_avis) {
     <app-avis-single [avis]="item" />
     } @empty {

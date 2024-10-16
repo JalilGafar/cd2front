@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Avis } from '../../../model/avis-model';
 import { SharedComponentModule } from '../../../shared/shared.modules';
+import { EcoleAvis } from '../../../model/ecole-avis-model';
 
 @Component({
   selector: 'app-avis-single',
@@ -14,6 +15,7 @@ import { SharedComponentModule } from '../../../shared/shared.modules';
 export class AvisSingleComponent implements OnInit {
 
   @Input() avis!:Avis;
+  @Input() schoolNote!:EcoleAvis;
   @Input() seemore: string = 'none';
   textMore : string = 'Lire la suite'
 
