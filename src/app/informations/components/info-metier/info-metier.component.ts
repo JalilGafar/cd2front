@@ -6,13 +6,17 @@ import { interestelt } from '../../../model/interest-item-model';
 import { Observable } from 'rxjs';
 import { InfoServices } from '../../information.services';
 import { CommonModule } from '@angular/common';
+import { PubAdversComponent } from '../../../shared/components/pub-advers/pub-advers.component';
+import { AdversService } from '../../../service/advers.service';
+import { FormationAdvers } from '../../../model/formadv';
 
 
 @Component({
   selector: 'app-info-metier',
   standalone: true,
   imports: [
-    SharedComponentModule
+    SharedComponentModule,
+    PubAdversComponent
   ],
   templateUrl: './info-metier.component.html',
   styleUrl: './info-metier.component.scss'
@@ -23,12 +27,15 @@ export class InfoMetierComponent implements OnInit{
   soustitre = "Comme Toumbe, 40% des bacheliers utilisent Camerdiplome pour trouver leur école";
   photo = "./../../../../assets/images/pexels-cottonbro-studi.webp";
 
+  advertiser$!: Observable<FormationAdvers[]>
+
   // school$!: Observable <interestelt[]>;
 
 
   constructor( 
     private appRout: Router,
-    private titleService:Title
+    private titleService:Title,
+    private adversService: AdversService,
     // private infoService: InfoServices
     ) 
     {this.titleService.setTitle("Les Métiers d'avenir | Camerdiplome");}
@@ -40,6 +47,7 @@ export class InfoMetierComponent implements OnInit{
     
 
   ngOnInit(): void {
+    this.advertiser$ = this.adversService.getFormationPub()
     //this.school$ = this.infoService.getAdvers()
   }
 

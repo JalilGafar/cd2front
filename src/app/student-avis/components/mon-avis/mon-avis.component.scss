@@ -1,0 +1,30 @@
+h2{
+    color: rgb(71, 71, 71);
+    margin-bottom: 0;
+}
+.form-group{
+    padding: 7px;
+    padding-bottom: 15px;
+    label{
+        display: block;
+        font-weight: 700;
+    }
+    p-rating{
+        display: block;
+    }
+    textarea{
+        display: block;
+    }
+    .precision{
+        font-size: small;
+    }
+    .radio{
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: 6px;
+        .flex{
+            display: flex;
+            margin-right: 30px;
+        }
+    }
+}

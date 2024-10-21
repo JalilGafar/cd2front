@@ -13,6 +13,9 @@
                 @for (item of [].constructor(note) ; track $index) {
                     <i class="pi pi-star-fill not"></i>
                 }
+                @for (item of [].constructor(5-note) ; track $index) {
+                    <i class="pi pi-star not"></i>
+                }
             </div>
             <div class="count">
                 <h3> {{schoolNote[0].occurence}} avis </h3>

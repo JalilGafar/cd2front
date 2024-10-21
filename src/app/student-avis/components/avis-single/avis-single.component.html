@@ -2,19 +2,86 @@
     <div class="auteur">
         <div class="descript">
             <div class="name">{{avis.auteur_avis}}</div>
+            <div class="promo">PROMOTION  {{avis.promotion}} </div>
             <div class="date">
                 a donné son avis le <br>
-                {{avis.date}}
+                {{avis.date | date :'M/d/yy' }}
             </div>
         </div>
-        <div class="note"> Note {{avis.note}} </div>
+        <div class="note"> Note  <b> {{avis.note}} / 5</b></div>
     </div>
-    <div class="content"> {{avis.content}} </div>
+    <div class="content">" {{avis.content}} "</div>
     <div [style.display]="seemore" class="detail">
-        <div class="cours">
-            <div class="lecours">Enseignement, cours et professeurs</div>
-            <div class="notecours"> {{avis.content_cours}} </div>
+        <div class="cursus">
+            <div class="label">Cursus suivi</div>
+            <div *ngIf="(cursus$  | async)?.length==1" class="valeur">
+                <div *ngIf="cursus$  | async as cursus" class="valeur"> {{cursus[0].nom_dip}} </div>
+            </div>
+        </div>
+        <hr>
+        <div class="note-per">
+            <div class="headnote">
+                <div class="note-title">Enseignement, cours et professeurs</div>
+                <div class="note-value"> {{avis.note_cours}} / 5 </div>
+                <div class="start">
+                    @for (item of [].constructor(avis.note_cours) ; track $index) {
+                        <i class="pi pi-star-fill not"></i>
+                    }
+                    @for (item of [].constructor(5 - avis.note_cours) ; track $index) {
+                        <i class="pi pi-star not"></i>
+                    }
+                </div>
+            </div>
+            <div class="note-text"> " {{avis.content_cours}} "</div>
+        </div>
+        <hr>
+        <div class="note-per">
+            <div class="headnote">
+                <div class="note-title">Ambiance, vie étudiante et associative</div>
+                <div class="note-value"> {{avis.note_ambiance}} / 5 </div>
+                <div class="start">
+                    @for (item of [].constructor(avis.note_ambiance) ; track $index) {
+                        <i class="pi pi-star-fill not"></i>
+                    }
+                    @for (item of [].constructor(5 - avis.note_ambiance) ; track $index) {
+                        <i class="pi pi-star not"></i>
+                    }
+                </div>
+            </div>
+            <div class="note-text"> " {{avis.content_ambiance}} "  </div>
+        </div>
+        <hr>
+        <div class="note-per">
+            <div class="headnote">
+                <div class="note-title">Locaux, infrastructures et localisation</div>
+                <div class="note-value"> {{avis.note_locaux}} / 5 </div>
+                <div class="start">
+                    @for (item of [].constructor(avis.note_locaux) ; track $index) {
+                        <i class="pi pi-star-fill not"></i>
+                    }
+                    @for (item of [].constructor(5 - avis.note_locaux) ; track $index) {
+                        <i class="pi pi-star not"></i>
+                    }
+                </div>
+            </div>
+            <div class="note-text">" {{avis.content_locaux}} " </div>
+        </div>
+        <hr>
+        <div class="note-per">
+            <div class="headnote">
+                <div class="note-title">Stage, alternance, insertion professionnelle</div>
+                <div class="note-value"> {{avis.note_insert}} / 5 </div>
+                <div class="start">
+                    @for (item of [].constructor(avis.note_insert) ; track $index) {
+                        <i class="pi pi-star-fill not"></i>
+                    }
+                    @for (item of [].constructor(5 - avis.note_insert) ; track $index) {
+                        <i class="pi pi-star not"></i>
+                    }
+                </div>
+            </div>
+            <div class="note-text"> " {{avis.content_insert}} "</div>
         </div>
     </div>
-    <p-button (click)="deroule()" [outlined]="true" >{{textMore}}</p-button>
+    <button (click)="deroule()" class="suite" >{{textMore}}</button>
 </div>

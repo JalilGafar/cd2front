@@ -1,0 +1,41 @@
+.card{
+    display: flex;
+    flex-direction: column;
+    padding: 4px;
+    box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+    transition: 0.3s;
+    text-align: center;
+    margin: 20px 0;
+    border-radius: 30px;
+    .logo > img {
+        position :relative;
+        max-width: 30%;
+    }
+    .diplome{
+        font-weight: 600;
+    }
+    .ecole{
+        color: #787878;
+        font-size: 0.85rem;
+    }
+    .emoti{
+        margin: 15px 0;
+        .lone{
+            border-radius: 7px;
+            background-color: #87cefa;
+            padding: 7px;
+            border: none;
+            margin: 0 7px;
+        }
+    }
+    .voir{
+        background-color: white;
+        position: relative;
+        border: solid 1px gray;
+        padding: 7px;
+        border-radius: 40px;
+        max-width: 70%;
+        left: 15%;
+    }
+
+}

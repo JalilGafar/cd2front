@@ -2,6 +2,9 @@ import { Component, Input, OnInit } from '@angular/core';
 import { Avis } from '../../../model/avis-model';
 import { SharedComponentModule } from '../../../shared/shared.modules';
 import { EcoleAvis } from '../../../model/ecole-avis-model';
+import { Observable } from 'rxjs';
+import { Cursus } from '../../../model/cursus-model';
+import { AvisService } from '../../avis.service';
 
 @Component({
   selector: 'app-avis-single',
@@ -14,12 +17,19 @@ import { EcoleAvis } from '../../../model/ecole-avis-model';
 })
 export class AvisSingleComponent implements OnInit {
 
+  constructor(
+    private avisService : AvisService
+  ){}
+
   @Input() avis!:Avis;
   @Input() schoolNote!:EcoleAvis;
   @Input() seemore: string = 'none';
-  textMore : string = 'Lire la suite'
+  textMore : string = 'Lire la suite';
+  cursus$!: Observable<Cursus[]>;
 
   ngOnInit(): void {
+
+    this.cursus$ = this.avisService.getOneCursus(this.avis.diplo_id);
     
   }
 

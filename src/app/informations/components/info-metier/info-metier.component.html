@@ -207,6 +207,9 @@
         </div>
         <div>
             <p-card header="Liste des formations" >
+                @for (iteme of advertiser$ | async; track iteme.id_form) {
+                    <app-pub-advers [school]="iteme" ></app-pub-advers>
+                }
                 <div class="dolom">
                     <p-button [raised]="true" [outlined]="true" label="Voir plus" severity="contrast"/>
                     <span><p-button [raised]="true" icon="pi pi-chevron-circle-right" iconPos="right" label="Trouver ma formation" severity="help" (click)="trouverForm()" /></span>

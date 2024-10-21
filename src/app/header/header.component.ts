@@ -34,82 +34,119 @@ export class HeaderComponent implements OnInit {
             icon: 'pi pi-building-columns'
         },
         {
-            label: 'Diplômes',
-            routerLink: 'info/diplome',
-            icon: 'pi pi-graduation-cap'
-        },
-        {
-            label: 'Avant Bac',
-            icon: 'pi pi-angle-double-right',
+            label: 'Formations',
+            icon: 'pi pi-graduation-cap',
             items: [
                 {
-                    label: 'CAP',
-                    routerLink: 'info/cap',
-                    icon: 'pi pi-circle-fill'
+                    label: 'Par domaine',
+                    routerLink: 'info/diplome',
+                    icon: 'pi pi-building-columns'
                 },
                 {
-                    label: 'BAC Technique',
-                    routerLink: 'info/bactec',
-                    icon: 'pi pi-circle-fill'
+                    label: 'Avant Bac',
+                    icon: 'pi pi-angle-double-right',
+                    items: [
+                        {
+                            label: 'CAP',
+                            routerLink: 'info/cap',
+                            icon: 'pi pi-circle-fill'
+                        },
+                        {
+                            label: 'BAC Technique',
+                            routerLink: 'info/bactec',
+                            icon: 'pi pi-circle-fill'
+                        },
+                        {
+                            label: 'CQP / DQP',
+                            routerLink: 'info/cqp',
+                            icon: 'pi pi-circle-fill'
+                        },
+                        {
+                            label: 'Capacité en droit',
+                            routerLink: 'info/capacite',
+                            icon: 'pi pi-circle-fill'
+                        }
+                    ]
                 },
                 {
-                    label: 'CQP / DQP',
-                    routerLink: 'info/cqp',
-                    icon: 'pi pi-circle-fill'
-                },
-                {
-                    label: 'Capacité en droit',
-                    routerLink: 'info/capacite',
-                    icon: 'pi pi-circle-fill'
+                    label: 'Après BAC',
+                    icon: 'pi pi-angle-double-right',
+                    items: [
+                        {
+                            label: 'Prépa',
+                            routerLink: 'info/prepa',
+                            icon: 'pi pi-circle-fill'
+                        },
+                        {
+                            label: 'BTS',
+                            routerLink: 'info/bts',
+                            icon: 'pi pi-circle-fill'
+                        },
+                        {
+                            label: 'HND',
+                            routerLink: 'info/hnd',
+                            icon: 'pi pi-circle-fill'
+                        },
+                        {
+                            label: 'DUT',
+                            routerLink: 'info/dut',
+                            icon: 'pi pi-circle-fill'
+                        },
+                        {
+                            label: 'Licence',
+                            routerLink: 'info/licence',
+                            icon: 'pi pi-circle-fill'
+                        },
+                        {
+                            label: 'Licence Pro',
+                            routerLink: 'info/licencepro',
+                            icon: 'pi pi-circle-fill'
+                        },
+                        {
+                            label: 'Bachelor\'s Degree',
+                            routerLink: 'info/bachelor',
+                            icon: 'pi pi-circle-fill'
+                        },
+                        {
+                            label: 'Master',
+                            routerLink: 'info/master',
+                            icon: 'pi pi-circle-fill'
+                        },
+                    ]
                 }
             ]
         },
         {
-            label: 'Après BAC',
-            icon: 'pi pi-angle-double-right',
-            items: [
+            label: 'Actualité',
+            icon: 'pi pi-building-columns',
+            items:[
                 {
-                    label: 'Prépa',
-                    routerLink: 'info/prepa',
+                    label: 'A la une',
+                    routerLink: 'info/actualité',
                     icon: 'pi pi-circle-fill'
                 },
                 {
-                    label: 'BTS',
-                    routerLink: 'info/bts',
+                    label: 'Enseignement superieur',
+                    routerLink: 'info/superieur',
                     icon: 'pi pi-circle-fill'
                 },
                 {
-                    label: 'HND',
-                    routerLink: 'info/hnd',
+                    label: 'Orientation',
+                    routerLink: 'info/orientation',
                     icon: 'pi pi-circle-fill'
                 },
                 {
-                    label: 'DUT',
-                    routerLink: 'info/dut',
+                    label: 'Vie étudiante',
+                    routerLink: 'info/etudiant',
                     icon: 'pi pi-circle-fill'
                 },
                 {
-                    label: 'Licence',
-                    routerLink: 'info/licence',
-                    icon: 'pi pi-circle-fill'
-                },
-                {
-                    label: 'Licence Pro',
-                    routerLink: 'info/licencepro',
-                    icon: 'pi pi-circle-fill'
-                },
-                {
-                    label: 'Bachelor\'s Degree',
-                    routerLink: 'info/bachelor',
-                    icon: 'pi pi-circle-fill'
-                },
-                {
-                    label: 'Master',
-                    routerLink: 'info/master',
+                    label: 'Vie professionnelle',
+                    routerLink: 'info/professionnel',
                     icon: 'pi pi-circle-fill'
                 },
             ]
-        }
+        }        
     ]
   }
 }

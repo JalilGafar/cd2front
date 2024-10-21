@@ -1,24 +1,26 @@
 <div class="school-header"></div>
-<p-card header="">
+<p-card  *ngIf="campus$ | async as campus" header="Donnez votre avis sur {{campus[0].nom_e}} ">
     <form [formGroup]="newAvis" >
         <div class="form-group">
             <label for="">Campus</label>
             <p-dropdown id="campus_id" 
+                        *ngIf="campus$ | async as campuss"
                         placeholder="Sélectione ton campus" 
-                        [options]="campus" 
-                        optionLabel="nom_dip" 
-                        optionValue="id_dip" 
+                        [options]="campuss" 
+                        optionLabel="nom_camp" 
+                        optionValue="id_camp" 
                         formControlName="campus_id">
             </p-dropdown>    
         </div>
         <div class="form-group">
             <label for="">Formation suivie</label>
-            <p-dropdown id="formation_id" 
-                        placeholder="Sélectione ta formation" 
-                        [options]="formation" 
+            <p-dropdown id="diplo_id" 
+                        *ngIf="cursus$ | async as cursus"
+                        placeholder="Sélectione ton cursus" 
+                        [options]="cursus" 
                         optionLabel="nom_dip" 
                         optionValue="id_dip" 
-                        formControlName="formation_id">
+                        formControlName="diplo_id">
             </p-dropdown>    
         </div>
         <div class="form-group">
@@ -89,7 +91,7 @@
                 </textarea>
             </div>
             <div class="form-group">
-                <label for="">Recommanderais-tu EGEM ?</label>
+                <label *ngIf="campus$ | async as campus" for="">Recommanderais-tu {{campus[0].sigle_e}} ?</label>
                 <div class="radio">
                     <div class="flex align-items-center">
                         <p-radioButton 

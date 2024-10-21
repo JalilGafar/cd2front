@@ -4,6 +4,8 @@ import { BehaviorSubject, Observable, tap } from "rxjs";
 import { EcoleAvis } from "../model/ecole-avis-model";
 import { environment } from "../../environments/environment";
 import { Avis } from "../model/avis-model";
+import { CampusSchool } from "../model/campusSchool-model";
+import { Cursus } from "../model/cursus-model";
 
 @Injectable ({
     providedIn: 'root'
@@ -44,7 +46,29 @@ export class AvisService{
   }
 
   sendAvis(UserAvis : Avis ){
-    return this.http.post<Avis>(`${environment.apiUrl}/api/result`, UserAvis)
+    console.log('envoie de un avis !!!!');
+    return this.http.post<Avis>(`${environment.apiUrl}/api/avis`, UserAvis)
+  }
+
+  getCampusForSchool(idSchool: number): Observable <CampusSchool[]> {
+    let url = `${environment.apiUrl}/api/ecoleavis/campus`;
+    let idParams = new HttpParams();
+    idParams = idParams.append('idSchool', idSchool);
+    return this.http.get<CampusSchool[]>(url, {params: idParams})
+  }
+  
+  getCursusForSchool(idSchool: number): Observable <Cursus[]> {
+    let url = `${environment.apiUrl}/api/ecoleavis/cursus`;
+    let idParams = new HttpParams();
+    idParams = idParams.append('idSchool', idSchool);
+    return this.http.get<Cursus[]>(url, {params: idParams})
+  }
+  
+  getOneCursus(idDip: number): Observable <Cursus[]> {
+    let url = `${environment.apiUrl}/api/ecoleavis/diplo`;
+    let idParams = new HttpParams();
+    idParams = idParams.append('idDip', idDip);
+    return this.http.get<Cursus[]>(url, {params: idParams})
   }
     
 }

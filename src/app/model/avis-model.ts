@@ -3,10 +3,10 @@ export class Avis {
     id_ecole!: number;
     campus_id!: number;
     auteur_avis!: string; 
-    formation_id!: number;
+    diplo_id!: number;
     promotion!: number;
     date!: Date;
-    filiere!: string;
+    id_diplo!: Number;
     visible!:boolean;
     content!: string;
     note!: number;

@@ -4,7 +4,9 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { AvisService } from '../../avis.service';
 import { SelectItem } from 'primeng/api';
 import { ActivatedRoute, Router } from '@angular/router';
-import { switchMap, tap } from 'rxjs';
+import { Observable, switchMap, tap } from 'rxjs';
+import { CampusSchool } from '../../../model/campusSchool-model';
+import { Cursus } from '../../../model/cursus-model';
 
 @Component({
   selector: 'app-mon-avis',
@@ -21,6 +23,8 @@ export class MonAvisComponent implements OnInit {
   items!: SelectItem[];
   itemsborn!: SelectItem[];
   schoolId!: number;
+  campus$ !: Observable <CampusSchool[]>;
+  cursus$!: Observable<Cursus[]>
   campus = [
     {nom_dip:'campus 1', id_dip:'1'},
     {nom_dip:'campus 2', id_dip:'2'},
@@ -52,10 +56,11 @@ export class MonAvisComponent implements OnInit {
 
 
   ngOnInit(): void {
+
     this.newAvis  = this.formBuilder.group({
       id_ecole: [null],
       campus_id: [null],
-      formation_id: [null],
+      diplo_id: [null],
       note: [null],
       content:[null],
       note_cours:[null],
@@ -81,16 +86,17 @@ export class MonAvisComponent implements OnInit {
           id_ecole: this.schoolId, 
         });
       } ) 
-      ).subscribe();
-      // console.log(this.schoolId)
+    ).subscribe();
+    // console.log(this.schoolId)
 
+    this.campus$ = this.avisService.getCampusForSchool(this.schoolId);
+    this.cursus$ = this.avisService.getCursusForSchool(this.schoolId)
 
   }
 
   
   onSubmitForm(){
-    this.avisService.sendAvis(this.newAvis.value);
-    console.log(this.newAvis.value);
-   // this.appRout.navigate( ['orientation/resultats/'] );
+    this.avisService.sendAvis(this.newAvis.value).subscribe();
+    // this.appRout.navigateByUrl('avis/merci');
   }
 }

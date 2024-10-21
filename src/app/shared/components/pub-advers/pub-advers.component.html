@@ -1,1 +1,19 @@
-<p>pub-advers works!</p>
+<div class="card ">
+    <div class="logo">
+        <img alt="Card" [src]="school.logo_e" />
+    </div>
+    <div class="diplome">{{school.nom_dip}}</div>
+    <div class="ecole"> {{school.nom_e}} </div>
+    <div class="avis">
+        <div class="start"> {{school.note}} </div>
+        <div class="occurence"> {{school.count}} </div>
+    </div>
+    <div class="emoti">
+        <button class="lone" *ngIf="school.niveau" > {{school.niveau}} </button>
+        <button class="lone" *ngIf="school.ville_cam" > {{school.ville_cam}} </button>
+        <button class="lone" *ngIf="school.date_debut_f" > {{school.date_debut_f}} </button>
+        <button class="lone" *ngIf="school.cout_f" > {{school.cout_f}} </button>
+    </div>
+    <div *ngIf="school.descriptif_dip"  class="descript" [innerHTML]="school.descriptif_dip | slice:0:100"></div>
+    <button class="voir"  onclick="showFormation()" >Voir la formation</button>
+</div>
