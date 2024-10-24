@@ -1,0 +1,14 @@
+<div class="card" (click)="showOnePage(schoolAdv.id_ecol)">
+    <div class="illustra">
+        <div class="image" [style]="{ 'background-image': 'url(' + schoolAdv.image_e + ')'}" >
+        </div>
+        <div class="logo">
+            <img [src]="schoolAdv.logo_e" alt="">
+        </div>
+    </div>
+    <div class="texte">
+        <div class="name"> {{schoolAdv.sigle_e}} </div>
+        <div class="typo"> {{schoolAdv.type_e}} </div>
+        <div class="ville"> {{schoolAdv.ville_cam}} </div>
+    </div>
+</div>

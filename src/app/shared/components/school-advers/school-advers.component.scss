@@ -1,0 +1,63 @@
+.card {
+    min-width: 250px; /* Set min width of card */
+    height: 300px; /* Set height of card */
+    scroll-snap-align: start; /* Set the element focus position in scroll container */
+    display: flex;
+    // justify-content: center;
+    // align-items: center;
+    background:#f7f7f7;
+    // border: 1px solid #4F5873;
+    color: #4a544c;
+    border-radius: 0 0 10px 10px;
+    margin-right: 10px;
+    box-shadow: 5px 10px 8px 0 rgba(0,0,0,0.2);
+    .illustra {
+        position: relative;
+        width: -webkit-fill-available;
+        height: 230px;
+        background-color: azure;
+        .image{
+            height: 100%;
+            // background-image: url("image.jpg");
+            background-size: cover;
+            background-repeat: no-repeat;
+            
+            img{
+                height: auto;
+                max-width: 100%;
+            }
+        }
+        .logo{
+            img{
+                background-color: aliceblue;
+                border-radius: 0 20px 0 0;
+                max-width: 70px;
+                position: absolute;
+                bottom: 0px;
+            }
+        }
+    }
+    .texte{
+        height: 70px;
+        padding-top: 5px;
+        padding-left: 10px;
+        .name{
+            font-size: 1.05rem;
+            font-weight: 800;
+        }
+        .typo{
+
+        }
+        .ville{
+            width: fit-content;
+            padding: 0 15px;
+            background-color: #ebeaea;
+            color: blueviolet;
+            border-radius: 15px;
+        }
+    }
+}
+
+.card:hover {
+    background: #1ED96F; /* Set background color when hover */
+}

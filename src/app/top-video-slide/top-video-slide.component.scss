@@ -115,10 +115,10 @@ img {
         padding-bottom: 64px;
         padding-top: 5px;
 
-        .item1 { grid-area: menu; }
-        .item2 { grid-area: header; }
-        .item3 { grid-area: right; }
-        .item4 { grid-area: main; }
+        .item:first-child { grid-area: menu; }
+        .item:nth-child(2) { grid-area: header; }
+        .item:nth-child(3) { grid-area: right; }
+        .item:nth-child(4) { grid-area: main; }
 
         .h2 {
             text-align: center;

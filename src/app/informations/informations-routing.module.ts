@@ -15,6 +15,9 @@ import { InfoMasterComponent } from "./components/info-master/info-master.compon
 import { InfoMetierComponent } from "./components/info-metier/info-metier.component";
 import { InfoPrepaComponent } from "./components/info-prepa/info-prepa.component";
 import { InfoLicenceProComponent } from "./components/info-licence-pro/info-licence-pro.component";
+import { InfoMetierItemComponent } from "./components/info-metier-item/info-metier-item.component";
+import { InfoEcoleItemComponent } from "./components/info-ecole-item/info-ecole-item.component";
+import { InfoFormationItemComponent } from "./components/info-formation-item/info-formation-item.component";
 
 const routes: Routes = [
     {path: 'diplome', component: InfoDiplomeComponent},
@@ -31,7 +34,10 @@ const routes: Routes = [
     {path: 'bachelor', component: InfoBachelorComponent},
     {path: 'master', component: InfoMasterComponent},
     {path: 'ecole', component: InfoEcoleComponent},
-    {path: 'metier', component: InfoMetierComponent}
+    {path: 'ecole/:id', component: InfoEcoleItemComponent},
+    {path: 'metier', component: InfoMetierComponent},
+    {path: 'metier/:id', component: InfoMetierItemComponent},
+    {path: 'formation/:id', component: InfoFormationItemComponent},
 ]
 
 @NgModule({

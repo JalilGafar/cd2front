@@ -6,8 +6,15 @@
 </app-headmsg>
 <app-start ></app-start>
 <div class="container">
-    <div class="first-pub">
-        <app-pub-first></app-pub-first>
+    <div class="une">
+        <h2>Les écoles à la une</h2>
+        <div class="carousel">
+            <div class="card-container">
+                @for (item of schoolAdvers$ | async ; track item.id_ecol) {
+                    <app-school-advers [schoolAdv]="item" ></app-school-advers>
+                }
+            </div>
+        </div>        
     </div>
     <div class="main-container">
         <!-- <app-pub-interest-item *ngFor="let schooli of school$ | async" [school]="schooli"></app-pub-interest-item> -->
@@ -205,24 +212,49 @@
             </article>      
 
         </div>
-        <div>
-            <p-card header="Liste des formations" >
+        <div class="adv">
+            <h2>Les formations très demandées</h2>
+            <div class="list">
                 @for (iteme of advertiser$ | async; track iteme.id_form) {
                     <app-pub-advers [school]="iteme" ></app-pub-advers>
                 }
-                <div class="dolom">
-                    <p-button [raised]="true" [outlined]="true" label="Voir plus" severity="contrast"/>
-                    <span><p-button [raised]="true" icon="pi pi-chevron-circle-right" iconPos="right" label="Trouver ma formation" severity="help" (click)="trouverForm()" /></span>
-                </div>
-            </p-card>
+            </div>
+            <div class="dolom">
+                <p-button [raised]="true" [outlined]="true" label="Voir plus" severity="contrast"/>
+                <span><p-button [raised]="true" icon="pi pi-chevron-circle-right" iconPos="right" label="Trouver ma formation" severity="help" (click)="trouverForm()" /></span>
+            </div>
         </div>
-            <h2>Les écoles à la une</h2>
-            <!-- <app-pub-interest-item *ngFor="let schooli of school$ | async" [school]="schooli"></app-pub-interest-item> -->
-        <div>
+
+        <div class="contact">
+            <p>
+                Consulte gratuitement un de nos conseillé d'orientation pour échanger sur ton projet de formation
+            </p>
+        </div>
+
+        <div class="actual">
+            <app-actu-list/>
+        </div>
+
+        <div class="fiche">
+            <h2>Fiches Métiers les plus recherchées</h2>
+            <div class="metier-list">
+                @for (item of metierListe$ | async ; track item.id_metier) {
+                    <button class="metier-item" (click)="metier(item.id_metier)">Fiche métier {{item.titre}}</button>
+                    <!-- <div class="metier-item">Fiche métier {{item.titre}} </div> -->
+                }
+            </div>
+            <div class="dolom">
+                <button class="plus" (click)="plusMetier()"> {{plusMetiertext}} </button>
+                <button class="trouv" (click)="trouverForm()">Trouver ma formation</button>
+            </div>
+        </div>
+
+    
     </div>
-    <aside class="side-container">
+
+    <!-- <aside class="side-container">
         <app-side-info></app-side-info>
-    </aside>
+    </aside> -->
 </div><!-- 
 <app-info-redaction></app-info-redaction>
 <app-interest-list></app-interest-list>

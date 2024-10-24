@@ -4,6 +4,7 @@ import { SharedComponentModule } from '../../shared.modules';
 import { FormationAdvers } from '../../../model/formadv';
 import { AdversService } from '../../../service/advers.service';
 import { Observable } from 'rxjs';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-pub-advers',
@@ -17,15 +18,16 @@ export class PubAdversComponent implements OnInit {
   @Input() school!: FormationAdvers;
 
   constructor(
-    private adversService: AdversService
+    private adversService: AdversService,
+    private appRout: Router,
   ){}
 
   ngOnInit(): void {
     // this.school = this.adversService.getFormationPub()
   }
 
-  showFormation(){
-
+  showFormation(idForm:number){
+    this.appRout.navigateByUrl('info/formation/'+ idForm);
   }
 
 }

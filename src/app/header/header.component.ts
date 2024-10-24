@@ -29,7 +29,7 @@ export class HeaderComponent implements OnInit {
             icon: 'pi pi-hammer'
         },
         {
-            label: 'Ecoles',
+            label: 'Etablissement',
             routerLink: 'info/ecole',
             icon: 'pi pi-building-columns'
         },
@@ -122,27 +122,27 @@ export class HeaderComponent implements OnInit {
             items:[
                 {
                     label: 'A la une',
-                    routerLink: 'info/actualité',
+                    routerLink: 'building',
                     icon: 'pi pi-circle-fill'
                 },
                 {
                     label: 'Enseignement superieur',
-                    routerLink: 'info/superieur',
+                    routerLink: 'building',
                     icon: 'pi pi-circle-fill'
                 },
                 {
                     label: 'Orientation',
-                    routerLink: 'info/orientation',
+                    routerLink: 'building',
                     icon: 'pi pi-circle-fill'
                 },
                 {
                     label: 'Vie étudiante',
-                    routerLink: 'info/etudiant',
+                    routerLink: 'building',
                     icon: 'pi pi-circle-fill'
                 },
                 {
                     label: 'Vie professionnelle',
-                    routerLink: 'info/professionnel',
+                    routerLink: 'building',
                     icon: 'pi pi-circle-fill'
                 },
             ]

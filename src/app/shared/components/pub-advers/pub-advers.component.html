@@ -15,5 +15,5 @@
         <button class="lone" *ngIf="school.cout_f" > {{school.cout_f}} </button>
     </div>
     <div *ngIf="school.descriptif_dip"  class="descript" [innerHTML]="school.descriptif_dip | slice:0:100"></div>
-    <button class="voir"  onclick="showFormation()" >Voir la formation</button>
+    <button class="voir"  (click)="showFormation(school.id_form)" >Voir la formation</button>
 </div>

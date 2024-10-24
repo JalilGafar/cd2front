@@ -4,10 +4,35 @@
     [photo] = "photo"
     >
 </app-headmsg>
+<div class="find">
+    <div class="dispo"> <i></i> Plus de {{countEcole}} établissements disponibles </div>
+    <div class="avi">Plus de ______ avis publiés</div>
+    <form action="">
+        <div class="form-group">
+            <p-dropdown id="ecole_id" 
+                        *ngIf="ecole$ | async as ecoles" 
+                        placeholder="Quelle Ecole ?" 
+                        [options]="ecoles" 
+                        optionLabel="displayName" 
+                        optionValue="id_ecol" 
+                        [filter]="true" filterBy="displayName" [showClear]="true"
+                        formControlName="ecole_id">
+            </p-dropdown>
+            <p-button type="submit" styleClass="p-button-success" (click)="onFind()">Find</p-button>
+        </div>
+    </form>
+</div>
 <app-start ></app-start>
 <div class="container">
-    <div class="first-pub">
-        <app-pub-first></app-pub-first>
+    <div class="une">
+        <h2>Les écoles à la une</h2>
+        <div class="carousel">
+            <div class="card-container">
+                @for (item of schoolAdvers$ | async ; track item.id_ecol) {
+                    <app-school-advers [schoolAdv]="item" ></app-school-advers>
+                }
+            </div>
+        </div>        
     </div>
     <div class="main-container">
         <!-- <app-pub-interest-item *ngFor="let schooli of school$ | async" [school]="schooli"></app-pub-interest-item> -->
@@ -40,9 +65,7 @@
             
         </div>
     </div>
-    <aside class="side-container">
-        <app-side-info></app-side-info>
-    </aside>
+
 </div>
 <!-- 
 <app-info-redaction></app-info-redaction>
