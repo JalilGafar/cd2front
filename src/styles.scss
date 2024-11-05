@@ -4,10 +4,7 @@ html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 @import "primeicons/primeicons.css";
 
-.mat-typography{
-    padding-left: 3%;
-    padding-right: 3%;
-}
+
 
 /* Importing Bootstrap SCSS file. */
 //@import 'bootstrap/scss/bootstrap';
@@ -15,3 +12,4 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 // import Quill styles in styles.scss
 @import "../node_modules/quill/dist/quill.core.css";
 @import "../node_modules/quill/dist/quill.snow.css";
+@import "../node_modules/bootstrap-icons/font/bootstrap-icons.css";

@@ -1,19 +1,5 @@
 @import '../../informations-style.module.scss';
 
-.adv{
-    display: flex;
-    flex-direction: column;
-    padding: 50px 10px;
-    background-color: aliceblue;
-    text-align: center;
-    .list{
-        margin: auto;
-        text-align: center;
-        app-pub-advers{
-            display: inline-block;
-        }
-    }
-}
 
 .une {
     display: block;
@@ -45,6 +31,19 @@
     
 }
 
+.dolom{
+    margin-top: 10px;
+    display: flex;
+    flex-direction: column;
+}
+.trouver{
+    margin-top: 10px;
+    text-align: center;
+    display: inline-flex;
+    a{
+        width: 100%;
+    }
+}
 .fiche{
     display: flex;
     margin: 40px 0;
@@ -52,59 +51,44 @@
     h2{
         font-size: x-large;
     }
-    .dolom{
-        margin-top: 10px;
-        .plus{
-            border: 1px solid;
-            padding: 15px;
-            background-color: rgba(254, 254, 254, 0);
-            border-radius: 50px; 
-        }
-        .trouv{
-            border: 1px solid #a855f7;
-            padding: 50px;
-            padding: 15px;
-            border-radius: 20px;
-            background: #a855f7;
-            color: white;
-        }
-    }
     .metier-list{
         display: flex;
         flex-direction: row;
         flex-wrap: wrap;
         .metier-item{
             border: 1px solid #f6edf8;
-            cursor: pointer;
             background-color: #f6edf8;
             padding: 5px 10px;
             border-radius: 15px;
             font-weight: 300;
             margin: 3px;
+            color: rgb(88, 88, 88);
         }
         
     }
 }
-
-
-:host ::ng-deep{
-    .p-card-content{
-        display: flex;
-        flex-direction: column;
-    }
-    .dolom{
-        .p-button{
-            border-radius: 50px;
-            width: auto;
-        }
-        .p-button-label{
-            font-weight: 400;
-        }
-    }
+.plus{
+    border: 1px solid;
+    padding: 15px;
+    background-color: rgba(254, 254, 254, 0);
+    border-radius: 50px; 
 }
+.trouv{
+    border: 1px solid #a855f7;
+    padding: 50px;
+    padding: 15px;
+    border-radius: 20px;
+    background: #a855f7;
+    color: white;
+}
+
 
 @media screen and (min-width: 450px){
-    .formations{
-        
+    .dolom{
+        display: block;
+    }
+    .trouver{
+        margin-top: 0;
+        margin-left: 20px;
     }
 }

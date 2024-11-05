@@ -1,6 +1,6 @@
 <div class="card ">
     <div class="logo">
-        <img alt="Card" [src]="school.logo_e" />
+        <img alt="Card" [src]="'../../../../assets/images/school/logo/'+school.logo_e" />
     </div>
     <div class="diplome">{{school.nom_dip}}</div>
     <div class="ecole"> {{school.nom_e}} </div>
@@ -15,5 +15,7 @@
         <button class="lone" *ngIf="school.cout_f" > {{school.cout_f}} </button>
     </div>
     <div *ngIf="school.descriptif_dip"  class="descript" [innerHTML]="school.descriptif_dip | slice:0:100"></div>
-    <button class="voir"  (click)="showFormation(school.id_form)" >Voir la formation</button>
+    <a [routerLink]="'/info/formation/'+school.id_form">
+        <button class="voir">Voir la formation</button>
+    </a>
 </div>

@@ -1,1 +1,45 @@
 @import '../../informations-style.module.scss';
+
+:host ::ng-deep {
+    .p-tabview-nav-content{
+        ul{
+            margin-bottom: 0;
+        }
+    }
+    .p-tabview-nav-link{
+        height: 70px;
+        padding: 0 1.25rem;
+    }
+
+    .p-tabview-title{
+        white-space: inherit;
+    }
+}
+
+.nav-link{
+    color: black;
+    font-weight: 700;
+}
+
+.nav-tabs {
+    overflow-x: auto;
+    overflow-y: hidden;
+    flex-wrap: nowrap;
+}
+.nav-link.active {
+    color: rgb(3, 3, 161);
+}
+.metier-item{
+    border: 1px solid #f6edf8;
+    cursor: pointer;
+    background-color: #f6edf8;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-weight: 300;
+    margin: 3px;
+}
+
+h2{
+    font-size: x-large;
+    margin: 0;
+}

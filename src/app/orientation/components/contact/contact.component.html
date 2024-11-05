@@ -13,12 +13,21 @@
             <div class="cut"></div>
             <label for="prenom" class="placeholder">Prénom *</label>
         </div>
+        <div class="form-group" style="margin-top: 20px;">
+            <select class="form-control" name="" id="born" >
+                <option value="" disabled selected>Année de naissance</option>
+                @for (item of items; track $index) {
+                    <option>{{item.value}}</option>
+                }
+            </select>
+        </div>
+        <!-- 
         <div class="input-container ic1">
-            <!-- 
+            
                 <input id="born" class="input" type="number" placeholder=" "  formControlName="born"> 
                 <div class="cut cut-long"></div>
                 <label for="born" class="placeholder">Année de naissance *</label>
-            -->
+            
             <p-dropdown id="born" 
                         formControlName="born"
                         type="number" 
@@ -29,6 +38,7 @@
                         [virtualScrollItemSize]="38">
             </p-dropdown>   
         </div> 
+        -->
         <div class="input-container ic1">
             <input id="pays" class="input" type="text" placeholder=" "  formControlName="pays">
             <div class="cut cut-long"></div>
@@ -53,16 +63,6 @@
             name="phone"
             formControlName="phone"
         ></ngx-intl-tel-input>
-        
-        
-        <div>
-            
-            <!--
-            <input id="phone" class="input" type="text" placeholder=" "  formControlName="phone">
-            <div class="cut"></div>
-            <label for="phone" class="placeholderc">Téléphone*</label>
-            -->
-        </div>
 
         <div class="action-buttons">
             <button type="submit" class="submit" (click)="onSubmitForm()" [disabled]="newContact.invalid" >Valider et voir mes résultats</button>

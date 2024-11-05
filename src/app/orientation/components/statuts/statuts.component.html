@@ -1,12 +1,14 @@
-<div class="cardBar">
-    <p-progressBar [showValue]="false" [value]="80"></p-progressBar>
-</div>
-<div  class="statuts">
-    <h2>Je suis :</h2>
-    <div >
-        <button class="but" pButton pRipple (click)="SelectStatuts('lycéen')"  type="button" label="Lycéen / Collégien" ></button>
-        <button class="but" pButton pRipple (click)="SelectStatuts('étudiant')" type="button" label="Etudiant" ></button>
-        <button class="but" pButton pRipple (click)="SelectStatuts('en activité')" type="button" label="En activité" ></button>
-        <button class="but" pButton pRipple (click)="SelectStatuts('sans emploi')" type="button" label="Sans emploi" ></button>
+<div class="container">
+    <div class="progress">
+        <div class="progress-bar" role="progressbar" style="width: 85%;" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100" ></div>
+    </div>
+    <div  class="statuts">
+        <h2>Je suis :</h2>
+        <div >
+            <button class="btn btn-primary"  (click)="SelectStatuts('lycéen')"  type="button" >Lycéen / Collégien</button>
+            <button class="btn btn-primary"  (click)="SelectStatuts('étudiant')" type="button" >Etudiant</button>
+            <button class="btn btn-primary"  (click)="SelectStatuts('en activité')" type="button" >En activité</button>
+            <button class="btn btn-primary"  (click)="SelectStatuts('sans emploi')" type="button" >Sans emploi</button>
+        </div>
     </div>
 </div>

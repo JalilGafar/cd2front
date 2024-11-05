@@ -28,4 +28,19 @@ export class TopVideoSlideComponent implements OnInit {
   showOnePage(school: number){
    this.appRout.navigateByUrl('info/ecole/'+ school);
   }
+
+  splitStringToArray(str: string){
+    if(str === null || str === undefined){
+      str = 'noImage.webp'
+      return str
+    } else {
+      return str.split('').reduce((acc:string[], char:string) => {
+        if (char ===' '){
+          acc.push('');
+        }else {
+          acc[acc.length - 1] += char;
+        } return acc;
+      }, ['']);
+    }
+  }
 }

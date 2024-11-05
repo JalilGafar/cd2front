@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnInit } from '@angular/core';
 import {MatMenuModule} from '@angular/material/menu';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
@@ -19,7 +19,10 @@ import { RouterLink } from '@angular/router';
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent implements OnInit {
-  items: MenuItem[] | undefined;
+  
+    items: MenuItem[] | undefined;
+    toggle: string = 'display: none;';
+    ckd: string = 'menu';
 
   ngOnInit(){
     this.items = [
@@ -38,7 +41,12 @@ export class HeaderComponent implements OnInit {
             icon: 'pi pi-graduation-cap',
             items: [
                 {
-                    label: 'Par domaine',
+                    label: 'Systèmes de formation',
+                    routerLink: 'info/system',
+                    icon: 'pi pi-building-columns'
+                },
+                {
+                    label: 'domaines de formation',
                     routerLink: 'info/diplome',
                     icon: 'pi pi-building-columns'
                 },
@@ -149,4 +157,22 @@ export class HeaderComponent implements OnInit {
         }        
     ]
   }
+
+  hideMenu(){
+    if (this.ckd === 'menu showMenu') {        
+        this.ckd = 'menu hideMenu'
+    } else {
+        this.ckd = 'menu'
+    }
+  }
+  hideMenuTop(){
+    if (this.ckd === 'menu' || this.ckd === 'menu hideMenu') {        
+        this.ckd = 'menu showMenu'
+    } else {
+        this.ckd = 'menu'
+    }
+  }
+
+
+
 }

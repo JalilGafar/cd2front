@@ -5,12 +5,18 @@ import { interestelt } from '../../../model/interest-item-model';
 import { TreeNode } from 'primeng/api';
 import { InfoServices } from '../../information.services';
 import { Meta, Title } from '@angular/platform-browser';
+import { SchoolAdversComponent } from '../../../shared/components/school-advers/school-advers.component';
+import { SchoolAdvers } from '../../../model/school-adv';
+import { AdversService } from '../../../service/advers.service';
+import { ActuListComponent } from '../../../actualite/components/actu-list/actu-list.component';
 
 @Component({
   selector: 'app-info-cap',
   standalone: true,
   imports: [
-    SharedComponentModule
+    SharedComponentModule,
+    SchoolAdversComponent,
+    ActuListComponent
   ],
   templateUrl: './info-cap.component.html',
   styleUrl: './info-cap.component.scss'
@@ -23,6 +29,8 @@ export class InfoCapComponent implements OnInit {
 
   school$!: Observable<interestelt[]>;
   overlayVisible: boolean = false;
+  schoolAdvers$!: Observable<SchoolAdvers[]>;
+
 
 
   data: TreeNode[] = [
@@ -99,6 +107,7 @@ export class InfoCapComponent implements OnInit {
 
    constructor( 
      private meta: Meta,
+     private adversService: AdversService,
      private title:Title) 
       {
         this.title.setTitle("Le Certificat d'Aptitude Professionnel (CAP) au Cameroun | Camerdiplome");
@@ -107,6 +116,8 @@ export class InfoCapComponent implements OnInit {
       }
 
   ngOnInit(): void {
+
+    this.schoolAdvers$ = this.adversService.getSchoolPub();
 
     //this.school$ = this.infoservice.getFirstInterestSchool('cap')
 

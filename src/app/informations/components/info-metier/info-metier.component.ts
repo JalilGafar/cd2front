@@ -3,7 +3,7 @@ import { SharedComponentModule } from '../../../shared/shared.modules';
 import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { interestelt } from '../../../model/interest-item-model';
-import { Observable } from 'rxjs';
+import { Observable, tap } from 'rxjs';
 import { InfoServices } from '../../information.services';
 import { CommonModule } from '@angular/common';
 import { PubAdversComponent } from '../../../shared/components/pub-advers/pub-advers.component';
@@ -34,7 +34,10 @@ export class InfoMetierComponent implements OnInit{
 
   advertiser$!: Observable<FormationAdvers[]>;
   schoolAdvers$!: Observable<SchoolAdvers[]>
-  metierListe$!: Observable<[{id_metier:number, titre:string}]>
+  metierListe$!: Observable<[{id_metier:number, titre:string}]>;
+  metierTransit: {id_metier:number, titre:string}[] = []; 
+  metierLong: {id_metier:number, titre:string}[] = []; 
+  metierShort: {id_metier:number, titre:string}[] = []; 
 
   plusMetiertext = 'Voir plus de métier'
 
@@ -50,26 +53,37 @@ export class InfoMetierComponent implements OnInit{
     private infoService: InfoServices
     ) 
     {this.titleService.setTitle("Les Métiers d'avenir | Camerdiplome");}
-
-    trouverForm(){
-      this.appRout.navigate(['./orientation/degree']);
-    }
-
     
 
   ngOnInit(): void {
     this.advertiser$ = this.adversService.getFormationPub();
     this.schoolAdvers$ = this.adversService.getSchoolPub();
-    this.metierListe$ = this.infoService.getMetierList()
-    //this.school$ = this.infoService.getAdvers()
+    this.infoService.getMetierLongList().pipe(
+      tap( data => {
+        this.metierLong = data
+        for (let index = 0; index < 8; index++) {
+          this.metierShort.push(data[index])
+        }
+        this.metierTransit = this.metierShort
+      } )
+    ).subscribe();
+
+    // $('.collapse').on('show.bs.collapse', function(e){
+    //   var $card = $(this).closest('.card');
+    //   $('html,body').animate({
+    //     scrollTop: $card.offset()?.top
+    //   }, 500)
+    // });
   }
+
+
 
   plusMetier(){
     if (this.plusMetiertext == 'Voir plus de métier') {      
-      this.metierListe$ = this.infoService.getMetierLongList();
+      this.metierTransit = this.metierLong;
       this.plusMetiertext = 'Voir moins'
     } else {
-      this.metierListe$ = this.infoService.getMetierList();
+      this.metierTransit = this.metierShort;
       this.plusMetiertext = 'Voir plus de métier'
     }
   }
@@ -77,5 +91,7 @@ export class InfoMetierComponent implements OnInit{
   metier(idMetier:number){
     this.appRout.navigateByUrl('info/metier/'+ idMetier);
   }
+
+  
 
 }

@@ -1,24 +1,142 @@
-<div class="container">
-    <div class="explorer"></div>
-    <div class="inside">
-        <div class="intro-inside"></div>
-        <div class="localisation"></div>
-        <div class="visual"></div>
-        <div class="maping"></div>
-    </div>
-    <div class="avis">
-        <div class="avis-sur"></div>
-        <div class="avis-list"></div>
-    </div>
-    <div class="formation">
-        <div class="intro-form"></div>
-    </div>
-    <div class="etablissement">
-        <div class="logo"></div>
-        <div class="stat"></div>
-        <div class="acreditation"></div>
-        <div class="description"></div>
-    </div>
-    <h1> {{ecole[0].nom_e}} </h1>
-    <h2> {{ecole[0].sigle_e}} </h2>
+<div class="containerr">
+    @if (ecole) {
+        <div class="logo">
+            <img  [src]="ecole[0].logo_e" alt="">
+        </div>
+        <div class="name">{{ecole[0].nom_e}}</div>
+        <div class="categ">{{ecole[0].niveau_e}}</div>
+        <div class="description box">
+            <h2>Découvre notre établissement {{ecole[0].sigle_e}} </h2>
+            <div class="descript-text" [innerHTML]="ecole[0].descriptif_e" ></div>
+        </div>
+        <div class="illustrat box">
+            <h2>{{ecole[0].sigle_e}} en image</h2>
+            <div class="image-group">
+                @for (item of imageArray; track $index) {
+                    <div class="image-item">
+                        <a [href]="'../../../../assets/images/school/'+ecole[0].sigle_e+'/'+item" target="_blank"  rel="noopener noreferrer">
+                            <img [src]="'../../../../assets/images/school/'+ecole[0].sigle_e+'/'+item" [alt]="item">
+                        </a>
+                    </div>
+                }
+            </div>
+        </div>
+        <div class="chifres box">
+            <h2>{{ecole[0].sigle_e}} nos chifres clés</h2>
+            @if (ecole[0].date_creation) {
+                <div class="stat">
+                    <div class="ico"> <i class="pi pi-graduation-cap"></i>  </div>
+                    <div class="texto">Année de création</div>
+                    <div class="val">{{ecole[0].date_creation}}</div>
+                </div>
+            }
+            @if (ecole[0].date_creation) {
+                <div class="stat">
+                    <div class="ico"> <i class="pi pi-building-columns"></i>  </div>
+                    <div class="texto">Nombre de Campus</div>
+                    <div class="val">{{ecole[0].date_creation}}</div>
+                </div>
+            }
+            @if (ecole[0].date_creation) {
+                <div class="stat">
+                    <div class="ico"> <i class="pi pi-users"></i>  </div>
+                    <div class="texto">Etudiants formés</div>
+                    <div class="val">{{ecole[0].date_creation}}</div>
+                </div>
+            }
+            @if (ecole[0].date_creation) {
+                <div class="stat">
+                    <div class="ico"> <i class="pi pi-chart-pie"></i>  </div>
+                    <div class="texto">Taux de réussite aux examens</div>
+                    <div class="val">{{ecole[0].date_creation}}</div>
+                </div>
+            }
+            @if (ecole[0].date_creation) {
+                <div class="stat">
+                    <div class="ico"> <i class="pi pi-briefcase"></i>  </div>
+                    <div class="texto">Entreprises partenaires</div>
+                    <div class="val">{{ecole[0].date_creation}}</div>
+                </div>
+            }
+            @if (ecole[0].date_creation) {
+                <div class="stat">
+                    <div class="ico"> <i class="pi pi-list"></i>  </div>
+                    <div class="texto">Nombre de Cursus ouvert</div>
+                    <div class="val">{{ecole[0].date_creation}}</div>
+                </div>
+            }
+        </div>
+        <div class="mapping"></div>
+        @if (parrainArray) {
+            <div class="partner box">
+                <h2>Nos Accréditations</h2>
+                <div class="partner-group">
+                    @for (item of parrainArray; track $index) {
+                        <div class="partner-item">
+                            <img [src]="'../../../../assets/images/parrain/'+item" [alt]="item">
+                        </div>
+                    }
+                </div>
+            </div>
+        }
+        @if (advertiser$ | async; as adi ) {
+            @if (adi.length!==0) {
+                <div class="formations box">
+                    <h2>Quelques unes de nos formations</h2>
+                    <div class="intro-form"></div>
+                    <div class="adv">
+                        <div class="list">
+                            @for (iteme of advertiser$ | async; track iteme.id_form) {
+                                <app-pub-advers [school]="iteme" ></app-pub-advers>
+                            }
+                        </div>
+                        <div class="dolom">
+                            <p-button [raised]="true" [outlined]="true" label="Voir plus" severity="contrast"/>
+                            <span><p-button [raised]="true" icon="pi pi-chevron-circle-right" iconPos="right" label="Trouver ma formation" severity="help" (click)="trouverForm()" /></span>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        <div class="avis box">
+            <h2>Quelques Avis sur {{ecole[0].sigle_e}}</h2>
+            
+            @if (schoolNote$ | async; as schoolNote ) {
+                @if (schoolNote[0].notes_moy != null) {
+                    <div class="school-note">
+                        <div class="moy">{{schoolNote[0].notes_moy}} / 5</div>
+                        <div class="start">
+                            @for (item of [].constructor(note) ; track $index) {
+                                <i class="pi pi-star-fill not"></i>
+                            }
+                            @for (item of [].constructor(5-note) ; track $index) {
+                                <i class="pi pi-star not"></i>
+                            }
+                        </div>
+                        <div class="count">
+                            <h3> {{schoolNote[0].occurence}} avis </h3>
+                            <h4> dont {{schoolNote[0].occurence}} certifiés </h4>
+                        </div>
+                    </div>
+                }@else {
+                    <h4>Aucun avis n'a été enreristré sur {{ecole[0].sigle_e}}</h4>
+                }
+            } @else {
+                <h4>Aucun avis n'a été enreristré sur {{ecole[0].sigle_e}} </h4>
+            }
+            <div class="ton-avis">
+                <p-button label="Donne ton avis" [rounded]="true" severity="help" (click)="tonAvis()"/>
+            </div>
+            <div class="avis-list">
+                @for (item of avisList; track item.auteur_avis) {
+                    <app-avis-single [avis]="item" />
+                    } @empty {
+                    <li>There are no items.</li>
+                }
+            </div>
+        </div>
+        <div class="orientation"></div>
+        <div class="adress"></div>
+        <div class="campus"></div>
+    }
 </div>

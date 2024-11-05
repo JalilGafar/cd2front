@@ -1,1 +1,86 @@
 @import '../../informations-style.module.scss';
+.find{
+    background:#f7f7f7;
+    color: #4a544c;
+    border-radius: 30px;
+    margin-right: 10px;
+    padding: 10px;
+    box-shadow: 5px 10px 8px 0 rgba(0,0,0,0.2);
+    margin-bottom: 40px;
+
+    .titi{
+        font-size: large;
+        margin: 10px 10%;
+    }
+
+    .startFind{
+        width: 40%;
+        margin-left: 30%;
+        .p-button{
+            border-radius: 20px;
+            text-align: center;
+            font-size: 1.03rem;
+        }
+    }
+}
+
+.absent-off {
+    display: none;
+}
+.absent-on {
+    display: block;
+}
+
+.dropdown-{
+    display: flex;
+    flex-direction: column;
+}
+
+#list-input{
+    position: relative;
+    width: 70%;
+    left: 15%;
+    height: 2.5rem;
+    margin-bottom: 20px;
+}
+
+.startFind {
+    border-radius: 20px;
+    text-align: center;
+    font-size: 1.03rem;
+    text-align: center;
+    background-color: blueviolet;
+    border: none;
+    padding: 12px;
+    color: white;
+}
+
+.former{
+    text-align: center;
+    justify-content: center;
+}
+
+:host ::ng-deep {
+    .startFind{
+        .p-button{
+            border-radius: 20px;
+            text-align: center;
+            font-size: 1.03rem;
+            #text{
+                text-align: center;
+            }
+        }
+    }
+    .p-dropdown{
+        width: 100%;
+    }
+    .p-overlay{
+        width: 100%;
+    }
+    .p-dropdown-items-wrapper{
+        display: flex;
+        ul{
+            padding-left: 0;
+        }
+    }
+}

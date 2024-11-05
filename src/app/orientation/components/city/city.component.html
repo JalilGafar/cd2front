@@ -1,17 +1,19 @@
-<div class="cardBar">
-    <p-progressBar [showValue]="false" [value]="70"></p-progressBar>
-</div>
-<h1>Dans quelle ville souhaitez-vous suivre votre formation ?</h1>
-<!-- <mat-spinner *ngIf="loading$ | async"></mat-spinner> -->
-<p-progressSpinner *ngIf="loading$ | async" ariaLabel="loading" />
-<div >
-    <div class="container">
-        <button class="but" pButton pRipple  
-                            *ngFor="let cyti of cyties$ |async " 
-                            type="button" 
-                            [label]="cyti.ville_cam"
-                            (click)="setCyti(cyti.ville_cam)"></button>
+<div class="container">
+    <div class="progress">
+        <div class="progress-bar" role="progressbar" style="width: 70%;" aria-valuenow="70" aria-valuemin="0" aria-valuemax="100" ></div>
     </div>
+    <h1>Dans quelle ville souhaitez-vous suivre votre formation ?</h1>
+    <!-- <mat-spinner *ngIf="loading$ | async"></mat-spinner> -->
+    <p-progressSpinner *ngIf="loading$ | async" ariaLabel="loading" />
+    <div >
+        <div class="container">
+            <button class="but" pButton pRipple  
+                                *ngFor="let cyti of cyties$ |async " 
+                                type="button" 
+                                [label]="cyti.ville_cam"
+                                (click)="setCyti(cyti.ville_cam)"></button>
+        </div>
+    </div>
+    
+    <p-button class="buti" label="Cameroun entier" styleClass="p-button-outlined" (click)="setNiveau()"></p-button>
 </div>
-
-<p-button class="buti" label="Cameroun entier" styleClass="p-button-outlined" (click)="setNiveau()"></p-button>

@@ -1,13 +1,20 @@
-<app-headmsg 
-    [titre]="titre"
-    [soustitre]="soustitre"
-    [photo] = "photo"
-    >
-</app-headmsg>
-<app-start ></app-start>
 <div class="container">
-    <div class="first-pub">
-        <app-pub-first></app-pub-first>
+    <app-headmsg 
+        [titre]="titre"
+        [soustitre]="soustitre"
+        [photo] = "photo"
+        >
+    </app-headmsg>
+    <app-start ></app-start>
+    <div class="une">
+        <h2>Les écoles à la une</h2>
+        <div class="carousel">
+            <div class="card-container">
+                @for (item of schoolAdvers$ | async ; track item.id_ecol) {
+                    <app-school-advers [schoolAdv]="item" ></app-school-advers>
+                }
+            </div>
+        </div>        
     </div>
     <div class="main-container">
         <!-- <app-pub-interest-item *ngFor="let schooli of school$ | async" [school]="schooli"></app-pub-interest-item> -->
@@ -19,8 +26,97 @@
                 Le master est suivi après un diplôme de niveau bac+3 comme la licenc, le DUT ou  
                 le bachelor's degree. Il peut être effectué sur différents campus, et ce à travers 
                 tout le Cameroun. Voici tout ce qu'il faut savoir sur les études supérieures en master ! 
-            </p>       
-            <p-accordion [activeIndex]="0">
+            </p>    
+            
+            <div class="accordion" id="accordionExample" >
+                <div class="card">
+                    <div id="heading1" class="card-header">
+                        <h2 class="mb-0" >
+                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse1" arial-expanded="true" aria-controls="collapse1">
+                                Qu'est ce qu'un master ?
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="collapse1"  class="collapse" aria-labelledby="heaing1" data-parent="#accordionExample" >
+                        <div class="card-body">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div id="heading2" class="card-header">
+                        <h2 class="mb-0" >
+                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse2" arial-expanded="true" aria-controls="collapse2">
+                                Quelles sont les autres formations de niveau bac+5 ?
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="collapse2"  class="collapse" aria-labelledby="heaing2" data-parent="#accordionExample" >
+                        <div class="card-body">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div id="heading3" class="card-header">
+                        <h2 class="mb-0" >
+                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse3" arial-expanded="true" aria-controls="collapse3">
+                                Pourquoi faire un master
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="collapse3"  class="collapse" aria-labelledby="heaing3" data-parent="#accordionExample" >
+                        <div class="card-body">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div id="heading4" class="card-header">
+                        <h2 class="mb-0" >
+                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse4" arial-expanded="true" aria-controls="collapse4">
+                                Quel est le programme en master ?
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="collapse4"  class="collapse" aria-labelledby="heaing4" data-parent="#accordionExample" >
+                        <div class="card-body">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div id="heading5" class="card-header">
+                        <h2 class="mb-0" >
+                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse5" arial-expanded="true" aria-controls="collapse5">
+                                Comment intégrer un master ?
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="collapse5"  class="collapse" aria-labelledby="heaing5" data-parent="#accordionExample" >
+                        <div class="card-body">
+
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div id="heading6" class="card-header">
+                        <h2 class="mb-0" >
+                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse6" arial-expanded="true" aria-controls="collapse6">
+                                Que faire après un master ?
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="collapse6"  class="collapse" aria-labelledby="heaing6" data-parent="#accordionExample" >
+                        <div class="card-body">
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- <p-accordion [activeIndex]="0">
                 <p-accordionTab header="Qu'est ce qu'un master ?">
                     <p> 
 
@@ -46,27 +142,27 @@
                         
                     </p>
                 </p-accordionTab>
-                <p-accordionTab header="Comment réussir en master ?">
-                    <p>
-                       
-                    </p>
-                </p-accordionTab>
+
                 <p-accordionTab header="Que faire après un master ?">
                     <p>
                         
                     </p>
                 </p-accordionTab>
-            </p-accordion>
+            </p-accordion> -->
 
-            <p-card header="Liste des Master au Cameroun" >
-                <p-card></p-card>
-            </p-card>
             
         </div>
     </div>
-    <aside class="side-container">
-        <app-side-info></app-side-info>
-    </aside>
+    
+    <div class="card my-3 px-2">
+        <h2 class="card-title" >Quelques Master pro au Cameroun</h2>
+    </div>
+
+    <div class="actual">
+        <app-actu-list/>
+    </div>
+
+    <app-start ></app-start>
 </div>
 <!-- 
 <app-info-redaction></app-info-redaction>

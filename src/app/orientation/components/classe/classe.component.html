@@ -1,13 +1,14 @@
-<div class="cardBar">
-    <p-progressBar [showValue]="false"  [value]="90"></p-progressBar>
-</div>
-<div>
-    <h2>En quelle classe êtes-vous ?</h2>
-    <div >
-        <button class="but" pButton pRipple  
-                            *ngFor="let classe of classe " 
-                            type="button" 
-                            [label]="classe"
-                            (click)="setClasse(classe)"></button>
+<div class="container">
+    <div class="progress">
+        <div class="progress-bar" role="progressbar" style="width: 90%;" aria-valuenow="90" aria-valuemin="0" aria-valuemax="100" ></div>
+    </div>
+    <div>
+        <h2>En quelle classe êtes-vous ?</h2>
+        <div >
+            <button class="btn btn-primary"  
+                                *ngFor="let classe of classe " 
+                                type="button" 
+                                (click)="setClasse(classe)"> {{classe}}</button>
+        </div>
     </div>
 </div>

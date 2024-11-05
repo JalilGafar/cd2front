@@ -1,4 +1,6 @@
-<div class="container">
-    <h1> {{formation[0].nom_f}} </h1>
-    <h2> {{formation[0].id_form}} </h2>
-</div>
+@if (formation) {
+    <div class="container">
+        <h1> {{formation[0].nom_f}} </h1>
+        <h2> {{formation[0].id_form}} </h2>
+    </div>
+}

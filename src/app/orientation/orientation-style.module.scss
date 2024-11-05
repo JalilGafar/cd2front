@@ -5,6 +5,10 @@ button {
    // display: block;
 }
 
+.container {
+    padding: 20px 3%;
+}
+
 .buti {
     display: block;
     width: 80%;
@@ -27,6 +31,13 @@ button {
 
 
 @media screen and (min-width: 600px) {
+    .card-body{
+        display: flex;
+        flex-wrap: wrap;
+    }
+    button{
+        width: inherit;
+    }
     .p-button {
         display: initial;
         width: auto;   

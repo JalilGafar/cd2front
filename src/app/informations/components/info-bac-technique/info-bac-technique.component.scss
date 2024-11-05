@@ -1,1 +1,21 @@
 @import '../../informations-style.module.scss';
+
+#accordionExample3{
+    .card{
+        .card-header{
+            h2{
+                .bn{
+                    font-weight: 600;
+                    font-size: 0.71rem;
+                    color: black;
+                }
+            }
+        }
+    }
+}
+
+.bbttnn{
+    font-weight: 600;
+    font-size: 0.71rem;
+    color: black;
+}

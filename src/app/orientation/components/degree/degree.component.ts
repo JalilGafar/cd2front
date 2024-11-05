@@ -7,6 +7,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Title } from '@angular/platform-browser';
 import { CommonModule } from '@angular/common';
 import { BEHAVIOR } from '../../../model/behavior';
+import $ from 'jquery';
+
 
 @Component({
   selector: 'app-degree',
@@ -30,6 +32,7 @@ export class DegreeComponent implements OnInit, AfterViewInit {
   master = {groupe: 'Bac+4 à Bac+5'};
   doctor = {groupe: 'Bac+6 et plus'};
   autre = {groupe: 'Autre'};
+
 
   capLenght!: number
   bacLenght!: number
@@ -58,11 +61,16 @@ export class DegreeComponent implements OnInit, AfterViewInit {
       //   this.degreeView = data
       // }
     );
+
+
     
   }
 
+  
+
   ngAfterViewInit(): void {
     this.orientationService.scrollTo('header', BEHAVIOR.auto)
+
   }
 
   setDegree(degree : string){

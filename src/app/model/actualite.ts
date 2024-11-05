@@ -8,4 +8,5 @@ export class Actualite {
     illustration!: string;
     content!: string;
     sujets!: string;
+    images!: string
 }

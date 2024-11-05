@@ -23,5 +23,18 @@ export class SchoolAdversComponent implements OnInit {
 
   showOnePage(school: number){
     this.appRout.navigateByUrl('info/ecole/'+ school);
-   }
+  }
+
+  splitStringToArray(str: string){
+    if(str=== null){
+      str = 'noImage'
+    }
+    return str.split('').reduce((acc:string[], char:string) => {
+      if (char ===' '){
+        acc.push('');
+      }else {
+        acc[acc.length - 1] += char;
+      } return acc;
+    }, ['']);
+  }
 }

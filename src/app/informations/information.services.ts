@@ -7,6 +7,7 @@ import { Metier } from "../model/metier";
 import { Etablissement } from "../model/etablissement-model";
 import { Formation } from "../admin/models/formation.model";
 import { EcoleFind } from "../model/ecoleFind-model";
+import { Domaine } from "../admin/models/domaine.model";
 
 
 @Injectable({
@@ -47,6 +48,13 @@ export class InfoServices {
         return this.http.get<Metier[]>(url, {params: idParams})
     }
 
+    getFiliereById(idFiliere:number):Observable<Domaine[]>{
+        let url = `${environment.apiUrl}/api/field/item`;
+        let idParams = new HttpParams();
+        idParams = idParams.append('idFiliere', idFiliere);
+        return this.http.get<Domaine[]>(url, {params: idParams})
+    }
+
     getEcoleById(idEcole:number):Observable <Etablissement[]> {
         let url = `${environment.apiUrl}/api/ecoles/etablissement`;
         let idParams = new HttpParams();
@@ -65,4 +73,13 @@ export class InfoServices {
     getEcoleFind(): Observable <EcoleFind[]>{
         return this.http.get<EcoleFind[]>(`${environment.apiUrl}/api/ecoles/find`)
     }
+
+    getDomainList():Observable<Domaine[]>{
+        return this.http.get<Domaine[]>(`${environment.apiUrl}/api/field/page`)
+    }
+
+    getBranche():Observable< {branche_dom:string} []>{
+        return this.http.get<{branche_dom:string} []>(`${environment.apiUrl}/api/field/br`)
+    }
+
 }

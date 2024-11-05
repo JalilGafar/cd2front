@@ -19,4 +19,5 @@ export class Etablissement {
     descriptif_e!: string;
     image_e!: string;
     universites_id!: number;
+    parrain!:string
 }

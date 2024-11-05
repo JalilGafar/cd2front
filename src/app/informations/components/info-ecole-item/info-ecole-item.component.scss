@@ -1,0 +1,108 @@
+.containerr{
+    h2{
+        text-align: center;
+    }
+
+    .box{
+        margin-bottom: 40px;
+    }
+
+    display: flex;
+    flex-direction: column;
+    .logo img {
+        width: 30%;
+        margin-left: 40%;
+    }
+    .name, .categ {
+        text-align: center;
+    }
+
+    .description{
+    }
+
+    .illustrat{
+        .image-group{
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-around;
+            .image-item  {
+                width: 48%;
+                box-shadow: 5px 5px 5px 0 rgba(0, 0, 0, 0.7);
+                border-radius: 10px;
+                margin-right: 1%;
+                margin-bottom: 7px;
+                img{
+                    max-width: 100%;
+                    border-radius: 10px;
+                }
+            }
+        }
+        
+    }
+    .chifres{
+        text-align: center;
+    }
+    .partner {
+        .partner-group{
+            display: flex;
+            justify-content: center;
+            .partner-item{
+                width: 25%;
+                padding-right: 3px;
+                img{
+                    max-width: 100%;
+                }
+            }
+        }
+    }
+
+    .formations{
+        .adv{
+            display: flex;
+            flex-direction: column;
+            padding: 50px 10px;
+            background-color: aliceblue;
+            text-align: center;
+            .list{
+                margin: auto;
+                text-align: center;
+                app-pub-advers{
+                    display: inline-block;
+                }
+            }
+        }
+    }
+
+    .avis {
+        .school-note{
+            border: 3px solid rgb(138, 63, 237);
+            border-radius: 15px;
+            padding: 5px;
+            text-align: center;
+    
+            .not{
+                color: orangered;
+            }
+            .count{
+                h3{
+                    margin: 0;
+                }
+            }
+        }
+        .ton-avis{
+            text-align: center;
+            margin-top: 10px;
+    
+            button{
+                border-radius: 30px;
+            }
+        }
+    }
+}
+
+:host ::ng-deep{
+    .p-button{
+        border-radius: 30px;
+    }
+}

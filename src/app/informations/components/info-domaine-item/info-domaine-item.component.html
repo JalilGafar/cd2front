@@ -1,0 +1,24 @@
+@if (filiere) {
+    <div class="container">
+        <div class="tout">Tout sasoir sur</div>
+        <h2>Formation {{filiere[0].nom_dom}}</h2>
+        <div class="intro">
+            {{filiere[0].intro_dom}}
+        </div>
+        <app-start ></app-start>
+        <div class="illustra">
+            <img [src]="'../../../../assets/images/domaines/'+filiere[0].illustra_dom" [alt]="filiere[0].illustra_dom">
+        </div>
+        <div class="adv">
+            <h2>Quelques formation {{filiere[0].nom_dom}}</h2>
+            <div class="list">
+                @for (iteme of advertiser$ | async; track iteme.id_form) {
+                    <app-pub-advers [school]="iteme" ></app-pub-advers>
+                }
+            </div>
+            <div class="dolom">
+                <span><p-button [raised]="true" icon="pi pi-chevron-circle-right" iconPos="right" label="Trouver ma formation" severity="help" (click)="trouverForm()" /></span>
+            </div>
+        </div>
+    </div>
+}

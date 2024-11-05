@@ -7,13 +7,17 @@ import { AdversService } from '../../../service/advers.service';
 import { SchoolAdversComponent } from '../../../shared/components/school-advers/school-advers.component';
 import { EcoleFind } from '../../../model/ecoleFind-model';
 import { InfoServices } from '../../information.services';
+import { FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { ActuListComponent } from '../../../actualite/components/actu-list/actu-list.component';
 
 @Component({
   selector: 'app-info-ecole',
   standalone: true,
   imports: [
     SharedComponentModule,
-    SchoolAdversComponent
+    SchoolAdversComponent,
+    ActuListComponent
   ],
   templateUrl: './info-ecole.component.html',
   styleUrl: './info-ecole.component.scss'
@@ -26,15 +30,19 @@ export class InfoEcoleComponent implements OnInit{
 
   schoolAdvers$!: Observable<SchoolAdvers[]>;
   ecole$!: Observable<EcoleFind[]>;
-  countEcole!: number;
-  
+  countEcole: number = 0;
+  absent: string= 'absent-off'
+  ets = new FormControl('', Validators.required)
+  etsi : FormControl = new FormControl('', Validators.required)
   constructor( //private infoservice :InfoServices,
     private titleService:Title,
     private adversService: AdversService,
-    private infoService: InfoServices
+    private infoService: InfoServices,
+    private appRout : Router
   ) 
     {
       this.titleService.setTitle("Les Ecoles de formation au Cameroun | Camerdiplome");
+      //this.ets.setValue('ggg')
     }
 
 
@@ -45,13 +53,26 @@ export class InfoEcoleComponent implements OnInit{
       tap(data => this.countEcole = data.length ),
       map(data => data.map(data => ({
         ...data,
-        displayName : data.sigle_e+' || '+data.nom_e
+        displayName : data.sigle_e+' __ '+data.nom_e
       })))
     ) ;
   }
 
   onFind(){
+    if (this.ets.invalid) {
+      return;
+    }else if (this.ets.value != null) {      
+     let  tt = parseInt(this.ets.value[this.ets.value?.indexOf("||") + 2] + this.ets.value[this.ets.value?.indexOf("||") + 3])
+      if (isNaN(tt)) {
+        this.absent = 'absent-on'                                            
+      }else {
+        this.appRout.navigateByUrl('info/ecole/'+ tt);                                                 
+      }
+    }
+  }
 
+  hiden(){
+    this.absent = 'absent-off'
   }
 
 }

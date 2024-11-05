@@ -4,12 +4,18 @@ import { Observable } from 'rxjs';
 import { interestelt } from '../../../model/interest-item-model';
 import { TreeNode } from 'primeng/api';
 import { Meta, Title } from '@angular/platform-browser';
+import { AdversService } from '../../../service/advers.service';
+import { SchoolAdvers } from '../../../model/school-adv';
+import { SchoolAdversComponent } from '../../../shared/components/school-advers/school-advers.component';
+import { ActuListComponent } from '../../../actualite/components/actu-list/actu-list.component';
 
 @Component({
   selector: 'app-info-bac-technique',
   standalone: true,
   imports: [
-    SharedComponentModule
+    SharedComponentModule,
+    SchoolAdversComponent,
+    ActuListComponent
   ],
   templateUrl: './info-bac-technique.component.html',
   styleUrl: './info-bac-technique.component.scss'
@@ -22,9 +28,11 @@ export class InfoBacTechniqueComponent implements OnInit {
 
   school$!: Observable<interestelt[]>;
   overlayVisible: boolean = false;
+  schoolAdvers$!: Observable<SchoolAdvers[]>;
 
   constructor(  
     private titleService:Title,
+    private adversService: AdversService,
     private meta : Meta) 
     {  
       this.titleService.setTitle("Le Bac technique et Professionnelle au Cameroun | Camerdiplome");
@@ -355,7 +363,7 @@ export class InfoBacTechniqueComponent implements OnInit {
   ]
 
   ngOnInit(): void {
-    
+    this.schoolAdvers$ = this.adversService.getSchoolPub();
   }
 
   toggle() {

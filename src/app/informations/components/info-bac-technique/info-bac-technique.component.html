@@ -1,13 +1,20 @@
-<app-headmsg 
-    [titre]="titre"
-    [soustitre]="soustitre"
-    [photo] = "photo"
-    >
-</app-headmsg>
-<app-start ></app-start>
 <div class="container">
-    <div class="first-pub">
-        <app-pub-first></app-pub-first>
+    <app-headmsg 
+        [titre]="titre"
+        [soustitre]="soustitre"
+        [photo] = "photo"
+        >
+    </app-headmsg>
+    <app-start ></app-start>
+    <div class="une">
+        <h2>Les écoles à la une</h2>
+        <div class="carousel">
+            <div class="card-container">
+                @for (item of schoolAdvers$ | async ; track item.id_ecol) {
+                    <app-school-advers [schoolAdv]="item" ></app-school-advers>
+                }
+            </div>
+        </div>        
     </div>
     <div class="main-container">
         <!-- <app-pub-interest-item *ngFor="let schooli of school$ | async" [school]="schooli"></app-pub-interest-item> -->
@@ -34,7 +41,7 @@
                 <li>etc.</li>
             </ul>
             
-            <div class="card ">
+            <!-- <div class="card ">
                 <p-button class="parcour" (click)="toggle()" label="Parcours"></p-button>
                 <p-dialog header="Header" [(visible)]="overlayVisible" [style]="{width: '95vw'}">
                     <p-organizationChart [value]="data">
@@ -45,11 +52,396 @@
                         </ng-template>
                     </p-organizationChart>
                 </p-dialog>
-            </div>                   
+            </div>                    -->
             
+            <div class="accordion" id="accordionExample" >
+                <div class="card">
+                    <div id="headingOne" class="card-header">
+                        <h2 class="mb-0" >
+                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" arial-expanded="true" aria-controls="collapseOne">
+                                2nd cycle de l'Enseignement Secondaire Technique
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="collapseOne"  class="collapse show" aria-labelledby="heaingOne" data-parent="#accordionExample" >
+                        <div class="card-body">
+                            <p>
+                                Les examens officiels proposés au second cycle de l'enseignement secondaire technique sont :
+                            </p>
+                            <ul>
+                                <li> 
+                                    <b>Le Probatoire Technique :</b> le Probatoire est un diplôme intermédiaire obtenu 02 ans après le 
+                                    BEPC ou le CAP. Ce diplôme n'est disponible que pour les filières (F1, F2,... , F8) ;
+                                </li>
+                                <li> 
+                                    <b>Le Probatoire de Brevet de Technicien :</b> il est équivalent au Probatoire Technique 
+                                    mais ne concerne que les filières autre que "F" ;
+                                </li>
+                                
+                                <hr>
+                                <li>
+                                    <b>Le Baccalauréat de Technicien :</b> C'est un diplôme reconnu par le Ministre de l'Enseignement
+                                    Supérieur du Cameroun, pour un cursus d'une année après obtention du Probatoire. Comme le Probatoire 
+                                    Technique, il ne concerne que les filières dites "F" ;
+                                </li>
+                                <li>
+                                    <b>Le Brevet de Technicien :</b> il est équivalent au Baccalauréat technique et ne concerne que 
+                                    les filières autre que "F".
+                                </li>
+                                
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div id="heading2" class="card-header">
+                        <h2 class="mb-0" >
+                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse2" arial-expanded="true" aria-controls="collapse2">
+                                Les filières du second cycle de l'enseignement technique
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="collapse2"  class="collapse" aria-labelledby="heaingOne" data-parent="#accordionExample" >
+                        <div class="card-body">
+                            <!-- ****************************************** -->
+                            <div class="accordion" id="accordionExample2" >
+                                <div class="card">
+                                    <div id="headingA1" class="card-header">
+                                        <h2 class="mb-0" >
+                                            <button class="bbttnn btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseA1" arial-expanded="true" aria-controls="collapseA1">
+                                                Section Génie Electrique, Chimie Industrielle et Sciences Biomédicales
+                                            </button>
+                                        </h2>
+                                    </div>
+                                    <div id="collapseA1"  class="collapse" aria-labelledby="heaingA1" data-parent="#accordionExample2" >
+                                        <div class="card-body">
+                                           <table class="table">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                        <th>Spécialité</th>
+                                                        <th>Dénomination</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @for (item of Elec; track $index) {
+                                                        <tr>
+                                                          <td> {{item.spe}} </td>
+                                                          <td> {{item.deno}} </td>
+                                                        </tr>
+                                                    }
+                                               </tbody>
+                                           </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div id="headingA2" class="card-header">
+                                        <h2 class="mb-0" >
+                                            <button class="bbttnn btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseA2" arial-expanded="true" aria-controls="collapseA2">
+                                                Section Génie Mécanique
+                                            </button>
+                                        </h2>
+                                    </div>
+                                    <div id="collapseA2"  class="collapse" aria-labelledby="heaingA2" data-parent="#accordionExample2" >
+                                        <div class="card-body">
+                                           <table class="table">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                        <th>Spécialité</th>
+                                                        <th>Dénomination</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @for (item of GenieM; track $index) {
+                                                        <tr>
+                                                          <td> {{item.spe}} </td>
+                                                          <td> {{item.deno}} </td>
+                                                        </tr>
+                                                    }
+                                               </tbody>
+                                           </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div id="headingA3" class="card-header">
+                                        <h2 class="mb-0" >
+                                            <button class="bbttnn btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseA3" arial-expanded="true" aria-controls="collapseA3">
+                                                Section du Génie Civil, Génie Bois et Techniques Agricoles
+                                            </button>
+                                        </h2>
+                                    </div>
+                                    <div id="collapseA3"  class="collapse" aria-labelledby="heaingA3" data-parent="#accordionExample2" >
+                                        <div class="card-body">
+                                           <table class="table">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                        <th>Spécialité</th>
+                                                        <th>Dénomination</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @for (item of GenieC; track $index) {
+                                                        <tr>
+                                                          <td> {{item.spe}} </td>
+                                                          <td> {{item.deno}} </td>
+                                                        </tr>
+                                                    }
+                                               </tbody>
+                                           </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div id="headingA4" class="card-header">
+                                        <h2 class="mb-0" >
+                                            <button class="bbttnn btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseA4" arial-expanded="true" aria-controls="collapseA4">
+                                                Section Arts et Modes
+                                            </button>
+                                        </h2>
+                                    </div>
+                                    <div id="collapseA4"  class="collapse" aria-labelledby="heaingA4" data-parent="#accordionExample2" >
+                                        <div class="card-body">
+                                           <table class="table">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                        <th>Spécialité</th>
+                                                        <th>Dénomination</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @for (item of Mode; track $index) {
+                                                        <tr>
+                                                          <td> {{item.spe}} </td>
+                                                          <td> {{item.deno}} </td>
+                                                        </tr>
+                                                    }
+                                               </tbody>
+                                           </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div id="heading3" class="card-header">
+                        <h2 class="mb-0" >
+                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse3" arial-expanded="true" aria-controls="collapse3">
+                                L'Enseignement Professionnel
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="collapse3"  class="collapse" aria-labelledby="heaing3" data-parent="#accordionExample" >
+                        <div class="card-body">
+                            <p>
+                                Les diplômes professionnels couronnent le perfectionnement dans un
+                                domaine précis et réservé exclusivement aux travailleurs dans
+                                le cadre de formation continue donnant lieu à une promotion
+                                sociale. Il faut donc en plus du CAP, posséder une certaine 
+                                expérience du terrain. Ici, le volet scientifique est un peu allégé, au profit des modules 
+                                professionnels. Les diplômes professionnels de l'enseignenement secondaire sont :
+                            </p>
+                            <ul>
+                                <li>
+                                    <b>Le Brevet d'Etudes Professionnelles (BEP) :</b> il est lui aussi équivalent au Probatoire 
+                                    technique. Pour être éligible à ce diplôme, il faut en plus du CAP, posséder une certaine 
+                                    expérience du terrain. Ici, le volet scientifique est un peu allégé, au profit des modules 
+                                    professionnels. 
+                                </li>
+                                <li>
+                                    <b>Le Brevet Professionnel (BP) :</b> il est équivalent au baccalauréat technique et compte 
+                                    trois années avec la possibilité d'obtenir un BEP en deuxième année. Contrairement au 
+                                    Probatoire qui conditionne le Baccalauréat, le BEP n'est pas exigé pour obtenir un BP.
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div id="heading4" class="card-header">
+                        <h2 class="mb-0" >
+                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse4" arial-expanded="true" aria-controls="collapse4">
+                                Les filières de l'enseignement Professionnel
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="collapse4"  class="collapse" aria-labelledby="heaing4" data-parent="#accordionExample" >
+                        <div class="card-body">
+                            <div class="accordion" id="accordionExample3" >
+                                <div class="card">
+                                    <div id="headingA1" class="card-header">
+                                        <h2 class="mb-0" >
+                                            <button class="bbttnn btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseA1" arial-expanded="true" aria-controls="collapseA1">
+                                                Brevet d'Etudes Professionnelles (BEP)
+                                            </button>
+                                        </h2>
+                                    </div>
+                                    <div id="collapseA1"  class="collapse" aria-labelledby="heaingA1" data-parent="#accordionExample2" >
+                                        <div class="card-body">
+                                           <table class="table">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                        <th>Spécialité</th>
+                                                        <th>Dénomination</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @for (item of Bep; track $index) {
+                                                        <tr>
+                                                          <td> {{item.spe}} </td>
+                                                          <td> {{item.deno}} </td>
+                                                        </tr>
+                                                    }
+                                               </tbody>
+                                           </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card">
+                                    <div id="headingA2" class="card-header">
+                                        <h2 class="mb-0" >
+                                            <button class="bbttnn btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseA2" arial-expanded="true" aria-controls="collapseA2">
+                                                Brevet d'Etudes Professionnelles (BP)
+                                            </button>
+                                        </h2>
+                                    </div>
+                                    <div id="collapseA2"  class="collapse" aria-labelledby="heaingA2" data-parent="#accordionExample2" >
+                                        <div class="card-body">
+                                           <table class="table">
+                                                <thead class="thead-light">
+                                                    <tr>
+                                                        <th>Spécialité</th>
+                                                        <th>Dénomination</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    @for (item of Bp; track $index) {
+                                                        <tr>
+                                                          <td> {{item.spe}} </td>
+                                                          <td> {{item.deno}} </td>
+                                                        </tr>
+                                                    }
+                                               </tbody>
+                                           </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div id="heading5" class="card-header">
+                        <h2 class="mb-0" >
+                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse5" arial-expanded="true" aria-controls="collapse5">
+                                Comment préparer son Bac Pro / Technique ? 
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="collapse5"  class="collapse" aria-labelledby="heaing5" data-parent="#accordionExample" >
+                        <div class="card-body">
+                            <p>
+                                Les examens Pro/Techniques peuvent se préparer de différentes manières :
+                            </p>     
+                            <ul>
+                                <li> <strong>Par la voie scolaire :</strong>  dans un lycée professionnel ou un établissement privé
+                                     d'enseignement supérieur pendant trois ans. Au cours du cursus, les élèves 
+                                     passeront des diplômes intermédiaires de niveau CAP ou BEP et de niveau Probatoire.
+                                     Il est possible, après la seconde, d'intégrer une classe de première d'une autre 
+                                     spécialité si celle-ci appartient au même champ professionnel. 
+                                </li>
+                                <li>
+                                    <strong>Par la voie de la formation en apprentissage :</strong>  dans des centres de formation d'apprentis, 
+                                    l'élève alternera entre théorie et pratique, en formation en alternance chez un patron. 
+                                    À l'issue de la formation, il n'est pas rare que le diplômé soit engagé dans son entreprise 
+                                    d'accueil.
+                                </li>
+                                <li>
+                                    <strong>Par la voie de la formation professionnelle :</strong>  les salariés peuvent choisir d'obtenir un Bac Pro 
+                                    grâce à la formation professionnelle continue réservée aux adultes. Les heures de cours sont parfois
+                                    décalées en cours du soir pour plus de flexibilité.
+                                </li>
+                            </ul>
+                            <p>
+                                Il est nécessaire de bien se renseigner sur toutes les spécialités pour choisir celle 
+                                qui correspondra le plus à votre projet professionnel. 
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div id="heading5" class="card-header">
+                        <h2 class="mb-0" >
+                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse5" arial-expanded="true" aria-controls="collapse5">
+                                Que faire après un Bac Pro / Technique ?
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="collapse5"  class="collapse" aria-labelledby="heaing5" data-parent="#accordionExample" >
+                        <div class="card-body">
+                            <p>
+                                Si l'insertion professionnelle et l'entrée dans la vie active sont facilitées après l'obtention du diplôme, 
+                                il est également possible de poursuivre ses études après le bac.
+                            </p>
+                            <br>
+                            
+                            <h3>Les poursuites d'études possibles</h3>
+                            <p>
+                                Vous pouvez continuer avec :
+                            </p>
+                            <ul>
+                                <li>
+                                    l'entré sous concours dans les grandes écoles (ENSTP, ENSET, ENSPT, FGI, IUT, ENIET...)
+                                </li>
+                                <li>
+                                    le Brevet de Technicien Supérieur (BTS) 
+                                    avec un BTS MCO, un BTS GPME, un BTS tourisme, etc.
+                                </li>
+                                <li>
+                                    le diplôme d'Ingénieur de Travaux ou Technicien Supérieur
+                                </li>
+                                <li>
+                                    le Bachelor Universitaire de Technologie (BUT), 
+                                    ex-DUT (Diplôme Universitaire de Technologie)
+                                </li>
+                                <li>
+                                    le Bachelor dans une école spécialisée comme une école de comptabilité par exemple
+                                </li>
+                                <li>
+                                    le cycle Licence Professionnelle en trois ans
+                                </li>
+                            </ul>
+        
+                            <h3>L'insertion professionnelle</h3>
+                            <p>
+                                Il est aussi possible de passer un concours pour accéder à des métiers de la fonction publique 
+                                (via les concours de la fonction publique) ou devenir aide-soignant par exemple.
+                            </p>
+                            <p>
+                                Voici quelques métiers accessibles après une formation bac pro :
+                            </p>
+                            <ul>
+                                <li> Employé de commerce  </li>
+                                <li> Technicien de maintenance </li>
+                                <li> Ouvrier du BTP </li>
+                                <li> Électromécanicien </li>
+                                <li> Mécanicien auto</li>
+                                <li> etc.</li>
+                            </ul>
+                            <p>
+                                Fort de tout ceci, l'on se rend à l'évidence qu'un diplômé de l'enseignement secondaire 
+                                technique se trouve face à un large éventail d'opportunités sur le marché de l'emploi et de 
+                                la réussite.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
             
-            
-            <p-accordion [activeIndex]="" [multiple]="true">
+            <!-- <p-accordion [activeIndex]="" [multiple]="true">
                 <p-accordionTab header=" 2nd cycle de l'Enseignement Secondaire Technique :">
                     <p>
                         Les examens officiels proposés au second cycle de l'enseignement secondaire technique sont :
@@ -293,14 +685,14 @@
                         la réussite.
                     </p>
                 </p-accordionTab>
-            </p-accordion>
-            
+            </p-accordion> -->
+        </div>
+        <div class="actual">
+            <app-actu-list/>
         </div>
         <app-start ></app-start>
     </div>
-    <aside class="side-container">
-        <app-side-info></app-side-info>
-    </aside>
+
 </div>
 <!-- 
 <app-interest-list></app-interest-list>

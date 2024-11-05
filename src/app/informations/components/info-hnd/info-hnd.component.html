@@ -1,13 +1,20 @@
-<app-headmsg 
-    [titre]="titre"
-    [soustitre]="soustitre"
-    [photo] = "photo"
-    >
-</app-headmsg>
-<app-start ></app-start>
 <div class="container">
-    <div class="first-pub">
-        <app-pub-first></app-pub-first>
+    <app-headmsg 
+        [titre]="titre"
+        [soustitre]="soustitre"
+        [photo] = "photo"
+        >
+    </app-headmsg>
+    <app-start ></app-start>
+    <div class="une">
+        <h2>Les écoles à la une</h2>
+        <div class="carousel">
+            <div class="card-container">
+                @for (item of schoolAdvers$ | async ; track item.id_ecol) {
+                    <app-school-advers [schoolAdv]="item" ></app-school-advers>
+                }
+            </div>
+        </div>        
     </div>
     <div class="main-container">
         <!-- <app-pub-interest-item *ngFor="let schooli of school$ | async" [school]="schooli"></app-pub-interest-item> -->
@@ -18,8 +25,97 @@
                 higher education diplomas issued by the Ministry of Higher Education in Cameroon located in Yaounde, which 
                 attest to an academic and technical qualification at the Baccalaureate level or General Certificate of 
                 Education Advanced Level plus two years or four semesters of study. 
-            </p>       
-            <p-accordion [activeIndex]="0">
+            </p>     
+            
+            
+            <div class="accordion" id="accordionExample" >
+                <div class="card">
+                    <div id="heading1" class="card-header">
+                        <h2 class="mb-0" >
+                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse1" arial-expanded="true" aria-controls="collapse1">
+                                What is HND ?
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="collapse1"  class="collapse" aria-labelledby="heaing1" data-parent="#accordionExample" >
+                        <div class="card-body">
+                            <p> 
+                                HND is a two-year professional university program which focuses on learning by doing. 
+                                It is designed to teach the knowledge and skills needed for employment and paving 
+                                the way for a Bachelor's Degree Program. The HND originated from the United Kingdom 
+                                and has long been adopted by all Commonwealth nations. It was introduced in Cameroon 
+                                in 2002 by Ministerial Order No. 02/0069/MINESUP/DDES.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div id="heading2" class="card-header">
+                        <h2 class="mb-0" >
+                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse2" arial-expanded="true" aria-controls="collapse2">
+                                how to integrate HND ?
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="collapse2"  class="collapse" aria-labelledby="heaing2" data-parent="#accordionExample" >
+                        <div class="card-body">
+                            <p>
+                                The HND is earned in Cameroon through a national examination organized each academic 
+                                year in one session by the Ministry of Higher Education through the National Committee 
+                                for the Organization of HND Examinations. The examination is open only to those who 
+                                have completed the programme of study for the HND in an institution of Higher Learning 
+                                approved by the Ministry of Higher Education.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div id="heading3" class="card-header">
+                        <h2 class="mb-0" >
+                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse3" arial-expanded="true" aria-controls="collapse3">
+                                What is the HND program ?
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="collapse3"  class="collapse" aria-labelledby="heaing3" data-parent="#accordionExample" >
+                        <div class="card-body">
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div id="heading4" class="card-header">
+                        <h2 class="mb-0" >
+                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse4" arial-expanded="true" aria-controls="collapse4">
+                                What can I do after my HND ?
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="collapse4"  class="collapse" aria-labelledby="heaing4" data-parent="#accordionExample" >
+                        <div class="card-body">
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div id="heading5" class="card-header">
+                        <h2 class="mb-0" >
+                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse5" arial-expanded="true" aria-controls="collapse5">
+                                How to choose a good Institut for my HND ?
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="collapse5"  class="collapse" aria-labelledby="heaing5" data-parent="#accordionExample" >
+                        <div class="card-body">
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+            <!-- <p-accordion [activeIndex]="0">
                 <p-accordionTab header="What is HND ?">
                     <p> 
                         HND is a two-year professional university program which focuses on learning by doing. 
@@ -53,17 +149,20 @@
                         
                     </p>
                 </p-accordionTab>
-            </p-accordion>
+            </p-accordion> -->
 
-            <p-card header="List of HND" >
-                <p-card></p-card>
-            </p-card>
             
         </div>
     </div>
-    <aside class="side-container">
-        <app-side-info></app-side-info>
-    </aside>
+    <div class="card my-3 px-2">
+        <h2 class="card-title" >Somme important HND</h2>
+    </div>
+
+    <div class="actual">
+        <app-actu-list/>
+    </div>
+
+    <app-start ></app-start>
 </div>
 <!-- 
 <app-info-redaction></app-info-redaction>

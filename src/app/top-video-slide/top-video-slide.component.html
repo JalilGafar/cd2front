@@ -6,9 +6,9 @@
         @for (item of schoolAdvers$ | async ; track item.id_ecol) {
             <li class="item" (click)="showOnePage(item.id_ecol)">
                 <div class="ilustra">
-                    <img [src]="item.image_e">
+                    <img [src]="'../../../../assets/images/school/'+item.sigle_e+'/'+splitStringToArray(item.image_e )[0]">
                     <div class="logo">
-                        <img [src]="item.logo_e" style="background-color: #393838d1;">
+                        <img [src]="'../../../../assets/images/school/logo/'+item.logo_e" style="background-color: #393838d1;">
                     </div>
                 </div>
                 <div class="ets">

@@ -22,6 +22,9 @@ export class ActuListComponent implements OnInit {
 
   Actualite$!: Observable<Actualite[]>;
   responsiveOptions;
+  classer :string ='carousel-item';
+
+
 
   constructor(private actuService: ActuService,
     private appRout : Router) {
@@ -46,11 +49,28 @@ export class ActuListComponent implements OnInit {
 
   ngOnInit() {
     this.Actualite$ = this.actuService.getAllActu();
+    
   };
 
-  onViewActu(idActu:number){
-    console.log(idActu)
-    this.appRout.navigateByUrl('actualite/blog/'+idActu);
+  splitStringToArray(str: string){
+    if(str === null || str === undefined){
+      str = 'noImage.webp'
+      return str
+    } else {
+      return str.split('').reduce((acc:string[], char:string) => {
+        if (char ===' '){
+          acc.push('');
+        }else {
+          acc[acc.length - 1] += char;
+        } return acc;
+      }, ['']);
+    }
   }
+
+  onViewActu(idActu:number){
+    this.appRout.navigateByUrl('actualite/blog/'+idActu)
+  }
+  
+        
 
 }

@@ -18,9 +18,12 @@ import { InfoLicenceProComponent } from "./components/info-licence-pro/info-lice
 import { InfoMetierItemComponent } from "./components/info-metier-item/info-metier-item.component";
 import { InfoEcoleItemComponent } from "./components/info-ecole-item/info-ecole-item.component";
 import { InfoFormationItemComponent } from "./components/info-formation-item/info-formation-item.component";
+import { InfoSystemComponent } from "./components/info-system/info-system.component";
+import { InfoDomaineItemComponent } from "./components/info-domaine-item/info-domaine-item.component";
 
 const routes: Routes = [
     {path: 'diplome', component: InfoDiplomeComponent},
+    {path: 'system', component: InfoSystemComponent},
     {path: 'cap', component: InfoCapComponent},
     {path: 'bactec', component: InfoBacTechniqueComponent},
     {path: 'cqp', component: InfoCqpComponent},
@@ -34,8 +37,9 @@ const routes: Routes = [
     {path: 'bachelor', component: InfoBachelorComponent},
     {path: 'master', component: InfoMasterComponent},
     {path: 'ecole', component: InfoEcoleComponent},
-    {path: 'ecole/:id', component: InfoEcoleItemComponent},
     {path: 'metier', component: InfoMetierComponent},
+    {path: 'domaine/:id', component: InfoDomaineItemComponent},
+    {path: 'ecole/:id', component: InfoEcoleItemComponent},
     {path: 'metier/:id', component: InfoMetierItemComponent},
     {path: 'formation/:id', component: InfoFormationItemComponent},
 ]

@@ -1,12 +1,19 @@
 import { Component, OnInit } from '@angular/core';
 import { SharedComponentModule } from '../../../shared/shared.modules';
 import { Meta, Title } from '@angular/platform-browser';
+import { ActuListComponent } from '../../../actualite/components/actu-list/actu-list.component';
+import { SchoolAdversComponent } from '../../../shared/components/school-advers/school-advers.component';
+import { SchoolAdvers } from '../../../model/school-adv';
+import { Observable } from 'rxjs';
+import { AdversService } from '../../../service/advers.service';
 
 @Component({
   selector: 'app-info-licence-pro',
   standalone: true,
   imports: [
-    SharedComponentModule
+    SharedComponentModule,
+    SchoolAdversComponent,
+    ActuListComponent
   ],
   templateUrl: './info-licence-pro.component.html',
   styleUrl: './info-licence-pro.component.scss'
@@ -16,9 +23,11 @@ export class InfoLicenceProComponent implements OnInit {
   titre = "Trouvez votre Licence Pro";
   soustitre = "Comme Choupo, 40% des bacheliers utilisent Camerdiplome pour trouver leur école";
   photo = "./../../../../assets/images/pexels-cottonbro-studi.webp";
+  schoolAdvers$!: Observable<SchoolAdvers[]>;
 
   constructor( //private infoservice :InfoServices,
     private titleService:Title,
+    private adversService: AdversService,
     private meta : Meta) 
     {
       this.titleService.setTitle("La Licence Pro au Cameroun  | Camerdiplome");
@@ -30,7 +39,7 @@ export class InfoLicenceProComponent implements OnInit {
 
 
   ngOnInit(): void {
-    
+    this.schoolAdvers$ = this.adversService.getSchoolPub();
   }
 
 }

@@ -1,29 +1,29 @@
-<app-headmsg 
-    [titre]="titre"
-    [soustitre]="soustitre"
-    [photo] = "photo"
-    >
-</app-headmsg>
-<div class="find">
-    <div class="dispo"> <i></i> Plus de {{countEcole}} établissements disponibles </div>
-    <div class="avi">Plus de ______ avis publiés</div>
-    <form action="">
-        <div class="form-group">
-            <p-dropdown id="ecole_id" 
-                        *ngIf="ecole$ | async as ecoles" 
-                        placeholder="Quelle Ecole ?" 
-                        [options]="ecoles" 
-                        optionLabel="displayName" 
-                        optionValue="id_ecol" 
-                        [filter]="true" filterBy="displayName" [showClear]="true"
-                        formControlName="ecole_id">
-            </p-dropdown>
-            <p-button type="submit" styleClass="p-button-success" (click)="onFind()">Find</p-button>
-        </div>
-    </form>
-</div>
-<app-start ></app-start>
 <div class="container">
+    <app-headmsg 
+        [titre]="titre"
+        [soustitre]="soustitre"
+        [photo] = "photo"
+        >
+    </app-headmsg>
+    <div class="find">
+        <div class="titi dispo"> <i></i> Plus de {{countEcole}} établissements disponibles </div>
+        <div class="titi avi">Plus de ______ avis publiés</div>
+        <form action="" class="former">
+            <div class="dropdown-">
+                @if (ecole$ | async; as ecole) {
+                    <input list="ecole_id"  [formControl]="ets" id="list-input" (input)="hiden()" >
+                    <div [class]="absent" > Cette école ne figure pas encore dans notre base de donnée ! </div>
+                    <datalist name=""  id="ecole_id">
+                        @for (item of ecole; track item.id_ecol) {
+                            <option   [value]="item.displayName +' ||'+ item.id_ecol">
+                        }
+                    </datalist>
+                }
+                <button type="submit" class="startFind" [disabled]="ets.invalid" (click)="onFind()" >Retrouver cette école</button>
+            </div>
+        </form>
+    </div>
+
     <div class="une">
         <h2>Les écoles à la une</h2>
         <div class="carousel">
@@ -34,6 +34,8 @@
             </div>
         </div>        
     </div>
+
+    <app-start ></app-start>
     <div class="main-container">
         <!-- <app-pub-interest-item *ngFor="let schooli of school$ | async" [school]="schooli"></app-pub-interest-item> -->
         <div class="redaction-info">   
@@ -50,29 +52,40 @@
                 <li>Camerdiplome compare les formations qui vous intéressent.</li>
                 <li>Camerdiplome vous met en relation avec les responsables des formations que vous avez sélectionnées.</li>
             </ol>    
-            <p-accordion [activeIndex]="0">
-                <p-accordionTab header="Les IPES par domaine les plus recherchés">
-                    <p> 
-                    </p>
-                </p-accordionTab>
-                <p-accordionTab header="Les établissements les plus populaires">
-                    <p>
-                        
-                    </p>
-                </p-accordionTab>
-                
-            </p-accordion>
+            <div class="accordion" id="accordionExample" >
+                <div class="card">
+                    <div id="headingOne" class="card-header">
+                        <h2 class="mb-0" >
+                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" arial-expanded="true" aria-controls="collapseOne">
+                                Les IPES par domaine les plus recherchés
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="collapseOne"  class="collapse show" aria-labelledby="heaingOne" data-parent="#accordionExample" >
+                        <div class="card-body">
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div id="heading2" class="card-header">
+                        <h2 class="mb-0" >
+                            <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse2" arial-expanded="true" aria-controls="collapse2">
+                                Les établissements les plus populaires
+                            </button>
+                        </h2>
+                    </div>
+                    <div id="collapse2"  class="collapse show" aria-labelledby="heaing2" data-parent="#accordionExample" >
+                        <div class="card-body">
+                            
+                        </div>
+                    </div>
+                </div>
+            </div>
             
         </div>
     </div>
-
+    <div class="actual">
+        <app-actu-list/>
+    </div>
 </div>
-<!-- 
-<app-info-redaction></app-info-redaction>
-<app-interest-list></app-interest-list>
-<app-interest-actualite></app-interest-actualite>
-<app-interest-avis></app-interest-avis>
-<app-interest-classification></app-interest-classification>
- -->
-
- <!-- <app-under-building></app-under-building> -->

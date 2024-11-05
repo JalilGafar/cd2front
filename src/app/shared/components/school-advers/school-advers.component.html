@@ -1,9 +1,9 @@
 <div class="card" (click)="showOnePage(schoolAdv.id_ecol)">
     <div class="illustra">
-        <div class="image" [style]="{ 'background-image': 'url(' + schoolAdv.image_e + ')'}" >
+        <div class="image" [style]="{ 'background-image': 'url(../../../../assets/images/school/'+schoolAdv.sigle_e+'/'+ splitStringToArray(schoolAdv.image_e )[0]+ ')'}" >
         </div>
         <div class="logo">
-            <img [src]="schoolAdv.logo_e" alt="">
+            <img [src]="'../../../../assets/images/school/logo/'+schoolAdv.logo_e" alt="">
         </div>
     </div>
     <div class="texte">
