@@ -1,15 +1,16 @@
 import { Component, OnInit } from '@angular/core';
 import { SharedComponentModule } from '../../../shared/shared.modules';
 import { Title } from '@angular/platform-browser';
-import { map, Observable, tap } from 'rxjs';
+import { filter, map, Observable, tap } from 'rxjs';
 import { SchoolAdvers } from '../../../model/school-adv';
 import { AdversService } from '../../../service/advers.service';
 import { SchoolAdversComponent } from '../../../shared/components/school-advers/school-advers.component';
 import { EcoleFind } from '../../../model/ecoleFind-model';
 import { InfoServices } from '../../information.services';
 import { FormControl, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router } from '@angular/router';
 import { ActuListComponent } from '../../../actualite/components/actu-list/actu-list.component';
+import { event } from 'jquery';
 
 @Component({
   selector: 'app-info-ecole',
@@ -30,6 +31,7 @@ export class InfoEcoleComponent implements OnInit{
 
   schoolAdvers$!: Observable<SchoolAdvers[]>;
   ecole$!: Observable<EcoleFind[]>;
+  ecole!: EcoleFind[];
   countEcole: number = 0;
   absent: string= 'absent-off'
   ets = new FormControl('', Validators.required)
@@ -41,16 +43,23 @@ export class InfoEcoleComponent implements OnInit{
     private appRout : Router
   ) 
     {
-      this.titleService.setTitle("Les Ecoles de formation au Cameroun | Camerdiplome");
+      // if (this.ets) {        
+      //   this.titleService.setTitle(this.ets.value+'');
+      // }
       //this.ets.setValue('ggg')
     }
 
 
 
   ngOnInit(): void {
+    // this.appRout.events.pipe(
+    //   filter(event => event instanceof NavigationEnd),
+    // ).subscribe(()=> this.titleService.setTitle(this.ets.value+''))
+
     this.schoolAdvers$ = this.adversService.getSchoolPub();
     this.ecole$ = this.infoService.getEcoleFind().pipe(
       tap(data => this.countEcole = data.length ),
+      tap(data => this.ecole = data ),
       map(data => data.map(data => ({
         ...data,
         displayName : data.sigle_e+' __ '+data.nom_e
@@ -62,11 +71,13 @@ export class InfoEcoleComponent implements OnInit{
     if (this.ets.invalid) {
       return;
     }else if (this.ets.value != null) {      
-     let  tt = parseInt(this.ets.value[this.ets.value?.indexOf("||") + 2] + this.ets.value[this.ets.value?.indexOf("||") + 3])
+     let  tt = parseInt(this.ets.value[this.ets.value?.indexOf("||") + 2] + this.ets.value[this.ets.value?.indexOf("||") + 3] + this.ets.value[this.ets.value?.indexOf("||") + 4])
       if (isNaN(tt)) {
         this.absent = 'absent-on'                                            
       }else {
-        this.appRout.navigateByUrl('info/ecole/'+ tt);                                                 
+        // this.appRout.navigateByUrl('info/ecole/'+ tt+'', {details:});    
+        let paramsValue = this.ets.value.split(' ').join('_').toLowerCase()
+        this.appRout.navigate(['info/ecole/'+ tt] , {queryParams:{detail: paramsValue}})                                            
       }
     }
   }

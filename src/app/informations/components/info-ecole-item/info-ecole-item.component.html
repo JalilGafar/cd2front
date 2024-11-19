@@ -1,13 +1,15 @@
 <div class="containerr">
     @if (ecole) {
         <div class="logo">
-            <img  [src]="ecole[0].logo_e" alt="">
+            <img  [src]="'../../../../assets/images/school/logo/'+ecole[0].logo_e" alt="">
         </div>
         <div class="name">{{ecole[0].nom_e}}</div>
         <div class="categ">{{ecole[0].niveau_e}}</div>
         <div class="description box">
             <h2>Découvre notre établissement {{ecole[0].sigle_e}} </h2>
             <div class="descript-text" [innerHTML]="ecole[0].descriptif_e" ></div>
+            <div class="tele">Tel : {{ecole[0].tel_1_e}}</div>
+            <div class="site">Site Web : {{ecole[0].siteweb_e}} </div>
         </div>
         <div class="illustrat box">
             <h2>{{ecole[0].sigle_e}} en image</h2>

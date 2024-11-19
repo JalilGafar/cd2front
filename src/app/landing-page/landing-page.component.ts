@@ -11,6 +11,7 @@ import { CommonModule } from '@angular/common';
 import { TopNewsService } from '../service/top-news.service';
 import { map } from 'rxjs';
 import { ActuListComponent } from '../actualite/components/actu-list/actu-list.component';
+import { SpinerService } from '../service/spiner.service';
 
 @Component({
   selector: 'app-landing-page',
@@ -38,6 +39,7 @@ export class LandingPageComponent implements OnInit {
    speed = 200; // The lower the slower
 
   constructor( 
+    private loadingService: SpinerService,
     private service:TopNewsService,
     private titleService:Title,
     private meta: Meta)
@@ -69,5 +71,18 @@ export class LandingPageComponent implements OnInit {
         updateCounto()
       })        
     ).subscribe();
+  }
+
+  onLoadCourses() {
+    try {
+      this.loadingService.loadingOn();
+      console.log('lllllllllllllll')
+      // load courses from backend
+    } catch (error) {
+      // handle error message
+    } finally {
+      console.log('oooooooooooooo')
+      this.loadingService.loadingOff();
+    }
   }
 }

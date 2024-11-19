@@ -52,8 +52,9 @@ export class ActuListComponent implements OnInit {
     
   };
 
-  splitStringToArray(str: string){
-    if(str === null || str === undefined){
+  // fonction qui permet de transformer une serie de mot en array
+  splitStringToArray(str: string | null){
+    if(str=== null || str === undefined ){
       str = 'noImage.webp'
       return str
     } else {

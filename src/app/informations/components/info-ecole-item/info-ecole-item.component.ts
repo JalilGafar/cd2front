@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { Observable, switchMap, tap } from 'rxjs';
+import { filter, Observable, switchMap, tap } from 'rxjs';
 import { Etablissement } from '../../../model/etablissement-model';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
 import { InfoServices } from '../../information.services';
 import { PrimengModule } from '../../../shared/primeng.modules';
 import { AvisService } from '../../../student-avis/avis.service';
@@ -12,6 +12,7 @@ import { AvisSingleComponent } from '../../../student-avis/components/avis-singl
 import { PubAdversComponent } from '../../../shared/components/pub-advers/pub-advers.component';
 import { FormationAdvers } from '../../../model/formadv';
 import { AdversService } from '../../../service/advers.service';
+import { Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-info-ecole-item',
@@ -36,8 +37,10 @@ export class InfoEcoleItemComponent implements OnInit{
   note!: number;
   code!: number;
   advertiser$!: Observable<FormationAdvers[]>;
+  leTitre!: string | null;
 
   constructor(
+    private titleService:Title,
     private route: ActivatedRoute,
     private infoService: InfoServices,
     private avisService : AvisService,
@@ -45,19 +48,36 @@ export class InfoEcoleItemComponent implements OnInit{
     private appRout : Router
   ){}
 
+  private initMetaForMyPage(){
+    if (this.ecole) {
+      this.titleService.setTitle(this.ecole[0].sigle_e+' _ '+ this.ecole[0].nom_e)
+    }
+  }
+
   ngOnInit(): void {
+
+    // this.route.params.pipe(
+    //   switchMap(async (params) => this.titleService.setTitle(''+params['detail'])),
+    //   // filter(event => event instanceof NavigationEnd),
+    //   // tap(()=> this.titleService.setTitle(this.leTitre+''))
+    // ).subscribe();
+
+    // this.appRout.events.pipe(
+      
+    // ).subscribe()
 
     this.route.params.pipe(
       switchMap(params => this.infoService.getEcoleById(+params['id'])),
       tap(ecole=> this.ecole = ecole ),
       tap(ecole => this.imageArray = this.splitStringToArray(ecole[0].image_e)),
       tap(ecole => this.parrainArray = this.splitStringToArray(ecole[0].parrain))
-    ).subscribe();
+    ).subscribe(()=> this.initMetaForMyPage());
 
     this.route.params.pipe(
       switchMap(params => this.avisService.getAvisForSchoolId(+params['id'])),
       tap(aviss=>this.avisList = aviss)
     ).subscribe();
+    
 
     this.schoolNote$ = this.route.params.pipe(
       switchMap(params => this.avisService.getEcoleAvisById(+params['id'])),

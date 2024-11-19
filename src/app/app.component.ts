@@ -10,6 +10,7 @@ import { LandingPageComponent } from './landing-page/landing-page.component';
 import { FooterComponent } from './footer/footer.component';
 import { HeaderComponent } from './header/header.component';
 import { environment } from '../environments/environment';
+import { SpinerComponent } from './spiner/spiner.component';
 
 @Component({
     selector: 'app-root',
@@ -19,6 +20,7 @@ import { environment } from '../environments/environment';
     imports: [  RouterOutlet,
                 RouterLink,
                 FooterComponent,
+                SpinerComponent,
                 HeaderComponent,
                 UsertestComponent, 
                 LandingPageComponent,

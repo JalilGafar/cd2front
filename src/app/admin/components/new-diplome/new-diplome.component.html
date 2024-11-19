@@ -14,19 +14,27 @@
         </div>
         <div class="form-group">
             <label for="">Domaine de formation</label>
-            <p-dropdown id="domaine_id" *ngIf="domaine$ | async as domaine" [options]="domaine" optionLabel="nom_dom" placeholder="Quel Domaine ?" optionValue="id_dom"  formControlName="domaine_id">
+            <p-dropdown 
+                        id="domaine_id" 
+                        *ngIf="domaine$ | async as domaine" 
+                        [options]="domaine" 
+                        optionLabel="nom_dom" 
+                        placeholder="Quel Domaine ?" 
+                        optionValue="id_dom"  
+                        formControlName="domaine_id"
+                        [filter]="true" filterBy="nom_dom" [showClear]="true">
 
             </p-dropdown>
         </div>
         <div class="form-group">
             <label for="">Autre Domaine</label>
-            <p-dropdown id="domaine_id2" *ngIf="domaine$ | async as domaine" [options]="domaine" optionLabel="nom_dom" placeholder="Quel Domaine ?" optionValue="id_dom"  formControlName="domaine_id2">
+            <p-dropdown id="domaine_id2" *ngIf="domaine$ | async as domaine" [options]="domaine" optionLabel="nom_dom" placeholder="Quel Domaine ?" optionValue="id_dom"  formControlName="domaine_id2" [filter]="true" filterBy="nom_dom" [showClear]="true">
 
             </p-dropdown>
         </div>
         <div class="form-group">
             <label for="">Autre Domaine</label>
-            <p-dropdown id="domaine_id3" *ngIf="domaine$ | async as domaine" [options]="domaine" optionLabel="nom_dom" placeholder="Quel Domaine ?" optionValue="id_dom"  formControlName="domaine_id3">
+            <p-dropdown id="domaine_id3" *ngIf="domaine$ | async as domaine" [options]="domaine" optionLabel="nom_dom" placeholder="Quel Domaine ?" optionValue="id_dom"  formControlName="domaine_id3" [filter]="true" filterBy="nom_dom" [showClear]="true">
 
             </p-dropdown>
         </div>
