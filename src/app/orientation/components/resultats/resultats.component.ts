@@ -19,10 +19,13 @@ import { OrientationService } from '../../orientation.service';
 export class ResultatsComponent implements OnInit{
   
   school$!: Observable <interestelt[]>;
+  loading$!: Observable<boolean>;
 
   constructor (private orientationService : OrientationService){}  
   
   ngOnInit(): void {
-    this.school$ = this.orientationService.getSerchResult()
+    this.loading$ = this.orientationService.loading$;
+    this.orientationService.getSerchResult().subscribe()
+    this.school$ = this.orientationService.school$ 
   }
 }

@@ -1,15 +1,95 @@
-<div class="containerr">
+<div class="container">
+    @if (loading$ | async) {
+        <div class="d-flex justify-content-center">
+            <div class="spinner-border text-primary" style="width: 6rem; height: 6rem; margin: 10% 0;" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+    }
     @if (ecole) {
         <div class="logo">
             <img  [src]="'../../../../assets/images/school/logo/'+ecole[0].logo_e" alt="">
         </div>
-        <div class="name">{{ecole[0].nom_e}}</div>
-        <div class="categ">{{ecole[0].niveau_e}}</div>
-        <div class="description box">
-            <h2>Découvre notre établissement {{ecole[0].sigle_e}} </h2>
-            <div class="descript-text" [innerHTML]="ecole[0].descriptif_e" ></div>
-            <div class="tele">Tel : {{ecole[0].tel_1_e}}</div>
-            <div class="site">Site Web : {{ecole[0].siteweb_e}} </div>
+        <div class="name">
+            <h2>{{ecole[0].nom_e}}</h2>
+        </div>
+        <div class="description box text-center">
+            <hr>
+            <button
+                class="btn btn-secondary"
+                type="button"
+                >
+                Description
+            </button>
+            <div class="descript-text" id="descript" [innerHTML]="ecole[0].descriptif_e" ></div>
+            
+            <hr>
+            <!-- <button
+                class="btn btn-secondary"
+                type="button"
+                >
+                Détails
+            </button> -->
+            <button
+                class="btn btn-secondary"
+                type="button"
+                data-toggle="collapse"
+                data-target="#detail"
+                aria-expanded="false"
+                aria-controls="detail"
+                >
+                Détails
+            </button>
+            <div class="collapse" id="detail" >
+                <table class="table" >
+                    <tbody>
+                        <tr>
+                            <th>Sigle</th>
+                            <td>{{ecole[0].sigle_e}}</td>
+                        </tr>
+                        <tr>
+                            <th>Région</th>
+                            <td>Centre</td>
+                        </tr>
+                        <tr>
+                            <th>Nombre de Campus</th>
+                            <td>____ Campus</td>
+                        </tr>
+                        <tr>
+                            <th>Ville(s)</th>
+                            <td>{{ecole[0].sigle_e}}</td>
+                        </tr>
+                        <tr>
+                            <th>Année d'ouverture</th>
+                            <td>{{ecole[0].date_creation}}</td>
+                        </tr>
+                        <tr>
+                            <th>Apprenants formés</th>
+                            <td>_______</td>
+                        </tr>
+                        <tr>
+                            <th>Taux de réussite affiché aux examens</th>
+                            <td>__%</td>
+                        </tr>
+                        <tr>
+                            <th>Structures partenaires</th>
+                            <td>_______</td>
+                        </tr>
+                        <tr>
+                            <th>Nombre de Cursus ouvert</th>
+                            <td>_____</td>
+                        </tr>
+                        <tr>
+                            <th>Contact</th>
+                            <td>{{ecole[0].tel_1_e}}</td>
+                        </tr>
+                        <tr>
+                            <th>Site Web</th>
+                            <td>{{ecole[0].siteweb_e}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
         <div class="illustrat box">
             <h2>{{ecole[0].sigle_e}} en image</h2>
@@ -23,7 +103,7 @@
                 }
             </div>
         </div>
-        <div class="chifres box">
+        <!-- <div class="chifres box">
             <h2>{{ecole[0].sigle_e}} nos chifres clés</h2>
             @if (ecole[0].date_creation) {
                 <div class="stat">
@@ -67,7 +147,7 @@
                     <div class="val">{{ecole[0].date_creation}}</div>
                 </div>
             }
-        </div>
+        </div> -->
         <div class="mapping"></div>
         @if (parrainArray) {
             <div class="partner box">
@@ -79,7 +159,7 @@
                         </div>
                     }
                 </div>
-            </div>
+            </div> 
         }
         @if (advertiser$ | async; as adi ) {
             @if (adi.length!==0) {
@@ -93,13 +173,42 @@
                             }
                         </div>
                         <div class="dolom">
-                            <p-button [raised]="true" [outlined]="true" label="Voir plus" severity="contrast"/>
-                            <span><p-button [raised]="true" icon="pi pi-chevron-circle-right" iconPos="right" label="Trouver ma formation" severity="help" (click)="trouverForm()" /></span>
+                            <button class="btn btn-primary" data-toggle="modal" data-target="#modalFormations" >Voir plus</button>
+                            <span><button icon="pi pi-chevron-circle-right" iconPos="right" severity="help" (click)="trouverForm()">Trouver ma formation</button>  </span>
                         </div>
                     </div>
                 </div>
             }
         }
+        <div class="modal fade" id="modalFormations" tabindex="-1" role="dialog" aria-labelledby="modalFormations" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="modalFormationsTitle">{{ecole[0].nom_e}} : nos cursus de formation</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        @if (formus$ | async; as formus) {
+                            @for (item of categorie; track $index) {
+                                <h5> {{item.nom_cat}} </h5>
+                                <ul>
+                                    @for (itemus of formus; track $index) {
+                                        @if (itemus.nom_cat === item.nom_cat ) {
+                                            <li> {{itemus.nom_dip}} </li>
+                                        }
+                                    }
+                                </ul>
+                            }
+                        }
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="avis box">
             <h2>Quelques Avis sur {{ecole[0].sigle_e}}</h2>
             

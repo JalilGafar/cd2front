@@ -1,7 +1,7 @@
 <div class="school-header">
     <ng-container *ngIf="schoolNote$ | async as schoolNote">
         <div class="school-logo">
-            <img [src]="schoolNote[0].logo_e" [alt]="schoolNote[0].sigle_e">
+            <img [src]="'../../../../assets/images/school/logo/'+schoolNote[0].logo_e" [alt]="schoolNote[0].sigle_e">
         </div>
         <div class="school-name">
             <span class="sigle" >Avis sur {{schoolNote[0].sigle_e}} </span> <br>

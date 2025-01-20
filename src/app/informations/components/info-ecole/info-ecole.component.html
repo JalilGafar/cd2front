@@ -7,17 +7,29 @@
     </app-headmsg>
     <div class="find">
         <div class="titi dispo"> <i></i> Plus de {{countEcole}} établissements disponibles </div>
-        <div class="titi avi">Plus de ______ avis publiés</div>
+        <!-- <div class="titi avi">Plus de ______ avis publiés</div> -->
         <form action="" class="former">
             <div class="dropdown-">
                 @if (ecole$ | async; as ecole) {
-                    <input list="ecole_id"  [formControl]="ets" id="list-input" (input)="hiden()" >
+                    <p-dropdown
+                        [options]="ecole"
+                        [formControl]="ets"
+                        optionLabel="displayName"
+                        optionValue="displayName"
+                        [filter]="true"
+                        filterBy="displayName"
+                        [showClear]="true"
+                        placeholder="Selectionnez un établissement"
+                        >
+
+                    </p-dropdown>
+                    <!-- <input list="ecole_id"  [formControl]="ets" id="list-input" (input)="hiden()" >
                     <div [class]="absent" > Cette école ne figure pas encore dans notre base de donnée ! </div>
                     <datalist name=""  id="ecole_id">
                         @for (item of ecole; track item.id_ecol) {
                             <option   [value]="item.displayName +' ||'+ item.id_ecol">
                         }
-                    </datalist>
+                    </datalist> -->
                 }
                 <button type="submit" class="startFind" [disabled]="ets.invalid" (click)="onFind()" >Retrouver cette école</button>
             </div>

@@ -21,10 +21,11 @@ import { OrderListModule } from 'primeng/orderlist';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RatingModule } from 'primeng/rating';
 import { FileUploadModule } from 'primeng/fileupload';
-
+import { TreeSelectModule } from 'primeng/treeselect'
 
 @NgModule({
     exports:[
+      TreeSelectModule,
       FileUploadModule,
       RatingModule,
       InputTextareaModule,

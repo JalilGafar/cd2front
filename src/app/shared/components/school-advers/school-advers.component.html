@@ -3,7 +3,7 @@
         <div class="image" [style]="{ 'background-image': 'url(../../../../assets/images/school/'+schoolAdv.sigle_e+'/'+ splitStringToArray(schoolAdv.image_e )[0]+ ')'}" >
         </div>
         <div class="logo">
-            <img [src]="'../../../../assets/images/school/logo/'+schoolAdv.logo_e" alt="">
+            <img [src]="'../../../../assets/images/school/logo/'+schoolAdv.logo_e" [alt]="schoolAdv.logo_e">
         </div>
     </div>
     <div class="texte">

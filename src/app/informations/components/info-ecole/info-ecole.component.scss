@@ -32,8 +32,8 @@
 }
 
 .dropdown-{
-    display: flex;
-    flex-direction: column;
+    // display: flex;
+    // flex-direction: column;
 }
 
 #list-input{
@@ -52,12 +52,13 @@
     background-color: blueviolet;
     border: none;
     padding: 12px;
+    margin-top: 10px;
     color: white;
 }
 
 .former{
-    text-align: center;
-    justify-content: center;
+    // text-align: center;
+    // justify-content: center;
 }
 
 :host ::ng-deep {
@@ -72,15 +73,21 @@
         }
     }
     .p-dropdown{
-        width: 100%;
+        width: -webkit-fill-available;
     }
-    .p-overlay{
-        width: 100%;
+    .p-dropdown-label{
+        white-space: pre-wrap;
     }
-    .p-dropdown-items-wrapper{
-        display: flex;
-        ul{
-            padding-left: 0;
-        }
+    .p-dropdown-item{
+        white-space: pre-wrap;
     }
+    // .p-overlay{
+    //     width: 100%;
+    // }
+    // .p-dropdown-items-wrapper{
+    //     display: flex;
+    //     ul{
+    //         padding-left: 0;
+    //     }
+    // }
 }

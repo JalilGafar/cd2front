@@ -74,8 +74,8 @@ export class MonAvisComponent implements OnInit {
       recommande:[null],
       promotion:[null],
       born:[null],
-      auteur_avis:[null],
-      email:[null],
+      auteur_avis:[null , [Validators.required]],
+      email:[null, [Validators.required]],
       justif:[null],
     });
 
@@ -97,6 +97,6 @@ export class MonAvisComponent implements OnInit {
   
   onSubmitForm(){
     this.avisService.sendAvis(this.newAvis.value).subscribe();
-    // this.appRout.navigateByUrl('avis/merci');
+    this.appRout.navigateByUrl('avis/merci');
   }
 }

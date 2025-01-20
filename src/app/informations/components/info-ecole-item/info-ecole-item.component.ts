@@ -12,7 +12,9 @@ import { AvisSingleComponent } from '../../../student-avis/components/avis-singl
 import { PubAdversComponent } from '../../../shared/components/pub-advers/pub-advers.component';
 import { FormationAdvers } from '../../../model/formadv';
 import { AdversService } from '../../../service/advers.service';
-import { Title } from '@angular/platform-browser';
+import { Meta, Title } from '@angular/platform-browser';
+import { Formus } from '../../../model/formus-model';
+import { BEHAVIOR } from '../../../model/behavior';
 
 @Component({
   selector: 'app-info-ecole-item',
@@ -28,6 +30,7 @@ import { Title } from '@angular/platform-browser';
 })
 export class InfoEcoleItemComponent implements OnInit{
 
+  loading$!: Observable<boolean>;
   ecole!: Etablissement[];
   imageArray!: string[];
   parrainArray!:string[];
@@ -37,6 +40,8 @@ export class InfoEcoleItemComponent implements OnInit{
   note!: number;
   code!: number;
   advertiser$!: Observable<FormationAdvers[]>;
+  formus$!: Observable<Formus[]>;
+  categorie!: {nom_cat:string} [];
   leTitre!: string | null;
 
   constructor(
@@ -45,16 +50,21 @@ export class InfoEcoleItemComponent implements OnInit{
     private infoService: InfoServices,
     private avisService : AvisService,
     private adversService: AdversService,
-    private appRout : Router
+    private appRout : Router,
+    private meta : Meta
   ){}
 
   private initMetaForMyPage(){
     if (this.ecole) {
       this.titleService.setTitle(this.ecole[0].sigle_e+' _ '+ this.ecole[0].nom_e)
+      this.meta.updateTag({ name: 'keywords', content: this.ecole[0].sigle_e+' formation au Cameroun, BTS, Licence, Master, CQP, DQP, formation, cameroun' });
+      this.meta.updateTag({ name: 'description', content: this.ecole[0].nom_e+' Pour une formation de qualité au Cameroun' });
     }
   }
 
   ngOnInit(): void {
+
+    this.loading$ = this.infoService.loading$
 
     // this.route.params.pipe(
     //   switchMap(async (params) => this.titleService.setTitle(''+params['detail'])),
@@ -88,6 +98,18 @@ export class InfoEcoleItemComponent implements OnInit{
     this.advertiser$ = this.route.params.pipe(
       switchMap(params => this.adversService.getFormationPubForShool(+params['id'])),
     );
+
+    this.infoService.getCateg().pipe(
+      tap(data => this.categorie = data)
+    ).subscribe();
+    
+    this.formus$ = this.route.params.pipe(
+      switchMap(params => this.infoService.getFormusForShool(+params['id'])),
+    );
+  }
+
+  ngAfterViewInit(): void {
+      this.infoService.scrollTo('header', BEHAVIOR.auto)
   }
 
   trouverForm(){

@@ -1,2 +1,12 @@
-<h1>Les formations susceptibles de vous intéresser</h1>
-<app-pub-interest-item *ngFor="let schooli of school$ | async" [school]="schooli"></app-pub-interest-item>
+<div class="container">
+    <h1>Les formations susceptibles de vous intéresser</h1>
+    @if (loading$ | async) {
+        <div class="d-flex justify-content-center">
+            <div class="spinner-border text-primary" style="width: 6rem; height: 6rem; margin: 10% 0;" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
+        </div>
+    } @else {
+        <app-pub-interest-item *ngFor="let schooli of school$ | async" [school]="schooli"></app-pub-interest-item>
+    }
+</div>

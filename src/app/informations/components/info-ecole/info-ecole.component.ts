@@ -33,6 +33,7 @@ export class InfoEcoleComponent implements OnInit{
   ecole$!: Observable<EcoleFind[]>;
   ecole!: EcoleFind[];
   countEcole: number = 0;
+  loading$!: Observable<boolean>;
   absent: string= 'absent-off'
   ets = new FormControl('', Validators.required)
   etsi : FormControl = new FormControl('', Validators.required)
@@ -56,13 +57,17 @@ export class InfoEcoleComponent implements OnInit{
     //   filter(event => event instanceof NavigationEnd),
     // ).subscribe(()=> this.titleService.setTitle(this.ets.value+''))
 
+
+    this.loading$ = this.infoService.loading$
+
     this.schoolAdvers$ = this.adversService.getSchoolPub();
     this.ecole$ = this.infoService.getEcoleFind().pipe(
       tap(data => this.countEcole = data.length ),
       tap(data => this.ecole = data ),
+      // tap(() => this.loading$.subscribe(loading$.next) ),
       map(data => data.map(data => ({
         ...data,
-        displayName : data.sigle_e+' __ '+data.nom_e
+        displayName : data.sigle_e+'   '+data.nom_e+' ||'+data.id_ecol
       })))
     ) ;
   }
@@ -70,8 +75,11 @@ export class InfoEcoleComponent implements OnInit{
   onFind(){
     if (this.ets.invalid) {
       return;
-    }else if (this.ets.value != null) {      
-     let  tt = parseInt(this.ets.value[this.ets.value?.indexOf("||") + 2] + this.ets.value[this.ets.value?.indexOf("||") + 3] + this.ets.value[this.ets.value?.indexOf("||") + 4])
+    }else if (this.ets.value != null) { 
+      console.log(this.ets)  
+      // this.appRout.navigate(['info/ecole/'+ this.ets.value] , {queryParams:{detail: paramsValue}})  
+
+     let  tt = parseInt(this.ets.value[this.ets.value.indexOf("||") + 2] + this.ets.value[this.ets.value?.indexOf("||") + 3] + this.ets.value[this.ets.value?.indexOf("||") + 4])
       if (isNaN(tt)) {
         this.absent = 'absent-on'                                            
       }else {

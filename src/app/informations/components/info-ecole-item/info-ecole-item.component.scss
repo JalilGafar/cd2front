@@ -1,4 +1,5 @@
-.containerr{
+@import '../../informations-style.module.scss';
+.container{
     h2{
         text-align: center;
     }
@@ -20,6 +21,12 @@
     .description{
     }
 
+    tbody >tr >th {
+        text-align: left;
+    }
+    tbody >tr >td {
+        text-align: right;
+    }
     .illustrat{
         .image-group{
             display: flex;

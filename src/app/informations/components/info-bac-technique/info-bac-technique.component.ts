@@ -29,6 +29,7 @@ export class InfoBacTechniqueComponent implements OnInit {
   school$!: Observable<interestelt[]>;
   overlayVisible: boolean = false;
   schoolAdvers$!: Observable<SchoolAdvers[]>;
+  loading$!: Observable<boolean>;
 
   constructor(  
     private titleService:Title,

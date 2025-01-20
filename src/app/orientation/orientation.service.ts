@@ -47,6 +47,16 @@ export class OrientationService {
         this._loading$.next(loading)
     }
 
+    private _cyties$ = new BehaviorSubject<ville[]>([]);
+    get cyties$(): Observable<ville[]> {
+        return this._cyties$.asObservable();
+    }
+
+    private _school$ = new BehaviorSubject<interestelt[]>([]);
+    get school$(): Observable<interestelt[]> {
+        return this._school$.asObservable();
+    } 
+
     scrollTo(element: string, behavior: BEHAVIOR): void {
         if (typeof document !== 'undefined') {
           let elementer = document.getElementById(element);
@@ -64,21 +74,26 @@ export class OrientationService {
         )
     };
 
-    getPartCyties(userDegree: string, userDomaine: string, userBranche: string ): Observable<ville[]> {
+    getPartCyties(userDegree: string, userDomaine: string, userBranche: string ){
         this.setLoadingStatus(true)
         const url = `${environment.apiUrl}/api/partCyties`;
         let queryParams = new HttpParams();
         queryParams = queryParams.append('Degree', userDegree);
         queryParams = queryParams.append('Domaine', userDomaine);
         return this.http.get<ville[]>(url, {params: queryParams}).pipe(
-            tap( (cyti) => this.setLoadingStatus(false))
-        )
+            tap( cyti => {
+                this._cyties$.next(cyti)
+                this.setLoadingStatus(false)
+            } )
+        ).subscribe()
     }
 
     private _domaine$ = new BehaviorSubject<field[]>([]);
     get domaine$(): Observable<field[]> {
         return this._domaine$.asObservable();
     }
+    
+
 
 
 
@@ -190,13 +205,18 @@ export class OrientationService {
     };
 
     getSerchResult(): Observable<interestelt[]> {
+        this.setLoadingStatus(true);
         const url = `${environment.apiUrl}/api/result`;
         let queryParams = {"city":this.initialUser.city,
                             "diplome":this.initialUser.degree, 
                             "domaine":this.initialUser.field,
                             "branche":this.initialUser.branche};
-
-        return this.http.get<interestelt[]>(url, {params: queryParams})
+        return this.http.get<interestelt[]>(url, {params: queryParams}).pipe(
+            tap(result => {
+                this._school$.next(result)
+                this.setLoadingStatus(false)
+            })
+        )
     }
 
     initUser() {

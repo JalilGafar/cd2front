@@ -27,7 +27,7 @@ export class CityComponent implements OnInit, AfterViewInit{
                 private appRout : Router,
                 private route: ActivatedRoute,
               //  private topNewsService: TopNewsService,
-                private titleService:Title) {this.titleService.setTitle("Trouver bonne une école de formation au Cameroun");}
+                private titleService:Title) {this.titleService.setTitle("Trouver une bonne école de formation au Cameroun");}
 
   ngOnInit():void {
     this.loading$ = this.orientationService.loading$;
@@ -36,7 +36,9 @@ export class CityComponent implements OnInit, AfterViewInit{
     let field = this.route.snapshot.queryParams['field'];
     if (field  && degree) {
       //console.log('normalement')
-      this.cyties$ = this.orientationService.getPartCyties( degree, field, branche);
+      this.cyties$ = this.orientationService.cyties$
+      // this.cyties$ = this.orientationService.getPartCyties( degree, field, branche);
+      this.orientationService.getPartCyties( degree, field, branche);
     } else {
       /*Envoyer une requete de toutes les villes ayant un campus*/
       this.cyties$ = this.orientationService.getAllCyties();

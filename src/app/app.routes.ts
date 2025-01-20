@@ -6,6 +6,10 @@ import { AboutComponent } from './about/about.component';
 import { EnConstructionComponent } from './en-construction/en-construction.component';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { PolitiqueComponent } from './politique/politique.component';
+import { ConditionComponent } from './condition/condition.component';
+import { LegalComponent } from './legal/legal.component';
+import { FaqComponent } from './faq/faq.component';
 
 export const routes: Routes = [
     {path:'', component: LandingPageComponent},
@@ -17,6 +21,10 @@ export const routes: Routes = [
     { path: 'actualite', loadChildren: () => import('./actualite/actualite.module').then(m => m.ActualiteModule) },
     { path: 'avis', loadChildren: () => import('./student-avis/student-avis.module').then(m => m.StudentAvisModule) },
     { path: 'login', component:LoginComponent},
+    { path: 'politique', component:PolitiqueComponent},
+    { path: 'condition', component:ConditionComponent},
+    { path: 'legal', component:LegalComponent},
+    { path: 'faq', component:FaqComponent},
     {path:'comment', title: 'Comment Set', component: VommentsComponent},
     {path:'building', title: 'Page en construction', component: EnConstructionComponent},
     { path:'**', redirectTo:''}

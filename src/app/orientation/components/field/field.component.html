@@ -4,324 +4,333 @@
     </div>
     <h1>Dans quelle filière souhaitez-vous effectuer votre formation ?</h1>
     <!-- <mat-spinner *ngIf="loading$ | async"></mat-spinner> -->
-    <p-progressSpinner *ngIf="loading$ | async" ariaLabel="loading" />
-    <div class="card">
-        <div id="headingOne" class="card-header">
-            <h2 class="mb-0" >
-                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" arial-expanded="false" aria-controls="collapseOne">
-                    Agricultue, Environnement
-                </button>
-            </h2>
-        </div>
-        <div id="collapseOne"  class="collapse show" aria-labelledby="heaingOne">
-            <div class="card-body">
-                @for (field of domaine$ | async | domfilter:agri; track $index) 
-                {
-                    <button type="button" 
-                            class="btn btn-primary"
-                            (click)="setfiled(field.nom_dom, field.branche_dom)">
-                            {{field.nom_dom}}
-                    </button> 
-                }
+    <!-- <p-progressSpinner *ngIf="loading$ | async" ariaLabel="loading" /> -->
+    @if (loading$ | async) {
+        <div class="d-flex justify-content-center">
+            <div class="spinner-border text-primary" style="width: 6rem; height: 6rem; margin: 10% 0;" role="status">
+              <span class="sr-only">Loading...</span>
             </div>
         </div>
-    </div>
-    
-    <div class="card">
-        <div id="heading2" class="card-header">
-            <h2 class="mb-0" >
-                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse2" arial-expanded="false" aria-controls="collapse2">
-                    Art, Culture, Design, Mode
-                </button>
-            </h2>
-        </div>
-        <div id="collapse2"  class="collapse show" aria-labelledby="heaing2">
-            <div class="card-body">
-                @for (field of domaine$ | async | domfilter:art; track $index) 
-                {
-                    <button type="button" 
-                            class="btn btn-primary"
-                            (click)="setfiled(field.nom_dom, field.branche_dom)">
-                            {{field.nom_dom}}
-                    </button> 
-                }
+    } @else {
+
+        <div class="card">
+            <div id="headingOne" class="card-header">
+                <h2 class="mb-0" >
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapseOne" arial-expanded="false" aria-controls="collapseOne">
+                        Agricultue, Environnement
+                    </button>
+                </h2>
+            </div>
+            <div id="collapseOne"  class="collapse show" aria-labelledby="heaingOne">
+                <div class="card-body">
+                    @for (field of domaine$ | async | domfilter:agri; track $index) 
+                    {
+                        <button type="button" 
+                                class="btn btn-primary"
+                                (click)="setfiled(field.nom_dom, field.branche_dom)">
+                                {{field.nom_dom}}
+                        </button> 
+                    }
+                </div>
             </div>
         </div>
-    </div>
-    <div class="card">
-        <div id="heading3" class="card-header">
-            <h2 class="mb-0" >
-                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse3" arial-expanded="false" aria-controls="collapse3">
-                    Bien-être, Beauté
-                </button>
-            </h2>
-        </div>
-        <div id="collapse3"  class="collapse show" aria-labelledby="heaing3">
-            <div class="card-body">
-                @for (field of domaine$ | async | domfilter:beaute; track $index) 
-                {
-                    <button type="button" 
-                            class="btn btn-primary"
-                            (click)="setfiled(field.nom_dom, field.branche_dom)">
-                            {{field.nom_dom}}
-                    </button> 
-                }
+        
+        <div class="card">
+            <div id="heading2" class="card-header">
+                <h2 class="mb-0" >
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse2" arial-expanded="false" aria-controls="collapse2">
+                        Art, Culture, Design, Mode
+                    </button>
+                </h2>
+            </div>
+            <div id="collapse2"  class="collapse show" aria-labelledby="heaing2">
+                <div class="card-body">
+                    @for (field of domaine$ | async | domfilter:art; track $index) 
+                    {
+                        <button type="button" 
+                                class="btn btn-primary"
+                                (click)="setfiled(field.nom_dom, field.branche_dom)">
+                                {{field.nom_dom}}
+                        </button> 
+                    }
+                </div>
             </div>
         </div>
-    </div>
-    
-    <div class="card">
-        <div id="heading5" class="card-header">
-            <h2 class="mb-0" >
-                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse5" arial-expanded="false" aria-controls="collapse5">
-                    Commerce, management
-                </button>
-            </h2>
-        </div>
-        <div id="collapse5"  class="collapse show" aria-labelledby="heaing5">
-            <div class="card-body">
-                @for (field of domaine$ | async | domfilter:commerce; track $index) 
-                {
-                    <button type="button" 
-                            class="btn btn-primary"
-                            (click)="setfiled(field.nom_dom, field.branche_dom)">
-                            {{field.nom_dom}}
-                    </button> 
-                }
+        <div class="card">
+            <div id="heading3" class="card-header">
+                <h2 class="mb-0" >
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse3" arial-expanded="false" aria-controls="collapse3">
+                        Bien-être, Beauté
+                    </button>
+                </h2>
+            </div>
+            <div id="collapse3"  class="collapse show" aria-labelledby="heaing3">
+                <div class="card-body">
+                    @for (field of domaine$ | async | domfilter:beaute; track $index) 
+                    {
+                        <button type="button" 
+                                class="btn btn-primary"
+                                (click)="setfiled(field.nom_dom, field.branche_dom)">
+                                {{field.nom_dom}}
+                        </button> 
+                    }
+                </div>
             </div>
         </div>
-    </div>
-    <div class="card">
-        <div id="heading6" class="card-header">
-            <h2 class="mb-0" >
-                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse6" arial-expanded="false" aria-controls="collapse6">
-                    Droit, Sc. Politiques
-                </button>
-            </h2>
-        </div>
-        <div id="collapse6"  class="collapse show" aria-labelledby="heaing6">
-            <div class="card-body">
-                @for (field of domaine$ | async | domfilter:droit; track $index) 
-                {
-                    <button type="button" 
-                            class="btn btn-primary"
-                            (click)="setfiled(field.nom_dom, field.branche_dom)">
-                            {{field.nom_dom}}
-                    </button> 
-                }
+        
+        <div class="card">
+            <div id="heading5" class="card-header">
+                <h2 class="mb-0" >
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse5" arial-expanded="false" aria-controls="collapse5">
+                        Commerce, management
+                    </button>
+                </h2>
+            </div>
+            <div id="collapse5"  class="collapse show" aria-labelledby="heaing5">
+                <div class="card-body">
+                    @for (field of domaine$ | async | domfilter:commerce; track $index) 
+                    {
+                        <button type="button" 
+                                class="btn btn-primary"
+                                (click)="setfiled(field.nom_dom, field.branche_dom)">
+                                {{field.nom_dom}}
+                        </button> 
+                    }
+                </div>
             </div>
         </div>
-    </div>
-    <div class="card">
-        <div id="heading7" class="card-header">
-            <h2 class="mb-0" >
-                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse7" arial-expanded="false" aria-controls="collapse7">
-                    Finance, comptabilité
-                </button>
-            </h2>
-        </div>
-        <div id="collapse7"  class="collapse show" aria-labelledby="heaing7">
-            <div class="card-body">
-                @for (field of domaine$ | async | domfilter:finance; track $index) 
-                {
-                    <button type="button" 
-                            class="btn btn-primary"
-                            (click)="setfiled(field.nom_dom, field.branche_dom)">
-                            {{field.nom_dom}}
-                    </button> 
-                }
+        <div class="card">
+            <div id="heading6" class="card-header">
+                <h2 class="mb-0" >
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse6" arial-expanded="false" aria-controls="collapse6">
+                        Droit, Sc. Politiques
+                    </button>
+                </h2>
+            </div>
+            <div id="collapse6"  class="collapse show" aria-labelledby="heaing6">
+                <div class="card-body">
+                    @for (field of domaine$ | async | domfilter:droit; track $index) 
+                    {
+                        <button type="button" 
+                                class="btn btn-primary"
+                                (click)="setfiled(field.nom_dom, field.branche_dom)">
+                                {{field.nom_dom}}
+                        </button> 
+                    }
+                </div>
             </div>
         </div>
-    </div>
-    <div class="card">
-        <div id="heading8" class="card-header">
-            <h2 class="mb-0" >
-                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse8" arial-expanded="false" aria-controls="collapse8">
-                    Fonction publique
-                </button>
-            </h2>
-        </div>
-        <div id="collapse8"  class="collapse show" aria-labelledby="heaing8">
-            <div class="card-body">
-                @for (field of domaine$ | async | domfilter:public; track $index) 
-                {
-                    <button type="button" 
-                            class="btn btn-primary"
-                            (click)="setfiled(field.nom_dom, field.branche_dom)">
-                            {{field.nom_dom}}
-                    </button> 
-                }
+        <div class="card">
+            <div id="heading7" class="card-header">
+                <h2 class="mb-0" >
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse7" arial-expanded="false" aria-controls="collapse7">
+                        Finance, comptabilité
+                    </button>
+                </h2>
+            </div>
+            <div id="collapse7"  class="collapse show" aria-labelledby="heaing7">
+                <div class="card-body">
+                    @for (field of domaine$ | async | domfilter:finance; track $index) 
+                    {
+                        <button type="button" 
+                                class="btn btn-primary"
+                                (click)="setfiled(field.nom_dom, field.branche_dom)">
+                                {{field.nom_dom}}
+                        </button> 
+                    }
+                </div>
             </div>
         </div>
-    </div>
-    <div class="card">
-        <div id="heading9" class="card-header">
-            <h2 class="mb-0" >
-                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse9" arial-expanded="false" aria-controls="collapse9">
-                    Hôtellerie, tourisme
-                </button>
-            </h2>
-        </div>
-        <div id="collapse9"  class="collapse show" aria-labelledby="heaing9">
-            <div class="card-body">
-                @for (field of domaine$ | async | domfilter:tourisme; track $index) 
-                {
-                    <button type="button" 
-                            class="btn btn-primary"
-                            (click)="setfiled(field.nom_dom, field.branche_dom)">
-                            {{field.nom_dom}}
-                    </button> 
-                }
+        <div class="card">
+            <div id="heading8" class="card-header">
+                <h2 class="mb-0" >
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse8" arial-expanded="false" aria-controls="collapse8">
+                        Fonction publique
+                    </button>
+                </h2>
+            </div>
+            <div id="collapse8"  class="collapse show" aria-labelledby="heaing8">
+                <div class="card-body">
+                    @for (field of domaine$ | async | domfilter:public; track $index) 
+                    {
+                        <button type="button" 
+                                class="btn btn-primary"
+                                (click)="setfiled(field.nom_dom, field.branche_dom)">
+                                {{field.nom_dom}}
+                        </button> 
+                    }
+                </div>
             </div>
         </div>
-    </div>
-    <div class="card">
-        <div id="heading10" class="card-header">
-            <h2 class="mb-0" >
-                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse10" arial-expanded="false" aria-controls="collapse10">
-                    Image, son, animation 2D/3D
-                </button>
-            </h2>
-        </div>
-        <div id="collapse10"  class="collapse show" aria-labelledby="heaing10">
-            <div class="card-body">
-                @for (field of domaine$ | async | domfilter:animation; track $index) 
-                {
-                    <button type="button" 
-                            class="btn btn-primary"
-                            (click)="setfiled(field.nom_dom, field.branche_dom)">
-                            {{field.nom_dom}}
-                    </button> 
-                }
+        <div class="card">
+            <div id="heading9" class="card-header">
+                <h2 class="mb-0" >
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse9" arial-expanded="false" aria-controls="collapse9">
+                        Hôtellerie, tourisme
+                    </button>
+                </h2>
+            </div>
+            <div id="collapse9"  class="collapse show" aria-labelledby="heaing9">
+                <div class="card-body">
+                    @for (field of domaine$ | async | domfilter:tourisme; track $index) 
+                    {
+                        <button type="button" 
+                                class="btn btn-primary"
+                                (click)="setfiled(field.nom_dom, field.branche_dom)">
+                                {{field.nom_dom}}
+                        </button> 
+                    }
+                </div>
             </div>
         </div>
-    </div>
-    <div class="card">
-        <div id="heading11" class="card-header">
-            <h2 class="mb-0" >
-                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse11" arial-expanded="false" aria-controls="collapse11">
-                    Informatique et Numérique
-                </button>
-            </h2>
-        </div>
-        <div id="collapse11"  class="collapse show" aria-labelledby="heaing11">
-            <div class="card-body">
-                @for (field of domaine$ | async | domfilter:informatique; track $index) 
-                {
-                    <button type="button" 
-                            class="btn btn-primary"
-                            (click)="setfiled(field.nom_dom, field.branche_dom)">
-                            {{field.nom_dom}}
-                    </button> 
-                }
+        <div class="card">
+            <div id="heading10" class="card-header">
+                <h2 class="mb-0" >
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse10" arial-expanded="false" aria-controls="collapse10">
+                        Image, son, animation 2D/3D
+                    </button>
+                </h2>
+            </div>
+            <div id="collapse10"  class="collapse show" aria-labelledby="heaing10">
+                <div class="card-body">
+                    @for (field of domaine$ | async | domfilter:animation; track $index) 
+                    {
+                        <button type="button" 
+                                class="btn btn-primary"
+                                (click)="setfiled(field.nom_dom, field.branche_dom)">
+                                {{field.nom_dom}}
+                        </button> 
+                    }
+                </div>
             </div>
         </div>
-    </div>
-    <div class="card">
-        <div id="heading12" class="card-header">
-            <h2 class="mb-0" >
-                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse12" arial-expanded="false" aria-controls="collapse12">
-                    Ingénierie, Science
-                </button>
-            </h2>
-        </div>
-        <div id="collapse12"  class="collapse show" aria-labelledby="heaing12">
-            <div class="card-body">
-                @for (field of domaine$ | async | domfilter:ingenierie; track $index) 
-                {
-                    <button type="button" 
-                            class="btn btn-primary"
-                            (click)="setfiled(field.nom_dom, field.branche_dom)">
-                            {{field.nom_dom}}
-                    </button> 
-                }
+        <div class="card">
+            <div id="heading11" class="card-header">
+                <h2 class="mb-0" >
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse11" arial-expanded="false" aria-controls="collapse11">
+                        Informatique et Numérique
+                    </button>
+                </h2>
+            </div>
+            <div id="collapse11"  class="collapse show" aria-labelledby="heaing11">
+                <div class="card-body">
+                    @for (field of domaine$ | async | domfilter:informatique; track $index) 
+                    {
+                        <button type="button" 
+                                class="btn btn-primary"
+                                (click)="setfiled(field.nom_dom, field.branche_dom)">
+                                {{field.nom_dom}}
+                        </button> 
+                    }
+                </div>
             </div>
         </div>
-    </div>
-    <div class="card">
-        <div id="heading13" class="card-header">
-            <h2 class="mb-0" >
-                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse13" arial-expanded="false" aria-controls="collapse13">
-                    Langues et Sc. humaines
-                </button>
-            </h2>
-        </div>
-        <div id="collapse13"  class="collapse show" aria-labelledby="heaing13">
-            <div class="card-body">
-                @for (field of domaine$ | async | domfilter:langue; track $index) 
-                {
-                    <button type="button" 
-                            class="btn btn-primary"
-                            (click)="setfiled(field.nom_dom, field.branche_dom)">
-                            {{field.nom_dom}}
-                    </button> 
-                }
+        <div class="card">
+            <div id="heading12" class="card-header">
+                <h2 class="mb-0" >
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse12" arial-expanded="false" aria-controls="collapse12">
+                        Ingénierie, Science
+                    </button>
+                </h2>
+            </div>
+            <div id="collapse12"  class="collapse show" aria-labelledby="heaing12">
+                <div class="card-body">
+                    @for (field of domaine$ | async | domfilter:ingenierie; track $index) 
+                    {
+                        <button type="button" 
+                                class="btn btn-primary"
+                                (click)="setfiled(field.nom_dom, field.branche_dom)">
+                                {{field.nom_dom}}
+                        </button> 
+                    }
+                </div>
             </div>
         </div>
-    </div>
-    <div class="card">
-        <div id="heading14" class="card-header">
-            <h2 class="mb-0" >
-                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse14" arial-expanded="false" aria-controls="collapse14">
-                    Marketing, communication
-                </button>
-            </h2>
-        </div>
-        <div id="collapse14"  class="collapse show" aria-labelledby="heaing14">
-            <div class="card-body">
-                @for (field of domaine$ | async | domfilter:marketing; track $index) 
-                {
-                    <button type="button" 
-                            class="btn btn-primary"
-                            (click)="setfiled(field.nom_dom, field.branche_dom)">
-                            {{field.nom_dom}}
-                    </button> 
-                }
+        <div class="card">
+            <div id="heading13" class="card-header">
+                <h2 class="mb-0" >
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse13" arial-expanded="false" aria-controls="collapse13">
+                        Langues et Sc. humaines
+                    </button>
+                </h2>
+            </div>
+            <div id="collapse13"  class="collapse show" aria-labelledby="heaing13">
+                <div class="card-body">
+                    @for (field of domaine$ | async | domfilter:langue; track $index) 
+                    {
+                        <button type="button" 
+                                class="btn btn-primary"
+                                (click)="setfiled(field.nom_dom, field.branche_dom)">
+                                {{field.nom_dom}}
+                        </button> 
+                    }
+                </div>
             </div>
         </div>
-    </div>
-    <div class="card">
-        <div id="heading15" class="card-header">
-            <h2 class="mb-0" >
-                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse15" arial-expanded="false" aria-controls="collapse15">
-                    Santé
-                </button>
-            </h2>
-        </div>
-        <div id="collapse15"  class="collapse show" aria-labelledby="heaing15">
-            <div class="card-body">
-                @for (field of domaine$ | async | domfilter:sante; track $index) 
-                {
-                    <button type="button" 
-                            class="btn btn-primary"
-                            (click)="setfiled(field.nom_dom, field.branche_dom)">
-                            {{field.nom_dom}}
-                    </button> 
-                }
+        <div class="card">
+            <div id="heading14" class="card-header">
+                <h2 class="mb-0" >
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse14" arial-expanded="false" aria-controls="collapse14">
+                        Marketing, communication
+                    </button>
+                </h2>
+            </div>
+            <div id="collapse14"  class="collapse show" aria-labelledby="heaing14">
+                <div class="card-body">
+                    @for (field of domaine$ | async | domfilter:marketing; track $index) 
+                    {
+                        <button type="button" 
+                                class="btn btn-primary"
+                                (click)="setfiled(field.nom_dom, field.branche_dom)">
+                                {{field.nom_dom}}
+                        </button> 
+                    }
+                </div>
             </div>
         </div>
-    </div>
-    <div class="card">
-        <div id="heading16" class="card-header">
-            <h2 class="mb-0" >
-                <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse16" arial-expanded="false" aria-controls="collapse16">
-                    Sport, social, animation
-                </button>
-            </h2>
-        </div>
-        <div id="collapse16"  class="collapse show" aria-labelledby="heaing16">
-            <div class="card-body">
-                @for (field of domaine$ | async | domfilter:sport; track $index) 
-                {
-                    <button type="button" 
-                            class="btn btn-primary"
-                            (click)="setfiled(field.nom_dom, field.branche_dom)">
-                            {{field.nom_dom}}
-                    </button> 
-                }
+        <div class="card">
+            <div id="heading15" class="card-header">
+                <h2 class="mb-0" >
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse15" arial-expanded="false" aria-controls="collapse15">
+                        Santé
+                    </button>
+                </h2>
+            </div>
+            <div id="collapse15"  class="collapse show" aria-labelledby="heaing15">
+                <div class="card-body">
+                    @for (field of domaine$ | async | domfilter:sante; track $index) 
+                    {
+                        <button type="button" 
+                                class="btn btn-primary"
+                                (click)="setfiled(field.nom_dom, field.branche_dom)">
+                                {{field.nom_dom}}
+                        </button> 
+                    }
+                </div>
             </div>
         </div>
-    </div>
+        <div class="card">
+            <div id="heading16" class="card-header">
+                <h2 class="mb-0" >
+                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse16" arial-expanded="false" aria-controls="collapse16">
+                        Sport, social, animation
+                    </button>
+                </h2>
+            </div>
+            <div id="collapse16"  class="collapse show" aria-labelledby="heaing16">
+                <div class="card-body">
+                    @for (field of domaine$ | async | domfilter:sport; track $index) 
+                    {
+                        <button type="button" 
+                                class="btn btn-primary"
+                                (click)="setfiled(field.nom_dom, field.branche_dom)">
+                                {{field.nom_dom}}
+                        </button> 
+                    }
+                </div>
+            </div>
+        </div>
+    }
 
     <!-- ********************** -->
     <!-- ********************** -->

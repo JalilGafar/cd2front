@@ -6,20 +6,23 @@
         <div class="input-container ic1">
             <input id="nom" class="input" type="text" placeholder=" "  formControlName="nom">
             <div class="cut"></div>
-            <label for="nom" class="placeholder">Nom *</label>
+            <label for="nom" class="placeholder">Nom</label>
+            <div class="msg-invalid" *ngIf="nom?.invalid" >Ce champ est requis !</div>
         </div>
         <div class="input-container ic1">
             <input id="prenom" class="input" type="text" placeholder=" "  formControlName="prenom">
             <div class="cut"></div>
-            <label for="prenom" class="placeholder">Prénom *</label>
+            <label for="prenom" class="placeholder">Prénom</label>
+            <div class="msg-invalid" *ngIf="prenom?.invalid" >Ce champ est requis !</div>
         </div>
         <div class="form-group" style="margin-top: 20px;">
+            <div style="margin-top: 12px;" >Année de naissance</div>
             <select class="form-control" name="" id="born" formControlName="born">
-                <option value="" disabled selected>Année de naissance</option>
                 @for (item of items; track $index) {
                     <option>{{item.value}}</option>
                 }
             </select>
+            <div class="msg-invalid" *ngIf="born?.invalid" >Ce champ est requis !</div>
         </div>
         <!-- 
         <div class="input-container ic1">
@@ -40,14 +43,16 @@
         </div> 
         -->
         <div class="input-container ic1">
-            <input id="pays" class="input" type="text" placeholder=" "  formControlName="pays">
+            <input id="pays" class="input" type="text" placeholder=" "  formControlName="pays" required>
             <div class="cut cut-long"></div>
-            <label for="pays" class="placeholder">Pays de nationnalité *</label>
+            <label for="pays" class="placeholder">Pays de nationnalité</label>
+            <div class="msg-invalid" *ngIf="pays?.invalid" >Ce champ est requis !</div>
         </div>
         <div class="input-container ic1">
-            <input id="email" class="input" type="text" placeholder=" "  formControlName="email">
+            <input id="email" class="input" type="email" placeholder=" "  formControlName="email">
             <div class="cut"></div>
-            <label for="email" class="placeholder">Email*</label>
+            <label for="email" class="placeholder">Email</label>
+            <div class="msg-invalid" *ngIf="email?.invalid" >Ce champ est requis !</div>
         </div>
         
         <div style="margin-top: 12px;" >Téléphone</div>
@@ -57,12 +62,14 @@
             [enableAutoCountrySelect]="false"
             [enablePlaceholder]="true"
             [searchCountryFlag]="true"
-            [selectFirstCountry]="false"
+            [selectFirstCountry]="true"
             [maxLength]="15"
             [phoneValidation]="true"
             name="phone"
             formControlName="phone"
         ></ngx-intl-tel-input>
+        <div class="msg-invalid" *ngIf="phone?.invalid" >Insérez un numéro valide !</div>
+
 
         <div class="action-buttons">
             <button type="submit" class="submit" (click)="onSubmitForm()" [disabled]="newContact.invalid" >Valider et voir mes résultats</button>

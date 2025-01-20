@@ -4,16 +4,23 @@
     </div>
     <h1>Dans quelle ville souhaitez-vous suivre votre formation ?</h1>
     <!-- <mat-spinner *ngIf="loading$ | async"></mat-spinner> -->
-    <p-progressSpinner *ngIf="loading$ | async" ariaLabel="loading" />
-    <div >
-        <div class="container">
-            <button class="but" pButton pRipple  
-                                *ngFor="let cyti of cyties$ |async " 
-                                type="button" 
-                                [label]="cyti.ville_cam"
-                                (click)="setCyti(cyti.ville_cam)"></button>
+    <!-- <p-progressSpinner *ngIf="loading$ | async" ariaLabel="loading" /> -->
+    @if (loading$ | async) {
+        <div class="d-flex justify-content-center">
+            <div class="spinner-border text-primary" style="width: 6rem; height: 6rem; margin: 10% 0;" role="status">
+              <span class="sr-only">Loading...</span>
+            </div>
         </div>
-    </div>
+    } @else {
+        <div >
+            <div class="container">
+                @for (cyti of cyties$ |async; track $index) {
+                    <button class="btn btn-primary"
+                            (click)="setCyti(cyti.ville_cam)"> {{cyti.ville_cam}} </button>
+                }
+            </div>
+        </div>
+    }
     
     <p-button class="buti" label="Cameroun entier" styleClass="p-button-outlined" (click)="setNiveau()"></p-button>
 </div>

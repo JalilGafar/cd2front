@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { SelectItem } from 'primeng/api';
 import { OrientationService } from '../../orientation.service';
 import { Router } from '@angular/router';
@@ -51,11 +51,38 @@ export class ContactComponent implements OnInit {
     })
   }
 
+
+  get nom(){
+    return this.newContact.get('nom');
+  }
+  get prenom(){
+    return this.newContact.get('prenom');
+  }
+  get born(){
+    return this.newContact.get('born');
+  }
+  get pays(){
+    return this.newContact.get('pays');
+  }
+  get email(){
+    return this.newContact.get('email');
+  }
+  get phone(){
+    return this.newContact.get('phone');
+  }
+
   onSubmitForm(){
     this.orientationService.saveContact(this.newContact.value);
     this.appRout.navigate( ['orientation/resultats/'] );
    // console.log(this.newContact.value)
   }
 
+  getFormControlErrorText(ctrl: AbstractControl) {
+    if(ctrl.hasError('required')){
+      return 'Ce champ est requis'
+    }else{
+      return null
+    }
+  }
 
 }

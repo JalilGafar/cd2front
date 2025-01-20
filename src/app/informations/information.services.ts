@@ -1,6 +1,6 @@
 import { HttpClient, HttpParams } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable } from "rxjs";
+import { BehaviorSubject, map, Observable, tap } from "rxjs";
 import { interestelt } from "../model/interest-item-model";
 import { environment } from "../../environments/environment";
 import { Metier } from "../model/metier";
@@ -8,6 +8,8 @@ import { Etablissement } from "../model/etablissement-model";
 import { Formation } from "../admin/models/formation.model";
 import { EcoleFind } from "../model/ecoleFind-model";
 import { Domaine } from "../admin/models/domaine.model";
+import { Formus } from "../model/formus-model";
+import { BEHAVIOR } from "../model/behavior";
 
 
 @Injectable({
@@ -17,6 +19,24 @@ import { Domaine } from "../admin/models/domaine.model";
 export class InfoServices {
 
     constructor(private http: HttpClient) { };
+
+    private _loading$ = new BehaviorSubject<boolean>(false);
+    get loading$(): Observable<boolean> {
+        return this._loading$.asObservable();
+    }
+
+    private setLoadingStatus(loading: boolean) {
+        this._loading$.next(loading)
+    }
+
+    scrollTo(element: string, behavior: BEHAVIOR): void {
+        if (typeof document !== 'undefined') {
+            let elementer = document.getElementById(element);
+        
+            (elementer as HTMLElement).scrollIntoView({behavior: behavior, block:"start", inline:"nearest"})
+            // Manipulating the DOM here
+        }
+    }                                                                                       
 
     getFirstInterestSchool(page : string): Observable<interestelt[]> {
         const url = `${environment.apiUrl}/api/interest`;
@@ -56,10 +76,13 @@ export class InfoServices {
     }
 
     getEcoleById(idEcole:number):Observable <Etablissement[]> {
+        this.setLoadingStatus(true);
         let url = `${environment.apiUrl}/api/ecoles/etablissement`;
         let idParams = new HttpParams();
         idParams = idParams.append('idEcole', idEcole);
-        return this.http.get<Etablissement[]>(url, {params: idParams})
+        return this.http.get<Etablissement[]>(url, {params: idParams}).pipe(
+            tap( ()=>this.setLoadingStatus(false) )
+        )
 
     }
 
@@ -71,7 +94,10 @@ export class InfoServices {
     }
 
     getEcoleFind(): Observable <EcoleFind[]>{
-        return this.http.get<EcoleFind[]>(`${environment.apiUrl}/api/ecoles/find`)
+        this.setLoadingStatus(true);
+        return this.http.get<EcoleFind[]>(`${environment.apiUrl}/api/ecoles/find`).pipe(
+            tap( ()=>this.setLoadingStatus(false) )
+        )
     }
 
     getDomainList():Observable<Domaine[]>{
@@ -80,6 +106,17 @@ export class InfoServices {
 
     getBranche():Observable< {branche_dom:string} []>{
         return this.http.get<{branche_dom:string} []>(`${environment.apiUrl}/api/field/br`)
+    }
+    
+    getCateg():Observable< {nom_cat:string} []>{
+        return this.http.get<{nom_cat:string} []>(`${environment.apiUrl}/api/field/categ`)
+    }
+
+    getFormusForShool(idSchool:number): Observable<Formus[]> {
+        let url = `${environment.apiUrl}/api/advers/formus`;
+        let idParams = new HttpParams();
+        idParams = idParams.append('idSchool', idSchool);
+        return this.http.get<Formus[]>(url, {params: idParams})
     }
 
 }

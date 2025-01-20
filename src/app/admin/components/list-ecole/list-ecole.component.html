@@ -29,7 +29,7 @@
                     <td>{{ecole.id_ecol}}</td>
                     <td>{{ecole.sigle_e}}</td>
                     <td>{{ecole.nom_e}}</td>
-                    <td> <img [src]="ecole.logo_e" alt="" style="height: 100px;"> </td>
+                    <td> <img [src]="'../../../../assets/images/school/logo/'+ecole.logo_e" [alt]="ecole.logo_e" style="height: 100px;"> </td>
                 </tr>
             </ng-template>
             <ng-template pTemplate="paginatorleft">

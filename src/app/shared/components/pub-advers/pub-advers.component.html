@@ -1,6 +1,6 @@
 <div class="card ">
     <div class="logo">
-        <img alt="Card" [src]="'../../../../assets/images/school/logo/'+school.logo_e" />
+        <img alt="Card" [src]="'../../../../assets/images/school/logo/'+school.logo_e"  [alt]="school.logo_e" />
     </div>
     <div class="diplome">{{school.nom_dip}}</div>
     <div class="ecole"> {{school.nom_e}} </div>
@@ -18,4 +18,4 @@
     <a [routerLink]="'/info/formation/'+school.id_form">
         <button class="voir">Voir la formation</button>
     </a>
-</div>
+</div> 
