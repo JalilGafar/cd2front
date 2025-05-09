@@ -1,5 +1,16 @@
-<div class="face-snap-card" >
-    <h2>{{actualite.title | uppercase}} </h2>
-    <!-- <p> {{actualite.description}} </p> -->
-    <button (click)="onViewFaceSnap()" >VIEW</button>
+<div class="card">
+    <h1 style="padding-bottom: 10px; text-align: center;" >Des articles pour mieux vous orienter.</h1>
+    @if (Actualite$ | async; as data) {
+        @for (item of data; track $index) {
+            <div class="cardi">
+                <img class="image" [src]="'../../../../assets/images/article/'+item.illustration+'.webp'" alt="images">
+                <div class="card-body">
+                    <h2 class="card-title" >{{item.title}}</h2>
+                    <p style="font-size: small;" >{{item.summary | slice:0:300}}...</p>
+                    <button (click)="onViewActu(item.id_actu)" type="button" class="btn btn-primary" > Consulter l'article</button>
+                </div>
+            </div>
+        }
+    }
+
 </div>

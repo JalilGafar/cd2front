@@ -5,6 +5,7 @@ export class Actualite {
     createdDate!: Date;
     visible!:boolean;
     summary!: string;
+    keywords!: string;
     illustration!: string;
     content!: string;
     sujets!: string;

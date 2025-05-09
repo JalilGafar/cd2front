@@ -3,6 +3,9 @@ import { Actualite } from '../../../model/actualite';
 import { CommonModule } from '@angular/common';
 import { ActuService } from '../../actu.service';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { OrientationService } from '../../../orientation/orientation.service';
+import { BEHAVIOR } from '../../../model/behavior';
 
 @Component({
   selector: 'app-actu',
@@ -15,17 +18,24 @@ import { Router } from '@angular/router';
 })
 export class ActuComponent implements OnInit {
 
+  Actualite$!: Observable<Actualite[]>;
   @Input() actualite!: Actualite;
 
-  constructor(private actuService: ActuService,
+  constructor(
+    private actuService: ActuService,
+    private orientationService :OrientationService,
     private appRout : Router){}
 
-  ngOnInit(): void {
-    
-  }
+    ngOnInit() {
+      this.Actualite$ = this.actuService.getAllActu();
+    };
 
-  onViewFaceSnap(){
-    // this.appRout.navigateByUrl('actualite/'+ this.actualite.id_news);
-  }
+    onViewActu(idActu:number){
+      this.appRout.navigateByUrl('actualite/blog/'+idActu)
+    }
+
+    ngAfterViewInit(): void {
+      this.orientationService.scrollTo('header', BEHAVIOR.auto)
+    } 
 
 }

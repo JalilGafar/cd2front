@@ -57,7 +57,7 @@ export class InfoEcoleItemComponent implements OnInit{
   private initMetaForMyPage(){
     if (this.ecole) {
       this.titleService.setTitle(this.ecole[0].sigle_e+' _ '+ this.ecole[0].nom_e)
-      this.meta.updateTag({ name: 'keywords', content: this.ecole[0].sigle_e+' formation au Cameroun, BTS, Licence, Master, CQP, DQP, formation, cameroun' });
+      this.meta.updateTag({ name: 'keywords', content: this.ecole[0].sigle_e+' '+this.ecole[0].nom_e+' '+' Etablissement, MINESUP, Orientation, Cameroun, Etudes supérieures, Formation professionnelle, Travail, Enseignement, Diplômes, Universités, Grandes écoles, Instituts, Centres de formation, Carrière, Emploi, Métiers' });
       this.meta.updateTag({ name: 'description', content: this.ecole[0].nom_e+' Pour une formation de qualité au Cameroun' });
     }
   }
@@ -73,7 +73,7 @@ export class InfoEcoleItemComponent implements OnInit{
     // ).subscribe();
 
     // this.appRout.events.pipe(
-      
+       
     // ).subscribe()
 
     this.route.params.pipe(

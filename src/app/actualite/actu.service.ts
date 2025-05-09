@@ -15,6 +15,11 @@ export class ActuService {
     //return this.topnewss;
     return this.http.get<Actualite[]>(`${environment.apiUrl}/api/actualite`); 
   }
+  
+  getSomeActu(): Observable<Actualite[]> {
+    //return this.topnewss;
+    return this.http.get<Actualite[]>(`${environment.apiUrl}/api/actualite/some`); 
+  }
 
   getActualiteById (actualiteId:number): Observable<Actualite[]> {
     let url = `${environment.apiUrl}/api/actualite/blog`;

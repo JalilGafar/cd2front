@@ -11,10 +11,9 @@ import { Router } from '@angular/router';
   selector: 'app-actu-list',
   standalone: true,
   imports: [
-    ActuComponent,
     CommonModule,
     SharedComponentModule
-  ],
+],
   templateUrl: './actu-list.component.html',
   styleUrl: './actu-list.component.scss'
 })
@@ -48,7 +47,7 @@ export class ActuListComponent implements OnInit {
   };
 
   ngOnInit() {
-    this.Actualite$ = this.actuService.getAllActu();
+    this.Actualite$ = this.actuService.getSomeActu();
     
   };
 

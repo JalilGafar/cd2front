@@ -13,14 +13,17 @@
         <div class="name">
             <h2>{{ecole[0].nom_e}}</h2>
         </div>
-        <div class="description box text-center">
+        <div class="description box">
             <hr>
-            <button
-                class="btn btn-secondary"
-                type="button"
-                >
-                Description
-            </button>
+            <div class="text-center" >
+                <button
+                    class="btn btn-secondary"
+                    type="button"
+                    >
+                    Description
+                </button>
+            </div>
+
             <div class="descript-text" id="descript" [innerHTML]="ecole[0].descriptif_e" ></div>
             
             <hr>
@@ -30,16 +33,18 @@
                 >
                 Détails
             </button> -->
-            <button
-                class="btn btn-secondary"
-                type="button"
-                data-toggle="collapse"
-                data-target="#detail"
-                aria-expanded="false"
-                aria-controls="detail"
-                >
-                Détails
-            </button>
+            <div class="text-center">
+                <button
+                    class="btn btn-secondary"
+                    type="button"
+                    data-toggle="collapse"
+                    data-target="#detail"
+                    aria-expanded="false"
+                    aria-controls="detail"
+                    >
+                    Détails
+                </button>
+            </div>
             <div class="collapse" id="detail" >
                 <table class="table" >
                     <tbody>

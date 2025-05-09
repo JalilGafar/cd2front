@@ -61,7 +61,8 @@ export class NewFormationComponent implements OnInit, OnDestroy{
       return;
     }
     this.adminService.addNewFormation(this.newFormation.value).pipe(take(1)).subscribe();
-    this.appRout.navigateByUrl('admin/adminStart');
+    window.location.reload();
+    //this.appRout.navigateByUrl('admin/new-formation');
   }
 
   ngOnDestroy() {

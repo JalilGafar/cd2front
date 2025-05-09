@@ -1,9 +1,11 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { SingleActuComponent } from './components/single-actu/single-actu.component';
+import { ActuComponent } from './components/actu/actu.component';
 
 const routes: Routes = [
-    { path: 'blog/:id', component: SingleActuComponent },
+  { path: 'actues', component: ActuComponent },
+  { path: 'blog/:id', component: SingleActuComponent },
 ];
 
 @NgModule({
