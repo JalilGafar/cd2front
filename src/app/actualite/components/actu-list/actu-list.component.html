@@ -23,7 +23,7 @@
                     <div class="carousel-item active">
                         <div class="card text-center bg-dark text-white" style="max-height: 300px;">
                             <img class="card-img " [src]="'../../../../assets/images/article/'+item.illustration+'.webp'" alt="Card image">
-                            <div class="card-img-overlay" (click)="onViewActu(item.id_actu)" style="cursor: pointer;">
+                            <div class="card-img-overlay" (click)="onViewActu(item.sujets)" style="cursor: pointer;">
                                 <h3 class="card-title p-3 mb-0 fd-3 text-white" style="background-color: #334444e6; line-height: normal;">{{item.title}} </h3>
                                 <p class="card-text pl-20 pr-20" style="background-color: #334444e6; padding: 0 10%; font-weight: 300;">{{item.summary  | slice:0:100}}... </p>
                             </div>                       
@@ -33,7 +33,7 @@
                     <div class="carousel-item">
                         <div class="card bg-dark text-white text-center" style="max-height: 300px;">
                             <img class="card-img d-flex flex-wrap align-items-center" [src]="'../../../../assets/images/article/'+item.illustration+'.webp'" alt="Card image">
-                            <div class="card-img-overlay" (click)="onViewActu(item.id_actu)" style="cursor: pointer;">
+                            <div class="card-img-overlay" (click)="onViewActu(item.sujets)" style="cursor: pointer;">
                                 <h3 class="card-title p-3 mb-0 fs-3 text-white" style="background-color: #334444e6; line-height: normal;"> {{item.title}} </h3>
                                 <p class="card-text" style="background-color: #334444e6; padding: 0 10%; font-weight: 300;">{{item.summary  | slice:0:100}}... </p>
                             </div>                       

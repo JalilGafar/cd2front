@@ -21,11 +21,11 @@ export class ActuService {
     return this.http.get<Actualite[]>(`${environment.apiUrl}/api/actualite/some`); 
   }
 
-  getActualiteById (actualiteId:number): Observable<Actualite[]> {
+  getActualiteBySubject (actualiteSubject:string): Observable<Actualite[]> {
     let url = `${environment.apiUrl}/api/actualite/blog`;
-    let idParams = new HttpParams();
-    idParams = idParams.append('idActu', actualiteId);
-    return this.http.get<Actualite[]>(url, {params: idParams})
+    let SubjectParams = new HttpParams();
+    SubjectParams = SubjectParams.append('subjectActu', actualiteSubject);
+    return this.http.get<Actualite[]>(url, {params: SubjectParams})
     //return this.http.get<Actualite>(`${environment.apiUrl}/api/Actualite/${faceSnapId}`)
   }
 }

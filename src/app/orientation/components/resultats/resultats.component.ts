@@ -3,6 +3,7 @@ import { Observable } from 'rxjs';
 import { interestelt } from '../../../model/interest-item-model';
 import { SharedComponentModule } from '../../../shared/shared.modules';
 import { OrientationService } from '../../orientation.service';
+import { BEHAVIOR } from '../../../model/behavior';
 
 
 @Component({
@@ -27,5 +28,9 @@ export class ResultatsComponent implements OnInit{
     this.loading$ = this.orientationService.loading$;
     this.orientationService.getSerchResult().subscribe()
     this.school$ = this.orientationService.school$ 
+  }
+
+  ngAfterViewInit(): void {
+      this.orientationService.scrollTo('header', BEHAVIOR.auto)
   }
 }

@@ -5,7 +5,7 @@ import { ActuComponent } from './components/actu/actu.component';
 
 const routes: Routes = [
   { path: 'actues', component: ActuComponent },
-  { path: 'blog/:id', component: SingleActuComponent },
+  { path: 'blog/:subject', component: SingleActuComponent },
 ];
 
 @NgModule({

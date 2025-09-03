@@ -46,7 +46,7 @@ export class OrientationService {
     private setLoadingStatus(loading: boolean) {
         this._loading$.next(loading)
     }
-
+ 
     private _cyties$ = new BehaviorSubject<ville[]>([]);
     get cyties$(): Observable<ville[]> {
         return this._cyties$.asObservable();

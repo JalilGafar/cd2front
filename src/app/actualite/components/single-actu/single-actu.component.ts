@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { Actualite } from '../../../model/actualite';
 import { Observable } from 'rxjs';
 import { ActuService } from '../../actu.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Meta, Title } from '@angular/platform-browser';
 import { OrientationService } from '../../../orientation/orientation.service';
 import { BEHAVIOR } from '../../../model/behavior';
@@ -26,6 +26,7 @@ export class SingleActuComponent implements OnInit {
   constructor(
     private ActuService: ActuService,
     private route: ActivatedRoute,
+    private appRout : Router,
     private meta : Meta,
     private titleService:Title,
     private orientationService :OrientationService
@@ -34,16 +35,16 @@ export class SingleActuComponent implements OnInit {
   private initMetaForMyPage(){
     if (this.actualite) {
       this.titleService.setTitle(this.actualite.title)
-      this.meta.updateTag({ name: 'keywords', content: this.actualite.keywords+', Etablissement, MINESUP, Orientation, Cameroun, Etudes supérieures, Formation professionnelle, Travail, Enseignement, Diplômes, Universités, Grandes écoles, Instituts, Centres de formation, Carrière, Emploi, Métiers' });
+      this.meta.updateTag({ name: 'keywords', content: this.actualite.keywords+', Orientation, Cameroun, Etudes supérieures, Formation professionnelle' });
       this.meta.updateTag({ name: 'description', content: this.actualite.summary});
     }
   }
 
   ngOnInit(){
     //this.buttonText = 'Oh Snap !';
-    const actuId = +this.route.snapshot.params['id'];
-    console.log(actuId);
-    this.actualite$ = this.ActuService.getActualiteById(actuId);
+    const actuSubject = this.route.snapshot.params['subject'];
+    console.log(actuSubject);
+    this.actualite$ = this.ActuService.getActualiteBySubject(actuSubject);
     this.actualite$.subscribe(actu=> {
       this.actualite = actu[0]
       this.initMetaForMyPage()
@@ -52,6 +53,10 @@ export class SingleActuComponent implements OnInit {
 
   ngAfterViewInit(): void {
       this.orientationService.scrollTo('header', BEHAVIOR.auto)
-    } 
+  }
+  
+  trouverForm(){
+    this.appRout.navigate(['./orientation/degree']);
+  }
 
 }

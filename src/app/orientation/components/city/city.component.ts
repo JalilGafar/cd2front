@@ -36,7 +36,8 @@ export class CityComponent implements OnInit, AfterViewInit{
     let field = this.route.snapshot.queryParams['field'];
     if (field  && degree) {
       //console.log('normalement')
-      this.cyties$ = this.orientationService.cyties$
+        this.cyties$ = this.orientationService.cyties$
+      //this.cyties$ = this.orientationService.getAllCyties();
       // this.cyties$ = this.orientationService.getPartCyties( degree, field, branche);
       this.orientationService.getPartCyties( degree, field, branche);
     } else {

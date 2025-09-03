@@ -9,9 +9,12 @@ import { TopNewsSlideComponent } from '../top-news-slide/top-news-slide.componen
 import { CommonModule } from '@angular/common';
 // import { FlexLayoutModule } from 'ngx-fx-layout';
 import { TopNewsService } from '../service/top-news.service';
-import { map } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { ActuListComponent } from '../actualite/components/actu-list/actu-list.component';
 import { SpinerService } from '../service/spiner.service';
+import { SchoolAdvers } from '../model/school-adv';
+import { SchoolAdversComponent } from '../shared/components/school-advers/school-advers.component';
+import { AdversService } from '../service/advers.service';
 
 @Component({
   selector: 'app-landing-page',
@@ -19,8 +22,9 @@ import { SpinerService } from '../service/spiner.service';
   imports: [
     ActuListComponent,
     SharedComponentModule,
-    TopVideoSlideComponent,
-    TopNewsSlideComponent,
+    // TopVideoSlideComponent,
+    //  TopNewsSlideComponent,
+    SchoolAdversComponent,
     // FlexLayoutModule,
     CommonModule
   ],
@@ -32,6 +36,9 @@ export class LandingPageComponent implements OnInit {
   titre = "Comme Hassan, rentabilise ton avenir avec une bonne orientation.";
   soustitre = "... Le chômage est très souvent le résultat d'une mauvaise orientation.";
   photo = "./assets/images/home.webp";
+  loading$!: Observable<boolean>;
+
+  schoolAdvers$!: Observable<SchoolAdvers[]>
 
   count!: number;
   // counter = document.querySelector('.counter');
@@ -41,6 +48,7 @@ export class LandingPageComponent implements OnInit {
   constructor( 
     private loadingService: SpinerService,
     private service:TopNewsService,
+    private adversService: AdversService,
     private titleService:Title,
     private meta: Meta)
     {
@@ -50,6 +58,7 @@ export class LandingPageComponent implements OnInit {
     }
 
   ngOnInit(){
+    this.schoolAdvers$ = this.adversService.getSchoolPub();
     this.service.countFormation().pipe(
       map(data => {
         this.count = data[0].cont;

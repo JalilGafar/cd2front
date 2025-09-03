@@ -22,7 +22,9 @@ export class SchoolAdversComponent implements OnInit {
   }
 
   showOnePage(school: number){
-    this.appRout.navigateByUrl('info/ecole/'+ school);
+    const slug = this.generateSlug(this.schoolAdv.nom_e+'-'+this.schoolAdv.id_ecol);
+    this.appRout.navigate(['info/ecole', slug, this.schoolAdv.id_ecol]);
+    //this.appRout.navigateByUrl('info/ecole/'+ school);
   }
 
   splitStringToArray(str: string){
@@ -36,5 +38,14 @@ export class SchoolAdversComponent implements OnInit {
         acc[acc.length - 1] += char;
       } return acc;
     }, ['']);
+  }
+
+  generateSlug(name: string): string {
+    return name.toLowerCase()
+      .normalize('NFD')                   // décompose les lettres accentuées
+      .replace(/[\u0300-\u036f]/g, '')    // supprime les signes diacritiques (accents)
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')        // remplace les caractères spéciaux par des -
+      .replace(/^-+|-+$/g, '');           // enlève les - au début et à la fin
   }
 }

@@ -37,7 +37,6 @@ export class SingleArticleComponent implements OnInit {
       switchMap(params => this.adminService.getArticleById(+params['id'])),
       tap(article=>this.article = article)
     );
-    console.log(this.article)
   }
 
   onModif(){

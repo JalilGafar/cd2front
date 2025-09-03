@@ -4,10 +4,12 @@
         <h1>{{ article.id_actu }} </h1>
         <h2 [innerHTML]="article.title"></h2>
         <h3> <strong>Auteur :</strong>  {{ article.auteur }}</h3>
-        <h3><strong>Date de création : </strong>{{ article.createdDate }}</h3>
+        <h3><strong>Date de création : </strong>{{ article.createdDate | date }}</h3>
+        <h3><strong>Dernière mise à jours : </strong>{{ article.updatedDate | date }}</h3>
         <h3><strong>Visibilité :</strong> {{article.visible}} </h3>
         <h3><strong>Sujets :</strong> {{article.sujets}} </h3>
         <h3><strong>Résumé :</strong> {{ article.summary }}</h3>
+        <h3><strong>Mots clés :</strong> {{ article.keywords }}</h3>
         <h3><strong>Contenu :</strong></h3> <div [innerHTML]="article.content" ></div>
       </div>
     </ng-container>

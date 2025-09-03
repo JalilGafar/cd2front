@@ -17,7 +17,9 @@ export class RegisterComponent implements OnInit {
 
   ngOnInit(){}
 
-  onSubmit(): void{
-
+  discover(){
+    let c = encodeURI(`Je souhaite avoir plus d'information sur l'Enregistrement ou la modification d'un établissement sur Camerdiplome`);
+    let url = `https://wa.me/237679197112?text=${c}`
+    window.location.href = url;
   }
 }

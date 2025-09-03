@@ -18,6 +18,7 @@ import { ModifFormationComponent } from './components/modif-formation/modif-form
 import { ModifUnivComponent } from './components/modif-univ/modif-univ.component';
 import { SingleArticleComponent } from './components/single-article/single-article.component';
 import { NewArticleComponent } from './components/new-article/new-article.component';
+import { ModifArticleComponent } from './components/modif-article/modif-article.component';
 
 const routes: Routes = [
     { path: '', component: AdminStartComponent},
@@ -39,6 +40,7 @@ const routes: Routes = [
     { path: 'modif-ecole/:id', component: ModifEcoleComponent },
     { path: 'modif-campus/:id', component: ModifCampusComponent },
     { path: 'modif-formation/:id', component: ModifFormationComponent },
+    { path: 'modif-article/:id', component: ModifArticleComponent },
     { path:'**', redirectTo:'adminStart'}
   
 

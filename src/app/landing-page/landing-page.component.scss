@@ -18,6 +18,36 @@
     padding-bottom: 120px;
 }
 
+.une {
+    display: block;
+    h2{
+        font-size: xx-large;
+        text-align: center;
+    }
+    .carousel {
+        width: 100%; /* Width of carousel */
+        height: 336px; /* Height of carousel */
+    }
+    
+    .card-container {
+        width: 100%; /* Width of card container */
+        display: flex; /* Set inline elements */
+        overflow-x: auto; /* Set overflow in horizontal scroll */
+        overflow-y: hidden; /* Hidden overflow in vertical scroll */
+        scroll-snap-type: x mandatory; /* Force the scroll to snap to the start of a scroll-snap area */
+        gap: 8px; /* Set gap between cards */
+        width: calc(100% - 16px);
+        margin: 8px;
+        flex: 0 0 calc(100% - 16px); /* Set width of card container */
+        padding-bottom: 20px;
+    }
+    
+    // .card-container::-webkit-scrollbar {
+    //     // display: none; /* Hide scrollbar in Chrome, Safari and Opera */
+    // }
+    
+}
+
 .inbox {
     position: relative;
 }

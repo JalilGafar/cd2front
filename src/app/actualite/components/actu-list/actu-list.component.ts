@@ -67,7 +67,7 @@ export class ActuListComponent implements OnInit {
     }
   }
 
-  onViewActu(idActu:number){
+  onViewActu(idActu:string){
     this.appRout.navigateByUrl('actualite/blog/'+idActu)
   }
   

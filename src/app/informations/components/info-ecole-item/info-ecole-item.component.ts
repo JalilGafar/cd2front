@@ -57,7 +57,7 @@ export class InfoEcoleItemComponent implements OnInit{
   private initMetaForMyPage(){
     if (this.ecole) {
       this.titleService.setTitle(this.ecole[0].sigle_e+' _ '+ this.ecole[0].nom_e)
-      this.meta.updateTag({ name: 'keywords', content: this.ecole[0].sigle_e+' '+this.ecole[0].nom_e+' '+' Etablissement, MINESUP, Orientation, Cameroun, Etudes supérieures, Formation professionnelle, Travail, Enseignement, Diplômes, Universités, Grandes écoles, Instituts, Centres de formation, Carrière, Emploi, Métiers' });
+      // this.meta.updateTag({ name: 'keywords', content: this.ecole[0].sigle_e+' '+this.ecole[0].nom_e+' '+' Etablissement, MINESUP, Orientation, Cameroun, Etudes supérieures, Formation professionnelle, Travail, Enseignement, Diplômes, Universités, Grandes écoles, Instituts, Centres de formation, Carrière, Emploi, Métiers' });
       this.meta.updateTag({ name: 'description', content: this.ecole[0].nom_e+' Pour une formation de qualité au Cameroun' });
     }
   }
@@ -114,6 +114,12 @@ export class InfoEcoleItemComponent implements OnInit{
 
   trouverForm(){
     this.appRout.navigate(['./orientation/degree']);
+  }
+
+  discover(){
+    let c = encodeURI(`Je souhaite avoir plus d'information sur ${this.ecole[0].nom_e} ${this.ecole[0].sigle_e}`);
+    let url = `https://wa.me/237679197112?text=${c}`
+    window.location.href = url;
   }
 
   tonAvis(){

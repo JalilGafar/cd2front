@@ -30,8 +30,8 @@ export class ActuComponent implements OnInit {
       this.Actualite$ = this.actuService.getAllActu();
     };
 
-    onViewActu(idActu:number){
-      this.appRout.navigateByUrl('actualite/blog/'+idActu)
+    onViewActu(subjectActu:string){
+      this.appRout.navigateByUrl('actualite/blog/'+subjectActu)
     }
 
     ngAfterViewInit(): void {

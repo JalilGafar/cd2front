@@ -28,7 +28,7 @@
                                 <div [id]="'tabix'+$index" class="tab-pane fade active show">
                                     @for (itemi of domainesLong; track itemi.id_dom) {
                                         @if (itemi.branche_dom === item.branche_dom) {
-                                            <button type="button" class="metier-item" (click)="voirFiliere(itemi.id_dom)">{{itemi.nom_dom}}</button>
+                                            <button type="button" class="metier-item" (click)="voirFiliere(itemi.nom_dom, itemi.id_dom)">{{itemi.nom_dom}}</button>
                                         }
                                     }
                                 </div>
@@ -36,7 +36,7 @@
                                 <div [id]="'tabix'+$index" class="tab-pane fade">
                                     @for (itemi of domainesLong; track itemi.id_dom) {
                                         @if (itemi.branche_dom === item.branche_dom) {
-                                            <button type="button" class="metier-item" (click)="voirFiliere(itemi.id_dom)">{{itemi.nom_dom}}</button>
+                                            <button type="button" class="metier-item" (click)="voirFiliere(itemi.nom_dom, itemi.id_dom)">{{itemi.nom_dom}}</button>
                                         }
                                     }
                                 </div>

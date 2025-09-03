@@ -34,29 +34,29 @@ export class InfoDiplomeComponent implements OnInit {
   domainesShort: Domaine[] = [];
   domainesTransit: Domaine[] = [];
   domainesLong: Domaine[] = [];
-  plusDom : string = 'Plus de filière';
+  plusDom: string = 'Plus de filière';
   activeIndex: number = 0;
-  branch!: {branche_dom: string} [];
+  branch!: { branche_dom: string }[];
 
 
-  constructor( 
-    private titleService:Title, 
+  constructor(
+    private titleService: Title,
     private adversService: AdversService,
     private infoService: InfoServices,
-    private appRout : Router,
+    private appRout: Router,
     private meta: Meta
   ) {
-      this.titleService.setTitle("Les filière de formation au Cameroun");
-      this.meta.updateTag({ name: 'description', content: 'CAP, Bac, DQP, CQP, Master, BTS, Licence, Bachelor, HND, Licence pro, Prepa, Capacité' });
-      this.meta.updateTag({ name: 'keywords', content: 'CAP, Bac, DQP, CQP, Master, BTS, Licence, Bachelor, HND, Licence pro, Prepa, Capacité' });
-    }
+    this.titleService.setTitle("Les filière de formation au Cameroun");
+    this.meta.updateTag({ name: 'description', content: 'CAP, Bac, DQP, CQP, Master, BTS, Licence, Bachelor, HND, Licence pro, Prepa, Capacité' });
+    this.meta.updateTag({ name: 'keywords', content: 'CAP, Bac, DQP, CQP, Master, BTS, Licence, Bachelor, HND, Licence pro, Prepa, Capacité' });
+  }
 
-  
-  trouverForm(){
+
+  trouverForm() {
     this.appRout.navigate(['./orientation/degree']);
   }
 
-  ngOnInit(){
+  ngOnInit() {
     this.schoolAdvers$ = this.adversService.getSchoolPub();
     this.infoService.getBranche().pipe(
       tap(data => this.branch = data)
@@ -72,12 +72,23 @@ export class InfoDiplomeComponent implements OnInit {
     ).subscribe();
   }
 
-  voirFiliere(idDom:number){
-    this.appRout.navigateByUrl('info/domaine/'+ idDom);
+  voirFiliere(nomDom: string, idDom: number) {
+    const slug = this.generateSlug('formations en ' + nomDom + ' au Cameroun');
+    this.appRout.navigate(['info/domaine', slug, idDom]);
+    // this.appRout.navigateByUrl('info/domaine/'+ idDom);
   }
 
-  plusFiliere(){
-    if (this.plusDom === 'Plus de filière' ) {
+  generateSlug(name: string): string {
+    return name
+      .normalize('NFD')                   // décompose les lettres accentuées
+      .replace(/[\u0300-\u036f]/g, '')    // supprime les signes diacritiques (accents)
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')        // remplace les caractères spéciaux par des -
+      .replace(/^-+|-+$/g, '');           // enlève les - au début et à la fin
+  }
+
+  plusFiliere() {
+    if (this.plusDom === 'Plus de filière') {
       this.domainesTransit = this.domainesLong;
       this.plusDom = 'Voir moins'
     } else {

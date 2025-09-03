@@ -9,6 +9,8 @@ import { SchoolAdvers } from '../../../model/school-adv';
 import { AdversService } from '../../../service/advers.service';
 import { PubAdversComponent } from '../../../shared/components/pub-advers/pub-advers.component';
 import { FormationAdvers } from '../../../model/formadv';
+import { OrientationService } from '../../../orientation/orientation.service';
+import { BEHAVIOR } from '../../../model/behavior';
 
 @Component({
   selector: 'app-info-domaine-item',
@@ -31,7 +33,8 @@ export class InfoDomaineItemComponent implements OnInit {
     private appRout: Router,
     private route: ActivatedRoute,
     private adversService: AdversService,
-    private infoService: InfoServices
+    private infoService: InfoServices,
+    private orientationService :OrientationService
   ){}
 
 
@@ -47,6 +50,10 @@ export class InfoDomaineItemComponent implements OnInit {
 
   trouverForm(){
     this.appRout.navigate(['./orientation/degree']);
+  }
+
+  ngAfterViewInit(): void {
+    this.orientationService.scrollTo('header', BEHAVIOR.auto)
   }
 
 }

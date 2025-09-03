@@ -23,7 +23,7 @@ import { event } from 'jquery';
   templateUrl: './info-ecole.component.html',
   styleUrl: './info-ecole.component.scss'
 })
-export class InfoEcoleComponent implements OnInit{
+export class InfoEcoleComponent implements OnInit {
 
   titre = "Les établissements au Cameroun";
   soustitre = "Comme Toumbe, 40% des bacheliers utilisent Camerdiplome pour trouver leur école";
@@ -34,21 +34,20 @@ export class InfoEcoleComponent implements OnInit{
   ecole!: EcoleFind[];
   countEcole: number = 0;
   loading$!: Observable<boolean>;
-  absent: string= 'absent-off'
+  absent: string = 'absent-off'
   ets = new FormControl('', Validators.required)
-  etsi : FormControl = new FormControl('', Validators.required)
+  etsi: FormControl = new FormControl('', Validators.required)
   constructor( //private infoservice :InfoServices,
-    private titleService:Title,
+    private titleService: Title,
     private adversService: AdversService,
     private infoService: InfoServices,
-    private appRout : Router
-  ) 
-    {
-      // if (this.ets) {        
-      //   this.titleService.setTitle(this.ets.value+'');
-      // }
-      //this.ets.setValue('ggg')
-    }
+    private appRout: Router
+  ) {
+    // if (this.ets) {        
+    //   this.titleService.setTitle(this.ets.value+'');
+    // }
+    //this.ets.setValue('ggg')
+  }
 
 
 
@@ -62,35 +61,46 @@ export class InfoEcoleComponent implements OnInit{
 
     this.schoolAdvers$ = this.adversService.getSchoolPub();
     this.ecole$ = this.infoService.getEcoleFind().pipe(
-      tap(data => this.countEcole = data.length ),
-      tap(data => this.ecole = data ),
+      tap(data => this.countEcole = data.length),
+      tap(data => this.ecole = data),
       // tap(() => this.loading$.subscribe(loading$.next) ),
       map(data => data.map(data => ({
         ...data,
-        displayName : data.sigle_e+'   '+data.nom_e+' ||'+data.id_ecol
+        displayName: data.sigle_e + '   ' + data.nom_e + ' ||' + data.id_ecol
       })))
-    ) ;
+    );
   }
 
-  onFind(){
+  onFind() {
     if (this.ets.invalid) {
       return;
-    }else if (this.ets.value != null) { 
-      console.log(this.ets)  
+    } else if (this.ets.value != null) {
+      console.log(this.ets)
       // this.appRout.navigate(['info/ecole/'+ this.ets.value] , {queryParams:{detail: paramsValue}})  
 
-     let  tt = parseInt(this.ets.value[this.ets.value.indexOf("||") + 2] + this.ets.value[this.ets.value?.indexOf("||") + 3] + this.ets.value[this.ets.value?.indexOf("||") + 4])
+      let tt = parseInt(this.ets.value[this.ets.value.indexOf("||") + 2] + this.ets.value[this.ets.value?.indexOf("||") + 3] + this.ets.value[this.ets.value?.indexOf("||") + 4])
       if (isNaN(tt)) {
-        this.absent = 'absent-on'                                            
-      }else {
-        // this.appRout.navigateByUrl('info/ecole/'+ tt+'', {details:});    
-        let paramsValue = this.ets.value.split(' ').join('_').toLowerCase()
-        this.appRout.navigate(['info/ecole/'+ tt] , {queryParams:{detail: paramsValue}})                                            
+        this.absent = 'absent-on'
+      } else {
+        // this.appRout.navigateByUrl('info/ecole/'+ tt+'', {details:});   
+        const slug = this.generateSlug(this.ets.value); // ou phone.nom si c’est ça le champ réel
+        this.appRout.navigate(['info/ecole', slug, tt]);
+        // let paramsValue = this.ets.value.split(' ').join('_').toLowerCase()
+        // this.appRout.navigate(['info/ecole/'+ tt] , {queryParams:{detail: paramsValue}})                                            
       }
     }
   }
 
-  hiden(){
+  generateSlug(name: string): string {
+    return name.toLowerCase()
+      .normalize('NFD')                   // décompose les lettres accentuées
+      .replace(/[\u0300-\u036f]/g, '')    // supprime les signes diacritiques (accents)
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')        // remplace les caractères spéciaux par des -
+      .replace(/^-+|-+$/g, '');           // enlève les - au début et à la fin
+  }
+
+  hiden() {
     this.absent = 'absent-off'
   }
 

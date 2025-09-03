@@ -25,6 +25,7 @@ import { TreeSelectModule } from 'primeng/treeselect'
 
 @NgModule({
     exports:[
+      DialogModule,
       TreeSelectModule,
       FileUploadModule,
       RatingModule,

@@ -30,6 +30,7 @@ export class NewArticleComponent implements OnInit {
     illustration : [null],
     content : [null],
     sujets : [null],
+    keywords: [null]
     });
   }
 

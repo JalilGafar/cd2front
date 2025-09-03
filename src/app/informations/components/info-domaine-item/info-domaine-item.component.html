@@ -1,7 +1,6 @@
 @if (filiere) {
     <div class="container">
-        <div class="tout">Tout sasoir sur</div>
-        <h2>Formation {{filiere[0].nom_dom}}</h2>
+        <h1>Tout sasoir sur les formations en {{filiere[0].nom_dom}} au Cameroun</h1>
         <div class="intro">
             {{filiere[0].intro_dom}}
         </div>
@@ -10,7 +9,7 @@
             <img [src]="'../../../../assets/images/domaines/'+filiere[0].illustra_dom" [alt]="filiere[0].illustra_dom">
         </div>
         <div class="adv">
-            <h2>Quelques formation {{filiere[0].nom_dom}}</h2>
+            <h2>Quelques formations en {{filiere[0].nom_dom}} au Cameroun</h2>
             <div class="list">
                 @for (iteme of advertiser$ | async; track iteme.id_form) {
                     <app-pub-advers [school]="iteme" ></app-pub-advers>

@@ -70,14 +70,17 @@
                             <hr>
                         </ng-container>
                         
-                        <div  *ngIf="school.tel_1_e"  ><i class="bi-telephone"></i> {{school.tel_1_e}} </div>
-                        <div  *ngIf="school.email_e"  ><i class="bi-envelope-at-fill"></i> <a [href]="school.email_e" target="_blank" rel="noopener noreferrer"></a> {{school.email_e}} </div>
-                        <div  *ngIf="school.siteweb_e" ><i class="bi-globe"></i> {{school.siteweb_e}} </div>
-
+                        <div>
+                            <strong>Contact : </strong> <button type="button" class="btn btn-success" (click)="discover()"> <i class="bi-telephone"></i>  Numéro WhatsApp  </button>
+                        </div>
+                        <!-- <div  *ngIf="school.email_e"  ><i class="bi-envelope-at-fill"></i> <a [href]="school.email_e" target="_blank" rel="noopener noreferrer"></a> {{school.email_e}} </div> -->
+                        @if (school.siteweb_e) {
+                            <strong>Site Web</strong> <a [href]="school.siteweb_e" target="_blank" rel="noopener noreferrer"><i class="bi-globe"></i> Cliquez ici</a>
+                        }
                     </div>
                     <div class="footer">
-                        <a [routerLink]="'/info/ecole/'+school.id_ecol">
-                            <button class="btn btn-primary" (click)="showOnePage(school.nom_e)">Voir l'établissement</button>
+                        <a (click)="toSchool()" data-dismiss="modal" >
+                            <button class="btn btn-primary" >Voir l'établissement</button>
                         </a>
                         <!-- <p-button label="Demander des informaions" (click)="sendNumber()"  styleClass="p-button-warning" ></p-button> -->
                     </div>

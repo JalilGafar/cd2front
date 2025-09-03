@@ -38,8 +38,8 @@ const routes: Routes = [
     {path: 'master', component: InfoMasterComponent},
     {path: 'ecole', component: InfoEcoleComponent},
     {path: 'metier', component: InfoMetierComponent},
-    {path: 'domaine/:id', component: InfoDomaineItemComponent},
-    {path: 'ecole/:id', component: InfoEcoleItemComponent},
+    {path: 'domaine/:slug/:id', component: InfoDomaineItemComponent},
+    {path: 'ecole/:slug/:id', component: InfoEcoleItemComponent},
     {path: 'metier/:id', component: InfoMetierItemComponent},
     {path: 'formation/:id', component: InfoFormationItemComponent},
 ]

@@ -15,6 +15,7 @@ export const routes: Routes = [
     {path:'', component: LandingPageComponent},
     {path:'view', component: UsertestComponent},
     {path: 'about', component: AboutComponent},
+    {path: 'register', component: RegisterComponent},
     { path: 'info', loadChildren: () => import('./informations/informations.module').then(m => m.InformationsModule) },
     { path: 'orientation', loadChildren: () => import('./orientation/orientation.module').then(m => m.OrientationModule) },
     { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule) },

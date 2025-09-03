@@ -20,8 +20,6 @@ export class ModifUnivComponent implements OnInit{
   
   modifUniv!: FormGroup;
   universite$!: Observable<Universite>;
-  univPrev!: Universite;
-  text1: string = '<div>Hello World!</div><div>PrimeNG <b>Editor</b> Rocks</div><div><br></div>';
 
   constructor ( private adminService : AdminService,
                 private route: ActivatedRoute,

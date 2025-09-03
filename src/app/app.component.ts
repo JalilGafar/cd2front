@@ -1,5 +1,5 @@
 import { Component, Inject, OnInit, PLATFORM_ID, inject } from '@angular/core';
-import { RouterLink, RouterOutlet } from '@angular/router';
+import { NavigationEnd, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { UsertestComponent } from "./usertest/usertest.component";
 import { VommentsComponent } from './vomments/vomments.component';
 import { DatePipe, NgOptimizedImage, UpperCasePipe, isPlatformBrowser, provideImgixLoader, Location, CommonModule } from '@angular/common';
@@ -59,11 +59,20 @@ export class AppComponent implements OnInit {
 
   constructor(
     // private petCareService: CarService, 
+    private router: Router,
     location: Location,
     @Inject(PLATFORM_ID) private platformId: any
     ) {
     // this.display = this.petCareService.getCars();
     this.location = location;
+    this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        // Fermer tous les modals et retirer le backdrop si présent
+        document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+        document.body.classList.remove('modal-open');
+        document.body.style.removeProperty('padding-right');
+      }
+    });
   }
 
   ngOnInit(): void {

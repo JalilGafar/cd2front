@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { TopNews } from '../model/top-news-model';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { environment } from '../../environments/environment';
 import { BEHAVIOR } from '../model/behavior';
 import { counter } from '../model/counter-model';
@@ -14,23 +14,33 @@ import { counter } from '../model/counter-model';
 export class TopNewsService {
 
 
-    constructor (private http: HttpClient){};
+  constructor(private http: HttpClient) { };
+
+  private _loading$ = new BehaviorSubject<boolean>(false);
+  get loading$(): Observable<boolean> {
+    return this._loading$.asObservable();
+  }
+
+  private setLoadingStatus(loading: boolean) {
+      this._loading$.next(loading)
+  }
 
   getAllTopNews(): Observable<TopNews[]> {
     //return this.topnewss;
-    return this.http.get<TopNews[]>(`${environment.apiUrl}/api/topNewsSlide`); 
+    return this.http.get<TopNews[]>(`${environment.apiUrl}/api/topNewsSlide`);
   }
 
   scrollTo(element: string, behavior: BEHAVIOR): void {
+    this.setLoadingStatus(true)
     if (typeof document !== 'undefined') {
       let elementer = document.getElementById(element);
-    
-      (elementer as HTMLElement).scrollIntoView({behavior: behavior, block:"start", inline:"nearest"})
+
+      (elementer as HTMLElement).scrollIntoView({ behavior: behavior, block: "start", inline: "nearest" })
       // Manipulating the DOM here
-   }
+    }
   }
 
   countFormation(): Observable<counter[]> {
-    return this.http.get<counter[]>(`${environment.apiUrl}/api/countFomration`); 
+    return this.http.get<counter[]>(`${environment.apiUrl}/api/countFomration`);
   }
 }

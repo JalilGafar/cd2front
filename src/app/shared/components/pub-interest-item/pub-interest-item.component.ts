@@ -16,11 +16,14 @@ export class PubInterestItemComponent implements OnInit {
   visible!: boolean;
   visibleCall!: boolean;
   userPhone!: string;
+  name!:string;
 
 
   constructor( private  appRout : Router ){}
  
   ngOnInit(): void {
+
+    this.name = this.school.sigle + this.school.nom_e
 
   }
 
@@ -32,6 +35,26 @@ export class PubInterestItemComponent implements OnInit {
     //const url = this.appRout.serializeUrl(this.appRout.createUrlTree(['etablissement/'], { queryParams: {school:school} }));
     //window.open(url, '_blank');
     this.appRout.navigate(['etablissement/'], { queryParams: {school:school} } );
+  }
+
+  discover(){
+    let c = encodeURI(`Je souhaite avoir plus d'information sur le diplôme ${this.school.nom_dip}  de l'école ${this.school.sigle} || ${this.school.nom_e} dans la ville de ${this.school.ville_cam} `);
+    let url = `https://wa.me/237679197112?text=${c}`
+    window.location.href = url;
+  }
+
+  toSchool(){
+    const slug = this.generateSlug(this.name);
+    this.appRout.navigate(['info/ecole', slug, this.school.id_ecol]);
+  }
+
+  generateSlug(name: string): string {
+    return name.toLowerCase()
+      .normalize('NFD')                   // décompose les lettres accentuées
+      .replace(/[\u0300-\u036f]/g, '')    // supprime les signes diacritiques (accents)
+      .toLowerCase()
+      .replace(/[^a-z0-9]+/g, '-')        // remplace les caractères spéciaux par des -
+      .replace(/^-+|-+$/g, '');           // enlève les - au début et à la fin
   }
 
   sendNumber(){
