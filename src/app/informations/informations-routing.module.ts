@@ -40,6 +40,9 @@ const routes: Routes = [
     {path: 'metier', component: InfoMetierComponent},
     {path: 'domaine/:slug/:id', component: InfoDomaineItemComponent},
     {path: 'ecole/:slug/:id', component: InfoEcoleItemComponent},
+    {path: 'metier/:slug/:id', component: InfoMetierItemComponent},
+    // Redirige les anciennes URL indexées (/info/metier/5) vers le composant
+    // identique — le composant lit params['id'] dans les deux cas.
     {path: 'metier/:id', component: InfoMetierItemComponent},
     {path: 'formation/:id', component: InfoFormationItemComponent},
 ]

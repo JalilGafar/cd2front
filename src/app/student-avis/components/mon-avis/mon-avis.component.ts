@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { SharedComponentModule } from '../../../shared/shared.modules';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { AvisService } from '../../avis.service';
@@ -42,7 +43,8 @@ export class MonAvisComponent implements OnInit {
     private formBuilder: FormBuilder,
     private avisService: AvisService,
     private route: ActivatedRoute,
-    private appRout : Router
+    private appRout : Router,
+    @Inject(PLATFORM_ID) private platformId: Object
   ){
     this.items = [];
     for (let i = 2000; i < 2025; i++) {
@@ -56,6 +58,9 @@ export class MonAvisComponent implements OnInit {
 
 
   ngOnInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 
     this.newAvis  = this.formBuilder.group({
       id_ecole: [null],

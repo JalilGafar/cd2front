@@ -1,161 +1,67 @@
-<div id="header">
-    <!-- <p-menubar [model]="items" /> -->
+<nav class="navbar navbar-expand-lg"  [class.scrolled]="isScrolled">
 
-    <!-- <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
-        <div class="logo">
-            <a routerLink="" class="navbar-brand"  > <img src="../../assets/images/logo-no-background.png" class="logo-img" alt="Camerdiplome"> </a>
-        </div>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" arial-controls="navbarSupportedContent"
-                aria-expanded="false" aria-label="Toggle navigation" >
-            <span class="navbar-toggler-icon" ></span>
-        </button>
+  <a class="navbar-brand" routerLink="">
+    <img src="../../assets/images/logo.webp" width="32" height="32" class="brand-logo" alt="Camerdiplome">
+    <span class="brand-name">Camerdiplome</span>
+  </a>
 
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item active"> <a class="nav-link" routerLink="">Accueil</a> </li>
-                <li class="nav-item active"> <a class="nav-link" routerLink="info/metier">Métier</a> </li>
-                <li class="nav-item active"> <a class="nav-link" routerLink="info/ecole">Etablissement</a> </li>
-                <li class="nav-item dropdown-submenu active" > 
-                    <a class="nav-link dropdown-toggle" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Formations
-                    </a> 
-                    <ul class="dropdown-menu bg-primary" aria-labelledby="navbarDropdown">
-                        <li class="nav-item active"><a class="dropdown-item" routerLink="info/system">Systèmes de formation</a></li>
-                        <li class="nav-item active"><a class="dropdown-item" routerLink="info/diplome">domaines de formation</a></li>
-                        <li class="nav-item dropdown-submenu active">
-                            <a class="nav-link dropdown-toggle" id="navbarDropdown2" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    Avant Bac
-                                </a> 
-                                <ul class="dropdown-submenu" aria-labelledby="navbarDropdown2">
-                                    <li class="nav-item active"><a class="dropdown-item" routerLink="info/cap">Le CAP</a></li>
-                                    <li class="nav-item active"><a class="dropdown-item" routerLink="info/bactec">Le Bac Technique</a></li>        
-                                </ul>
-                            
-                        </li>    
-                    </ul>
-                </li>
-            </ul>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="toggler-icon"></span>
+    <span class="toggler-icon"></span>
+    <span class="toggler-icon"></span>
+  </button>
 
-        </div>
-    </nav> -->
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav ml-auto" (click)="closeNavbar()">
 
+      <li class="nav-item">
+        <a class="nav-link" routerLink="">Accueil</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="info/metier">Les métiers</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="info/diplome">Les formations</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="info/ecole">Les écoles</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="info/system">Systèmes de formation</a>
+      </li>
 
-
-    <nav class="navbar navbar-dark bg-dark">
-        <a class="navbar-brand" href="" routerLink="">
-            <img src="../../assets/images/logo.webp" width="30" height="30" class="d-inline-block align-top"  alt="Camerdiplome">
-            <span style="vertical-align: sub; padding-left: 10px;" >Camerdiplome</span> 
+      <li class="nav-item dropdown" [class.show]="isCursusOpen">
+        <a class="nav-link dropdown-toggle" role="button"
+           (click)="toggleCursus($event)"
+           [attr.aria-expanded]="isCursusOpen">
+          Les Cursus
         </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto" (click)="closeNavbar()" >
-                <li class="nav-item active">
-                    <a class="nav-link" routerLink="">Accueil <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="info/metier">Les métier</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="info/diplome">Les formations</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="info/ecole">Les écoles de formation</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="info/system">Les systèmes de formation</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" role="button" data-toggle="dropdown"
-                        aria-expanded="false">
-                        Les Cursus
-                    </a>
-                    <div class="dropdown-menu">
-                        <a class="dropdown-item" routerLink="info/cap">Le CAP</a>
-                        <a class="dropdown-item" routerLink="info/bactec">Le Bac Technique</a>
-                        <a class="dropdown-item" routerLink="info/cqp">CQP, DQP et Certifations</a>
-                        <a class="dropdown-item" routerLink="info/capacite">La Capacité en droit</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" routerLink="info/prepa">Les Prépas</a>
-                        <a class="dropdown-item" routerLink="info/bts">Le BTS</a>
-                        <a class="dropdown-item" routerLink="info/hnd">The HND</a>
-                        <a class="dropdown-item" routerLink="info/dut">Le DUT</a>
-                        <a class="dropdown-item" routerLink="info/licence">La Licence et Licence Pro</a>
-                        <a class="dropdown-item" routerLink="info/bachelor">The Bachelor's Degree</a>
-                        <a class="dropdown-item" routerLink="info/master">Le Master</a>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" routerLink="actualite/actues">Articles à la une</a>
-                    <a class="nav-link" routerLink="register">Ajouter mon établissement</a>
-                </li>
-            </ul>
-
+        <div class="dropdown-menu" [class.show]="isCursusOpen">
+          <div class="dropdown-section-label">Avant Bac</div>
+          <a class="dropdown-item" routerLink="info/cap">Le CAP</a>
+          <a class="dropdown-item" routerLink="info/bactec">Le Bac Technique</a>
+          <a class="dropdown-item" routerLink="info/cqp">CQP, DQP et Certifications</a>
+          <a class="dropdown-item" routerLink="info/capacite">La Capacité en droit</a>
+          <div class="dropdown-divider"></div>
+          <div class="dropdown-section-label">Après Bac</div>
+          <a class="dropdown-item" routerLink="info/prepa">Les Prépas</a>
+          <a class="dropdown-item" routerLink="info/bts">Le BTS</a>
+          <a class="dropdown-item" routerLink="info/hnd">The HND</a>
+          <a class="dropdown-item" routerLink="info/dut">Le DUT</a>
+          <a class="dropdown-item" routerLink="info/licence">La Licence et Licence Pro</a>
+          <a class="dropdown-item" routerLink="info/bachelor">The Bachelor's Degree</a>
+          <a class="dropdown-item" routerLink="info/master">Le Master</a>
         </div>
-        <!-- <span>
-        </span>
-        <div class="logo">
-        </div> 
-        <ul class="nav-links">
-            <input type="checkbox" id="checkbox_toggle">
-            <label for="checkbox_toggle" (click)="hideMenuTop()" class="hamburger">&#9776;</label>
+      </li>
 
-            <div [className]="ckd">
-                <li> <a (click)="hideMenu()" routerLink="">Accueil</a> </li>
-                <li> <a (click)="hideMenu()" routerLink="info/metier">Métier</a> </li>
-                <li> <a (click)="hideMenu()" routerLink="info/ecole">Etablissement</a> </li>
-                <li class="openning">
-                    <span>Formations</span>
-                    <i class="bi bi-arrow-right-circle-fill"></i>
+      <li class="nav-item">
+        <a class="nav-link" routerLink="actualite/actues">Actualités</a>
+      </li>
+      <li class="nav-item nav-item-cta">
+        <a class="nav-link nav-cta" routerLink="register">Ajouter mon établissement</a>
+      </li>
 
-                    <ul class="dropdown">
-                        <li> <a (click)="hideMenu()" routerLink="info/system">Systèmes de formation</a> </li>
-                        <li> <a (click)="hideMenu()" routerLink="info/diplome">domaines de formation</a> </li>
-                        <li class="reopenning">
-                            <i class="bi bi-arrow-left-circle-fill"></i>
-                            <span>Avant Bac</span>
-
-                            <ul class="redropdown">
-                                <li> <a (click)="hideMenu()" routerLink="info/cap">Le CAP</a> </li>
-                                <li> <a (click)="hideMenu()" routerLink="info/bactec">Le Bac Technique</a> </li>
-                                <li> <a (click)="hideMenu()" routerLink="info/cqp">Le CQP / DQP</a> </li>
-                                <li> <a (click)="hideMenu()" routerLink="info/capacite">La Capacité en droit</a> </li>
-                            </ul>
-                        </li>
-                        <li class="reopenning">
-                            <i class="bi bi-arrow-left-circle-fill"></i>
-                            <span>Après Bac</span>
-
-                            <ul class="redropdown">
-                                <li> <a (click)="hideMenu()" routerLink="info/prepa">Les Prépas</a> </li>
-                                <li> <a (click)="hideMenu()" routerLink="info/bts">Le BTS</a> </li>
-                                <li> <a (click)="hideMenu()" routerLink="info/hnd">The HND</a> </li>
-                                <li> <a (click)="hideMenu()" routerLink="info/dut">Le DUT</a> </li>
-                                <li> <a (click)="hideMenu()" routerLink="info/licence">La Licence</a> </li>
-                                <li> <a (click)="hideMenu()" routerLink="info/licencepro">La Licence Pro</a> </li>
-                                <li> <a (click)="hideMenu()" routerLink="info/bachelor">The Bachelor's Degree</a> </li>
-                                <li> <a (click)="hideMenu()" routerLink="info/master">Le Master</a> </li>
-                            </ul>
-                        </li>
-                    </ul>
-                </li>
-                <li class="openning">
-                    <span>Actualité</span>
-                    <i class="bi bi-arrow-right-circle-fill"></i>
-
-                    <ul class="dropdown">
-                        <li> <a (click)="hideMenu()" routerLink="actualite">Articles à la une</a> </li>
-                        <li> <a (click)="hideMenu()" routerLink="building">Enseignement superieur </a> </li>
-                        <li> <a (click)="hideMenu()" routerLink="building">Orientation </a> </li>
-                        <li> <a (click)="hideMenu()" routerLink="building">Vie étudiante </a> </li>
-                        <li> <a (click)="hideMenu()" routerLink="building">Vie professionnelle </a> </li>
-                    </ul>
-                </li>
-            </div>
-        </ul>
-        -->
-    </nav>
-</div>
+    </ul>
+  </div>
+</nav>

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { CommonModule } from '@angular/common';
 import { SharedComponentModule } from '../../../shared/shared.modules';
 import { Meta, Title } from '@angular/platform-browser';
@@ -31,12 +32,13 @@ export class InfoSystemComponent implements OnInit {
   schoolAdvers$!: Observable<SchoolAdvers[]>;
 
 
-  constructor( 
-    private titleService:Title, 
+  constructor(
+    private titleService:Title,
     private adversService: AdversService,
     private infoService: InfoServices,
     private appRout : Router,
-    private meta: Meta) {this.titleService.setTitle("Liste des Diplômes au Cameroun");
+    private meta: Meta,
+    @Inject(PLATFORM_ID) private platformId: Object) {this.titleService.setTitle("Liste des Diplômes au Cameroun");
                           this.meta.updateTag({ name: 'description', content: 'CAP, Bac, DQP, CQP, Master, BTS, Licence, Bachelor, HND, Licence pro, Prepa, Capacité' });
                           this.meta.updateTag({ name: 'keywords', content: 'CAP, Bac, DQP, CQP, Master, BTS, Licence, Bachelor, HND, Licence pro, Prepa, Capacité' });
                         }
@@ -185,6 +187,9 @@ export class InfoSystemComponent implements OnInit {
   ]
 
   ngOnInit(){
+    if (isPlatformBrowser(this.platformId)) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
     this.schoolAdvers$ = this.adversService.getSchoolPub();
   }
 

@@ -1,10 +1,10 @@
+<app-headmsg
+    [titre]="titre"
+    [soustitre]="soustitre"
+    [photo] = "photo"
+    >
+</app-headmsg>
 <div class="container">
-    <app-headmsg 
-        [titre]="titre"
-        [soustitre]="soustitre"
-        [photo] = "photo"
-        >
-    </app-headmsg>
     <div class="find">
         <div class="titi dispo"> <i></i> Plus de {{countEcole}} établissements disponibles </div>
         <!-- <div class="titi avi">Plus de ______ avis publiés</div> -->
@@ -37,17 +37,18 @@
     </div>
 
     <div class="une">
-        <h2>Les écoles à la une</h2>
+        <div class="section-head">
+            <span class="section-badge">Établissements partenaires</span>
+            <h2>Les écoles à la une</h2>
+        </div>
         <div class="carousel">
             <div class="card-container">
                 @for (item of schoolAdvers$ | async ; track item.id_ecol) {
                     <app-school-advers [schoolAdv]="item" ></app-school-advers>
                 }
             </div>
-        </div>        
+        </div>
     </div>
-
-    <app-start ></app-start>
     <div class="main-container">
         <!-- <app-pub-interest-item *ngFor="let schooli of school$ | async" [school]="schooli"></app-pub-interest-item> -->
         <div class="redaction-info">   
@@ -96,8 +97,8 @@
             </div>
             
         </div>
-    </div>
-    <div class="actual">
-        <app-actu-list/>
+        <div class="actual">
+            <app-actu-list/>
+        </div>
     </div>
 </div>

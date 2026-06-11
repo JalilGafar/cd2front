@@ -1,0 +1,1398 @@
+@import 'design-system';
+
+// ── Variables locales ────────────────────────────────────────────────────────
+$max-width:       800px;
+$card-radius:     12px;
+$transition:      0.2s ease;
+$spinner-color:   $accent;
+
+// ── Conteneur principal ──────────────────────────────────────────────────────
+.orientation-v2 {
+  min-height: 100vh;
+  background: $bg;
+  padding: 2rem 1rem 5rem;
+}
+
+// ── Structure commune aux phases ─────────────────────────────────────────────
+.phase {
+  max-width: $max-width;
+  margin: 0 auto;
+}
+
+.phase-header {
+  text-align: center;
+  margin-bottom: 2rem;
+
+  h1 {
+    font-size: 1.75rem;
+    font-weight: 700;
+    color: $text;
+    margin: 0.5rem 0 0.375rem;
+
+    @media (max-width: 575px) { font-size: 1.375rem; }
+  }
+}
+
+.phase-badge {
+  display: inline-block;
+  padding: 0.25rem 0.875rem;
+  background: $accent-bg;
+  color: $accent;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 0.875rem;
+}
+
+.phase-subtitle {
+  color: $text-muted;
+  font-size: 0.95rem;
+  margin: 0;
+}
+
+.ville-choisie {
+  color: $accent;
+  font-weight: 600;
+  font-size: 0.9rem;
+  margin: 0.25rem 0 0;
+}
+
+.btn-retour {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  background: none;
+  border: none;
+  color: $text-muted;
+  font-size: 0.9rem;
+  cursor: pointer;
+  padding: 0.25rem 0;
+  margin-bottom: 1.25rem;
+  transition: color $transition;
+
+  &:hover { color: $text; }
+}
+
+// ── Spinner centré ────────────────────────────────────────────────────────────
+.spinner-center {
+  display: flex;
+  justify-content: center;
+  padding: 2.5rem 0;
+}
+
+// ── Champ de recherche commun ─────────────────────────────────────────────────
+.recherche-wrapper {
+  max-width: 520px;
+  margin: 0 auto 1.5rem;
+  position: relative;
+}
+
+.recherche-input-group {
+  position: relative;
+
+  .recherche-icone {
+    position: absolute;
+    left: 0.875rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: $text-muted;
+    font-size: 0.95rem;
+    pointer-events: none;
+  }
+
+  .recherche-input {
+    padding-left: 2.5rem;
+    border-radius: 999px;
+    border: 1.5px solid $border;
+    transition: border-color $transition, box-shadow $transition;
+
+    &:focus {
+      border-color: $accent;
+      box-shadow: 0 0 0 3px $accent-bg;
+      outline: none;
+    }
+  }
+}
+
+// ── Phase A — Villes ──────────────────────────────────────────────────────────
+
+.villes-courantes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  justify-content: center;
+  margin-bottom: 1.75rem;
+}
+
+.ville-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.625rem 1.25rem;
+  border: 2px solid $border;
+  border-radius: 999px;
+  background: $bg-card;
+  color: $text;
+  font-size: 0.925rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all $transition;
+
+  &:hover,
+  &--active {
+    border-color: $accent;
+    background: $accent-bg;
+    color: $accent;
+  }
+
+  i { font-size: 0.85rem; }
+}
+
+.liste-villes {
+  list-style: none;
+  padding: 0;
+  margin: 0.375rem 0 0;
+  background: $bg-card;
+  border: 1px solid $border;
+  border-radius: $card-radius;
+  box-shadow: $shadow-md;
+  overflow: hidden;
+
+  li { border-bottom: 1px solid $border; &:last-child { border-bottom: none; } }
+}
+
+.ville-liste-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: none;
+  border: none;
+  text-align: left;
+  cursor: pointer;
+  color: $text;
+  font-size: 0.925rem;
+  transition: background $transition;
+
+  i { color: $accent; font-size: 0.85rem; }
+
+  &:hover {
+    background: $accent-bg;
+    color: $accent;
+  }
+}
+
+.aucun-resultat-item {
+  padding: 0.75rem 1rem;
+  color: $text-muted;
+  font-size: 0.875rem;
+  font-style: italic;
+}
+
+// ── Bouton "Voir toutes les villes" ──────────────────────────────────────────
+
+.toutes-villes-toggle {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.25rem;
+}
+
+.btn-toutes-villes {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1.25rem;
+  background: none;
+  border: 1.5px dashed $border;
+  border-radius: 999px;
+  color: $text-muted;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all $transition;
+
+  &:hover,
+  &--actif {
+    border-color: $accent;
+    color: $accent;
+    background: $accent-bg;
+    border-style: solid;
+  }
+}
+
+.badge-count-ville {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.5rem;
+  height: 1.5rem;
+  padding: 0 0.375rem;
+  background: $accent-bg;
+  color: $accent;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+// ── Grille de toutes les villes ───────────────────────────────────────────────
+
+.villes-grille-conteneur {
+  max-width: $max-width;
+  margin: 0 auto 1.5rem;
+}
+
+.villes-grille {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(148px, 1fr));
+  gap: 0.625rem;
+  max-height: 280px;
+  overflow-y: auto;
+  padding: 1rem;
+  background: $bg-card;
+  border: 1px solid $border;
+  border-radius: $card-radius;
+  box-shadow: $shadow-md;
+
+  &::-webkit-scrollbar        { width: 6px; }
+  &::-webkit-scrollbar-track  { background: transparent; }
+  &::-webkit-scrollbar-thumb  {
+    background: $border;
+    border-radius: 999px;
+    &:hover { background: $accent; }
+  }
+
+  @media (max-width: 575px) {
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+  }
+}
+
+.ville-pill--grille {
+  justify-content: flex-start;
+  font-size: 0.875rem;
+  padding: 0.5rem 0.875rem;
+}
+
+.aucun-resultat-grille {
+  grid-column: 1 / -1;
+  text-align: center;
+  color: $text-muted;
+  font-size: 0.875rem;
+  font-style: italic;
+  padding: 1rem 0;
+  margin: 0;
+}
+
+// ── Bouton "Tous les domaines" (Phase B) ─────────────────────────────────────
+
+.tous-domaines-wrapper {
+  max-width: $max-width;
+  margin: 2rem auto 0;
+  padding-top: 1.5rem;
+  border-top: 1px solid $border;
+}
+
+.btn-tous-domaines {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+  padding: 1rem 1.25rem;
+  background: $bg-card;
+  border: 1.5px solid $border;
+  border-radius: $card-radius;
+  cursor: pointer;
+  text-align: left;
+  transition: all $transition;
+
+  &:hover {
+    border-color: $accent;
+    background: $accent-bg;
+    box-shadow: $shadow-md;
+
+    .tous-domaines-label  { color: $accent; }
+    .tous-domaines-icones { background: $accent; color: #fff; }
+    .tous-domaines-chevron { color: $accent; transform: translateX(4px); }
+  }
+}
+
+.tous-domaines-icones {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  min-width: 2.75rem;
+  background: $accent-bg;
+  color: $accent;
+  border-radius: 10px;
+  font-size: 1.1rem;
+  transition: all $transition;
+}
+
+.tous-domaines-texte {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.2rem;
+}
+
+.tous-domaines-label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: $text;
+  transition: color $transition;
+}
+
+.tous-domaines-sous {
+  font-size: 0.8rem;
+  color: $text-muted;
+}
+
+.tous-domaines-chevron {
+  color: $text-muted;
+  font-size: 1rem;
+  transition: color $transition, transform $transition;
+}
+
+// ── Phase B — Domaines ────────────────────────────────────────────────────────
+
+.liste-domaines {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.domaine-tile {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.875rem 1.125rem;
+  background: $bg-card;
+  border: 1px solid $border;
+  border-radius: $card-radius;
+  cursor: pointer;
+  text-align: left;
+  width: 100%;
+  transition: all $transition;
+
+  &:hover {
+    border-color: $accent-border;
+    background: $accent-bg;
+    box-shadow: $shadow;
+
+    .domaine-chevron {
+      transform: translateX(4px);
+      color: $accent;
+    }
+  }
+}
+
+.domaine-icone {
+  width: 46px;
+  height: 46px;
+  border-radius: 10px;
+  background: $accent-bg;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 1.3rem;
+  color: $accent;
+  transition: background $transition;
+
+  .domaine-tile:hover & {
+    background: rgba(5, 150, 105, 0.15);
+  }
+}
+
+.domaine-info {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.domaine-nom {
+  font-weight: 600;
+  color: $text;
+  font-size: 0.95rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.domaine-branche {
+  font-size: 0.8rem;
+  color: $text-muted;
+}
+
+.domaine-chevron {
+  color: $text-muted;
+  font-size: 0.85rem;
+  flex-shrink: 0;
+  transition: transform $transition, color $transition;
+}
+
+.aucun-resultat-domaine {
+  text-align: center;
+  padding: 2rem;
+  color: $text-muted;
+  font-style: italic;
+}
+
+// ── Groupe de domaines (wrapper par famille parente) ──────────────────────
+
+.groupe-domaine {
+  margin-bottom: 0.25rem;
+
+  & + .groupe-domaine {
+    margin-top: 0.75rem;
+  }
+}
+
+.groupe-domaine-header {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.5rem 0.875rem 0.375rem;
+  cursor: default;
+  user-select: none;
+  position: sticky;
+  top: 0;
+  background: $bg;
+  z-index: 1;
+}
+
+.groupe-icone {
+  width: 28px;
+  height: 28px;
+  border-radius: 7px;
+  background: $accent-bg;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-size: 0.85rem;
+  color: $accent;
+}
+
+.groupe-nom {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: $text-muted;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  flex: 1;
+}
+
+.groupe-count {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: $accent;
+  background: $accent-bg;
+  border-radius: 999px;
+  padding: 0.1rem 0.5rem;
+  min-width: 1.4rem;
+  text-align: center;
+}
+
+// ── Variante enfant du domaine-tile ──────────────────────────────────────
+
+.domaine-tile--enfant {
+  padding: 0.6rem 0.875rem 0.6rem 1.25rem;
+  border-radius: 8px;
+  margin-bottom: 2px;
+  background: $bg-card;
+
+  .domaine-nom {
+    font-size: 0.9rem;
+    font-weight: 500;
+  }
+
+  .domaine-icone {
+    display: none;
+  }
+
+  &:hover {
+    padding-left: 1.5rem;
+    transition: padding-left $transition, border-color $transition,
+                background $transition, box-shadow $transition;
+  }
+}
+
+// ── Phase C — Résultats ───────────────────────────────────────────────────────
+
+.resultats-entete {
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid $border;
+}
+
+.entete-recap {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 0.875rem;
+}
+
+.recap-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.875rem;
+  color: $text-muted;
+  font-weight: 500;
+
+  i { color: $accent; }
+}
+
+.recap-sep {
+  color: $border;
+}
+
+.entete-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+
+  @media (max-width: 575px) {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+.resultats-compteur {
+  margin: 0;
+  font-size: 0.925rem;
+  color: $text;
+
+  strong {
+    color: $accent;
+    font-size: 1.2rem;
+    font-weight: 700;
+  }
+}
+
+.btn-nouvelle-recherche {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  background: none;
+  border: 1.5px solid $border;
+  border-radius: 999px;
+  padding: 0.45rem 0.975rem;
+  font-size: 0.85rem;
+  color: $text-muted;
+  cursor: pointer;
+  transition: all $transition;
+  white-space: nowrap;
+
+  &:hover {
+    border-color: $accent;
+    color: $accent;
+  }
+}
+
+// ── Filtre diplôme — wrapper + message de blocage ────────────────────────────
+
+.dropdown-filtre-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.375rem;
+
+  @media (max-width: 575px) {
+    width: 100%;
+  }
+}
+
+.filtre-bloque-msg {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.775rem;
+  color: $accent;
+  font-weight: 500;
+  animation: fadeInDown 0.25s ease;
+
+  i { font-size: 0.7rem; }
+}
+
+@keyframes fadeInDown {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+// ── PrimNG Dropdown ────────────────────────────────────────────────────────────
+:host ::ng-deep {
+  .dropdown-diplome {
+    min-width: 180px;
+    width: 100%;
+
+    .p-dropdown {
+      border-radius: 999px;
+      border-color: $border;
+      font-size: 0.875rem;
+      width: 100%;
+
+      &:hover, &.p-focus { border-color: $accent; box-shadow: none; }
+    }
+  }
+
+  // ngx-intl-tel-input — intégration dans le design system
+  .iti {
+    width: 100%;
+
+    .lead-tel-input {
+      padding-left: 3rem !important;
+      border-radius: 0.375rem;
+      border: 1.5px solid $border;
+      color: $text;
+      background: $bg-card;
+      transition: border-color $transition, box-shadow $transition;
+      width: 100%;
+
+      &:focus {
+        border-color: $accent;
+        box-shadow: 0 0 0 3px $accent-bg;
+        outline: none;
+      }
+    }
+
+    .iti__flag-container {
+      .iti__selected-flag {
+        padding: 0 0.5rem;
+        border-radius: 0.375rem 0 0 0.375rem;
+        background: transparent;
+
+        &:hover, &:focus { background: $accent-bg; }
+      }
+    }
+
+    // Dropdown de recherche de pays
+    .iti__country-list {
+      border: 1px solid $border;
+      border-radius: $card-radius;
+      box-shadow: $shadow-md;
+      font-size: 0.875rem;
+      max-height: 220px;
+
+      .iti__country {
+        padding: 0.5rem 0.75rem;
+
+        &.iti__highlight, &:hover { background: $accent-bg; color: $accent; }
+      }
+
+      .iti__search-input {
+        border-bottom: 1px solid $border;
+        padding: 0.375rem 0.625rem;
+        font-size: 0.875rem;
+        width: 100%;
+
+        &:focus { outline: none; border-color: $accent; }
+      }
+    }
+  }
+
+  // Panel du dropdown — contraint la largeur et force le retour à la ligne
+  .p-dropdown-panel {
+    max-width: 100vw;
+
+    .p-dropdown-items {
+      padding: 0;
+    }
+
+    .p-dropdown-item {
+      white-space: normal;
+      word-break: break-word;
+      line-height: 1.4;
+      padding: 0.625rem 0.875rem;
+    }
+  }
+
+  .p-progressspinner-circle {
+    stroke: $accent !important;
+  }
+}
+
+// ── Bloc erreur ───────────────────────────────────────────────────────────────
+.bloc-erreur {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
+  background: #fef2f2;
+  border: 1px solid #fca5a5;
+  border-radius: $card-radius;
+  color: #dc2626;
+  font-size: 0.9rem;
+  margin-bottom: 1.25rem;
+}
+
+.btn-reessayer {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  padding: 0.35rem 0.875rem;
+  border: 1px solid #dc2626;
+  border-radius: 6px;
+  background: none;
+  color: #dc2626;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background $transition;
+
+  &:hover { background: rgba(220, 38, 38, 0.06); }
+}
+
+// ── Bloc vide ─────────────────────────────────────────────────────────────────
+.bloc-vide {
+  text-align: center;
+  padding: 4rem 1rem;
+  color: $text-muted;
+
+  i {
+    font-size: 3rem;
+    display: block;
+    margin-bottom: 1rem;
+  }
+
+  p {
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
+  }
+}
+
+// ── Bannière succès ───────────────────────────────────────────────────────────
+.banniere-succes {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  padding: 0.875rem 1.125rem;
+  background: $accent-bg;
+  border: 1px solid $accent-border;
+  border-radius: $card-radius;
+  color: $accent;
+  font-size: 0.925rem;
+  margin-bottom: 1.25rem;
+
+  i { font-size: 1.1rem; flex-shrink: 0; }
+}
+
+// ── Grille de formations ──────────────────────────────────────────────────────
+.grille-formations {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(252px, 1fr));
+  gap: 1rem;
+
+  @media (max-width: 575px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+.grille-debloquees {
+  margin-top: 1rem;
+}
+
+// ── Pagination ────────────────────────────────────────────────────────────────
+.pagination-nav {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.375rem;
+  margin-top: 2rem;
+}
+
+.page-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.25rem;
+  height: 2.25rem;
+  padding: 0 0.625rem;
+  border: 1.5px solid $border;
+  border-radius: 8px;
+  background: $bg-card;
+  color: $text;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all $transition;
+
+  &:hover:not(:disabled):not(.page-btn--active) {
+    border-color: $accent;
+    color: $accent;
+    background: $accent-bg;
+  }
+
+  &--active {
+    border-color: $accent;
+    background: $accent;
+    color: white;
+    cursor: default;
+    pointer-events: none;
+  }
+
+  &--arrow { font-size: 0.8rem; }
+
+  &:disabled {
+    opacity: 0.35;
+    cursor: not-allowed;
+  }
+}
+
+.page-ellipsis {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 1.5rem;
+  color: $text-muted;
+  font-size: 0.9rem;
+  pointer-events: none;
+}
+
+.pagination-info {
+  text-align: center;
+  font-size: 0.8rem;
+  color: $text-muted;
+  margin-top: 0.625rem;
+
+  strong { color: $text; font-weight: 600; }
+}
+
+// ── Bouton En savoir plus (dans la carte) ────────────────────────────────────
+.btn-en-savoir-plus {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  margin-top: 0.75rem;
+  padding: 0.45rem 0.875rem;
+  border: 1.5px solid $accent-border;
+  border-radius: 999px;
+  background: $accent-bg;
+  color: $accent;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all $transition;
+  width: 100%;
+  justify-content: center;
+
+  &:hover {
+    background: $accent;
+    color: white;
+    border-color: $accent;
+  }
+
+  i { font-size: 0.8rem; }
+}
+
+// ── Modal overlay ─────────────────────────────────────────────────────────────
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.55);
+  z-index: 1050;
+  display: flex;
+  align-items: flex-end;
+
+  @media (min-width: 576px) {
+    align-items: center;
+    justify-content: center;
+    padding: 1rem;
+  }
+}
+
+.modal-panel {
+  background: $bg-card;
+  border-radius: 20px 20px 0 0;
+  width: 98%;
+  max-height: 90dvh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+
+  @media (min-width: 576px) {
+    border-radius: 16px;
+    width: min(95vw, 560px);
+    max-height: 85dvh;
+  }
+}
+
+.modal-entete {
+  padding: 1.125rem 1.25rem 0.875rem;
+  border-bottom: 1px solid $border;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.modal-fermer {
+  position: absolute;
+  top: 0.875rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  color: $text-muted;
+  font-size: 1rem;
+  cursor: pointer;
+  line-height: 1;
+  padding: 0.25rem;
+  border-radius: 6px;
+  transition: color $transition, background $transition;
+
+  &:hover { color: $text; background: $border; }
+}
+
+.modal-ecole-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.625rem;
+  padding-right: 2rem;
+}
+
+.modal-logo {
+  width: 44px;
+  height: 44px;
+  object-fit: contain;
+  border-radius: 8px;
+  border: 1px solid $border;
+  background: white;
+  flex-shrink: 0;
+}
+
+.modal-ecole-identite { flex: 1; min-width: 0; }
+
+.modal-nom-ecole {
+  font-size: 0.975rem;
+  font-weight: 700;
+  color: $text;
+  margin: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.modal-sigle {
+  font-size: 0.78rem;
+  color: $text-muted;
+}
+
+.modal-badge-diplome {
+  display: inline-block;
+  padding: 0.2rem 0.75rem;
+  background: $accent-bg;
+  color: $accent;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.modal-infos-rapides {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  padding: 0.75rem 1.25rem;
+  background: $bg;
+  border-bottom: 1px solid $border;
+  flex-shrink: 0;
+}
+
+.modal-info-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.82rem;
+  color: $text-muted;
+
+  i { color: $accent; font-size: 0.8rem; }
+}
+
+.modal-corps {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0.25rem 0;
+  -webkit-overflow-scrolling: touch;
+}
+
+.modal-section {
+  padding: 1rem 1.25rem;
+  border-bottom: 1px solid $border;
+
+  &:last-child { border-bottom: none; }
+}
+
+.modal-section-titre {
+  font-size: 0.875rem;
+  font-weight: 700;
+  color: $text;
+  margin: 0 0 0.625rem;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+
+  i { color: $accent; font-size: 0.85rem; }
+}
+
+// Styles pour le HTML injecté dans les sections du modal
+:host ::ng-deep .modal-section-contenu {
+  font-size: 0.875rem;
+  color: $text-muted;
+  line-height: 1.6;
+
+  p          { margin: 0 0 0.5rem; &:last-child { margin-bottom: 0; } }
+  ul, ol     { padding-left: 1.25rem; margin: 0.25rem 0; }
+  li         { margin-bottom: 0.25rem; }
+  strong, b  { font-weight: 700; color: $text; }
+  em, i      { font-style: italic; }
+  a          { color: $accent; text-decoration: underline; }
+  h1, h2, h3 { font-size: 0.9rem; font-weight: 700; color: $text; margin: 0.5rem 0 0.25rem; }
+}
+
+.modal-contact-items {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.modal-contact-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.875rem;
+  color: $accent;
+  text-decoration: none;
+  font-weight: 500;
+
+  i { font-size: 0.85rem; }
+
+  &:hover { text-decoration: underline; }
+}
+
+.modal-contact-vide {
+  font-size: 0.825rem;
+  color: $text-muted;
+  font-style: italic;
+  margin: 0;
+}
+
+.modal-footer {
+  display: flex;
+  gap: 0.75rem;
+  padding: 1rem 1.25rem;
+  border-top: 1px solid $border;
+  flex-shrink: 0;
+
+  @media (max-width: 400px) {
+    flex-direction: column;
+  }
+}
+
+.modal-btn-wsp {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.75rem 1rem;
+  background: #25d366;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity $transition;
+
+  &:hover { opacity: 0.88; }
+}
+
+.modal-btn-ecole {
+  flex: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  padding: 0.75rem 1rem;
+  background: $accent-bg;
+  color: $accent;
+  border: 1.5px solid $accent-border;
+  border-radius: 10px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all $transition;
+
+  &:hover { background: $accent; color: white; border-color: $accent; }
+}
+
+// ── Carte formation ───────────────────────────────────────────────────────────
+.carte-formation {
+  background: $bg-card;
+  border: 1px solid $border;
+  border-radius: $card-radius;
+  overflow: hidden;
+  box-shadow: $shadow;
+  transition: box-shadow $transition, transform $transition;
+  display: flex;
+  flex-direction: column;
+
+  &:hover {
+    box-shadow: $shadow-md;
+    transform: translateY(-2px);
+  }
+}
+
+.carte-diplome {
+  padding: 0.5rem 1rem;
+  background: $accent-bg;
+}
+
+.badge-diplome {
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: $accent;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.carte-corps {
+  padding: 1rem;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.ecole-header {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.ecole-logo {
+  width: 40px;
+  height: 40px;
+  object-fit: contain;
+  border-radius: 6px;
+  border: 1px solid $border;
+  flex-shrink: 0;
+  background: white;
+}
+
+.ecole-identite {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.ecole-nom {
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: $text;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.ecole-sigle {
+  font-size: 0.75rem;
+  color: $text-muted;
+}
+
+.formation-titre {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: $text;
+  line-height: 1.45;
+  margin: 0 0 0.75rem;
+  flex: 1;
+}
+
+// Styles pour le HTML injecté via [innerHTML] dans .formation-titre
+// (::ng-deep requis car Angular n'applique pas l'encapsulation sur innerHTML)
+:host ::ng-deep .formation-titre {
+  p          { margin: 0 0 0.375rem; &:last-child { margin-bottom: 0; } }
+  ul, ol     { padding-left: 1.25rem; margin: 0.25rem 0 0; }
+  li         { margin-bottom: 0.2rem; }
+  strong, b  { font-weight: 700; }
+  em, i      { font-style: italic; }
+  a          { color: $accent; text-decoration: underline; }
+  br         { line-height: 1.8; }
+}
+
+.carte-infos {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.375rem 0.75rem;
+
+  li {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-size: 0.8rem;
+    color: $text-muted;
+
+    i { color: $accent; font-size: 0.8rem; }
+  }
+}
+
+// ── Carte fantôme ─────────────────────────────────────────────────────────────
+.carte-fantome {
+  filter: blur(5px);
+  pointer-events: none;
+  user-select: none;
+}
+
+// ── Zone de verrouillage ──────────────────────────────────────────────────────
+.zone-lock {
+  margin-top: 0.5rem;
+  position: relative;
+}
+
+.fantomes-conteneur {
+  position: relative;
+  overflow: hidden;
+}
+
+.degrade-masque {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 160px;
+  background: linear-gradient(to bottom, transparent, $bg);
+  pointer-events: none;
+}
+
+// ── Carte de capture lead ─────────────────────────────────────────────────────
+.carte-lead {
+  background: $bg-card;
+  border: 1.5px solid $accent-border;
+  border-radius: 16px;
+  padding: 2rem 1.75rem;
+  box-shadow: $shadow-md;
+  max-width: 480px;
+  margin: 1.25rem auto 0;
+  text-align: center;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+
+  &--highlight {
+    border-color: $accent;
+    box-shadow: 0 0 0 4px $accent-bg, $shadow-md;
+    animation: highlight-pulse 0.5s ease;
+  }
+}
+
+@keyframes highlight-pulse {
+  0%   { box-shadow: 0 0 0 0 rgba(5, 150, 105, 0.35), $shadow-md; }
+  60%  { box-shadow: 0 0 0 10px rgba(5, 150, 105, 0), $shadow-md; }
+  100% { box-shadow: 0 0 0 4px $accent-bg, $shadow-md; }
+}
+
+.lead-titre {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: $text;
+  margin: 0 0 0.5rem;
+
+  strong { color: $accent; }
+}
+
+.lead-description {
+  color: $text-muted;
+  font-size: 0.9rem;
+  margin: 0 0 1.25rem;
+  line-height: 1.5;
+}
+
+.form-lead {
+  text-align: left;
+
+  .form-group {
+    margin-bottom: 0.875rem;
+
+    label {
+      display: block;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: $text;
+      margin-bottom: 0.375rem;
+    }
+
+    .requis { color: #dc2626; margin-left: 0.125rem; }
+
+    .optionnel {
+      font-weight: 400;
+      color: $text-muted;
+      font-size: 0.8rem;
+    }
+  }
+}
+
+.btn-debloquer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0.875rem;
+  margin-top: 1rem;
+  background: linear-gradient(135deg, $accent, $accent-dark);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity $transition, transform $transition;
+
+  &:hover:not(:disabled) {
+    opacity: 0.92;
+    transform: translateY(-1px);
+  }
+
+  &:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+  }
+}
+
+.champ-erreur {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  margin-top: 0.3rem;
+  font-size: 0.775rem;
+  color: #dc2626;
+  font-weight: 500;
+
+  i { font-size: 0.75rem; }
+}
+
+.mention-confidentialite {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.375rem;
+  font-size: 0.75rem;
+  color: $text-muted;
+  margin: 0.875rem 0 0;
+
+  i { color: $accent; }
+}

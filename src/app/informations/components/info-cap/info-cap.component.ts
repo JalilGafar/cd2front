@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { SharedComponentModule } from '../../../shared/shared.modules';
 import { Observable } from 'rxjs';
 import { interestelt } from '../../../model/interest-item-model';
@@ -105,10 +106,11 @@ export class InfoCapComponent implements OnInit {
     }
   ];
 
-   constructor( 
+   constructor(
      private meta: Meta,
      private adversService: AdversService,
-     private title:Title) 
+     private title:Title,
+     @Inject(PLATFORM_ID) private platformId: Object)
       {
         this.title.setTitle("Le Certificat d'Aptitude Professionnel (CAP) au Cameroun | Camerdiplome");
         this.meta.updateTag({ name: 'description', content: 'Optez pour une formation professionnelle avant le Bac dans l\'une des nombreuses spécialités du CAP' });
@@ -116,6 +118,9 @@ export class InfoCapComponent implements OnInit {
       }
 
   ngOnInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 
     this.schoolAdvers$ = this.adversService.getSchoolPub();
 

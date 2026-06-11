@@ -1,13 +1,16 @@
+<app-headmsg
+    [titre]="titre"
+    [soustitre]="soustitre"
+    [photo] = "photo"
+    >
+</app-headmsg>
+<app-start></app-start>
 <div class="container">
-    <app-headmsg 
-        [titre]="titre"
-        [soustitre]="soustitre"
-        [photo] = "photo"
-        >
-    </app-headmsg>
-    <app-start ></app-start>
     <div class="une">
-        <h2>Les écoles à la une</h2>
+        <div class="section-head">
+            <span class="section-badge">Établissements partenaires</span>
+            <h2>Les écoles à la une</h2>
+        </div>
         <div class="carousel">
             <div class="card-container">
                 @for (item of schoolAdvers$ | async ; track item.id_ecol) {
@@ -283,7 +286,8 @@
             <!-- $$$$$$$$$$$$$$$$ -->
             <!-- $$$$$$$$$$$$$$$$ -->
 
-            <!-- <p-accordion [activeIndex]="" [multiple]="true">
+            <!-- ANCIEN PRIMENG ACCORDION (conservé en commentaire)
+            <p-accordion [activeIndex]="" [multiple]="true">
                 <p-accordionTab header="Le Premier cycle de l'enseignement technique.">
                     <p>
                         La durée des études secondaires au Cameroun est de 4 ans pour le premier cycle et 3 ans pour le 
@@ -478,11 +482,9 @@
                     </p>
                 </p-accordionTab>
             </p-accordion>  -->
-            <div class="actual">
-                <app-actu-list/>
-            </div>
-            
         </div>
-        <app-start ></app-start>
+        <div class="actual">
+            <app-actu-list/>
+        </div>
     </div>
 </div>

@@ -1,168 +1,222 @@
-<div fxLayout="column" class="landing">
-    <h1 class="title">Trouve la formation qui te correspond sur plus de <span [innerHTML]="counti" class="bruce"></span>
-        disponibles</h1>
-    <app-headmsg [titre]="titre" [soustitre]="soustitre" [photo]="photo">
-    </app-headmsg>
-    <app-start></app-start>
+<!-- ══════════════════════════════════════════════════════════════ HERO -->
+<section class="lp-hero">
+  <div class="lp-hero-body">
 
-    <!-- <app-top-video-slide></app-top-video-slide> -->
+    <div class="lp-hero-content">
+      <span class="section-badge">N°1 de l'orientation au Cameroun</span>
+      <h1>
+        Trouve la formation
+        <span class="text-accent">qui te correspond</span>
+      </h1>
+      <p class="lp-hero-sub">
+        Camerdiplome t'aide à identifier la bonne formation, dans le bon établissement,
+        pour le métier qui te correspond — gratuitement et partout au Cameroun.
+      </p>
 
-    
+      <div class="lp-hero-counter">
+        <i class="bi bi-graph-up-arrow"></i>
+        <span>Déjà</span>
+        <strong class="counter-num" [innerHTML]="counti"></strong>
+        <span>formations disponibles</span>
+      </div>
 
-    <div class="une">
-        <h2>Les écoles à la une</h2>
-        <div class="carousel">
-            <div class="card-container">
-                @for (item of schoolAdvers$ | async ; track item.id_ecol) {
-                <app-school-advers [schoolAdv]="item"></app-school-advers>
-                }
-            </div>
-        </div> 
+      <div class="lp-hero-actions">
+        <a routerLink="/trouver-ma-formation" class="btn-primary-cta">
+          <i class="bi bi-compass-fill"></i>
+          Trouver ma formation
+        </a>
+        <a routerLink="/orientation/test" class="btn-ghost-cta">
+          <i class="bi bi-clipboard2-check"></i>
+          Faire le test d'orientation
+        </a>
+      </div>
     </div>
 
-    <div class="steps" fxFlex fxLayout="column">
-        <div class="orientTitle">
-            <h2>L'orientation pas à pas avec CamerDiplome</h2>
-        </div>
-        <div class="box" fxFlex fxLayoutGap="10px">
-            <div class="inbox">
-                <div class="inboxImage first">
-                    <img src="./../../../../assets/images/mini/pexels-mikhail-nilov.webp" alt="Projet">
-                </div>
-                <div class="inboxText">
-                    <h3>1</h3>
-                    <h5>Projet</h5>
-                    <h4>Définissez votre parcours et votre projet d'orientation</h4>
-                </div>
-            </div>
-            <div class="inbox">
-                <div class="inboxImage">
-                    <img src="./../../../../assets/images/mini/pexels-linkedin-sales-navigator-1.webp" alt="Analyse">
-                </div>
-                <div class="inboxText">
-                    <h3>2</h3>
-                    <h5>Analyse</h5>
-                    <h4>Recherche les meilleurs pormations parmis les 7 000 disponibles</h4>
-                </div>
-            </div>
-            <div class="inbox">
-                <div class="inboxImage">
-                    <img src="./../../../../assets/images/mini/pexels-charlotte-may.webp" alt="Conseil">
-                </div>
-                <div class="inboxText">
-                    <h3>3</h3>
-                    <h5>Conseil</h5>
-                    <h4>Bénéficiez de l'appel gratuit d'un conseiller d'orientation CamerDiplome</h4>
-                </div>
-            </div>
+    <div class="lp-hero-image">
+      <!--
+        ┌─ IMAGE HERO ──────────────────────────────────────────────────────────┐
+        │ Chemin : src/assets/images/home.webp                                 │
+        │ Suggestion : étudiant(e) souriant(e) tenant un diplôme ou un livre,  │
+        │ en extérieur ou dans un campus camerounais, lumière naturelle chaude. │
+        │ Format : portrait ou paysage · min 700×860px                         │
+        └───────────────────────────────────────────────────────────────────────┘
+      -->
+      <img src="assets/images/home.webp" alt="Étudiant Camerdiplome" class="hero-img">
 
-        </div>
-        <app-start></app-start>
+      <div class="hero-float hero-float--top">
+        <i class="bi bi-patch-check-fill"></i>
+        <span>100% gratuit</span>
+      </div>
+      <div class="hero-float hero-float--bottom">
+        <i class="bi bi-geo-alt-fill"></i>
+        <span>Partout au Cameroun</span>
+      </div>
     </div>
 
-    <app-actu-list />
-
-    <!-- <app-top-news-slide  class="top-news-slide">
-    </app-top-news-slide> -->
+  </div>
+</section>
 
 
+<!-- ══════════════════════════════════════════════════════════════ STATS BAR -->
+<section class="lp-stats-section">
+  <div class="container">
+    <div class="stats-bar">
+      <div class="stat-item">
+        <span class="stat-num">7 000+</span>
+        <span class="stat-label">Formations</span>
+      </div>
+      <div class="stat-sep"></div>
+      <div class="stat-item">
+        <span class="stat-num">300+</span>
+        <span class="stat-label">Établissements</span>
+      </div>
+      <div class="stat-sep"></div>
+      <div class="stat-item">
+        <span class="stat-num">3 000+</span>
+        <span class="stat-label">Étudiants/an</span>
+      </div>
+      <div class="stat-sep"></div>
+      <div class="stat-item stat-item--free">
+        <span class="stat-num">Gratuit</span>
+        <span class="stat-label">Pour tous</span>
+      </div>
+    </div>
+  </div>
+</section>
 
-    <div class="banner-stat orientTitle">
-        <h2>Camerdiplome : <br> le 1er salon d'orientation virtuel du Cameroun</h2>
-        <div class="statContent" fxLayout="row" fxLayout.xs="column" fxLayoutGap="15px">
-            <div fxFlex="50">
-                <img src="./../../../../assets/images/mini/pexels-karl-rayson.webp" alt="salon">
-            </div>
-            <div fxFlexAlign="center">
-                <ul class="uvu">
-                    <li fxLayout="column">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" class="i i-student"
-                            aria-hidden="true">
-                            <path fill="#30017E" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="16"
-                                d="M32 64v80m22.232 72a88.022 88.022 0 0 1 147.536-.001M224 64l-96 32-96-32 96-32 96 32zm-54.663 18.22a56 56 0 1 1-82.674 0">
-                            </path>
-                        </svg>
-                        <div>40 % des bacheliers s'orientent avec Camerdiplome chaque année</div>
-                    </li>
-                    <li fxLayout="column">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" class="i i-phone"
-                            aria-hidden="true">
-                            <path
-                                d="M92.476 124.815a84.348 84.348 0 0 0 39.054 38.876 7.928 7.928 0 0 0 7.828-.592l25.036-16.694a8 8 0 0 1 7.59-.698l46.837 20.073a7.973 7.973 0 0 1 4.798 8.297A48.009 48.009 0 0 1 176 216 136 136 0 0 1 40 80a48.009 48.009 0 0 1 41.923-47.619 7.973 7.973 0 0 1 8.297 4.798l20.09 46.878a8 8 0 0 1-.66 7.532l-16.636 25.42a7.929 7.929 0 0 0-.538 7.806z"
-                                fill="#30017E" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="16"></path>
-                        </svg>
-                        <div>6 000 étudiant sont appelés chaque année par nos conseillers d'orientation</div>
-                    </li>
-                    <li fxLayout="column">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" class="i i-chalkboard-teacher"
-                            aria-hidden="true">
-                            <circle cx="104" cy="144" r="32" fill="#30017E" stroke="#fff" stroke-linecap="round"
-                                stroke-linejoin="round" stroke-width="16"></circle>
-                            <path
-                                d="M53.39 207.999a56.023 56.023 0 0 1 101.22 0L216 208a8 8 0 0 0 8-8V56a8 8 0 0 0-8-8H40a8 8 0 0 0-8 8v144a8 8 0 0 0 8 8z"
-                                fill="#30017E" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="16"></path>
-                            <path fill="#30017E" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="16" d="M176 176h16V80H64v16"></path>
-                        </svg>
-                        <div>3 514 formations (tous les cursus du Cameroun)</div>
-                    </li>
-                    <li fxLayout="column">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" class="i i-star"
-                            aria-hidden="true">
-                            <path
-                                d="M132.411 190.733l50.435 31.954c6.447 4.084 14.452-1.99 12.539-9.516l-14.572-57.323a8.757 8.757 0 0 1 2.837-8.876l45.228-37.643c5.942-4.946 2.875-14.809-4.76-15.304l-59.064-3.834a8.418 8.418 0 0 1-7.248-5.35l-22.028-55.473a8.319 8.319 0 0 0-15.556 0L98.194 84.84a8.418 8.418 0 0 1-7.248 5.35l-59.064 3.834c-7.635.495-10.702 10.358-4.76 15.304l45.228 37.643a8.757 8.757 0 0 1 2.837 8.876l-13.514 53.16c-2.295 9.031 7.31 16.32 15.046 11.42l46.87-29.695a8.214 8.214 0 0 1 8.822 0z"
-                                fill="#30017E" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="16"></path>
-                        </svg>
-                        <div>500 avis d'établissements</div>
-                    </li>
-                    <li fxLayout="column">
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" class="i i-buildings"
-                            aria-hidden="true">
-                            <path fill="#30017E" stroke="#fff" stroke-linecap="round" stroke-linejoin="round"
-                                stroke-width="16"
-                                d="M16 215.983h224m-96.006 0v-176a8 8 0 0 0-8-8h-96a8 8 0 0 0-8 8v176m192 0v-112a8 8 0 0 0-8-8h-72m-80-24h32m-16 64h32m-48 40h32m80 0h16m-16-40h16">
-                            </path>
-                        </svg>
-                        <div>500 établissements présentés</div>
-                    </li>
-                </ul>
-            </div>
-        </div>
+
+<!-- ══════════════════════════════════════════════════════════════ ÉCOLES À LA UNE -->
+<section class="lp-section lp-schools">
+  <div class="container">
+    <div class="lp-section-head">
+      <span class="section-badge">Établissements partenaires</span>
+      <h2>Les écoles à la une</h2>
+    </div>
+  </div>
+  <div class="school-track">
+    @for (item of schoolAdvers$ | async; track item.id_ecol) {
+      <app-school-advers [schoolAdv]="item"></app-school-advers>
+    }
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════════ COMMENT ÇA MARCHE -->
+<section class="lp-section lp-steps">
+  <div class="container">
+    <div class="lp-section-head">
+      <span class="section-badge">Simple et rapide</span>
+      <h2>L'orientation pas à pas avec Camerdiplome</h2>
     </div>
 
-    <div class="promise">
-        <div class="orientTitle">
-            <h2>La promesse de Camerdiplome</h2>
+    <div class="steps-grid">
+      <div class="step-card">
+        <div class="step-img-wrap">
+          <img src="assets/images/mini/pexels-mikhail-nilov.webp" alt="Définir son projet">
+          <div class="step-num">1</div>
         </div>
-        <div class="promiseBox">
-            <div class="inbox">
-                <div class="inboxImage first">
-                    <img src="./../../../../assets/images/pexels-sadock-kaisi-9287492.webp" alt="offre">
-                </div>
-                <div class="inboxText">
-                    <h4>Une offre exhaustive</h4>
-                    <p class="dolle">Camerdiplome référence toutes les écoles privées comme publiques</p>
-                    <p class="stone">Pour chaque école, on vous propose les formations, les avis, les accréditations,
-                        les campus, les brochures, les vidéos, les témoignages, les articles, etc.</p>
-                </div>
-            </div>
-            <div class="inbox">
-                <div class="inboxImage">
-                    <img src="./../../../../assets/images/pexels-alexander-suhorucov-6457554.webp" alt="conseils">
-                </div>
-                <div class="inboxText">
-                    <h4>Des conseils personnalisés</h4>
-                    <p class="dolle">Des conseillers d’orientation formés pour vous guider dans votre démarche</p>
-                    <p class="stone">Nos conseillers d’orientation vous rappellent gratuitement pour valider votre
-                        profil, ajuster votre projet et vous orienter vers les meilleures écoles.</p>
-                </div>
-            </div>
+        <div class="step-body">
+          <h3>Définir son projet</h3>
+          <p>Identifiez votre ville, votre niveau et le domaine qui vous intéresse en quelques clics.</p>
         </div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-img-wrap">
+          <img src="assets/images/mini/pexels-linkedin-sales-navigator-1.webp" alt="Explorer les formations">
+          <div class="step-num">2</div>
+        </div>
+        <div class="step-body">
+          <h3>Explorer les formations</h3>
+          <p>Parcourez les meilleures formations parmi les 7 000 disponibles sur la plateforme.</p>
+        </div>
+      </div>
+
+      <div class="step-card">
+        <div class="step-img-wrap">
+          <img src="assets/images/mini/pexels-charlotte-may.webp" alt="Être conseillé">
+          <div class="step-num">3</div>
+        </div>
+        <div class="step-body">
+          <h3>Être conseillé</h3>
+          <p>Un conseiller d'orientation vous rappelle gratuitement pour affiner votre choix.</p>
+        </div>
+      </div>
     </div>
 
-    <app-start></app-start>
+    <div class="steps-cta">
+      <a routerLink="/trouver-ma-formation" class="btn-primary-cta">
+        <i class="bi bi-compass-fill"></i>
+        Commencer maintenant — c'est gratuit
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════════ NOS ENGAGEMENTS -->
+<section class="lp-section lp-features">
+  <div class="container">
+    <div class="lp-section-head">
+      <span class="section-badge">Nos engagements</span>
+      <h2>La promesse Camerdiplome</h2>
+    </div>
+    <div class="features-grid">
+
+      <div class="feature-card">
+        <div class="feature-icon"><i class="bi bi-database-fill-check"></i></div>
+        <h3>Une offre exhaustive</h3>
+        <p>Toutes les écoles publiques et privées du Cameroun, avec leurs formations, campus, accréditations et avis étudiants vérifiés.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon"><i class="bi bi-person-check-fill"></i></div>
+        <h3>Des conseils personnalisés</h3>
+        <p>Nos conseillers vous rappellent gratuitement pour valider votre projet et vous orienter vers les meilleures écoles selon votre profil.</p>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-icon"><i class="bi bi-shield-fill-check"></i></div>
+        <h3>Des informations fiables</h3>
+        <p>Chaque fiche établissement est vérifiée par notre équipe. Les avis étudiants sont modérés avant publication pour garantir leur authenticité.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════════ ACTUALITÉS -->
+<div class="lp-news">
+  <app-actu-list></app-actu-list>
 </div>
+
+
+<!-- ══════════════════════════════════════════════════════════════ CTA FINAL -->
+<section class="lp-cta">
+  <div class="container">
+    <div class="cta-duo">
+
+      <div class="cta-card cta-card--student">
+        <div class="cta-card-icon"><i class="bi bi-mortarboard-fill"></i></div>
+        <h3>Vous cherchez une formation ?</h3>
+        <p>Répondez à quelques questions et nos conseillers vous orientent gratuitement vers la formation idéale.</p>
+        <a routerLink="/trouver-ma-formation" class="btn-primary-cta">
+          <i class="bi bi-compass-fill"></i>
+          Trouver ma formation
+        </a>
+      </div>
+
+      <div class="cta-card cta-card--school">
+        <div class="cta-card-icon"><i class="bi bi-building-fill"></i></div>
+        <h3>Vous êtes un établissement ?</h3>
+        <p>Rejoignez Camerdiplome et améliorez votre visibilité auprès de milliers d'étudiants qui recherchent leur formation chaque jour.</p>
+        <button class="btn-wsp" (click)="discover()">
+          <i class="bi bi-whatsapp"></i>
+          Nous contacter sur WhatsApp
+        </button>
+      </div>
+
+    </div>
+  </div>
+</section>

@@ -6,8 +6,12 @@
 </app-headmsg>
 <app-start ></app-start>
 <div class="container">
+    
     <div class="une">
-        <h2>Les écoles à la une</h2>
+        <div class="section-head">
+            <span class="section-badge">Établissements partenaires</span>
+            <h2>Les écoles à la une</h2>
+        </div>
         <div class="carousel">
             <div class="card-container">
                 @for (item of schoolAdvers$ | async ; track item.id_ecol) {
@@ -488,6 +492,7 @@
 
         </div>
         <div class="adv">
+            <span class="section-badge">Formations sponsorisées</span>
             <h2>Les formations très demandées</h2>
             <div class="list">
                 @for (iteme of advertiser$ | async; track iteme.id_form) {
@@ -495,10 +500,12 @@
                 }
             </div>
             <div class="dolom">
-                <button class="plus" severity="contrast">Voir plus</button>
+                <button class="plus">
+                    <i class="bi bi-plus-circle"></i> Voir plus
+                </button>
                 <div class="trouver">
-                    <a routerLink="/orientation/degree" class="trouv">
-                        Trouver ma formation
+                    <a routerLink="/trouver-ma-formation" class="trouv">
+                        <i class="bi bi-compass-fill"></i> Trouver ma formation
                     </a>
                 </div>
             </div>
@@ -515,19 +522,22 @@
         </div>
 
         <div class="fiche">
+            <span class="section-badge">Guide d'orientation</span>
             <h2>Fiches Métiers les plus recherchées</h2>
             <div class="metier-list">
                 @for (item of metierTransit; track item.id_metier) {
-                    <a [routerLink]="'/info/metier/'+item.id_metier" class="metier-item">
+                    <a [routerLink]="['/info/metier', generateSlug(item.titre), item.id_metier]" class="metier-item">
                         Fiche métier {{item.titre}}
                     </a>
                 }
             </div>
             <div class="dolom">
-                <button class="plus" (click)="plusMetier()"> {{plusMetiertext}} </button>
+                <button class="plus" (click)="plusMetier()">
+                    <i class="bi bi-plus-circle"></i> {{plusMetiertext}}
+                </button>
                 <div class="trouver">
-                    <a routerLink="/orientation/degree" class="trouv">
-                        Trouver ma formation
+                    <a routerLink="/trouver-ma-formation" class="trouv">
+                        <i class="bi bi-compass-fill"></i> Trouver ma formation
                     </a>
                 </div>
             </div>

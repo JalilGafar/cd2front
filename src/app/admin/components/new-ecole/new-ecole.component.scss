@@ -1,3 +1,19 @@
+@import '../../admin-style.module.scss';
+.form-card{
+    background-color: azure;
+}
+
+.row{
+  .form-group {
+      // margin: 10px auto;
+      // width: 80%;
+      // display: flex;
+      // align-items: center;
+      justify-content: start;
+  }
+}
+
+/*
 .form-card {
     box-sizing: border-box;
     width: 80%;
@@ -29,3 +45,4 @@
     display: block;
     margin: 20px auto;
   }
+    */

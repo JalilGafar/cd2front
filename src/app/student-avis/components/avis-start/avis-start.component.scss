@@ -1,107 +1,251 @@
-.main{
-    h2{
-        font-size: x-large;
-        padding-top: 35px;
-    }
-    display: initial;
-    .hero-image-top {
-        background-image: linear-gradient(#000000e0, #00000094), url("../../../../assets/images/pexels-kampus-production.jpg");
-        height: 40%;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-        position: relative; 
-    }
+@import 'design-system';
 
-    .hero-image-down {
-        background-image: linear-gradient(#000000f2, #000000c9), url("../../../../assets/images/pexels-kampus-production.jpg");
-        height: 100%;
-        background-position: center;
-        background-repeat: no-repeat;
-        background-size: cover;
-        position: relative; 
-
-        .hero-text {
-            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-            position: absolute;
-            width: 90%;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            color: white;
-        }
-    }
-    
-    .hero-text {
-        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-        position: absolute;
-        width: 70%;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        color: white;
-    }
-
-    .typ{
-        padding-top: 30px;
-
-        .container{
-            display: flex;
-            flex-direction: column;
-            .persona{
-                display: flex;
-                flex-direction: row;
-                .image_c{
-                    max-width: 30%;
-                    img{
-                        width: -webkit-fill-available;
-                    }
-                }
-            }
-        }
-    }
+:host {
+  display: block;
+  background: $bg;
+  color: $text;
+  font-family: $font-base;
 }
 
-.dodo{
-    margin-right: 30px;
-    float: left;
-    max-width: 100px;
+h1, h2, h3 { color: $text; }
+p { color: $text-muted; line-height: 1.75; }
+
+// ─── HERO ─────────────────────────────────────────────────────────────────────
+.hero-section {
+  padding: 5rem 0 4rem;
+  background: $bg-alt;
+  border-bottom: 1px solid $border;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -20%;
+    left: -5%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(circle, rgba(5,150,105,0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
 }
 
-.sigle{
-    margin: 7px;
-    span{
-        font-size: large;
-        font-weight: 700;
+.hero-content {
+  max-width: 720px;
 
-    }
+  h1 {
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-weight: 800;
+    line-height: 1.25;
+    margin: 0.75rem 0 1.25rem;
+    color: $text;
+  }
+
+  .lead {
+    font-size: 1.05rem;
+    color: $text-muted;
+    margin-bottom: 2rem;
+  }
 }
 
-.loto{
-    margin-left: 5px;
+.hero-steps {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
 }
 
-.moy{
-    font-size: larger;
-    color: blue;
-    margin-right: 10px;
+.hero-step {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.9rem;
+  color: $text-muted;
+  b { color: $text; }
 }
 
-:host ::ng-deep{
-    .pi {
-        color: coral;
-        font-weight: 600;
-    }
+.step-icon-sm {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: $accent-bg;
+  border: 1px solid $accent-border;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  i { font-size: 0.9rem; color: $accent; }
+}
 
-    .not{
-        color: orangered;
-    }
+// ─── EXEMPLE ──────────────────────────────────────────────────────────────────
+.example-section {
+  padding: 4rem 0;
+  background: $bg;
+  border-bottom: 1px solid $border;
+}
 
-    .p-orderlist-controls{
-        display: none;
-    }
+.example-card {
+  max-width: 600px;
+  margin: 0 auto;
+  background: $bg-card;
+  border: 1.5px solid $border;
+  border-radius: 16px;
+  padding: 2rem;
+  box-shadow: $shadow;
+}
 
-    .p-orderlist{
-        padding-top: 40px;
-    }
+.example-header {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1.25rem;
+}
+
+.example-avatar {
+  width: 64px;
+  height: 64px;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid $border;
+  background: #fff;
+  flex-shrink: 0;
+  img { width: 100%; height: 100%; object-fit: contain; padding: 4px; }
+}
+
+.example-meta {
+  .author-name { font-weight: 700; color: $text; margin: 0 0 0.2rem; font-size: 0.95rem; }
+  .author-date { font-size: 0.8rem; color: $text-muted; margin: 0 0 0.4rem; }
+}
+
+.stars {
+  i { color: #f59e0b; font-size: 1rem; }
+}
+
+.example-text {
+  font-size: 0.92rem;
+  color: $text-muted;
+  font-style: italic;
+  line-height: 1.7;
+  border-left: 3px solid $accent-border;
+  padding-left: 1rem;
+  margin: 0;
+}
+
+// ─── LISTE ÉCOLES ─────────────────────────────────────────────────────────────
+.schools-section {
+  padding: 4rem 0;
+  background: $bg-alt;
+  border-bottom: 1px solid $border;
+}
+
+.school-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  width: 100%;
+}
+
+.school-thumb {
+  width: 52px;
+  height: 52px;
+  border-radius: 8px;
+  object-fit: contain;
+  border: 1px solid $border;
+  background: #fff;
+  padding: 4px;
+  flex-shrink: 0;
+}
+
+.school-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.school-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: $text;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.school-sigle {
+  font-size: 0.78rem;
+  color: $text-muted;
+  font-weight: 500;
+}
+
+.school-rating {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  flex-shrink: 0;
+}
+
+.rating-val {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: $accent2;
+}
+
+.star-icon { color: #f59e0b; font-size: 0.9rem; }
+
+.rating-cnt {
+  font-size: 0.78rem;
+  color: $text-muted;
+}
+
+:host ::ng-deep {
+  .p-orderlist-controls { display: none; }
+  .p-orderlist-header   { display: none; }
+  .p-orderlist {
+    border-radius: 14px;
+    overflow: hidden;
+    border: 1.5px solid $border;
+    box-shadow: $shadow;
+  }
+  .p-orderlist-list-container { border: none; }
+}
+
+// ─── À PROPOS ──────────────────────────────────────────────────────────────────
+.about-avis-section {
+  padding: 4rem 0 5rem;
+  background: $bg;
+}
+
+.about-avis-card {
+  background: linear-gradient(135deg, #ecfdf5, #eff6ff);
+  border: 1.5px solid $accent-border;
+  border-radius: 20px;
+  padding: 3rem;
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+  box-shadow: $shadow;
+}
+
+.about-avis-icon {
+  font-size: 3rem;
+  color: $accent;
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.about-avis-content {
+  h3 { font-weight: 700; font-size: 1.3rem; color: $text; margin-bottom: 1rem; }
+  p + p { margin-top: 0.75rem; }
+}
+
+// ─── Responsive ───────────────────────────────────────────────────────────────
+@media (max-width: 767px) {
+  .hero-section   { padding: 3.5rem 0 3rem; }
+  .hero-steps     { gap: 1rem; }
+  .about-avis-card { flex-direction: column; padding: 2rem; }
+  .about-avis-icon { font-size: 2rem; }
+  .example-section,
+  .schools-section,
+  .about-avis-section { padding: 2.5rem 0; }
 }

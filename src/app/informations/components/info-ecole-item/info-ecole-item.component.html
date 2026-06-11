@@ -1,270 +1,261 @@
-<div class="container">
-    @if (loading$ | async) {
-    <div class="d-flex justify-content-center">
-        <div class="spinner-border text-primary" style="width: 6rem; height: 6rem; margin: 10% 0;" role="status">
-            <span class="sr-only">Loading...</span>
+<div class="ecole-page">
+
+  <!-- LOADING -->
+  @if (loading$ | async) {
+  <div class="loading-overlay">
+    <div class="spinner-border text-primary" style="width: 4rem; height: 4rem;" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>
+  </div>
+  }
+
+  @if (ecole) {
+
+  <!-- ═══ HERO ═══════════════════════════════════════════════════════════════ -->
+  <section class="school-hero">
+    <div class="container">
+      <div class="hero-inner">
+        <div class="school-logo-wrap">
+          <img [src]="'../../../../assets/images/school/logo/'+ecole[0].logo_e" [alt]="ecole[0].nom_e">
         </div>
+        <div class="school-identity">
+          <span class="section-badge">Fiche établissement</span>
+          <h1>{{ecole[0].nom_e}}</h1>
+          @if (ecole[0].sigle_e) {
+          <p class="school-sigle">{{ecole[0].sigle_e}}</p>
+          }
+        </div>
+      </div>
     </div>
-    }
-    @if (ecole) {
-    <div class="logo">
-        <img [src]="'../../../../assets/images/school/logo/'+ecole[0].logo_e" alt="">
+  </section>
+
+  <!-- ═══ DESCRIPTION ════════════════════════════════════════════════════════ -->
+  <section class="page-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">À propos</span>
+        <h2>Description</h2>
+      </div>
+      <div class="description-body" [innerHTML]="ecole[0].descriptif_e"></div>
     </div>
-    <div class="name">
-        <h2>{{ecole[0].nom_e}}</h2>
-    </div>
-    <div class="description box">
-        <hr>
-        <div class="text-center">
-            <button class="btn btn-secondary" type="button">
-                Description
-            </button>
+  </section>
+
+  <!-- ═══ CONTACT ════════════════════════════════════════════════════════════ -->
+  <section class="page-section alt">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">Nous contacter</span>
+        <h2>Coordonnées</h2>
+      </div>
+      <div class="contact-grid">
+
+        <div class="contact-card">
+          <div class="contact-icon contact-icon--wsp">
+            <i class="bi bi-whatsapp"></i>
+          </div>
+          <div class="contact-info">
+            <h4>Conseiller d'orientation</h4>
+            <p>Contacter un conseiller Camerdiplome</p>
+          </div>
+          <button type="button" class="btn-wsp" (click)="discover()">
+            <i class="bi bi-telephone-fill"></i>
+            WhatsApp
+          </button>
         </div>
 
-        <div class="descript-text" id="descript" [innerHTML]="ecole[0].descriptif_e"></div>
+        <div class="contact-card">
+          <div class="contact-icon contact-icon--blue">
+            <i class="bi bi-telephone-fill"></i>
+          </div>
+          <div class="contact-info">
+            <h4>Contact direct</h4>
+            @if (ecole[0].tel_1_e) {
+            <p>{{ecole[0].tel_1_e}}</p>
+            } @else {
+            <p class="muted-info">Non renseigné</p>
+            }
+          </div>
+        </div>
 
-        <hr>
-        <!-- <button
-                class="btn btn-secondary"
-                type="button"
-                >
-                Détails
-            </button> -->
-        <!-- <div class="text-center">
-                <button
-                    class="btn btn-secondary"
-                    type="button"
-                    data-toggle="collapse"
-                    data-target="#detail"
-                    aria-expanded="false"
-                    aria-controls="detail"
-                    >
-                    Détails
-                </button>
-            </div> -->
-        <div class="collapse show" id="detail">
-            <p> 
-                <strong>Contact : </strong> 
-                <button type="button" class="btn btn-success" (click)="discover()">
-                    <i class="bi-telephone"></i> 
-                    Numéro WhatsApp 
-                </button> 
-            </p>
+        <div class="contact-card">
+          <div class="contact-icon contact-icon--blue">
+            <i class="bi bi-globe"></i>
+          </div>
+          <div class="contact-info">
+            <h4>Site Web</h4>
             @if (ecole[0].siteweb_e) {
-            <p> <strong>Site Web :</strong> <a [href]="ecole[0].siteweb_e" target="_blank"> <i class="bi-globe"></i>
-                    cliquez ici</a> </p>
+            <a [href]="ecole[0].siteweb_e" target="_blank" rel="noopener noreferrer" class="link-accent">
+              <i class="bi bi-box-arrow-up-right"></i>
+              Visiter le site
+            </a>
+            } @else {
+            <p class="muted-info">Non renseigné</p>
             }
-            <!-- <table class="table" >
-                    <tbody>
-                        <tr>
-                            <th>Sigle</th>
-                            <td>{{ecole[0].sigle_e}}</td>
-                        </tr>
-                         <tr>
-                            <th>Région</th>
-                            <td>Centre</td>
-                        </tr>
-                        <tr>
-                            <th>Nombre de Campus</th>
-                            <td>____ Campus</td>
-                        </tr>
-                        <tr>
-                            <th>Ville(s)</th>
-                            <td>{{ecole[0].sigle_e}}</td>
-                        </tr>
-                        <tr>
-                            <th>Année d'ouverture</th>
-                            <td>{{ecole[0].date_creation}}</td>
-                        </tr>
-                        <tr>
-                            <th>Apprenants formés</th>
-                            <td>_______</td>
-                        </tr>
-                        <tr>
-                            <th>Taux de réussite affiché aux examens</th>
-                            <td>__%</td>
-                        </tr>
-                        <tr>
-                            <th>Structures partenaires</th>
-                            <td>_______</td>
-                        </tr>
-                        <tr>
-                            <th>Nombre de Cursus ouvert</th>
-                            <td>_____</td>
-                        
-                        <tr>
-                            <th>Contact</th>
-                            <td><button type="button" class="btn btn-success" (click)="discover()">Success</button></td>
-                        </tr>
-                        <tr>
-                            <th>Site Web</th>
-                            <td>{{ecole[0].siteweb_e}}</td>
-                        </tr>
-                    </tbody>
-                </table>
-                -->
+          </div>
         </div>
-    </div>
-    <div class="illustrat box">
-        <h2>{{ecole[0].sigle_e}} en image</h2>
-        <div class="image-group">
-            @for (item of imageArray; track $index) {
-            <div class="image-item">
-                <a [href]="'../../../../assets/images/school/'+ecole[0].sigle_e+'/'+item" target="_blank"
-                    rel="noopener noreferrer">
-                    <img [src]="'../../../../assets/images/school/'+ecole[0].sigle_e+'/'+item" [alt]="item">
-                </a>
-            </div>
-            }
-        </div>
-    </div>
-    <!-- <div class="chifres box">
-            <h2>{{ecole[0].sigle_e}} nos chifres clés</h2>
-            @if (ecole[0].date_creation) {
-                <div class="stat">
-                    <div class="ico"> <i class="pi pi-graduation-cap"></i>  </div>
-                    <div class="texto">Année de création</div>
-                    <div class="val">{{ecole[0].date_creation}}</div>
-                </div>
-            }
-            @if (ecole[0].date_creation) {
-                <div class="stat">
-                    <div class="ico"> <i class="pi pi-building-columns"></i>  </div>
-                    <div class="texto">Nombre de Campus</div>
-                    <div class="val">{{ecole[0].date_creation}}</div>
-                </div>
-            }
-            @if (ecole[0].date_creation) {
-                <div class="stat">
-                    <div class="ico"> <i class="pi pi-users"></i>  </div>
-                    <div class="texto">Etudiants formés</div>
-                    <div class="val">{{ecole[0].date_creation}}</div>
-                </div>
-            }
-            @if (ecole[0].date_creation) {
-                <div class="stat">
-                    <div class="ico"> <i class="pi pi-chart-pie"></i>  </div>
-                    <div class="texto">Taux de réussite aux examens</div>
-                    <div class="val">{{ecole[0].date_creation}}</div>
-                </div>
-            }
-            @if (ecole[0].date_creation) {
-                <div class="stat">
-                    <div class="ico"> <i class="pi pi-briefcase"></i>  </div>
-                    <div class="texto">Entreprises partenaires</div>
-                    <div class="val">{{ecole[0].date_creation}}</div>
-                </div>
-            }
-            @if (ecole[0].date_creation) {
-                <div class="stat">
-                    <div class="ico"> <i class="pi pi-list"></i>  </div>
-                    <div class="texto">Nombre de Cursus ouvert</div>
-                    <div class="val">{{ecole[0].date_creation}}</div>
-                </div>
-            }
-        </div> -->
-    <div class="mapping"></div>
-    @if (parrainArray) {
-    <div class="partner box">
-        <h2>Nos Accréditations</h2>
-        <div class="partner-group">
-            @for (item of parrainArray; track $index) {
-            <div class="partner-item">
-                <img [src]="'../../../../assets/images/parrain/'+item" [alt]="item">
-            </div>
-            }
-        </div>
-    </div>
-    }
-    @if (advertiser$ | async; as adi ) {
-    @if (adi.length!==0) {
-    <div class="formations box">
-        <h2>Quelques unes de nos formations</h2>
-        <div class="intro-form"></div>
-        <div class="adv">
-            <div class="list">
-                @for (iteme of advertiser$ | async; track iteme.id_form) {
-                <app-pub-advers [school]="iteme"></app-pub-advers>
-                }
-            </div>
-            <div class="dolom">
-                <button class="btn btn-primary mr-1" data-toggle="modal" data-target="#modalFormations">Voir
-                    plus</button>
-                <span><button class="btn btn-success" (click)="trouverForm()">Trouver ma formation</button> </span>
-            </div>
-        </div>
-    </div>
-    }
-    }
-    <div class="modal fade" id="modalFormations" tabindex="-1" role="dialog" aria-labelledby="modalFormations"
-        aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="modalFormationsTitle">{{ecole[0].nom_e}} : nos cursus de formation</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    @if (formus$ | async; as formus) {
-                    @for (item of categorie; track $index) {
-                    <h5> {{item.nom_cat}} </h5>
-                    <ul>
-                        @for (itemus of formus; track $index) {
-                        @if (itemus.nom_cat === item.nom_cat ) {
-                        <li> {{itemus.nom_dip}} </li>
-                        }
-                        }
-                    </ul>
-                    }
-                    }
-                </div>
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" data-dismiss="modal">Fermer</button>
-                </div>
-            </div>
-        </div>
-    </div>
-    <div class="avis box">
-        <h2>Quelques Avis sur {{ecole[0].sigle_e}}</h2>
 
-        @if (schoolNote$ | async; as schoolNote ) {
-        @if (schoolNote[0].notes_moy != null) {
-        <div class="school-note">
-            <div class="moy">{{schoolNote[0].notes_moy}} / 5</div>
-            <div class="start">
-                @for (item of [].constructor(note) ; track $index) {
-                <i class="pi pi-star-fill not"></i>
-                }
-                @for (item of [].constructor(5-note) ; track $index) {
-                <i class="pi pi-star not"></i>
-                }
-            </div>
-            <div class="count">
-                <h3> {{schoolNote[0].occurence}} avis </h3>
-                <h4> dont {{schoolNote[0].occurence}} certifiés </h4>
-            </div>
-        </div>
-        }@else {
-        <h4>Aucun avis n'a été enreristré sur {{ecole[0].sigle_e}}</h4>
-        }
-        } @else {
-        <h4>Aucun avis n'a été enreristré sur {{ecole[0].sigle_e}} </h4>
-        }
-        <div class="ton-avis">
-            <p-button label="Donne ton avis" [rounded]="true" severity="help" (click)="tonAvis()" />
-        </div>
-        <div class="avis-list">
-            @for (item of avisList; track item.auteur_avis) {
-            <app-avis-single [avis]="item" />
-            } @empty {
-            <li>There are no items.</li>
-            }
-        </div>
+      </div>
     </div>
-    <div class="orientation"></div>
-    <div class="adress"></div>
-    <div class="campus"></div>
-    }
+  </section>
+
+  <!-- ═══ GALERIE ════════════════════════════════════════════════════════════ -->
+  @if (imageArray && imageArray.length > 0) {
+  <section class="page-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">Galerie</span>
+        <h2>{{ecole[0].sigle_e}} en images</h2>
+      </div>
+      <div class="image-gallery">
+        @for (item of imageArray; track $index) {
+        <div class="gallery-item">
+          <a [href]="'../../../../assets/images/school/'+ecole[0].sigle_e+'/'+item" target="_blank" rel="noopener noreferrer">
+            <img [src]="'../../../../assets/images/school/'+ecole[0].sigle_e+'/'+item" [alt]="item">
+            <div class="gallery-overlay"><i class="bi bi-zoom-in"></i></div>
+          </a>
+        </div>
+        }
+      </div>
+    </div>
+  </section>
+  }
+
+  <!-- ═══ ACCRÉDITATIONS ══════════════════════════════════════════════════════ -->
+  @if (parrainArray) {
+  <section class="page-section alt">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">Certifications</span>
+        <h2>Nos accréditations</h2>
+      </div>
+      <div class="partner-row">
+        @for (item of parrainArray; track $index) {
+        <div class="partner-logo">
+          <img [src]="'../../../../assets/images/parrain/'+item" [alt]="item">
+        </div>
+        }
+      </div>
+    </div>
+  </section>
+  }
+
+  <!-- ═══ FORMATIONS ══════════════════════════════════════════════════════════ -->
+  @if (advertiser$ | async; as adi) {
+  @if (adi.length !== 0) {
+  <section class="page-section formations-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">Offre de formation</span>
+        <h2>Quelques unes de nos formations</h2>
+      </div>
+      <div class="formations-list">
+        @for (iteme of advertiser$ | async; track iteme.id_form) {
+        <app-pub-advers [school]="iteme"></app-pub-advers>
+        }
+      </div>
+      <div class="formations-actions">
+        <button class="btn-outline-neutral" data-toggle="modal" data-target="#modalFormations">
+          <i class="bi bi-list-ul"></i>
+          Voir tous les cursus
+        </button>
+        <button class="btn-primary-cta" (click)="trouverForm()">
+          <i class="bi bi-compass-fill"></i>
+          Trouver ma formation
+        </button>
+      </div>
+    </div>
+  </section>
+  }
+  }
+
+  <!-- ═══ MODAL FORMATIONS ═══════════════════════════════════════════════════ -->
+  <div class="modal fade" id="modalFormations" tabindex="-1" role="dialog" aria-labelledby="modalFormations"
+    aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
+      <div class="modal-content modal-cd">
+        <div class="modal-header modal-cd-header">
+          <h5 class="modal-title">{{ecole[0].nom_e}} — cursus de formation</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          @if (formus$ | async; as formus) {
+          @for (item of categorie; track $index) {
+          <div class="modal-category">
+            <h5><i class="bi bi-mortarboard-fill"></i> {{item.nom_cat}}</h5>
+            <ul class="modal-formation-list">
+              @for (itemus of formus; track $index) {
+              @if (itemus.nom_cat === item.nom_cat) {
+              <li>{{itemus.nom_dip}}</li>
+              }
+              }
+            </ul>
+          </div>
+          }
+          }
+        </div>
+        <div class="modal-footer">
+          <button class="btn-ghost-cta" data-dismiss="modal">Fermer</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══ AVIS ════════════════════════════════════════════════════════════════ -->
+  <section class="page-section avis-section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">Témoignages</span>
+        <h2>Avis sur {{ecole[0].sigle_e}}</h2>
+      </div>
+
+      @if (schoolNote$ | async; as schoolNote) {
+      @if (schoolNote[0].notes_moy != null) {
+      <div class="rating-card">
+        <div class="rating-score">
+          <span class="score-value">{{schoolNote[0].notes_moy}}</span>
+          <span class="score-max">/ 5</span>
+        </div>
+        <div class="rating-stars">
+          @for (item of [].constructor(note); track $index) {
+          <i class="pi pi-star-fill star-filled"></i>
+          }
+          @for (item of [].constructor(5-note); track $index) {
+          <i class="pi pi-star star-empty"></i>
+          }
+        </div>
+        <div class="rating-count">
+          <strong>{{schoolNote[0].occurence}} avis</strong>
+          <span>dont {{schoolNote[0].occurence}} certifiés</span>
+        </div>
+      </div>
+      } @else {
+      <div class="no-avis">
+        <i class="bi bi-chat-square-text"></i>
+        <p>Aucun avis enregistré pour {{ecole[0].sigle_e}}</p>
+      </div>
+      }
+      } @else {
+      <div class="no-avis">
+        <i class="bi bi-chat-square-text"></i>
+        <p>Aucun avis enregistré pour {{ecole[0].sigle_e}}</p>
+      </div>
+      }
+
+      <div class="avis-cta">
+        <p-button label="Donner mon avis" [rounded]="true" severity="help" (click)="tonAvis()" />
+      </div>
+
+      <div class="avis-list">
+        @for (item of avisList; track item.auteur_avis) {
+        <app-avis-single [avis]="item" />
+        } @empty {
+        <p class="no-items">Soyez le premier à donner votre avis !</p>
+        }
+      </div>
+    </div>
+  </section>
+
+  }
 </div>

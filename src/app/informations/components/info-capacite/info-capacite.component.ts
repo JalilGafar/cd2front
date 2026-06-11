@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { SharedComponentModule } from '../../../shared/shared.modules';
 import { Meta, Title } from '@angular/platform-browser';
 import { SchoolAdversComponent } from '../../../shared/components/school-advers/school-advers.component';
@@ -30,8 +31,9 @@ export class InfoCapaciteComponent implements OnInit {
   constructor(
     private titleService:Title,
     private adversService: AdversService,
-    private meta : Meta) 
-    {  
+    private meta : Meta,
+    @Inject(PLATFORM_ID) private platformId: Object)
+    {
       this.titleService.setTitle("Capacité en Droit et Économie au Cameroun | Camerdiplome ");
       this.meta.updateTag({ name: 'description', content: 'La capacité en droit et Économie offre une formation universitaire juridique générale à tous publics avec pour condition d\'être titulaire du BEPC, CAP ou tout autre diplôme équivalent, et être âgé d’au moins 21 ans révolus' });
       this.meta.updateTag({ name: 'keywords', content: 'métier, metier, droit, économie, juridique, facultés, emploie, Certificat, formation, Bac, Professionnel, Professionnelle' });
@@ -41,6 +43,9 @@ export class InfoCapaciteComponent implements OnInit {
   
   
   ngOnInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
     this.schoolAdvers$ = this.adversService.getSchoolPub();
   }
 

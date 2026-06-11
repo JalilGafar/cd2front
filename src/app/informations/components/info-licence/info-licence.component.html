@@ -1,13 +1,16 @@
+<app-headmsg
+    [titre]="titre"
+    [soustitre]="soustitre"
+    [photo] = "photo"
+    >
+</app-headmsg>
+<app-start></app-start>
 <div class="container">
-    <app-headmsg 
-        [titre]="titre"
-        [soustitre]="soustitre"
-        [photo] = "photo"
-        >
-    </app-headmsg>
-    <app-start ></app-start>
     <div class="une">
-        <h2>Les écoles à la une</h2>
+        <div class="section-head">
+            <span class="section-badge">Établissements partenaires</span>
+            <h2>Les écoles à la une</h2>
+        </div>
         <div class="carousel">
             <div class="card-container">
                 @for (item of schoolAdvers$ | async ; track item.id_ecol) {
@@ -348,7 +351,7 @@
             </div>
 
 
-            <p-accordion  [multiple]="true" >
+            <!-- <p-accordion  [multiple]="true" >
                 <p-accordionTab header="Qu'est ce qu'une licence ?">
                     <p> 
                         Une licence est une formation  universitaire qui dure trois  ans, soit six  semestres. 
@@ -609,19 +612,17 @@
                         </li>
                     </ul>
                 </p-accordionTab>
-            </p-accordion>
-            
+            </p-accordion> -->
+
         </div>
     </div>
-    <div class="card my-3 px-2">
-        <h2 class="card-title" >Quelques Licence au Cameroun</h2>
+    <div class="section-head" style="text-align:center; margin: 2rem 0 1rem;">
+        <span class="section-badge">Formations</span>
+        <h2>Quelques Licences au Cameroun</h2>
     </div>
-
     <div class="actual">
         <app-actu-list/>
     </div>
-
-    <app-start ></app-start>
 </div>
 <!-- 
 <app-info-redaction></app-info-redaction>

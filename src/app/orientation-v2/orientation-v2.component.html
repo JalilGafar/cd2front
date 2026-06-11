@@ -1,0 +1,699 @@
+<div class="orientation-v2">
+
+  <!-- ══════════════════════════════════════════ PHASE A — Sélection ville -->
+  <section
+    *ngIf="phase === 'A'"
+    @fadeSlideIn
+    class="phase phase-a"
+    aria-label="Sélection de la ville">
+
+    <header class="phase-header">
+      <span class="phase-badge">Étape 1 / 2</span>
+      <h1>Dans quelle ville souhaitez-vous étudier ?</h1>
+      <p class="phase-subtitle">Sélectionnez une ville ou recherchez-en une autre ci-dessous</p>
+    </header>
+
+    <p-progressSpinner
+      *ngIf="chargement"
+      [style]="{'width':'44px','height':'44px'}"
+      styleClass="spinner-center">
+    </p-progressSpinner>
+
+    <!-- Pills des 6 villes courantes -->
+    <div
+      *ngIf="!chargement"
+      class="villes-courantes"
+      role="group"
+      aria-label="Villes les plus recherchées">
+      <button
+        *ngFor="let ville of villesCourantes"
+        class="ville-pill"
+        [class.ville-pill--active]="villeSelectionnee === ville"
+        [attr.aria-pressed]="villeSelectionnee === ville"
+        (click)="selectionnerVille(ville)">
+        <i class="bi bi-geo-alt" aria-hidden="true"></i>
+        {{ ville }}
+      </button>
+    </div>
+
+    <!-- Bouton pour afficher toutes les villes -->
+    <div *ngIf="!chargement" class="toutes-villes-toggle">
+      <button
+        class="btn-toutes-villes"
+        [class.btn-toutes-villes--actif]="afficherToutesVilles"
+        (click)="afficherToutesVilles = !afficherToutesVilles"
+        [attr.aria-expanded]="afficherToutesVilles">
+        <i class="bi" [ngClass]="afficherToutesVilles ? 'bi-chevron-up' : 'bi-map'" aria-hidden="true"></i>
+        {{ afficherToutesVilles ? 'Masquer la liste' : 'Voir toutes les villes' }}
+        <span class="badge-count-ville">{{ villes.length }}</span>
+      </button>
+    </div>
+
+    <!-- Champ de recherche (filtre les pills rapides ou la grille selon le mode) -->
+    <div *ngIf="!chargement" class="recherche-wrapper">
+      <div class="recherche-input-group">
+        <i class="bi bi-search recherche-icone" aria-hidden="true"></i>
+        <input
+          type="text"
+          class="form-control recherche-input"
+          [placeholder]="afficherToutesVilles ? 'Filtrer les villes...' : 'Rechercher une autre ville...'"
+          [(ngModel)]="villeRecherche"
+          aria-label="Rechercher une ville dans la liste complète"
+          autocomplete="off"
+        />
+      </div>
+
+      <!-- Dropdown (mode normal, sans grille étendue) -->
+      <ul
+        *ngIf="villeRecherche.trim() && !afficherToutesVilles"
+        class="liste-villes"
+        role="listbox"
+        aria-label="Villes correspondant à votre recherche">
+        <li *ngFor="let v of villesFiltrees" role="option">
+          <button class="ville-liste-item" (click)="selectionnerVille(v.ville_cam)">
+            <i class="bi bi-geo-alt-fill" aria-hidden="true"></i>
+            {{ v.ville_cam }}
+          </button>
+        </li>
+        <li *ngIf="villesFiltrees.length === 0" class="aucun-resultat-item" role="option" aria-disabled="true">
+          Aucune ville trouvée pour "{{ villeRecherche }}"
+        </li>
+      </ul>
+    </div>
+
+    <!-- Grille de toutes les villes (mode étendu) -->
+    <div
+      *ngIf="!chargement && afficherToutesVilles"
+      class="villes-grille-conteneur"
+      [@staggerIn]="villesFiltrees.length">
+      <div class="villes-grille" role="listbox" aria-label="Toutes les villes disponibles">
+        <button
+          *ngFor="let v of villesFiltrees"
+          class="ville-pill ville-pill--grille"
+          [class.ville-pill--active]="villeSelectionnee === v.ville_cam"
+          [attr.aria-pressed]="villeSelectionnee === v.ville_cam"
+          role="option"
+          (click)="selectionnerVille(v.ville_cam)">
+          <i class="bi bi-geo-alt" aria-hidden="true"></i>
+          {{ v.ville_cam }}
+        </button>
+        <p *ngIf="villesFiltrees.length === 0" class="aucun-resultat-grille">
+          Aucune ville trouvée pour "{{ villeRecherche }}"
+        </p>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ══════════════════════════════════════════ PHASE B — Sélection domaine -->
+  <section
+    *ngIf="phase === 'B'"
+    @fadeSlideIn
+    class="phase phase-b"
+    aria-label="Sélection du domaine de formation">
+
+    <header class="phase-header">
+      <button
+        class="btn-retour"
+        (click)="phase = 'A'"
+        aria-label="Retour à la sélection de ville">
+        <i class="bi bi-arrow-left" aria-hidden="true"></i> Retour
+      </button>
+      <span class="phase-badge">Étape 2 / 2</span>
+      <h1>Dans quel domaine souhaitez-vous vous former ?</h1>
+      <p class="ville-choisie">
+        <i class="bi bi-geo-alt-fill" aria-hidden="true"></i>
+        {{ villeSelectionnee }}
+      </p>
+    </header>
+
+    <div class="recherche-wrapper">
+      <div class="recherche-input-group">
+        <i class="bi bi-search recherche-icone" aria-hidden="true"></i>
+        <input
+          type="text"
+          class="form-control recherche-input"
+          placeholder="Rechercher un domaine..."
+          [(ngModel)]="domaineRecherche"
+          aria-label="Filtrer les domaines de formation"
+          autocomplete="off"
+        />
+      </div>
+    </div>
+
+    <p-progressSpinner
+      *ngIf="chargement"
+      [style]="{'width':'44px','height':'44px'}"
+      styleClass="spinner-center">
+    </p-progressSpinner>
+
+    <!-- Liste des domaines -->
+
+    <!-- Liste groupée (sans recherche active) -->
+    <div *ngIf="!chargement && !domaineRecherche.trim()" [@staggerIn]="domainesGroupes.length"
+         class="liste-domaines" role="list">
+
+      <div *ngFor="let groupe of domainesGroupes" class="groupe-domaine">
+
+        <!-- En-tête de groupe — non cliquable, rôle de séparateur -->
+        <div class="groupe-domaine-header" role="listitem" aria-disabled="true">
+          <span class="groupe-icone" aria-hidden="true">
+            <i class="bi" [ngClass]="iconePourParent(groupe.nom_parent)"></i>
+          </span>
+          <span class="groupe-nom">{{ groupe.nom_parent }}</span>
+          <span class="groupe-count">{{ groupe.sousDomaines.length }}</span>
+        </div>
+
+        <!-- Sous-domaines du groupe -->
+        <button
+          *ngFor="let d of groupe.sousDomaines"
+          class="domaine-tile domaine-tile--enfant"
+          role="listitem"
+          [attr.aria-label]="d.nom_dom"
+          (click)="selectionnerDomaine(d)">
+          <span class="domaine-info">
+            <span class="domaine-nom">{{ d.nom_dom }}</span>
+          </span>
+          <i class="bi bi-chevron-right domaine-chevron" aria-hidden="true"></i>
+        </button>
+
+      </div>
+
+      <p *ngIf="domainesGroupes.length === 0" class="aucun-resultat-domaine">
+        Aucun domaine disponible.
+      </p>
+    </div>
+
+    <!-- Liste plate filtrée (recherche active) -->
+
+    <div *ngIf="!chargement && domaineRecherche.trim()" [@staggerIn]="domainesFiltres.length"
+         class="liste-domaines" role="list">
+
+      <button
+        *ngFor="let d of domainesFiltres"
+        class="domaine-tile"
+        role="listitem"
+        [attr.aria-label]="d.nom_dom + ' — ' + (d.nom_parent || d.branche_dom)"
+        (click)="selectionnerDomaine(d)">
+        <span class="domaine-icone" aria-hidden="true">
+          <i class="bi" [ngClass]="iconePourBranche(d.branche_dom)"></i>
+        </span>
+        <span class="domaine-info">
+          <span class="domaine-nom">{{ d.nom_dom }}</span>
+          <span class="domaine-branche">{{ d.nom_parent || d.branche_dom }}</span>
+        </span>
+        <i class="bi bi-chevron-right domaine-chevron" aria-hidden="true"></i>
+      </button>
+
+      <p *ngIf="domainesFiltres.length === 0" class="aucun-resultat-domaine">
+        Aucun domaine ne correspond à "{{ domaineRecherche }}"
+      </p>
+    </div>
+
+    <!-- Bouton "Tous les domaines" -->
+    <div *ngIf="!chargement" class="tous-domaines-wrapper">
+      <button
+        class="btn-tous-domaines"
+        (click)="selectionnerTousDomaines()"
+        [attr.aria-label]="'Explorer toutes les formations disponibles à ' + villeSelectionnee">
+        <span class="tous-domaines-icones" aria-hidden="true">
+          <i class="bi bi-grid-3x3-gap-fill"></i>
+        </span>
+        <span class="tous-domaines-texte">
+          <span class="tous-domaines-label">Explorer toutes les formations</span>
+          <span class="tous-domaines-sous">Tous domaines confondus à {{ villeSelectionnee }}</span>
+        </span>
+        <i class="bi bi-arrow-right tous-domaines-chevron" aria-hidden="true"></i>
+      </button>
+    </div>
+
+  </section>
+
+  <!-- ══════════════════════════════════════════ PHASE C — Résultats -->
+  <section
+    *ngIf="phase === 'C'"
+    @fadeSlideIn
+    class="phase phase-c"
+    aria-label="Résultats de votre recherche de formation">
+
+    <!-- C1 : En-tête résultats ─────────────────────────────────────────── -->
+    <header class="resultats-entete">
+      <button
+        class="btn-retour"
+        (click)="phase = 'B'"
+        aria-label="Retour à la sélection du domaine">
+        <i class="bi bi-arrow-left" aria-hidden="true"></i> Retour
+      </button>
+
+      <div class="entete-recap">
+        <span class="recap-item">
+          <i class="bi bi-geo-alt-fill" aria-hidden="true"></i>
+          {{ villeSelectionnee }}
+        </span>
+        <span class="recap-sep" aria-hidden="true">·</span>
+        <span class="recap-item">
+          <i class="bi bi-mortarboard-fill" aria-hidden="true"></i>
+          {{ tousDomainesSelectionnes ? 'Tous les domaines' : domaineSelectionne?.nom_dom }}
+        </span>
+      </div>
+
+      <div class="entete-actions">
+        <p class="resultats-compteur" aria-live="polite" aria-atomic="true">
+          <strong>{{ resultatsFiltres.length }}</strong>
+          formation{{ resultatsFiltres.length > 1 ? 's' : '' }}
+          trouvée{{ resultatsFiltres.length > 1 ? 's' : '' }}
+        </p>
+
+        <div *ngIf="diplomesOptions.length > 1" class="dropdown-filtre-wrapper">
+          <p-dropdown
+            [options]="diplomesOptions"
+            [(ngModel)]="diplomeFiltre"
+            optionLabel="label"
+            (onChange)="appliquerFiltreDiplome()"
+            placeholder="Filtrer par niveau"
+            styleClass="dropdown-diplome"
+            aria-label="Filtrer les résultats par niveau de diplôme">
+          </p-dropdown>
+          <span *ngIf="filtreBloque" class="filtre-bloque-msg" role="alert">
+            <i class="bi bi-lock-fill" aria-hidden="true"></i>
+            Remplissez le formulaire ci-dessous pour activer ce filtre
+          </span>
+        </div>
+
+        <button class="btn-nouvelle-recherche" (click)="nouvelleRecherche()">
+          <i class="bi bi-arrow-counterclockwise" aria-hidden="true"></i>
+          Nouvelle recherche
+        </button>
+      </div>
+    </header>
+
+    <!-- Spinner chargement résultats -->
+    <p-progressSpinner
+      *ngIf="chargement"
+      [style]="{'width':'44px','height':'44px'}"
+      styleClass="spinner-center">
+    </p-progressSpinner>
+
+    <!-- Erreur API -->
+    <div *ngIf="erreur && !chargement" role="alert" class="bloc-erreur">
+      <i class="bi bi-exclamation-triangle-fill" aria-hidden="true"></i>
+      <span>{{ erreur }}</span>
+      <button class="btn-reessayer" (click)="chargerResultats()">
+        <i class="bi bi-arrow-clockwise" aria-hidden="true"></i> Réessayer
+      </button>
+    </div>
+
+    <!-- Aucun résultat -->
+    <div
+      *ngIf="!chargement && !erreur && resultatsFiltres.length === 0"
+      class="bloc-vide">
+      <i class="bi bi-search" aria-hidden="true"></i>
+      <p>Aucune formation ne correspond à votre recherche.</p>
+      <button class="btn-primary-cta" (click)="nouvelleRecherche()">
+        <i class="bi bi-arrow-counterclockwise" aria-hidden="true"></i>
+        Recommencer
+      </button>
+    </div>
+
+    <!-- C2 + C3 : grille de résultats ─────────────────────────────────── -->
+    <div
+      *ngIf="!chargement && !erreur && resultatsFiltres.length > 0"
+      class="resultats-contenu"
+      id="resultats-contenu">
+
+      <!-- Bandeau de confirmation (après soumission lead) -->
+      <div *ngIf="leadSoumis" @successBannerIn role="alert" class="banniere-succes">
+        <i class="bi bi-check-circle-fill" aria-hidden="true"></i>
+        Merci <strong>{{ leadPrenom }}</strong> ! Un conseiller vous contactera pour vous accompagner dans votre choix.
+      </div>
+
+      <!-- ── AVANT soumission lead ──────────────────────────────────────── -->
+      <ng-container *ngIf="!leadSoumis">
+
+        <!-- Cartes libres — 3 premières formations -->
+        <div
+          [@staggerIn]="cartesVisibles.length"
+          class="grille-formations"
+          aria-label="Formations disponibles">
+          <article
+            *ngFor="let r of cartesVisibles"
+            class="carte-formation"
+            [attr.aria-label]="r.nom_e + ' — ' + (r.descriptif_dip || r.nom_dip)">
+            <ng-container *ngTemplateOutlet="tmplCarte; context: { $implicit: r }"></ng-container>
+          </article>
+        </div>
+
+        <!-- Zone de verrouillage (si plus de 3 résultats) -->
+        <div *ngIf="nombreRestants > 0" class="zone-lock">
+
+          <!-- Cartes fantômes -->
+          <div class="fantomes-conteneur" aria-hidden="true">
+            <div class="grille-formations">
+              <div
+                *ngFor="let r of cartesFantomes"
+                class="carte-formation carte-fantome">
+                <ng-container *ngTemplateOutlet="tmplCarte; context: { $implicit: r }"></ng-container>
+              </div>
+            </div>
+            <div class="degrade-masque" aria-hidden="true"></div>
+          </div>
+
+          <!-- Formulaire de capture lead -->
+          <div
+            @leadCardIn
+            id="carte-lead"
+            class="carte-lead"
+            [class.carte-lead--highlight]="filtreBloque"
+            aria-label="Formulaire pour accéder à toutes les formations">
+
+            <h2 class="lead-titre">
+              Voir les <strong>{{ nombreRestants }}</strong>
+              autre{{ nombreRestants > 1 ? 's' : '' }}
+              formation{{ nombreRestants > 1 ? 's' : '' }}
+            </h2>
+            <p class="lead-description">
+              Recevez la liste complète et bénéficiez de l'accompagnement gratuit
+              d'un conseiller d'orientation dédié.
+            </p>
+
+            <form (ngSubmit)="soumettreLead()" class="form-lead" novalidate>
+
+              <div class="form-group">
+                <label for="lead-prenom">
+                  Prénom <span class="requis" aria-label="champ requis">*</span>
+                </label>
+                <input
+                  id="lead-prenom"
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="leadPrenom"
+                  name="leadPrenom"
+                  placeholder="Votre prénom"
+                  required
+                  aria-required="true"
+                  autocomplete="given-name"
+                />
+              </div>
+
+              <div class="form-group">
+                <label>
+                  Téléphone <span class="requis" aria-label="champ requis">*</span>
+                </label>
+                <ngx-intl-tel-input
+                  [cssClass]="'form-control lead-tel-input'"
+                  [preferredCountries]="['cm', 'fr', 'sn', 'ci', 'ga', 'cd', 'ng']"
+                  [enableAutoCountrySelect]="false"
+                  [enablePlaceholder]="true"
+                  [searchCountryFlag]="true"
+                  [selectFirstCountry]="true"
+                  [phoneValidation]="true"
+                  [maxLength]="15"
+                  name="leadTel"
+                  [(ngModel)]="leadTelObj"
+                  #telCtrl="ngModel"
+                ></ngx-intl-tel-input>
+                <span
+                  *ngIf="telCtrl.invalid && (telCtrl.dirty || telCtrl.touched)"
+                  class="champ-erreur">
+                  <i class="bi bi-exclamation-circle" aria-hidden="true"></i>
+                  Numéro invalide pour le pays sélectionné
+                </span>
+              </div>
+
+              <div class="form-group">
+                <label for="lead-email">
+                  Email <span class="optionnel">(optionnel)</span>
+                </label>
+                <input
+                  id="lead-email"
+                  type="email"
+                  class="form-control"
+                  [(ngModel)]="leadEmail"
+                  name="leadEmail"
+                  placeholder="votre@email.com"
+                  autocomplete="email"
+                />
+              </div>
+
+              <button
+                type="submit"
+                class="btn-debloquer"
+                [disabled]="leadChargement || !leadPrenom.trim() || !leadTelObj || telCtrl.invalid">
+                <ng-container *ngIf="!leadChargement">
+                  <i class="bi bi-unlock-fill" aria-hidden="true"></i>
+                  Débloquer toutes les formations
+                </ng-container>
+                <p-progressSpinner
+                  *ngIf="leadChargement"
+                  [style]="{'width':'22px','height':'22px'}">
+                </p-progressSpinner>
+              </button>
+
+            </form>
+
+            <p class="mention-confidentialite">
+              <i class="bi bi-shield-check" aria-hidden="true"></i>
+              Vos informations sont confidentielles et ne sont jamais revendues.
+            </p>
+          </div>
+
+        </div><!-- /zone-lock -->
+      </ng-container>
+
+      <!-- ── APRÈS soumission lead — vue paginée ────────────────────────── -->
+      <ng-container *ngIf="leadSoumis">
+
+        <div
+          [@staggerIn]="cartesPage.length"
+          class="grille-formations"
+          aria-label="Formations disponibles">
+          <article
+            *ngFor="let r of cartesPage"
+            class="carte-formation"
+            [attr.aria-label]="r.nom_e + ' — ' + (r.descriptif_dip || r.nom_dip)">
+            <ng-container *ngTemplateOutlet="tmplCarte; context: { $implicit: r }"></ng-container>
+          </article>
+        </div>
+
+        <!-- Contrôles de pagination -->
+        <nav
+          *ngIf="nombrePages > 1"
+          class="pagination-nav"
+          aria-label="Navigation entre les pages de résultats">
+
+          <button
+            class="page-btn page-btn--arrow"
+            (click)="allerPage(pageActuelle - 1)"
+            [disabled]="pageActuelle === 1"
+            aria-label="Page précédente">
+            <i class="bi bi-chevron-left" aria-hidden="true"></i>
+          </button>
+
+          <ng-container *ngFor="let p of pagesVisibles">
+            <span *ngIf="p === '...'" class="page-ellipsis" aria-hidden="true">…</span>
+            <button
+              *ngIf="p !== '...'"
+              class="page-btn"
+              [class.page-btn--active]="p === pageActuelle"
+              (click)="allerPage(+p)"
+              [attr.aria-label]="'Page ' + p"
+              [attr.aria-current]="p === pageActuelle ? 'page' : null">
+              {{ p }}
+            </button>
+          </ng-container>
+
+          <button
+            class="page-btn page-btn--arrow"
+            (click)="allerPage(pageActuelle + 1)"
+            [disabled]="pageActuelle === nombrePages"
+            aria-label="Page suivante">
+            <i class="bi bi-chevron-right" aria-hidden="true"></i>
+          </button>
+        </nav>
+
+        <p class="pagination-info" aria-live="polite">
+          Page {{ pageActuelle }} / {{ nombrePages }} —
+          <strong>{{ resultatsFiltres.length }}</strong>
+          formation{{ resultatsFiltres.length > 1 ? 's' : '' }} au total
+        </p>
+
+      </ng-container>
+
+    </div><!-- /resultats-contenu -->
+
+  </section>
+
+</div><!-- /orientation-v2 -->
+
+<!-- ══════════════════════════════════════════ TEMPLATE CARTE FORMATION -->
+<ng-template #tmplCarte let-r>
+  <div class="carte-diplome"> 
+    <span class="badge-diplome">{{ r.nom_dip || r.nom_cat }}</span>
+  </div>
+  <div class="carte-corps">
+    <div class="ecole-header">
+      <img
+        *ngIf="r.logo_e"
+        [src]="'../../assets/images/school/logo/'+r.logo_e"
+        [alt]="'Logo ' + r.nom_e"
+        class="ecole-logo"
+        loading="lazy"
+      />
+      <div class="ecole-identite">
+        <span class="ecole-nom">{{ r.nom_e }}</span>
+        <span *ngIf="r.sigle_e" class="ecole-sigle">{{ r.sigle_e }}</span>
+      </div>
+    </div>
+    <p class="formation-titre" [innerHTML]="r.nom_dip"></p>
+    <ul class="carte-infos" aria-label="Détails de la formation">
+      <li><i class="bi bi-geo-alt" aria-hidden="true"></i> {{ r.ville_cam }}</li>
+      <li><i class="bi bi-cash" aria-hidden="true"></i> {{ formaterCout(r.cout_f) }}</li>
+      <li *ngIf="r.date_debut_f">
+        <i class="bi bi-calendar3" aria-hidden="true"></i> {{ r.date_debut_f }}
+      </li>
+    </ul>
+    <button class="btn-en-savoir-plus" (click)="ouvrirDetail(r)" type="button">
+      <i class="bi bi-info-circle" aria-hidden="true"></i>
+      En savoir plus
+    </button>
+  </div>
+</ng-template>
+
+<!-- ══════════════════════════════════════════ MODAL DÉTAIL FORMATION -->
+<div
+  *ngIf="formationSelectionnee"
+  class="modal-overlay"
+  @backdropIn
+  (click)="fermerDetail()"
+  role="dialog"
+  aria-modal="true"
+  [attr.aria-label]="'Détails — ' + formationSelectionnee.nom_e">
+
+  <div class="modal-panel" @modalPanelIn (click)="$event.stopPropagation()">
+
+    <!-- En-tête -->
+    <div class="modal-entete">
+      <button class="modal-fermer" (click)="fermerDetail()" aria-label="Fermer">
+        <i class="bi bi-x-lg" aria-hidden="true"></i>
+      </button>
+      <div class="modal-ecole-header">
+        <img
+          *ngIf="formationSelectionnee.logo_e"
+          [src]="'../../assets/images/school/logo/' + formationSelectionnee.logo_e"
+          [alt]="'Logo ' + formationSelectionnee.nom_e"
+          class="modal-logo"
+          loading="lazy"
+        />
+        <div class="modal-ecole-identite">
+          <p class="modal-nom-ecole">{{ formationSelectionnee.nom_e }}</p>
+          <span *ngIf="formationSelectionnee.sigle_e" class="modal-sigle">{{ formationSelectionnee.sigle_e }}</span>
+        </div>
+      </div>
+      <span class="modal-badge-diplome">{{ formationSelectionnee.nom_dip || formationSelectionnee.nom_cat }}</span>
+    </div>
+
+    <!-- Infos rapides -->
+    <div class="modal-infos-rapides">
+      <span class="modal-info-item">
+        <i class="bi bi-geo-alt-fill" aria-hidden="true"></i>
+        {{ formationSelectionnee.ville_cam }}
+      </span>
+      <span class="modal-info-item">
+        <i class="bi bi-cash" aria-hidden="true"></i>
+        {{ formaterCout(formationSelectionnee.cout_f) }}
+      </span>
+      <span *ngIf="formationSelectionnee.date_debut_f" class="modal-info-item">
+        <i class="bi bi-calendar3" aria-hidden="true"></i>
+        {{ formationSelectionnee.date_debut_f }}
+      </span>
+    </div>
+
+    <!-- Corps scrollable -->
+    <div class="modal-corps">
+
+      <section *ngIf="formationSelectionnee.descriptif_e" class="modal-section">
+        <h3 class="modal-section-titre">
+          <i class="bi bi-building" aria-hidden="true"></i>
+          À propos de {{ formationSelectionnee.nom_e }}
+        </h3>
+        <div class="modal-section-contenu" [innerHTML]="formationSelectionnee.descriptif_e"></div>
+      </section>
+
+      <section *ngIf="formationSelectionnee.descriptif_f" class="modal-section">
+        <h3 class="modal-section-titre">
+          <i class="bi bi-book" aria-hidden="true"></i>
+          La formation
+        </h3>
+        <div class="modal-section-contenu" [innerHTML]="formationSelectionnee.descriptif_f"></div>
+      </section>
+
+      <section *ngIf="formationSelectionnee.descriptif_dip" class="modal-section">
+        <h3 class="modal-section-titre">
+          <i class="bi bi-mortarboard" aria-hidden="true"></i>
+          Le diplôme
+        </h3>
+        <div class="modal-section-contenu" [innerHTML]="formationSelectionnee.descriptif_dip"></div>
+      </section>
+
+      <section *ngIf="formationSelectionnee.conditions_f" class="modal-section">
+        <h3 class="modal-section-titre">
+          <i class="bi bi-check2-circle" aria-hidden="true"></i>
+          Conditions d'admission
+        </h3>
+        <div class="modal-section-contenu" [innerHTML]="formationSelectionnee.conditions_f"></div>
+      </section>
+
+      <!-- Contact établissement -->
+      <section class="modal-section">
+        <h3 class="modal-section-titre">
+          <i class="bi bi-telephone" aria-hidden="true"></i>
+          Contact établissement
+        </h3>
+        <div class="modal-contact-items">
+          <a
+            *ngIf="formationSelectionnee.tel_1_e"
+            [href]="'tel:' + formationSelectionnee.tel_1_e"
+            class="modal-contact-item">
+            <i class="bi bi-telephone-fill" aria-hidden="true"></i>
+            {{ formationSelectionnee.tel_1_e }}
+          </a>
+          <a
+            *ngIf="formationSelectionnee.email_e"
+            [href]="'mailto:' + formationSelectionnee.email_e"
+            class="modal-contact-item">
+            <i class="bi bi-envelope-fill" aria-hidden="true"></i>
+            {{ formationSelectionnee.email_e }}
+          </a>
+          <a
+            *ngIf="formationSelectionnee.siteweb_e"
+            [href]="formationSelectionnee.siteweb_e"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="modal-contact-item">
+            <i class="bi bi-globe" aria-hidden="true"></i>
+            Site web
+          </a>
+          <p
+            *ngIf="!formationSelectionnee.tel_1_e && !formationSelectionnee.email_e && !formationSelectionnee.siteweb_e"
+            class="modal-contact-vide">
+            Aucun contact disponible pour cet établissement.
+          </p>
+        </div>
+      </section>
+
+    </div><!-- /modal-corps -->
+
+    <!-- Pied — CTA -->
+    <div class="modal-footer">
+      <button class="modal-btn-wsp" (click)="contacterConseiller(formationSelectionnee)">
+        <i class="bi bi-whatsapp" aria-hidden="true"></i>
+        Contacter un conseiller
+      </button>
+      <button class="modal-btn-ecole" (click)="allerEcole(formationSelectionnee)">
+        <i class="bi bi-arrow-right-circle" aria-hidden="true"></i>
+        Voir l'établissement
+      </button>
+    </div>
+
+  </div><!-- /modal-panel -->
+</div><!-- /modal-overlay -->

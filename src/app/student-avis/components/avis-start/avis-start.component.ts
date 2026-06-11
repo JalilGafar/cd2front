@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { GeneralService } from '../../../general.service';
 import { BEHAVIOR } from '../../../model/behavior';
 import { SharedComponentModule } from '../../../shared/shared.modules';
@@ -25,10 +26,14 @@ export class AvisStartComponent implements OnInit{
   constructor(
     private generalService : GeneralService,
     private avisService : AvisService,
-    private appRout : Router
+    private appRout : Router,
+    @Inject(PLATFORM_ID) private platformId: Object
   ){}
 
   ngOnInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
     this.InitObservable();
     this.avisService.getEcoleAvisFromServer()
   }

@@ -9,6 +9,10 @@
             <input id="ville_cam" type="text" formControlName="ville_cam">
         </div>
         <div class="form-group">
+            <label for="tel_camp">Tel</label>
+            <input id="tel_camp" type="text" formControlName="tel_camp">
+        </div>
+        <div class="form-group">
             <label for="quartier_camp">quartier</label>
             <input id="quartier_camp" type="text" formControlName="quartier_camp">
         </div>
@@ -30,7 +34,7 @@
             <input id="lat_camp" type="text" formControlName="lat_camp">
         </div>
         <div class="action-buttons">
-            <button type="submit" (click)="onSubmitForm()">Enregistrer</button>
+            <button class="btn btn-success" type="button" (click)="onSubmitForm()">Enregistrer</button>
         </div>
     </form>
 </div>

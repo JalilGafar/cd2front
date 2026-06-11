@@ -1,4 +1,5 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { SharedComponentModule } from '../../../shared/shared.modules';
 import { OrientationService } from '../../orientation.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -19,10 +20,13 @@ export class StatutsComponent implements OnInit, AfterViewInit {
   constructor (private orientationService :OrientationService,
     private appRout : Router,
     // private topNewsService: TopNewsService,
-    private route: ActivatedRoute) {}
+    private route: ActivatedRoute,
+    @Inject(PLATFORM_ID) private platformId: Object) {}
 
   ngOnInit(): void {
-    
+    if (isPlatformBrowser(this.platformId)) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   }
 
   ngAfterViewInit(): void {

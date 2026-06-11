@@ -1,4 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Ecole } from '../../models/ecole.model';
 import { Observable, map, take } from 'rxjs';
@@ -24,10 +25,14 @@ export class NewFormationComponent implements OnInit, OnDestroy{
 
   constructor(private formBuilder: FormBuilder,
               private adminService: AdminService,
-              private appRout : Router){}
+              private appRout : Router,
+              @Inject(PLATFORM_ID) private platformId: Object){}
 
 
   ngOnInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
     this.newFormation = this.formBuilder.group({
       id_form: [null],
       nom_f: [null],

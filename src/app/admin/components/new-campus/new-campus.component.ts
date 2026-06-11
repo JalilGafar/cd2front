@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AdminService } from '../../admin.service';
 import { Router } from '@angular/router';
@@ -19,12 +20,17 @@ export class NewCampusComponent implements OnInit {
   
   constructor(private formBuilder: FormBuilder,
               private adminService: AdminService,
-              private appRout : Router){}
+              private appRout : Router,
+              @Inject(PLATFORM_ID) private platformId: Object){}
 
   ngOnInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
     this.newCampus = this.formBuilder.group({
       nom_camp : [null],
       ville_cam : [null],
+      tel_camp : [null],
       quartier_camp : [null],
       principal_camp : [null],
       descriptif_camp : [null],

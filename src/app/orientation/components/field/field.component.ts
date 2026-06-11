@@ -1,4 +1,5 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { SharedComponentModule } from '../../../shared/shared.modules';
 import { Observable, tap } from 'rxjs';
 import { field } from '../../../model/field-model';
@@ -59,9 +60,13 @@ export class FieldComponent implements OnInit, AfterViewInit{
                 private appRout : Router,
                 private route: ActivatedRoute,
                 // private topNewsService : TopNewsService,
-                private titleService:Title) {this.titleService.setTitle("quel sont les domaines de formation au Cameroun");}
+                private titleService:Title,
+                @Inject(PLATFORM_ID) private platformId: Object) {this.titleService.setTitle("quel sont les domaines de formation au Cameroun");}
 
   ngOnInit() {
+    if (isPlatformBrowser(this.platformId)) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
     const userDomaineDegree = this.route.snapshot.queryParams['degree'];
     const userDomainecyti = this.route.snapshot.queryParams['cyti'];
     //console.log(userDomaineDegree)

@@ -1,5 +1,5 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { filter, Observable, switchMap, tap } from 'rxjs';
 import { Etablissement } from '../../../model/etablissement-model';
 import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
@@ -15,6 +15,7 @@ import { AdversService } from '../../../service/advers.service';
 import { Meta, Title } from '@angular/platform-browser';
 import { Formus } from '../../../model/formus-model';
 import { BEHAVIOR } from '../../../model/behavior';
+import { SeoService } from '../../../service/seo.service';
 
 @Component({
   selector: 'app-info-ecole-item',
@@ -51,18 +52,59 @@ export class InfoEcoleItemComponent implements OnInit{
     private avisService : AvisService,
     private adversService: AdversService,
     private appRout : Router,
-    private meta : Meta
+    private meta : Meta,
+    private seoService: SeoService,
+    @Inject(PLATFORM_ID) private platformId: Object
   ){}
 
   private initMetaForMyPage(){
-    if (this.ecole) {
-      this.titleService.setTitle(this.ecole[0].sigle_e+' _ '+ this.ecole[0].nom_e)
-      // this.meta.updateTag({ name: 'keywords', content: this.ecole[0].sigle_e+' '+this.ecole[0].nom_e+' '+' Etablissement, MINESUP, Orientation, Cameroun, Etudes supérieures, Formation professionnelle, Travail, Enseignement, Diplômes, Universités, Grandes écoles, Instituts, Centres de formation, Carrière, Emploi, Métiers' });
-      this.meta.updateTag({ name: 'description', content: this.ecole[0].nom_e+' Pour une formation de qualité au Cameroun' });
-    }
+    if (!this.ecole?.[0]) return;
+
+    const ecole  = this.ecole[0];
+    const slug   = this.route.snapshot.params['slug'] || '';
+    const id     = this.route.snapshot.params['id']   || ecole.id_ecol;
+    const url    = `/info/ecole/${slug}/${id}`;
+
+    const title       = `${ecole.sigle_e} - ${ecole.nom_e} | Camerdiplome`;
+    const description = `${ecole.nom_e} — établissement d'enseignement supérieur au Cameroun. `
+                      + `${ecole.niveau_e ? 'Niveau ' + ecole.niveau_e + '. ' : ''}`
+                      + `Formations, avis étudiants et conditions d'admission.`;
+
+    const image = ecole.logo_e
+      ? `https://www.camerdiplome.com/assets/logos/${ecole.logo_e}`
+      : undefined;
+
+    // ── OG + Twitter + canonical ──────────────────────────────────────────────
+    this.seoService.setSeo({ title, description, url, image, type: 'website',
+      keywords: `${ecole.sigle_e}, ${ecole.nom_e}, formation, Cameroun, orientation` });
+
+    // ── JSON-LD EducationalOrganization ───────────────────────────────────────
+    this.seoService.setSchemaJsonLd({
+      '@context': 'https://schema.org',
+      '@type':    'EducationalOrganization',
+      name:            ecole.nom_e,
+      alternateName:   ecole.sigle_e,
+      url:             `https://www.camerdiplome.com${url}`,
+      ...(image ? { logo: image } : {}),
+      ...(ecole.descriptif_e ? { description: ecole.descriptif_e } : {}),
+      ...(ecole.tel_1_e      ? { telephone:   ecole.tel_1_e }      : {}),
+      ...(ecole.email_e      ? { email:       ecole.email_e }      : {}),
+      ...(ecole.siteweb_e    ? { sameAs:      [ecole.siteweb_e] }  : {}),
+      address: { '@type': 'PostalAddress', addressCountry: 'CM' }
+    });
+
+    // ── BreadcrumbList ────────────────────────────────────────────────────────
+    this.seoService.setBreadcrumb([
+      { name: 'Accueil',   url: '/',           position: 1 },
+      { name: 'Les écoles', url: '/info/ecole', position: 2 },
+      { name: ecole.nom_e, url,                position: 3 }
+    ]);
   }
 
   ngOnInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 
     this.loading$ = this.infoService.loading$
 
@@ -113,7 +155,7 @@ export class InfoEcoleItemComponent implements OnInit{
   }
 
   trouverForm(){
-    this.appRout.navigate(['./orientation/degree']);
+    this.appRout.navigate(['./trouver-ma-formation']); 
   }
 
   discover(){

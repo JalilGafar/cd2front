@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
@@ -28,10 +29,14 @@ export class ModifFormationComponent implements OnInit{
   constructor ( private adminService : AdminService,
                 private route: ActivatedRoute,
                 private formBuilder: FormBuilder,
-                private appRout: Router) {}
+                private appRout: Router,
+                @Inject(PLATFORM_ID) private platformId: Object) {}
 
 
   ngOnInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
     this.modifFormation = this.formBuilder.group({
       id_form: [null],
       nom_f: [null],

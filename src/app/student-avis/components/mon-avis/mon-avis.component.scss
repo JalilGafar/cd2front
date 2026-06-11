@@ -1,30 +1,265 @@
-h2{
-    color: rgb(71, 71, 71);
-    margin-bottom: 0;
+@import 'design-system';
+
+:host {
+  display: block;
+  background: $bg;
+  color: $text;
+  font-family: $font-base;
 }
-.form-group{
-    padding: 7px;
-    padding-bottom: 15px;
-    label{
-        display: block;
-        font-weight: 700;
-    }
-    p-rating{
-        display: block;
-    }
-    textarea{
-        display: block;
-    }
-    .precision{
-        font-size: small;
-    }
-    .radio{
-        display: flex;
-        flex-wrap: wrap;
-        margin-top: 6px;
-        .flex{
-            display: flex;
-            margin-right: 30px;
-        }
-    }
+
+h1, h2, h3, h4 { color: $text; }
+p { color: $text-muted; line-height: 1.75; }
+
+.avis-page { min-height: 100vh; }
+
+// ─── EN-TÊTE ──────────────────────────────────────────────────────────────────
+.page-header {
+  padding: 4rem 0 3rem;
+  background: $bg-alt;
+  border-bottom: 1px solid $border;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -20%;
+    left: -5%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(5,150,105,0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  h1 {
+    font-size: clamp(1.6rem, 4vw, 2.2rem);
+    font-weight: 800;
+    margin: 0.75rem 0 1rem;
+    line-height: 1.25;
+  }
+
+  .lead {
+    font-size: 1rem;
+    color: $text-muted;
+    max-width: 580px;
+    margin: 0;
+  }
+}
+
+// ─── FORMULAIRE ───────────────────────────────────────────────────────────────
+.form-section {
+  padding: 3rem 0 5rem;
+  background: $bg;
+}
+
+.form-card {
+  max-width: 860px;
+  margin: 0 auto;
+  background: $bg-card;
+  border: 1.5px solid $border;
+  border-radius: 18px;
+  padding: 2.5rem;
+  box-shadow: $shadow-md;
+}
+
+.form-block {
+  margin-bottom: 2.5rem;
+  padding-bottom: 2.5rem;
+  border-bottom: 1px solid $border;
+
+  &:last-of-type {
+    border-bottom: none;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+}
+
+.block-title {
+  font-size: 1rem;
+  font-weight: 700;
+  color: $text;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid $accent-border;
+  i { color: $accent; font-size: 1rem; }
+}
+
+.field-group {
+  margin-bottom: 1.25rem;
+
+  label {
+    display: block;
+    font-weight: 600;
+    font-size: 0.88rem;
+    color: $text;
+    margin-bottom: 0.5rem;
+  }
+
+  p-dropdown,
+  p-rating { display: block; }
+
+  textarea {
+    display: block;
+    width: 100%;
+    border-radius: 8px;
+    border: 1.5px solid $border;
+    padding: 0.75rem 1rem;
+    font-size: 0.9rem;
+    font-family: $font-base;
+    transition: border-color 0.2s;
+    margin-top: 0.5rem;
+    &:focus { outline: none; border-color: $accent; }
+  }
+
+  input[type="text"],
+  input[type="email"] {
+    display: block;
+    width: 100%;
+    height: 42px;
+    border-radius: 8px;
+    border: 1.5px solid $border;
+    padding: 0 1rem;
+    font-size: 0.9rem;
+    font-family: $font-base;
+    transition: border-color 0.2s;
+    &:focus { outline: none; border-color: $accent; }
+  }
+
+  input[type="file"] {
+    display: block;
+    font-size: 0.88rem;
+    color: $text-muted;
+    margin-top: 0.25rem;
+  }
+}
+
+.field-hint {
+  display: block;
+  font-size: 0.78rem;
+  color: $text-muted;
+  margin-top: 0.4rem;
+  font-style: italic;
+}
+
+.required {
+  color: #ef4444;
+  font-weight: 700;
+}
+
+// ─── GRILLE DEUX COLONNES ────────────────────────────────────────────────────
+.two-cols {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.25rem;
+}
+
+// ─── ÉVALUATIONS ─────────────────────────────────────────────────────────────
+.eval-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.eval-item {
+  background: $bg;
+  border: 1px solid $border;
+  border-radius: 12px;
+  padding: 1.25rem;
+
+  textarea { margin-top: 0.75rem; }
+}
+
+.eval-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  margin-bottom: 0.5rem;
+
+  h4 {
+    font-size: 0.88rem;
+    font-weight: 700;
+    color: $text;
+    margin: 0 0 0.35rem;
+  }
+}
+
+.eval-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: $accent-bg;
+  border: 1px solid $accent-border;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin-top: 2px;
+  i { font-size: 0.9rem; color: $accent; }
+}
+
+// ─── RECOMMANDATION ──────────────────────────────────────────────────────────
+.recommande-field {
+  padding: 1rem 1.25rem;
+  background: $accent-bg;
+  border: 1px solid $accent-border;
+  border-radius: 10px;
+}
+
+.radio-group {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+.radio-option {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+
+  label {
+    font-size: 0.9rem;
+    font-weight: 500;
+    color: $text;
+    margin: 0;
+    cursor: pointer;
+  }
+}
+
+// ─── SOUMISSION ───────────────────────────────────────────────────────────────
+.form-submit {
+  text-align: center;
+  margin-top: 2rem;
+
+  button[disabled] {
+    opacity: 0.5;
+    cursor: not-allowed;
+    transform: none !important;
+    box-shadow: none !important;
+  }
+}
+
+.submit-hint {
+  margin-top: 0.75rem;
+  font-size: 0.8rem;
+  color: $text-muted;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.35rem;
+  margin-bottom: 0;
+  i { color: $accent; }
+}
+
+// ─── Responsive ───────────────────────────────────────────────────────────────
+@media (max-width: 767px) {
+  .form-card   { padding: 1.5rem 1rem; }
+  .eval-grid   { grid-template-columns: 1fr; }
+  .two-cols    { grid-template-columns: 1fr; }
+  .page-header { padding: 3rem 0 2.5rem; }
 }

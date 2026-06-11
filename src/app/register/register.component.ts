@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 
 @Component({
   selector: 'app-register',
@@ -12,10 +13,14 @@ export class RegisterComponent implements OnInit {
 
 
 
-  constructor () { }
+  constructor (@Inject(PLATFORM_ID) private platformId: Object) { }
 
 
-  ngOnInit(){}
+  ngOnInit(){
+    if (isPlatformBrowser(this.platformId)) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  }
 
   discover(){
     let c = encodeURI(`Je souhaite avoir plus d'information sur l'Enregistrement ou la modification d'un établissement sur Camerdiplome`);

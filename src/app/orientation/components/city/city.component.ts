@@ -1,4 +1,5 @@
-import { AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Inject, Input, OnInit, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { SharedComponentModule } from '../../../shared/shared.modules';
 import { Observable } from 'rxjs';
 import { ville } from '../../../model/ville-model';
@@ -27,9 +28,13 @@ export class CityComponent implements OnInit, AfterViewInit{
                 private appRout : Router,
                 private route: ActivatedRoute,
               //  private topNewsService: TopNewsService,
-                private titleService:Title) {this.titleService.setTitle("Trouver une bonne école de formation au Cameroun");}
+                private titleService:Title,
+                @Inject(PLATFORM_ID) private platformId: Object) {this.titleService.setTitle("Trouver une bonne école de formation au Cameroun");}
 
   ngOnInit():void {
+    if (isPlatformBrowser(this.platformId)) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
     this.loading$ = this.orientationService.loading$;
     let degree = this.route.snapshot.queryParams['degree'];
     let branche = this.route.snapshot.queryParams['branche'];

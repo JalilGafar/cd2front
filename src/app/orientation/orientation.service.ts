@@ -5,10 +5,10 @@ import { degree } from "../model/degree-model";
 import { field } from "../model/field-model";
 import { UserProfil } from "../model/user-profil-model";
 import { ville } from "../model/ville-model";
-import { environment } from "../../environments/environment";
 import { Contact } from "../model/contact-model";
 import { BEHAVIOR } from "../model/behavior";
 import { interestelt } from "../model/interest-item-model";
+import { API } from "../constants/api-endpoints";
 
 // import { interestelt } from "src/app/core/model/interest-item-model";
 
@@ -59,24 +59,22 @@ export class OrientationService {
 
     scrollTo(element: string, behavior: BEHAVIOR): void {
         if (typeof document !== 'undefined') {
-          let elementer = document.getElementById(element);
-        
-          (elementer as HTMLElement).scrollIntoView({behavior: behavior, block:"start", inline:"nearest"})
-          // Manipulating the DOM here
-       }
+          const elementer = document.getElementById(element);
+          elementer?.scrollIntoView({ behavior: behavior, block: 'start', inline: 'nearest' });
+        }
     }
   
 
     getAllCyties(): Observable<ville[]> {
         this.setLoadingStatus(true)
-        return this.http.get<ville[]>(`${environment.apiUrl}/api/cyties`).pipe(
+        return this.http.get<ville[]>(API.CYTIES).pipe(
             tap( (cyti) => this.setLoadingStatus(false))
         )
     };
 
     getPartCyties(userDegree: string, userDomaine: string, userBranche: string ){
         this.setLoadingStatus(true)
-        const url = `${environment.apiUrl}/api/partCyties`;
+        const url = API.PART_CYTIES;
         let queryParams = new HttpParams();
         queryParams = queryParams.append('Degree', userDegree);
         queryParams = queryParams.append('Domaine', userDomaine);
@@ -103,7 +101,7 @@ export class OrientationService {
      // on charge tt les domaines pour lesquel il y a une categ de diplome en particulier
     getDomaineFromServer(domaineDegree:string){
         this.setLoadingStatus(true);
-        const url = `${environment.apiUrl}/api/field`;
+        const url = API.FIELD;
         let queryParams = new HttpParams();
         queryParams = queryParams.append('DomaineDegree', domaineDegree);
         this.http.get<field[]>(url, {params: queryParams}).pipe(
@@ -117,7 +115,7 @@ export class OrientationService {
 
     getPartDomaine(domaineDegree:string, domaineCyti:string): Observable <field[]> {
         this.setLoadingStatus(true);
-        const url = `${environment.apiUrl}/api/field`;
+        const url = API.FIELD;
         let queryParams = new HttpParams();
         queryParams = queryParams.append('DomaineDegree', domaineDegree);
         queryParams = queryParams.append('DomaineCyti', domaineCyti);
@@ -136,7 +134,7 @@ export class OrientationService {
     getDegreeCyti(degreeCyti:string) {
         this.setLoadingStatus(true);
         console.log("la requette des diplomes !")
-        const url = `${environment.apiUrl}/api/degree`;
+        const url = API.DEGREE;
         let queryParams = new HttpParams();
         queryParams = queryParams.append('DegreeCyti', degreeCyti);
         return this.http.get<degree[]>(url, {params: queryParams}).pipe(
@@ -150,7 +148,7 @@ export class OrientationService {
 
     getDegree(degreeCyti:string) {
         this.setLoadingStatus(true);
-        const url = `${environment.apiUrl}/api/degree`;
+        const url = API.DEGREE;
         let queryParams = new HttpParams();
         queryParams = queryParams.append('DegreeCyti', degreeCyti);
         return this.http.get<degree[]>(url, {params: queryParams}).pipe(
@@ -165,7 +163,7 @@ export class OrientationService {
     /** Fonction qui envoie demande au serveur de retourner les diplomes pour un domaine en particulier */
     getDegreeField(degreeField: string): Observable<degree[]>{
         this.setLoadingStatus(true);
-        const url = `${environment.apiUrl}/api/degree`;
+        const url = API.DEGREE;
         let queryParams = new HttpParams();
         queryParams = queryParams.append('DegreeField', degreeField);
         return this.http.get<degree[]>(url, {params: queryParams}).pipe(
@@ -201,12 +199,12 @@ export class OrientationService {
     }
 
     saveClient (UserInfo : UserProfil ): Observable<UserProfil> {
-       return this.http.post<UserProfil>(`${environment.apiUrl}/api/result`, UserInfo)
+       return this.http.post<UserProfil>(API.RESULT, UserInfo)
     };
 
     getSerchResult(): Observable<interestelt[]> {
         this.setLoadingStatus(true);
-        const url = `${environment.apiUrl}/api/result`;
+        const url = API.RESULT;
         let queryParams = {"city":this.initialUser.city,
                             "diplome":this.initialUser.degree, 
                             "domaine":this.initialUser.field,

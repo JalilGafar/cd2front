@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { OrientationService } from '../../orientation.service';
 import { ActivatedRoute, Router } from '@angular/router';
 import { SharedComponentModule } from '../../../shared/shared.modules';
@@ -18,10 +19,13 @@ export class ClasseComponent implements OnInit {
 
   constructor (private orientationService :OrientationService,
     private appRout : Router,
-    private route: ActivatedRoute) {}
+    private route: ActivatedRoute,
+    @Inject(PLATFORM_ID) private platformId: Object) {}
 
   ngOnInit(): void {
-    
+    if (isPlatformBrowser(this.platformId)) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   }
 
   setClasse(classe: string) {

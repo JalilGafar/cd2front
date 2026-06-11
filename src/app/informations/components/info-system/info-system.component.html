@@ -1,13 +1,16 @@
+<app-headmsg
+    [titre]="titre"
+    [soustitre]="soustitre"
+    [photo] = "photo"
+    >
+</app-headmsg>
+<app-start></app-start>
 <div class="container">
-    <app-headmsg 
-        [titre]="titre"
-        [soustitre]="soustitre"
-        [photo] = "photo"
-        >
-    </app-headmsg>
-    <app-start ></app-start>
     <div class="une">
-        <h2>Les écoles à la une</h2>
+        <div class="section-head">
+            <span class="section-badge">Établissements partenaires</span>
+            <h2>Les écoles à la une</h2>
+        </div>
         <div class="carousel">
             <div class="card-container">
                 @for (item of schoolAdvers$ | async ; track item.id_ecol) {
@@ -286,8 +289,8 @@
                         
                         
                                                     <div>
-                                                        <span> <button routerLink="/info/cap"  class="btn" >Le CAP et ses spécialités</button> </span>
-                                                        <span> <button routerLink="/info/bactec" class="btn" >les Bac Pro et Brevets</button> </span>
+                                                        <span> <a routerLink="/info/cap"  class="btn-primary-cta"><i class="bi bi-compass-fill"></i> Le CAP et ses spécialités</a> </span>
+                                                        <span> <a routerLink="/info/bactec" class="btn-primary-cta"><i class="bi bi-compass-fill"></i> les Bac Pro et Brevets</a> </span>
                                                     </div>
                         
                                                     <hr>
@@ -484,7 +487,7 @@
                                 En règle générale, ces formations sont dispensées dans des Instituts 
                                 Privés d'Enseignement Supérieur (IPES). 
                             </p>
-                            <button class="btn" >Les BTS disponibles au Cameroun</button>
+                            <button class="btn-primary-cta"><i class="bi bi-compass-fill"></i> Les BTS disponibles au Cameroun</button>
                         </div>
                     </div>
                 </div>
@@ -516,7 +519,7 @@
                                 a été prouvé que des personnes ayant reçu une licence de type Pro, sont
                                 capable de s'insérer facilement dans le monde de l'emploi.
                             </p>
-                            <button class="btn" >Les Licences Pro disponibles au Cameroun</button>
+                            <button class="btn-primary-cta"><i class="bi bi-compass-fill"></i> Les Licences Pro disponibles au Cameroun</button>
                             <br>
                             <h3>La Licence Académique</h3>
                             <p>
@@ -590,10 +593,8 @@
                 </div>
             </div>            
         </div>
-        <app-start ></app-start>
         <div class="actual">
             <app-actu-list/>
         </div>
     </div>
-
 </div>

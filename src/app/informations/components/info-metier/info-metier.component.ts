@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { SharedComponentModule } from '../../../shared/shared.modules';
-import { Title } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { interestelt } from '../../../model/interest-item-model';
 import { Observable, tap } from 'rxjs';
@@ -12,6 +12,7 @@ import { FormationAdvers } from '../../../model/formadv';
 import { SchoolAdversComponent } from '../../../shared/components/school-advers/school-advers.component';
 import { SchoolAdvers } from '../../../model/school-adv';
 import { ActuListComponent } from '../../../actualite/components/actu-list/actu-list.component';
+import { SeoService } from '../../../service/seo.service';
 
 
 @Component({
@@ -46,16 +47,40 @@ export class InfoMetierComponent implements OnInit{
   // school$!: Observable <interestelt[]>;
 
 
-  constructor( 
+  constructor(
     private appRout: Router,
-    private titleService:Title,
     private adversService: AdversService,
-    private infoService: InfoServices
-    ) 
-    {this.titleService.setTitle("Les Métiers d'avenir | Camerdiplome");}
+    private infoService: InfoServices,
+    private seoService: SeoService,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
     
 
+  private initMetaForMyPage(): void {
+    try {
+      this.seoService.setSeo({
+        title: "Les Métiers d'avenir au Cameroun | Camerdiplome",
+        description: 'Découvrez les métiers d\'avenir au Cameroun. Explorez les différents domaines professionnels, formations nécessaires et débouchés pour trouver la carrière qui vous correspond.',
+        url: '/info/metier',
+        type: 'website',
+        keywords: 'métiers, professions, carrière, avenir, Cameroun, domaine professionnel, orientation professionnelle'
+      });
+
+      // Breadcrumb pour la page de liste
+      this.seoService.setJsonLd([
+        { name: 'Accueil', url: '/', position: 1 },
+        { name: 'Les métiers', url: '/info/metier', position: 2 }
+      ]);
+    } catch (error) {
+      console.error('InfoMetierComponent.initMetaForMyPage() error:', error);
+    }
+  }
+
   ngOnInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    this.initMetaForMyPage();
     this.advertiser$ = this.adversService.getFormationPub();
     this.schoolAdvers$ = this.adversService.getSchoolPub();
     this.infoService.getMetierLongList().pipe(
@@ -88,8 +113,17 @@ export class InfoMetierComponent implements OnInit{
     }
   }
 
-  metier(idMetier:number){
-    this.appRout.navigateByUrl('info/metier/'+ idMetier);
+  generateSlug(name: string): string {
+    return name.toLowerCase()
+      .normalize('NFD')
+      .replace(/[̀-ͯ]/g, '')
+      .replace(/[^a-z0-9]+/g, '-')
+      .replace(/^-+|-+$/g, '');
+  }
+
+  metier(idMetier: number, titre: string): void {
+    const s = this.generateSlug(titre);
+    this.appRout.navigate(['info/metier', s, idMetier]);
   }
 
   

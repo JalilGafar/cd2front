@@ -2,6 +2,14 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+// Compense la hauteur du header fixe sur mobile (position:fixed retire l'élément
+// du flux → le contenu remonte sous le header sans ce padding).
+@media (max-width: 991px) {
+  body {
+    padding-top: 56px;
+  }
+}
 @import "primeicons/primeicons.css";
 
 

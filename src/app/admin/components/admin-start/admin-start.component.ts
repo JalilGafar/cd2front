@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { tokenStorageService } from '../../../service/token-storage.service';
 import { CommonModule } from '@angular/common';
 import { ListCampusComponent } from '../list-campus/list-campus.component';
@@ -39,9 +40,13 @@ export class AdminStartComponent implements OnInit {
   
   constructor (
     private adminService: AdminService,
-    private tokenStorageService: tokenStorageService) { }
+    private tokenStorageService: tokenStorageService,
+    @Inject(PLATFORM_ID) private platformId: Object) { }
 
   ngOnInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
     this.isLoggedIn = !!this.tokenStorageService.getToken();
 
     if (this.isLoggedIn) {

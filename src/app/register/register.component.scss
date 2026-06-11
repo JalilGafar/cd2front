@@ -1,12 +1,343 @@
-.text-center {
-  padding: 1.2em;
+@import 'design-system';
 
-  .credo{
-    padding: 1.2em 0;
-  }
-
+:host {
+  display: block;
+  background: $bg;
+  font-family: $font-base;
 }
 
-.mailer{
-  padding: 1.2em 0;
+// ─── Hero ─────────────────────────────────────────────────────────────────────
+.rg-hero {
+  background: $bg-alt;
+  border-bottom: 1px solid $border;
+  padding: 4rem 0 3.5rem;
+  background-image:
+    radial-gradient(ellipse at 90% 10%, rgba(5,150,105,0.07) 0%, transparent 55%),
+    radial-gradient(ellipse at 5% 90%, rgba(37,99,235,0.04) 0%, transparent 45%);
+}
+
+.rg-hero-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+.rg-hero-content {
+  .section-badge { margin-bottom: 1.25rem; }
+
+  h1 {
+    font-size: clamp(1.75rem, 3.2vw, 2.6rem);
+    font-weight: 800;
+    color: $text;
+    line-height: 1.2;
+    margin: 0 0 1.1rem;
+  }
+}
+
+.rg-hero-sub {
+  font-size: 1rem;
+  color: $text-muted;
+  line-height: 1.75;
+  max-width: 480px;
+  margin-bottom: 2rem;
+}
+
+.rg-hero-actions {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.rg-hero-visual {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+
+.rg-stat-card {
+  background: $bg;
+  border: 1.5px solid $border;
+  border-radius: 14px;
+  padding: 1.5rem 1.25rem;
+  text-align: center;
+  box-shadow: $shadow;
+  transition: transform 0.2s, box-shadow 0.2s;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: $shadow-md;
+  }
+
+  &--accent {
+    background: $accent-bg;
+    border-color: $accent-border;
+
+    .rg-stat-num { color: $accent; }
+  }
+}
+
+.rg-stat-num {
+  display: block;
+  font-size: 1.65rem;
+  font-weight: 800;
+  color: $text;
+  line-height: 1;
+  margin-bottom: 0.35rem;
+}
+
+.rg-stat-label {
+  font-size: 0.78rem;
+  color: $text-muted;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+// ─── Sections ─────────────────────────────────────────────────────────────────
+.rg-section {
+  padding: 4rem 0;
+
+  &--alt {
+    background: $bg-alt;
+    border-top: 1px solid $border;
+    border-bottom: 1px solid $border;
+  }
+}
+
+// ─── Values grid ──────────────────────────────────────────────────────────────
+.rg-values-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+
+.rg-value-card {
+  background: $bg-alt;
+  border: 1.5px solid $border;
+  border-radius: 14px;
+  padding: 1.75rem 1.5rem;
+  box-shadow: $shadow;
+  transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s;
+
+  .feature-icon { margin-bottom: 1.1rem; }
+
+  h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: $text;
+    margin: 0 0 0.6rem;
+  }
+
+  p {
+    font-size: 0.88rem;
+    color: $text-muted;
+    line-height: 1.7;
+    margin: 0;
+  }
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: $shadow-md;
+    border-color: $accent-border;
+  }
+}
+
+// ─── Steps ────────────────────────────────────────────────────────────────────
+.rg-steps {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.rg-step {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 1rem;
+}
+
+.rg-step-num {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, $accent, $accent-dark);
+  color: #fff;
+  font-size: 1.3rem;
+  font-weight: 800;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  box-shadow: 0 4px 14px rgba(5,150,105,0.35);
+}
+
+.rg-step-body {
+  h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: $text;
+    margin: 0 0 0.5rem;
+  }
+  p {
+    font-size: 0.87rem;
+    color: $text-muted;
+    line-height: 1.7;
+    margin: 0;
+  }
+}
+
+.rg-step-arrow {
+  padding-top: 14px;
+  color: $accent;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+// ─── Benefits grid ────────────────────────────────────────────────────────────
+.rg-benefits-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.25rem;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.rg-benefit {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  background: $bg-alt;
+  border: 1px solid $border;
+  border-radius: 12px;
+  padding: 1.25rem 1.1rem;
+  transition: border-color 0.2s, box-shadow 0.2s;
+
+  > i {
+    font-size: 1.25rem;
+    color: $accent;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  h4 {
+    font-size: 0.92rem;
+    font-weight: 700;
+    color: $text;
+    margin: 0 0 0.3rem;
+  }
+
+  p {
+    font-size: 0.83rem;
+    color: $text-muted;
+    line-height: 1.6;
+    margin: 0;
+  }
+
+  &:hover {
+    border-color: $accent-border;
+    box-shadow: $shadow;
+  }
+}
+
+// ─── CTA Section ──────────────────────────────────────────────────────────────
+.rg-cta-section {
+  padding: 4rem 0 5rem;
+}
+
+.rg-cta-card {
+  background: linear-gradient(135deg, #064e35 0%, #065f46 50%, #1d4ed8 100%);
+  border-radius: 20px;
+  padding: 3.5rem 2.5rem;
+  text-align: center;
+  max-width: 680px;
+  margin: 0 auto;
+  box-shadow: 0 8px 40px rgba(5,150,105,0.25);
+}
+
+.rg-cta-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 16px;
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+
+  i { font-size: 1.75rem; color: #fff; }
+}
+
+.rg-cta-card h2 {
+  font-size: clamp(1.4rem, 2.5vw, 1.9rem);
+  font-weight: 800;
+  color: #fff;
+  margin: 0 0 1rem;
+}
+
+.rg-cta-card p {
+  color: rgba(255,255,255,0.85);
+  font-size: 0.97rem;
+  line-height: 1.75;
+  max-width: 480px;
+  margin: 0 auto 2rem;
+
+  strong { color: #fff; }
+}
+
+.rg-cta-actions {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.5rem;
+
+  .btn-primary-cta {
+    background: #fff;
+    color: $accent-dark;
+    box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+
+    &:hover {
+      background: #f0fdf4;
+      color: $accent-dark;
+      box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+    }
+  }
+}
+
+.rg-cta-note {
+  font-size: 0.8rem;
+  color: rgba(255,255,255,0.65);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.4rem;
+  margin: 0;
+
+  i { font-size: 0.85rem; }
+}
+
+// ─── Responsive ───────────────────────────────────────────────────────────────
+@media (max-width: 992px) {
+  .rg-hero-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+  .rg-hero-content h1 { font-size: 2rem; }
+  .rg-hero-visual { max-width: 420px; }
+  .rg-values-grid { grid-template-columns: 1fr 1fr; }
+  .rg-benefits-grid { grid-template-columns: 1fr 1fr; }
+}
+
+@media (max-width: 640px) {
+  .rg-hero { padding: 2.5rem 0 2rem; }
+  .rg-hero-visual { grid-template-columns: 1fr 1fr; }
+  .rg-values-grid { grid-template-columns: 1fr; }
+  .rg-steps { flex-direction: column; align-items: center; gap: 1.5rem; }
+  .rg-step-arrow { transform: rotate(90deg); padding: 0; }
+  .rg-benefits-grid { grid-template-columns: 1fr; }
+  .rg-cta-card { padding: 2rem 1.25rem; }
+  .rg-hero-actions { flex-direction: column; }
 }

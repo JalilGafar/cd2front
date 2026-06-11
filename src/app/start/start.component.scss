@@ -1,88 +1,78 @@
-.player {
-    position:relative;
-    text-align : center;
-    padding-bottom: 32px;
-    
-    .title {
-        font-size: 1.8rem;
-        line-height: 1.1;
-        margin-top: 16px;
-        padding-left: 16px;
-        padding-right: 16px;
+$orange: #ff5e00;
+$purple: #30017e;
+
+.cta-block {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  text-align: center;
+}
+
+.cta-question {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #1a1a2e;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.cta-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  max-width: 420px;
+}
+
+.cta-btn {
+  display: block;
+  width: 100%;
+  padding: 14px 24px;
+  border-radius: 50px;
+  font-size: 1rem;
+  font-weight: 600;
+  text-align: center;
+  text-decoration: none;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  cursor: pointer;
+
+  &:hover {
+    transform: translateY(-2px);
+    text-decoration: none;
+  }
+
+  &--primary {
+    background: $orange;
+    color: #fff;
+    box-shadow: 0 4px 14px rgba($orange, 0.4);
+
+    &:hover {
+      box-shadow: 0 6px 20px rgba($orange, 0.5);
+      color: #fff;
     }
+  }
 
-    .player-forms {
-        display: flex;
-        flex-direction: column;
-        padding-bottom: 16px;
-        padding-left: 15px;
-        padding-right: 15px;
-        position: relative;
+  &--secondary {
+    background: transparent;
+    color: $purple;
+    border: 2px solid $purple;
+    box-shadow: none;
 
-        a {
-            padding-top: 16px;
-
-            button{
-                width: 80%;
-                background-color: #ff5e00;
-                color: #fff;
-                border-radius: 19px;
-                font-size: x-large;
-                line-height: 1.3333333;
-                padding: 10px 16px;
-            }
-        }
+    &:hover {
+      background: $purple;
+      color: #fff;
     }
+  }
 }
 
-@media (min-width: 768px) {
-    .player {
-        .player-forms {
-            display: flex;
-            flex-direction: row;
-            justify-content: center;
-            padding-left: 16px;
-            padding-right: 16px;
-    
-            a {
-                width: 100%;
-                padding-left: 16px;
-                padding-right: 16px;
+@media (min-width: 576px) {
+  .cta-actions {
+    flex-direction: row;
+    max-width: 560px;
+  }
 
-                button {
-                    width: 50%;
-                    margin-left: auto;
-                    margin-right: auto;
-                    //padding: 18px 16px;
-                }
-            }
-        }
-    }
-}
-
-button {
-    margin-bottom: .5rem;
-    margin-right: .5rem;
-    width: 100%;
-   // display: block;
-}
-
-.buti {
-    display: block;
-    width: 80%;
-    margin-left: 10%;
-    margin-right: 10%;
-    margin-bottom: 10px;
-    margin-top: 10px;
-}
-:host ::ng-deep {
-    .buti{
-        .p-button {
-            width: 100%;
-        }
-    }
-}
-
-.cardBar {
-    padding-bottom: 20px;
+  .cta-btn {
+    flex: 1;
+  }
 }

@@ -1,44 +1,250 @@
-<div class="container">
-    <img src="../../assets/images/logo-no-background.png" alt="" class="bg">
-    <div class="content">
-        <p>
-            Les formations Camerounaises connaîssent aujourd’hui une forte 
-        diversification  des  filières  et  une  dispersion  géographique  des 
-        établissements.
+<!-- ═══════════════════════════════════════════════════════════ HERO -->
+<section class="hero-section">
+  <div class="container">
+    <div class="row align-items-center">
+
+      <div class="col-lg-6 hero-text">
+        <span class="section-badge">À propos de Camerdiplome</span>
+        <h1>L'orientation académique <span class="text-accent">réinventée</span> pour le Cameroun</h1>
+        <p class="lead">
+          Camerdiplome est la plateforme de référence pour découvrir, comparer et choisir
+          sa formation parmi les meilleurs établissements camerounais — gratuitement.
         </p>
-        <p>
-            Avant de se lancer aujourd’hui dans les démarches d’inscription dans cette 
-            multitude d’établissements, il est nécessaire au préalable pour les élèves, étudiants et demandeurs d'emploie de 
-            déterminer leurs priorités de poursuite d’études. En effet, les filières de formation 
-            sont nombreuses, avec chacune ses particularités. 
-        </p>
-        <p>
-            La plate-forme Camerdiplome vise à assurer la diffusion 
-            et la présentation des offres académiques nationales, afin d’amener les élèves, les 
-            étudiants et toutes autres personnes qui souhaitent suivre un cursus académique, 
-            à  mieux  s’orienter  dans  les  fi lières  correspondant  à  leur  profil  académique  et 
-            aboutissant aux métiers en relation avec leurs projets professionnels et les réalités 
-            du monde de l’emploi.
-        </p>
-        <p>
-            Camerdiplome vous permet d’avoir une vision 
-            globale  sur  les  caractéristiques  des  différentes  filières  d’études  (durée,  accès, 
-            programme, conditions d’études, débouchés…), avec le calendrier des inscriptions.
-        </p>
-        <p>
-            Au delà de l’information pratique que CamerDiplome apporte à travers un aperçu 
-            du système d’Enseignement camerounais, notre équipe de Conseillers 
-            d’Orientation sont à votre disposition pour répondre en cas de nécessité à l’essentiel 
-            de vos interrogations.
-        </p>
-        <p>
-            Nous travaillons actuellement sur la mise à disposition des avis émis par d'anciens étudiants 
-            afin d'apporter à nos utilisateur une vision plus impartiale de la réputation des établissements 
-            visibles sur notre plate-forme.
-        </p>
-        <p>
-            Vous êtes administrateur ou promoteur d'un établissement de formation et vous souhaitez améliorer votre visibilité
-            sur Camerdiplome ? Il suffit de nous contacter par téléphone ou sur  WhatsApp  <button (click)="discover()" class="wsp"><i (click)="discover()" class="bi bi-whatsapp social"> au 679 19 71 12</i></button> 
-        </p>
+        <div class="hero-actions">
+          <a routerLink="/trouver-ma-formation" class="btn-primary-cta">Trouver ma formation</a>
+          <a routerLink="/info/ecole" class="btn-ghost-cta">Voir les établissements</a>
+        </div>
+      </div>
+
+      <div class="col-lg-6 hero-visual">
+        <!--
+          ┌─ IMAGE 1 : HERO ──────────────────────────────────────────────────────┐
+          │ Chercher : "african students graduation celebration outdoor"           │
+          │ Idéal : groupe de 3-5 étudiants africains souriants tenant leurs      │
+          │ diplômes, en extérieur, lumière naturelle chaude, ambiance festive.   │
+          │ Format : paysage 16/9 ou 4/3 · min 800×550px                         │
+          │ Enregistrer sous : src/assets/images/about/hero-etudiants.webp       │
+          └───────────────────────────────────────────────────────────────────────┘
+        -->
+        <div class="img-frame">
+          <img src="assets/images/about/hero-etudiants.webp" alt="Étudiants camerounais"
+               class="about-img" (error)="heroImg.style.display='flex'" #heroImgReal
+               style="display:none">
+          <div class="img-placeholder" #heroImg>
+            <i class="bi bi-mortarboard-fill"></i>
+            <span>Étudiants · diplômes · joie</span>
+            <small>assets/images/about/hero-etudiants.webp</small>
+          </div>
+          <div class="img-frame-deco"></div>
+        </div>
+      </div>
+
     </div>
-</div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════ STATS -->
+<section class="stats-section">
+  <div class="container">
+    <div class="row">
+      <div class="col-6 col-md-3 stat-item" *ngFor="let stat of stats">
+        <div class="stat-number">
+          <span *ngIf="!stat.isFree">{{ stat.value }}{{ stat.suffix }}</span>
+          <span *ngIf="stat.isFree" class="stat-free">Gratuit</span>
+        </div>
+        <div class="stat-label">{{ stat.label }}</div>
+      </div>
+    </div>
+  </div>
+</section> 
+
+
+<!-- ═══════════════════════════════════════════════════════════ MISSION -->
+<section class="mission-section">
+  <div class="container">
+    <div class="row align-items-center g-5">
+
+      <div class="col-lg-5">
+        <!--
+          ┌─ IMAGE 2 : MISSION ───────────────────────────────────────────────────┐
+          │ Chercher : "cameroon university campus modern building aerial"         │
+          │ Idéal : campus universitaire camerounais vu de l'extérieur —          │
+          │ bâtiments modernes, pelouse, ambiance studieuse et dynamique.         │
+          │ Format : portrait ou carré · min 600×700px                           │
+          │ Enregistrer sous : src/assets/images/about/campus-cameroun.webp      │
+          └───────────────────────────────────────────────────────────────────────┘
+        -->
+        <div class="img-frame img-frame--portrait">
+          <img src="assets/images/about/campus-cameroun.webp" alt="Campus camerounais"
+               class="about-img" (error)="campusImg.style.display='flex'" #campusImgReal
+               style="display:none">
+          <div class="img-placeholder" #campusImg>
+            <i class="bi bi-buildings-fill"></i>
+            <span>Campus · université · Cameroun</span>
+            <small>assets/images/about/campus-cameroun.webp</small>
+          </div>
+          <div class="mission-badge">
+            <i class="bi bi-award-fill"></i>
+            <span>Depuis 2020</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-7 mission-text">
+        <span class="section-badge">Notre mission</span>
+        <h2>Simplifier le choix de formation pour chaque étudiant camerounais</h2>
+        <p>
+          Face à la diversification croissante des filières et à la dispersion géographique
+          des établissements, les élèves et étudiants ont besoin d'un repère fiable pour
+          construire leur projet académique.
+        </p>
+        <p>
+          Camerdiplome centralise l'offre académique nationale — formations, établissements,
+          débouchés, calendriers d'inscription — pour que chaque jeune camerounais puisse
+          s'orienter en connaissance de cause, vers un cursus en accord avec son profil
+          et ses ambitions professionnelles.
+        </p>
+        <p>
+          Au-delà de l'information pratique, notre équipe de conseillers d'orientation
+          est disponible pour répondre à vos questions et vous accompagner personnellement
+          dans vos démarches.
+        </p>
+        <div class="mission-highlight">
+          <i class="bi bi-chat-quote-fill"></i>
+          <blockquote>
+            "Nous travaillons chaque jour pour que l'information académique soit accessible
+            à tous, partout au Cameroun."
+          </blockquote>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════ VALEURS -->
+<section class="values-section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-badge">Ce qui nous guide</span>
+      <h2>Nos valeurs</h2>
+    </div>
+    <div class="row">
+      <div class="col-md-4" *ngFor="let v of values; let i = index">
+        <div class="value-card" [style.animation-delay]="(i * 0.15) + 's'">
+          <div class="value-icon">
+            <i class="bi {{ v.icon }}"></i>
+          </div>
+          <h3>{{ v.title }}</h3>
+          <p>{{ v.text }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════ ÉQUIPE -->
+<section class="team-section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-badge">Les personnes derrière la plateforme</span>
+      <h2>Notre équipe</h2>
+      <p class="section-subtitle">
+        Une équipe pluridisciplinaire engagée pour l'éducation et l'orientation des jeunes camerounais.
+      </p>
+    </div>
+
+    <!--
+      ┌─ IMAGE 3 : PHOTO D'ÉQUIPE ────────────────────────────────────────────────┐
+      │ Chercher : "african startup team professional photo office"               │
+      │ Idéal : 4 à 6 personnes en tenue professionnelle décontractée (smart     │
+      │ casual), posant ensemble dans un bureau ou espace de travail moderne.     │
+      │ Ambiance : jeune, dynamique, souriant, professionnelle.                   │
+      │ Format : paysage 16/9 · min 1000×560px                                   │
+      │ Enregistrer sous : src/assets/images/about/team-group.webp               │
+      └───────────────────────────────────────────────────────────────────────────┘
+    -->
+    <div class="team-group-frame">
+      <img src="assets/images/about/team-group.webp" alt="Équipe Camerdiplome"
+           class="team-group-img" (error)="teamImg.style.display='flex'" #teamImgReal
+           style="display:none">
+      <div class="img-placeholder img-placeholder--wide" #teamImg>
+        <i class="bi bi-people-fill"></i>
+        <span>Photo de groupe de l'équipe Camerdiplome</span>
+        <small>assets/images/about/team-group.webp</small>
+      </div>
+    </div>
+
+    <div class="row mt-5">
+      <div class="col-md-4" *ngFor="let member of team; let i = index">
+        <div class="team-card" [style.animation-delay]="(i * 0.12) + 's'">
+          <!--
+            IMAGE MEMBRE {{ i + 1 }} :
+            Photo individuelle ou illustration représentant "{{ member.role }}"
+            Format carré 300×300px · Enregistrer sous : {{ member.img }}
+          -->
+          <div class="team-avatar">
+            <img [src]="member.img" [alt]="member.name"
+                 (error)="avatarEl.style.display='flex'; $any($event.target).style.display='none'" #avatarImgEl>
+            <div class="avatar-placeholder" #avatarEl>
+              <i class="bi bi-person-fill"></i>
+            </div>
+          </div>
+          <h4>{{ member.name }}</h4>
+          <span class="team-role">{{ member.role }}</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════ COMMENT ÇA MARCHE -->
+<section class="how-section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-badge">Simple et rapide</span>
+      <h2>Comment ça marche ?</h2>
+    </div>
+    <div class="steps-grid">
+      <div class="step-item" *ngFor="let step of steps; let i = index"
+           [style.animation-delay]="(i * 0.12) + 's'">
+        <div class="step-num">{{ step.num }}</div>
+        <div class="step-icon"><i class="bi {{ step.icon }}"></i></div>
+        <h3>{{ step.title }}</h3>
+        <p>{{ step.text }}</p>
+        <div class="step-connector" *ngIf="i < steps.length - 1"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════════════════════ CTA FINAL -->
+<section class="cta-section">
+  <div class="container">
+    <div class="cta-card">
+      <div class="cta-content">
+        <h2>Vous êtes un établissement de formation ?</h2>
+        <p>
+          Rejoignez Camerdiplome et améliorez votre visibilité auprès de milliers d'étudiants
+          qui recherchent leur formation chaque jour.
+        </p>
+        <div class="cta-actions">
+          <button class="btn-wsp" (click)="discover()">
+            <i class="bi bi-whatsapp"></i>
+            Nous contacter sur WhatsApp
+          </button>
+          <a routerLink="/register" class="btn-ghost-cta">Créer mon compte</a>
+        </div>
+      </div>
+      <div class="cta-deco">
+        <i class="bi bi-building-check"></i>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { SharedComponentModule } from '../../../shared/shared.modules';
-import { Title } from '@angular/platform-browser';
+import { Meta, Title } from '@angular/platform-browser';
 import { filter, map, Observable, tap } from 'rxjs';
 import { SchoolAdvers } from '../../../model/school-adv';
 import { AdversService } from '../../../service/advers.service';
@@ -11,6 +12,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { NavigationEnd, Router } from '@angular/router';
 import { ActuListComponent } from '../../../actualite/components/actu-list/actu-list.component';
 import { event } from 'jquery';
+import { SeoService } from '../../../service/seo.service';
 
 @Component({
   selector: 'app-info-ecole',
@@ -37,25 +39,42 @@ export class InfoEcoleComponent implements OnInit {
   absent: string = 'absent-off'
   ets = new FormControl('', Validators.required)
   etsi: FormControl = new FormControl('', Validators.required)
-  constructor( //private infoservice :InfoServices,
+  constructor(
     private titleService: Title,
+    private meta: Meta,
     private adversService: AdversService,
     private infoService: InfoServices,
-    private appRout: Router
-  ) {
-    // if (this.ets) {        
-    //   this.titleService.setTitle(this.ets.value+'');
-    // }
-    //this.ets.setValue('ggg')
+    private appRout: Router,
+    private seoService: SeoService,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {}
+
+  private initSeo(): void {
+    try {
+      this.seoService.setSeo({
+        title: 'Les écoles au Cameroun | Annuaire complet | Camerdiplome',
+        description: 'Découvrez toutes les écoles au Cameroun : universités, grandes écoles, instituts de formation. Trouvez l\'établissement qui correspond à vos aspirations avec Camerdiplome.',
+        url: '/info/ecole',
+        type: 'website'
+      });
+
+      // Breadcrumb pour la page de liste
+      this.seoService.setJsonLd([
+        { name: 'Accueil', url: '/', position: 1 },
+        { name: 'Les écoles', url: '/info/ecole', position: 2 }
+      ]);
+    } catch (error) {
+      console.error('InfoEcoleComponent.initSeo() error:', error);
+    }
   }
 
 
 
   ngOnInit(): void {
-    // this.appRout.events.pipe(
-    //   filter(event => event instanceof NavigationEnd),
-    // ).subscribe(()=> this.titleService.setTitle(this.ets.value+''))
-
+    if (isPlatformBrowser(this.platformId)) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    this.initSeo();
 
     this.loading$ = this.infoService.loading$
 
@@ -63,7 +82,6 @@ export class InfoEcoleComponent implements OnInit {
     this.ecole$ = this.infoService.getEcoleFind().pipe(
       tap(data => this.countEcole = data.length),
       tap(data => this.ecole = data),
-      // tap(() => this.loading$.subscribe(loading$.next) ),
       map(data => data.map(data => ({
         ...data,
         displayName: data.sigle_e + '   ' + data.nom_e + ' ||' + data.id_ecol

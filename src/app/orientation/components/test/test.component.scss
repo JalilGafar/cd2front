@@ -1,0 +1,197 @@
+/* ===== HERO ===== */
+.hero-riasec {
+  background: linear-gradient(135deg, #7e22ce 0%, #3730a3 55%, #1e293b 100%);
+  min-height: 480px;
+  color: #fff;
+}
+
+.hero-subtitle {
+  color: #c4b5fd;
+  font-size: 1.15rem;
+}
+
+.hero-muted {
+  color: #a5b4fc;
+}
+
+.hero-arrow {
+  color: rgba(165, 180, 252, 0.5);
+}
+
+/* ===== RIASEC BADGES (hero) ===== */
+.riasec-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 8px;
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0 4px 4px;
+}
+
+.riasec-i {
+  background-color: #8b5cf6;
+}
+
+.riasec-c {
+  background-color: #f97316;
+}
+
+/* ===== HERO BUTTONS ===== */
+.btn-hero-start {
+  background-color: #fff;
+  color: #6d28d9;
+  border: 2px solid #fff;
+  border-radius: 50px;
+  font-weight: 600;
+  transition: background-color 0.2s, color 0.2s;
+
+  &:hover {
+    background-color: #ede9fe;
+    color: #5b21b6;
+    border-color: #ede9fe;
+  }
+}
+
+/* ===== BREADCRUMB ===== */
+.breadcrumb-pill {
+  background: #fff;
+  border: 1px solid #e5e7eb;
+  border-radius: 50px;
+  font-size: 0.875rem;
+
+  .breadcrumb-item + .breadcrumb-item::before {
+    color: #9ca3af;
+  }
+
+  a {
+    color: #6d28d9;
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+
+  .breadcrumb-item.active {
+    color: #374151;
+  }
+}
+
+/* ===== ARTICLE SECTION ===== */
+.article-heading {
+  color: #1f2937;
+  padding-left: 14px;
+  border-left: 4px solid #ea580c;
+}
+
+/* ===== PROFIL CARDS (6 RIASEC types) ===== */
+.profil-card {
+  background-color: #f9fafb;
+  border: 1px solid #e5e7eb;
+  text-decoration: none;
+  transition: box-shadow 0.2s, background-color 0.2s;
+
+  &:hover {
+    background-color: #f3f4f6;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    text-decoration: none;
+  }
+}
+
+.profil-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  border-radius: 50%;
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+/* ===== CTA BUTTON ===== */
+.btn-riasec-cta {
+  background: linear-gradient(90deg, #7c3aed, #4f46e5);
+  color: #fff;
+  border: none;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 1.1rem;
+  transition: opacity 0.2s, transform 0.15s;
+
+  &:hover {
+    opacity: 0.9;
+    color: #fff;
+    transform: translateY(-1px);
+  }
+}
+
+/* ===== GUIDES SECTION ===== */
+.guides-section {
+  background-color: #f8f9fa;
+}
+
+.guide-card {
+  background-color: #fff;
+  text-decoration: none;
+  transition: box-shadow 0.2s;
+
+  &:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    text-decoration: none;
+  }
+}
+
+.guide-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  min-width: 44px;
+  border-radius: 8px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.guide-bc  { background-color: #0ea5e9; }
+.guide-rp  { background-color: #10b981; }
+.guide-gm  { background-color: #f59e0b; }
+.guide-to  { background-color: #8b5cf6; }
+
+/* ===== FONT WEIGHT SEMIBOLD ===== */
+.font-weight-semibold {
+  font-weight: 600;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 767px) {
+  .hero-riasec {
+    min-height: 400px;
+  }
+
+  .riasec-badge {
+    width: 36px;
+    height: 36px;
+    font-size: 1rem;
+    margin: 0 3px 3px;
+  }
+
+  .profil-badge,
+  .guide-badge {
+    width: 38px;
+    height: 38px;
+    min-width: 38px;
+  }
+
+  .btn-riasec-cta {
+    font-size: 1rem;
+  }
+}

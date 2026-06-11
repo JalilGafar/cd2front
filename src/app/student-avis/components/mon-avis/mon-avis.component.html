@@ -1,165 +1,231 @@
-<div class="school-header"></div>
 @if (campus$ | async; as campus) {
-    <div class="card">
-        <div class="card-body">
-            <h2 class="card-title">Donnez votre avis sur {{campus[0].nom_e}}</h2>
-            <form [formGroup]="newAvis" >
-                <div class="form-group">
-                    <label for="">Campus</label>
-                    <p-dropdown id="campus_id" 
-                                *ngIf="campus$ | async as campuss"
-                                placeholder="Sélectione ton campus" 
-                                [options]="campuss" 
-                                optionLabel="nom_camp" 
-                                optionValue="id_camp" 
-                                formControlName="campus_id">
-                    </p-dropdown>    
-                </div>
-                <div class="form-group">
-                    <label for="">Formation suivie</label>
-                    <p-dropdown id="diplo_id" 
-                                *ngIf="cursus$ | async as cursus"
-                                placeholder="Sélectione ton cursus" 
-                                [options]="cursus" 
-                                optionLabel="nom_dip" 
-                                optionValue="id_dip" 
-                                formControlName="diplo_id">
-                    </p-dropdown>    
-                </div>
-                <div class="form-group">
-                    <label for="">Ton expérience</label>
-                    <p-rating formControlName="note" [cancel]="false" />
-                    <textarea 
-                        formControlName="content"
-                        rows="5"
-                        cols="30" 
-                        placeholder="Partage ton témoignage (cursus, spécialisation, stage, emploi)… En rédigeant ton avis, tu aideras de nombreux futurs étudiants à faire le bon choix !" 
-                        pInputTextarea 
-                        [autoResize]="true">
-                    </textarea>
-                    <span>140 caractères minimum</span>
-                </div>
-                <div class="evaluation">
-                    <h2>Evaluation</h2>
-                    <div class="form-group">
-                        <label for="">Enseignement, cours et professeurs</label>
-                        <p-rating formControlName="note_cours" [cancel]="false" />
-                        <span class="precision">Précision (facultatif)</span>
-                        <textarea 
-                            formControlName="content_cours"
-                            rows="5"
-                            cols="30" 
-                            placeholder="Précise pourquoi tu as attribué cette note." 
-                            pInputTextarea 
-                            [autoResize]="true">
-                        </textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="">Ambiance, vie étudiante et associative</label>
-                        <p-rating formControlName="note_ambiance" [cancel]="false" />
-                        <span class="precision">Précision (facultatif)</span>
-                        <textarea 
-                            formControlName="content_ambiance"
-                            rows="5"
-                            cols="30" 
-                            placeholder="Précise pourquoi tu as attribué cette note." 
-                            pInputTextarea 
-                            [autoResize]="true">
-                        </textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="">Locaux, infrastructures et localisation</label>
-                        <p-rating formControlName="note_locaux" [cancel]="false" />
-                        <span class="precision">Précision (facultatif)</span>
-                        <textarea 
-                            formControlName="content_locaux"
-                            rows="5"
-                            cols="30" 
-                            placeholder="Précise pourquoi tu as attribué cette note." 
-                            pInputTextarea 
-                            [autoResize]="true">
-                        </textarea>
-                    </div>
-                    <div class="form-group">
-                        <label for="">Stage, alternance, insertion professionnelle</label>
-                        <p-rating formControlName="note_insert" [cancel]="false" />
-                        <span class="precision">Précision (facultatif)</span>
-                        <textarea 
-                            formControlName="content_insert"
-                            rows="5"
-                            cols="30" 
-                            placeholder="Précise pourquoi tu as attribué cette note." 
-                            pInputTextarea 
-                            [autoResize]="true">
-                        </textarea>
-                    </div>
-                    <div class="form-group">
-                        <label *ngIf="campus$ | async as campus" for="">Recommanderais-tu {{campus[0].sigle_e}} ?</label>
-                        <div class="radio">
-                            <div class="flex align-items-center">
-                                <p-radioButton 
-                                    value="Oui" 
-                                    formControlName="recommande" 
-                                    inputId="recommande1" />
-                                <label for="recommande1" class="ml-2">
-                                   Oui
-                                </label>
-                            </div>
-                            <div class="flex align-items-center">
-                                <p-radioButton 
-                                    value="Non" 
-                                    formControlName="recommande" 
-                                    inputId="recommande2" />
-                                <label for="recommande2" class="ml-2">
-                                    Non
-                                </label>
-                            </div>
-                        </div>
-                        
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label for="">Année de promotion</label>
-                    <p-dropdown id="promotion" 
-                                formControlName="promotion"
-                                type="number" 
-                                [options]="items" 
-                                placeholder="2024" 
-                                [virtualScroll]="true" 
-                                [virtualScrollItemSize]="38">
-                    </p-dropdown>  
-                    <div class="etudiant">
-                        Si tu es encore étudiant, saisis l'année au cours de laquelle tu auras ton diplôme.
-                    </div> 
-                </div>
-                <div class="form-group">
-                    <label for="">Année de naissance</label>
-                    <p-dropdown id="born" 
-                                formControlName="born"
-                                type="number" 
-                                [options]="itemsborn" 
-                                placeholder="2024" 
-                                [virtualScroll]="true" 
-                                [virtualScrollItemSize]="38">
-                    </p-dropdown>  
-                </div>
-                <div class="form-group">
-                    <label for="auteur_avis">Prénom</label>
-                    <input type="text" pInputText formControlName="auteur_avis" /> 
-                </div>
-                <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="email" pInputText formControlName="email" /> 
-                </div>
-                <div class="form-group">
-                    <label for="justif">Justificatif de scolarité</label>
-                    <input type="file" id="myFile" formControlName="justif">
-                </div>
-            
-                <div class="action-buttons">
-                    <button type="submit" class="btn btn-primary" (click)="onSubmitForm()" [disabled]="newAvis.invalid" >Envoyer mon avis</button>
-                </div>
-            </form>
-        </div>
+<div class="avis-page">
+
+  <!-- ═══ EN-TÊTE ══════════════════════════════════════════════════════════ -->
+  <section class="page-header">
+    <div class="container">
+      <span class="section-badge">Témoignage</span>
+      <h1>Donner mon avis sur <span class="text-accent">{{campus[0].nom_e}}</span></h1>
+      <p class="lead">
+        Ton témoignage aide des milliers d'étudiants à faire le bon choix d'orientation.
+        Il est publié gratuitement sur notre plateforme.
+      </p>
     </div>
+  </section>
+
+  <!-- ═══ FORMULAIRE ════════════════════════════════════════════════════════ -->
+  <section class="form-section">
+    <div class="container">
+      <div class="form-card">
+        <form [formGroup]="newAvis">
+
+          <!-- ── Contexte ─────────────────────────────────────────────────── -->
+          <div class="form-block">
+            <h3 class="block-title"><i class="bi bi-geo-alt-fill"></i> Ton contexte</h3>
+
+            <div class="field-group">
+              <label>Campus</label>
+              <p-dropdown
+                id="campus_id"
+                placeholder="Sélectionne ton campus"
+                [options]="campus"
+                optionLabel="nom_camp"
+                optionValue="id_camp"
+                formControlName="campus_id">
+              </p-dropdown>
+            </div>
+
+            <div class="field-group">
+              <label>Formation suivie</label>
+              <p-dropdown
+                id="diplo_id"
+                *ngIf="cursus$ | async as cursus"
+                placeholder="Sélectionne ton cursus"
+                [options]="cursus"
+                optionLabel="nom_dip"
+                optionValue="id_dip"
+                formControlName="diplo_id">
+              </p-dropdown>
+            </div>
+
+            <div class="field-group">
+              <label>Année de promotion</label>
+              <p-dropdown
+                id="promotion"
+                formControlName="promotion"
+                [options]="items"
+                placeholder="Année d'obtention du diplôme"
+                [virtualScroll]="true"
+                [virtualScrollItemSize]="38">
+              </p-dropdown>
+              <span class="field-hint">Si tu es encore étudiant, saisis l'année prévue d'obtention.</span>
+            </div>
+          </div>
+
+          <!-- ── Expérience générale ─────────────────────────────────────── -->
+          <div class="form-block">
+            <h3 class="block-title"><i class="bi bi-chat-text-fill"></i> Ton expérience générale</h3>
+
+            <div class="field-group">
+              <label>Note globale</label>
+              <p-rating formControlName="note" [cancel]="false" />
+            </div>
+
+            <div class="field-group">
+              <label>Ton témoignage <span class="required">*</span></label>
+              <textarea
+                formControlName="content"
+                rows="6"
+                cols="30"
+                placeholder="Partage ton témoignage (cursus, spécialisation, stage, emploi)… En rédigeant ton avis, tu aideras de nombreux futurs étudiants à faire le bon choix !"
+                pInputTextarea
+                [autoResize]="true">
+              </textarea>
+              <span class="field-hint">140 caractères minimum</span>
+            </div>
+          </div>
+
+          <!-- ── Évaluations détaillées ─────────────────────────────────── -->
+          <div class="form-block">
+            <h3 class="block-title"><i class="bi bi-star-half"></i> Évaluations détaillées</h3>
+
+            <div class="eval-grid">
+
+              <div class="eval-item">
+                <div class="eval-header">
+                  <div class="eval-icon"><i class="bi bi-book-fill"></i></div>
+                  <div>
+                    <h4>Enseignement & cours</h4>
+                    <p-rating formControlName="note_cours" [cancel]="false" />
+                  </div>
+                </div>
+                <textarea
+                  formControlName="content_cours"
+                  rows="3"
+                  placeholder="Précise pourquoi tu as attribué cette note. (facultatif)"
+                  pInputTextarea [autoResize]="true">
+                </textarea>
+              </div>
+
+              <div class="eval-item">
+                <div class="eval-header">
+                  <div class="eval-icon"><i class="bi bi-people-fill"></i></div>
+                  <div>
+                    <h4>Ambiance & vie étudiante</h4>
+                    <p-rating formControlName="note_ambiance" [cancel]="false" />
+                  </div>
+                </div>
+                <textarea
+                  formControlName="content_ambiance"
+                  rows="3"
+                  placeholder="Précise pourquoi tu as attribué cette note. (facultatif)"
+                  pInputTextarea [autoResize]="true">
+                </textarea>
+              </div>
+
+              <div class="eval-item">
+                <div class="eval-header">
+                  <div class="eval-icon"><i class="bi bi-building-fill"></i></div>
+                  <div>
+                    <h4>Locaux & infrastructures</h4>
+                    <p-rating formControlName="note_locaux" [cancel]="false" />
+                  </div>
+                </div>
+                <textarea
+                  formControlName="content_locaux"
+                  rows="3"
+                  placeholder="Précise pourquoi tu as attribué cette note. (facultatif)"
+                  pInputTextarea [autoResize]="true">
+                </textarea>
+              </div>
+
+              <div class="eval-item">
+                <div class="eval-header">
+                  <div class="eval-icon"><i class="bi bi-briefcase-fill"></i></div>
+                  <div>
+                    <h4>Stage & insertion pro</h4>
+                    <p-rating formControlName="note_insert" [cancel]="false" />
+                  </div>
+                </div>
+                <textarea
+                  formControlName="content_insert"
+                  rows="3"
+                  placeholder="Précise pourquoi tu as attribué cette note. (facultatif)"
+                  pInputTextarea [autoResize]="true">
+                </textarea>
+              </div>
+
+            </div>
+
+            <div class="field-group recommande-field">
+              <label>Recommanderais-tu {{campus[0].sigle_e}} ?</label>
+              <div class="radio-group">
+                <div class="radio-option">
+                  <p-radioButton value="Oui" formControlName="recommande" inputId="recommande1" />
+                  <label for="recommande1">Oui, je recommande</label>
+                </div>
+                <div class="radio-option">
+                  <p-radioButton value="Non" formControlName="recommande" inputId="recommande2" />
+                  <label for="recommande2">Non, je ne recommande pas</label>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ── Informations personnelles ──────────────────────────────── -->
+          <div class="form-block">
+            <h3 class="block-title"><i class="bi bi-person-fill"></i> Tes informations</h3>
+
+            <div class="two-cols">
+              <div class="field-group">
+                <label for="auteur_avis">Prénom <span class="required">*</span></label>
+                <input type="text" pInputText formControlName="auteur_avis" placeholder="Ton prénom" />
+              </div>
+              <div class="field-group">
+                <label>Année de naissance <span class="required">*</span></label>
+                <p-dropdown
+                  id="born"
+                  formControlName="born"
+                  [options]="itemsborn"
+                  placeholder="Ton année de naissance"
+                  [virtualScroll]="true"
+                  [virtualScrollItemSize]="38">
+                </p-dropdown>
+              </div>
+            </div>
+
+            <div class="field-group">
+              <label for="email">Email <span class="required">*</span></label>
+              <input type="email" pInputText formControlName="email" placeholder="ton@email.com" />
+            </div>
+
+            <div class="field-group">
+              <label for="justif">Justificatif de scolarité</label>
+              <input type="file" id="myFile" formControlName="justif">
+              <span class="field-hint">Carte étudiante ou relevé de notes (pour la certification de ton avis)</span>
+            </div>
+          </div>
+
+          <!-- ── Soumission ─────────────────────────────────────────────── -->
+          <div class="form-submit">
+            <button
+              type="submit"
+              class="btn-primary-cta"
+              (click)="onSubmitForm()"
+              [disabled]="newAvis.invalid">
+              <i class="bi bi-send-fill"></i>
+              Envoyer mon avis
+            </button>
+            <p class="submit-hint">
+              <i class="bi bi-shield-check"></i>
+              Ton avis sera vérifié avant publication.
+            </p>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </section>
+
+</div>
 }

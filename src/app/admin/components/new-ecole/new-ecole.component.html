@@ -76,13 +76,80 @@
             <label for="">Université</label>
             <p-dropdown id="universites_id" *ngIf="universites$ | async as universitess" [options]="universitess" optionLabel="nom_univ" optionValue="id_univ" formControlName="universites_id"></p-dropdown>
         </div>
-        <div class="form-group">
-            <label for="">Campus</label>
-            <p-dropdown id="campus_id" *ngIf="campus$ | async as campuss" [options]="campuss" optionLabel="nom_camp" optionValue="id_camp" formControlName="campus_id"></p-dropdown>
+
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label class="pr-2" for="">Campus Principal</label>
+                    <p-dropdown  id="campus_id" *ngIf="campus$ | async as campuss" [options]="campuss" optionLabel="nom_camp" optionValue="id_camp" formControlName="campus_id"></p-dropdown>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label class="pr-2" for="">Campus 2</label>
+                    <p-dropdown  id="campus_id1" *ngIf="campus$ | async as campuss" [options]="campuss" optionLabel="nom_camp" optionValue="id_camp" formControlName="campus_id1"></p-dropdown>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label class="pr-2" for="">Campus 3</label>
+                    <p-dropdown  id="campus_id2" *ngIf="campus$ | async as campuss" [options]="campuss" optionLabel="nom_camp" optionValue="id_camp" formControlName="campus_id2"></p-dropdown>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label class="pr-2" for="">Campus 4</label>
+                    <p-dropdown  id="campus_id3" *ngIf="campus$ | async as campuss" [options]="campuss" optionLabel="nom_camp" optionValue="id_camp" formControlName="campus_id3"></p-dropdown>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label class="pr-2" for="">Campus 5</label>
+                    <p-dropdown  id="campus_id4" *ngIf="campus$ | async as campuss" [options]="campuss" optionLabel="nom_camp" optionValue="id_camp" formControlName="campus_id4"></p-dropdown>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label class="pr-2" for="">Campus 6</label>
+                    <p-dropdown  id="campus_id5" *ngIf="campus$ | async as campuss" [options]="campuss" optionLabel="nom_camp" optionValue="id_camp" formControlName="campus_id5"></p-dropdown>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label class="pr-2" for="">Campus 7</label>
+                    <p-dropdown  id="campus_id6" *ngIf="campus$ | async as campuss" [options]="campuss" optionLabel="nom_camp" optionValue="id_camp" formControlName="campus_id6"></p-dropdown>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label class="pr-2" for="">Campus 8</label>
+                    <p-dropdown  id="campus_id7" *ngIf="campus$ | async as campuss" [options]="campuss" optionLabel="nom_camp" optionValue="id_camp" formControlName="campus_id7"></p-dropdown>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label class="pr-2" for="">Campus 9</label>
+                    <p-dropdown  id="campus_id8" *ngIf="campus$ | async as campuss" [options]="campuss" optionLabel="nom_camp" optionValue="id_camp" formControlName="campus_id8"></p-dropdown>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label class="pr-2" for="">Campus 10</label>
+                    <p-dropdown  id="campus_id9" *ngIf="campus$ | async as campuss" [options]="campuss" optionLabel="nom_camp" optionValue="id_camp" formControlName="campus_id9"></p-dropdown>
+                </div>
+            </div>
+            
         </div>
 
+
+
         <div class="action-buttons">
-            <button type="submit" (click)="onSubmitForm()">Enregistrer</button>
+            <p-button type="submit" [disabled]="newEcole.invalid" styleClass="p-button-success" (click)="onSubmitForm()">Enregistrer</p-button>
+            <p-button styleClass="p-button-danger" (click)="onReturn()">Annuler</p-button>
         </div>
     </form>
 </p-card>

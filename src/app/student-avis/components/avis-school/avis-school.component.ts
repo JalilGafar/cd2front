@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
 import { GeneralService } from '../../../general.service';
 import { AvisService } from '../../avis.service';
@@ -32,10 +33,14 @@ export class AvisSchoolComponent implements OnInit {
     private generalService : GeneralService,
     private avisService : AvisService,
     private route: ActivatedRoute,
-    private appRout : Router
+    private appRout : Router,
+    @Inject(PLATFORM_ID) private platformId: Object
   ){}
 
   ngOnInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
     this.route.params.pipe(
       switchMap(params => this.avisService.getAvisForSchoolId(+params['id'])),
       tap(aviss=>this.avisList = aviss)

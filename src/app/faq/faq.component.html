@@ -1,115 +1,120 @@
-<div class="card" style="margin: 10px;">
-    <h1 class="titre">FAQ (Foire Aux Questions) </h1>
-    <div class="accordion" id="accordionExample" >
-        <div class="card">
-            <div id="heading1" class="card-header">
-                <h2 class="mb-0" >
-                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse1" arial-expanded="true" aria-controls="collapse1">
-                        Qu'est ce que Camerdiplome ?
-                    </button>
-                </h2>
-            </div>
-            <div id="collapse1"  class="collapse show" aria-labelledby="heaing1" data-parent="#accordionExample" >
-                <div class="card-body">
-                    <p>
-                        Choisir son futur métier, trouver la bonne formation, trouver la bonne école de formation au Cameroun. Camerdiplome, le spécialiste de l'orientation 
-                        au Cameroun, est la solution à toutes ces préoccupations. Que vous soyez collégien, lycéen, universitaire, en école de formation, 
-                        avec ou sans emploi, jeune ou adulte, la bonne orientation académique et professionnelle reste une préoccupation majeure.    
-                    </p>
-                    <ul>
-                        <li>Quel sens ai-je envie de donner à ma vie ?</li>
-                        <li>Quels sont les métiers qui peuvent me faire échapper au chômage ?</li>
-                        <li>Quels sont les parcours de formation possible au Cameroun ?</li>
-                        <li>Quelles sont les études et les établissements qui peuvent me permettre d'atteindre mes objectifs professionnels</li>
-                        <li>Quelle formation dois-je suivre pour exercer le métier qui me correspond ?</li>
-                        <li>etc...</li>
-                    </ul>
-                    <p>
-                        Toutes les réponses sont dans Camerdiplome.
-                    </p>
-                </div>
-            </div>
+<!-- ══════════════════════════════════════════════════════════════ HERO -->
+<section class="faq-hero">
+  <div class="container">
+    <div class="faq-hero-inner">
+      <span class="section-badge">Centre d'aide</span>
+      <h1>Foire Aux Questions</h1>
+      <p class="faq-hero-sub">
+        Tout ce que vous devez savoir sur Camerdiplome. Vous ne trouvez pas
+        votre réponse ?<a routerLink="/about"> Contactez-nous.</a>
+      </p>
+
+      <div class="faq-hero-stats">
+        <div class="hero-stat">
+          <span class="hero-stat-num">{{ categories.length }}</span>
+          <span class="hero-stat-label">Catégories</span>
         </div>
-        <div class="card">
-            <div id="heading2" class="card-header">
-                <h2 class="mb-0" >
-                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse2" arial-expanded="true" aria-controls="collapse2">
-                        Comment fonctionne la plateforme Camerdiplome ?
-                    </button>
-                </h2>
-            </div>
-            <div id="collapse2"  class="collapse" aria-labelledby="heaing2" data-parent="#accordionExample" >
-                <div class="card-body">
-                    <p>
-                        L'utilisation de Camerdiplome est gratuite pour les personnes à la recherche d'orientation.
-                        Cliquez sur "Trouver ma formation" et laissez vous guider en répondant aux questions qui vont aider notre algorithme 
-                        à vous proposer les formations qui vous correspondent.   
-                    </p>
-                    <p>
-                        Nous avons des <strong>téléconseillers en stratégie d'étude</strong> qui vont par la suite vous recontacter pour échanger davantage sur
-                        votre projet professionnel. Les téléconseillers vont par la suite vous mettre en contact avec les meilleurs établissements du pays.
-                    </p>
-                </div>
-            </div>
+        <div class="hero-stat-divider"></div>
+        <div class="hero-stat">
+          <span class="hero-stat-num">
+            {{ categories[0].items.length + categories[1].items.length + categories[2].items.length }}
+          </span>
+          <span class="hero-stat-label">Questions répondues</span>
         </div>
-        <div class="card">
-            <div id="heading3" class="card-header">
-                <h2 class="mb-0" >
-                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse3" arial-expanded="true" aria-controls="collapse3">
-                        Comment valoriser mon établissement sur Camerdiplome ?
-                    </button>
-                </h2>
-            </div>
-            <div id="collapse3"  class="collapse" aria-labelledby="heaing3" data-parent="#accordionExample" >
-                <div class="card-body">
-                    <p>
-                        Vous êtes administrateur ou promoteur d'un établissement de formation et vous souhaitez améliorer votre visibilité
-                        sur Camerdiplome ? Il suffit de nous contacter par téléphone ou sur  WhatsApp  <button (click)="discover()" class="wsp"><i (click)="discover()" class="bi bi-whatsapp social"> au 679 19 71 12</i></button> 
-                    </p>
-                    <p>
-                        Nous avons des <strong>téléconseillers en stratégie d'étude</strong> qui vont par la suite vous recontacter pour échanger davantage sur
-                        votre projet professionnel. Les téléconseillers vont par la suite vous mettre en contact avec les meilleurs établissements du pays.
-                    </p>
-                </div>
-            </div>
+        <div class="hero-stat-divider"></div>
+        <div class="hero-stat">
+          <span class="hero-stat-num">24h</span>
+          <span class="hero-stat-label">Délai de réponse</span>
         </div>
-        <div class="card">
-            <div id="heading4" class="card-header">
-                <h2 class="mb-0" >
-                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse4" arial-expanded="true" aria-controls="collapse4">
-                        Où sont situé les locaux de Camerdiplome ?
-                    </button>
-                </h2>
-            </div>
-            <div id="collapse4"  class="collapse" aria-labelledby="heaing4" data-parent="#accordionExample" >
-                <div class="card-body">
-                    <p>
-                        Nous sommes basés à Yaoundé, quartier Nkolbisson, carrefour Onana
-                    </p>
-                </div>
-            </div>
-        </div>
-        <div class="card">
-            <div id="heading5" class="card-header">
-                <h2 class="mb-0" >
-                    <button class="btn btn-link btn-block text-left" type="button" data-toggle="collapse" data-target="#collapse5" arial-expanded="true" aria-controls="collapse5">
-                        Est ce que les informations de Camerdiplome sont fiable ?
-                    </button>
-                </h2>
-            </div>
-            <div id="collapse5"  class="collapse" aria-labelledby="heaing5" data-parent="#accordionExample" >
-                <div class="card-body">
-                    <p>
-                        Nous nous engageons à ne proposer que des informations fiables et vérifiées sur notre plateforme.
-                        Les informations concernant les établissements sont fournies par ces derniers. Les délais de vérification peuvent prendre
-                        du temps compte tenu de la quantité importante des établissements et de leur répartition géographique.
-                    </p>
-                    <p>
-                        Certaines informations (formation, école) peuvent être abscentes de la plateforme pour des raisons de vérification et 
-                        de cycle de mise à jour.
-                    </p>
-                </div>
-            </div>
-        </div>
+      </div>
     </div>
-</div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════════ FAQ -->
+<section class="faq-section">
+  <div class="container">
+    <div class="faq-layout">
+
+      <!-- Sommaire latéral -->
+      <aside class="faq-sidebar">
+        <p class="sidebar-title">Catégories</p>
+        <ul class="sidebar-nav">
+          <li *ngFor="let cat of categories">
+            <a [href]="'#cat-' + cat.label" class="sidebar-link">
+              <i class="bi {{ cat.icon }}"></i>
+              <span>{{ cat.label }}</span>
+            </a>
+          </li>
+        </ul>
+
+        <div class="sidebar-help">
+          <i class="bi bi-headset"></i>
+          <p>Vous avez une autre question ?</p>
+          <button class="btn-wsp" (click)="discover()">
+            <i class="bi bi-whatsapp"></i> Écrire sur WhatsApp
+          </button>
+        </div>
+      </aside>
+
+      <!-- Accordéons par catégorie -->
+      <div class="faq-content">
+        <div *ngFor="let cat of categories" class="faq-category" [id]="'cat-' + cat.label">
+
+          <div class="category-header">
+            <div class="category-icon">
+              <i class="bi {{ cat.icon }}"></i>
+            </div>
+            <h2>{{ cat.label }}</h2>
+          </div>
+
+          <div class="accordion-list">
+            <div *ngFor="let item of cat.items; let i = index"
+                 class="accordion-item" [class.open]="item.open">
+
+              <button class="accordion-trigger" (click)="toggle(item)" type="button"
+                      [attr.aria-expanded]="item.open">
+                <span>{{ item.q }}</span>
+                <div class="accordion-icon">
+                  <i class="bi bi-plus-lg" *ngIf="!item.open"></i>
+                  <i class="bi bi-dash-lg" *ngIf="item.open"></i>
+                </div>
+              </button>
+
+              <div class="accordion-body" [class.open]="item.open">
+                <div class="accordion-body-inner" [innerHTML]="item.a"></div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ══════════════════════════════════════════════════════════════ CTA -->
+<section class="faq-cta">
+  <div class="container">
+    <div class="cta-card">
+      <div class="cta-icon"><i class="bi bi-chat-dots-fill"></i></div>
+      <div class="cta-text">
+        <h3>Vous n'avez pas trouvé votre réponse ?</h3>
+        <p>
+          Notre équipe est disponible pour répondre à toutes vos questions
+          sur l'orientation, les formations ou les établissements.
+        </p>
+      </div>
+      <div class="cta-actions">
+        <button class="btn-wsp" (click)="discover()">
+          <i class="bi bi-whatsapp"></i> WhatsApp
+        </button>
+        <a routerLink="/about" class="btn-ghost">En savoir plus</a>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { SharedComponentModule } from '../../../shared/shared.modules';
 import { Meta, Title } from '@angular/platform-browser';
 import { Observable } from 'rxjs';
@@ -29,14 +30,18 @@ export class InfoPrepaComponent implements OnInit {
   constructor(
     private titleService:Title,
     private adversService: AdversService,
-    private meta: Meta) 
-    { 
+    private meta: Meta,
+    @Inject(PLATFORM_ID) private platformId: Object)
+    {
       this.titleService.setTitle("Les Meilleurs Prépa au Cameroun | Camerdiplome");
       this.meta.updateTag({ name: 'description', content: 'Vous souhaitez facilement intégrer une grande école au Cameroun ou à l\'étranger ? Alors, le passage par une prépa est le moyen le plus sûr d\'atteindre votre objectif.' });
       this.meta.updateTag({ name: 'keywords', content: 'métier, metier, école, concours, grande école, emploie, Certificat, formation, Bac, Professionnel, Professionnelle'});
     }
 
   ngOnInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
     this.schoolAdvers$ = this.adversService.getSchoolPub();
   }
 

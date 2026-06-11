@@ -1,115 +1,416 @@
-@import '../../informations-style.module.scss';
-.container{
-    h2{
-        text-align: center;
-    }
+@import 'design-system';
 
-    .box{
-        margin-bottom: 40px;
-    }
-
-    display: flex;
-    flex-direction: column;
-    .logo img {
-        width: 30%;
-        margin-left: 40%;
-    }
-    .name, .categ {
-        text-align: center;
-    }
-
-    .description{
-    }
-
-    tbody >tr >th {
-        text-align: left;
-    }
-    tbody >tr >td {
-        text-align: right;
-    }
-    .illustrat{
-        .image-group{
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            justify-content: space-around;
-            .image-item  {
-                width: 48%;
-                box-shadow: 5px 5px 5px 0 rgba(0, 0, 0, 0.7);
-                border-radius: 10px;
-                margin-right: 1%;
-                margin-bottom: 7px;
-                img{
-                    max-width: 100%;
-                    border-radius: 10px;
-                }
-            }
-        }
-        
-    }
-    .chifres{
-        text-align: center;
-    }
-    .partner {
-        .partner-group{
-            display: flex;
-            justify-content: center;
-            .partner-item{
-                width: 25%;
-                padding-right: 3px;
-                img{
-                    max-width: 100%;
-                }
-            }
-        }
-    }
-
-    .formations{
-        .adv{
-            display: flex;
-            flex-direction: column;
-            padding: 50px 10px;
-            background-color: aliceblue;
-            text-align: center;
-            .list{
-                margin: auto;
-                text-align: center;
-                app-pub-advers{
-                    display: inline-block;
-                }
-            }
-        }
-    }
-
-    .avis {
-        .school-note{
-            border: 3px solid rgb(138, 63, 237);
-            border-radius: 15px;
-            padding: 5px;
-            text-align: center;
-    
-            .not{
-                color: orangered;
-            }
-            .count{
-                h3{
-                    margin: 0;
-                }
-            }
-        }
-        .ton-avis{
-            text-align: center;
-            margin-top: 10px;
-    
-            button{
-                border-radius: 30px;
-            }
-        }
-    }
+:host {
+  display: block;
+  background: $bg;
+  color: $text;
+  font-family: $font-base;
 }
 
-:host ::ng-deep{
-    .p-button{
-        border-radius: 30px;
+h1, h2, h3, h4 { color: $text; }
+p { color: $text-muted; line-height: 1.75; }
+
+// ─── LOADING ──────────────────────────────────────────────────────────────────
+.loading-overlay {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+}
+
+// ─── HERO ─────────────────────────────────────────────────────────────────────
+.school-hero {
+  background: $bg-alt;
+  border-bottom: 1px solid $border;
+  padding: 3rem 0 2.5rem;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -20%;
+    right: -5%;
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, rgba(5,150,105,0.05) 0%, transparent 70%);
+    pointer-events: none;
+  }
+}
+
+.hero-inner {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.school-logo-wrap {
+  flex-shrink: 0;
+  width: 120px;
+  height: 120px;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 2px solid $border;
+  box-shadow: $shadow;
+  background: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    padding: 8px;
+  }
+}
+
+.school-identity {
+  flex: 1;
+  min-width: 200px;
+
+  h1 {
+    font-size: clamp(1.5rem, 4vw, 2.4rem);
+    font-weight: 800;
+    margin: 0.5rem 0 0.25rem;
+    line-height: 1.2;
+    color: $text;
+  }
+}
+
+.school-sigle {
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: $text-muted;
+  margin: 0;
+}
+
+// ─── SECTIONS ─────────────────────────────────────────────────────────────────
+.page-section {
+  padding: 4rem 0;
+  background: $bg;
+  border-bottom: 1px solid $border;
+
+  &.alt { background: $bg-alt; }
+}
+
+.description-body {
+  max-width: 820px;
+  margin: 0 auto;
+  font-size: 0.95rem;
+  color: $text-muted;
+  line-height: 1.8;
+
+  ::ng-deep p { color: $text-muted; margin-bottom: 1rem; }
+}
+
+// ─── CONTACT ──────────────────────────────────────────────────────────────────
+.contact-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.25rem;
+}
+
+.contact-card {
+  background: $bg-card;
+  border: 1.5px solid $border;
+  border-radius: 14px;
+  padding: 1.5rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  box-shadow: $shadow;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+
+  &:hover {
+    transform: translateY(-3px);
+    box-shadow: $shadow-md;
+    border-color: $accent-border;
+  }
+}
+
+.contact-icon {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+
+  i { font-size: 1.3rem; }
+
+  &--wsp {
+    background: rgba(37, 211, 102, 0.08);
+    border: 1px solid rgba(37, 211, 102, 0.25);
+    i { color: $wsp-green; }
+  }
+
+  &--blue {
+    background: $accent2-bg;
+    border: 1px solid $accent2-border;
+    i { color: $accent2; }
+  }
+}
+
+.contact-info {
+  flex: 1;
+  h4 { font-size: 0.9rem; font-weight: 700; color: $text; margin: 0 0 0.2rem; }
+  p  { font-size: 0.85rem; color: $text-muted; margin: 0; }
+}
+
+.muted-info {
+  font-size: 0.85rem;
+  color: #94a3b8;
+  font-style: italic;
+  margin: 0;
+}
+
+.link-accent {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: $accent;
+  font-size: 0.88rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s;
+
+  &:hover { color: $accent-dark; text-decoration: underline; }
+}
+
+// ─── GALERIE ──────────────────────────────────────────────────────────────────
+.image-gallery {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1rem;
+}
+
+.gallery-item {
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: $shadow;
+  border: 1px solid $border;
+
+  a { display: block; position: relative; }
+
+  img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s ease;
+  }
+
+  .gallery-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.4);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    i { font-size: 1.8rem; color: #fff; }
+  }
+
+  &:hover img { transform: scale(1.04); }
+  &:hover .gallery-overlay { opacity: 1; }
+}
+
+// ─── ACCRÉDITATIONS ───────────────────────────────────────────────────────────
+.partner-row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1.5rem;
+  align-items: center;
+}
+
+.partner-logo {
+  width: 120px;
+  padding: 0.75rem;
+  border: 1px solid $border;
+  border-radius: 10px;
+  background: $bg-card;
+  box-shadow: $shadow;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  img { max-width: 100%; max-height: 80px; object-fit: contain; }
+}
+
+// ─── FORMATIONS ───────────────────────────────────────────────────────────────
+.formations-section { background: $bg-alt; }
+
+.formations-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: center;
+  margin-bottom: 2rem;
+
+  app-pub-advers { display: inline-block; }
+}
+
+.formations-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 1.5rem;
+}
+
+// ─── MODAL ────────────────────────────────────────────────────────────────────
+.modal-cd {
+  border-radius: 14px;
+  overflow: hidden;
+  border: none;
+  box-shadow: $shadow-md;
+}
+
+.modal-cd-header {
+  background: linear-gradient(135deg, $accent-bg, $accent2-bg);
+  border-bottom: 1px solid $border;
+
+  .modal-title {
+    font-weight: 700;
+    color: $text;
+    font-size: 1rem;
+  }
+}
+
+.modal-category {
+  margin-bottom: 1.5rem;
+
+  h5 {
+    font-weight: 700;
+    font-size: 0.95rem;
+    color: $accent;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    padding-bottom: 0.5rem;
+    border-bottom: 1px solid $border;
+    i { font-size: 1rem; }
+  }
+}
+
+.modal-formation-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  li {
+    padding: 0.4rem 0 0.4rem 1rem;
+    font-size: 0.9rem;
+    color: $text-muted;
+    border-bottom: 1px dashed $border;
+
+    &::before {
+      content: '→';
+      margin-right: 0.5rem;
+      color: $accent;
+      font-weight: 700;
     }
+  }
+}
+
+// ─── AVIS ─────────────────────────────────────────────────────────────────────
+.avis-section { background: $bg; }
+
+.rating-card {
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+  background: linear-gradient(135deg, #f0fdf4, #eff6ff);
+  border: 1.5px solid $accent-border;
+  border-radius: 16px;
+  padding: 2rem 2.5rem;
+  margin-bottom: 2rem;
+  box-shadow: $shadow;
+  flex-wrap: wrap;
+}
+
+.rating-score {
+  display: flex;
+  align-items: baseline;
+  gap: 0.25rem;
+}
+
+.score-value {
+  font-size: 3.5rem;
+  font-weight: 900;
+  background: linear-gradient(120deg, $accent, $accent2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  line-height: 1;
+}
+
+.score-max {
+  font-size: 1.2rem;
+  color: $text-muted;
+  font-weight: 600;
+}
+
+.rating-stars {
+  display: flex;
+  gap: 0.25rem;
+  i { font-size: 1.4rem; }
+}
+
+.star-filled { color: #f59e0b; }
+.star-empty  { color: #d1d5db; }
+
+.rating-count {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  strong { font-size: 1rem; color: $text; }
+  span   { font-size: 0.82rem; color: $text-muted; }
+}
+
+.no-avis {
+  text-align: center;
+  padding: 2rem;
+  color: $text-muted;
+  i { font-size: 2.5rem; color: #d1d5db; display: block; margin-bottom: 0.75rem; }
+  p { margin: 0; font-size: 0.95rem; }
+}
+
+.avis-cta {
+  text-align: center;
+  margin: 1.5rem 0;
+}
+
+.avis-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.no-items {
+  text-align: center;
+  color: $text-muted;
+  font-style: italic;
+}
+
+:host ::ng-deep {
+  .p-button { border-radius: 30px; }
+}
+
+// ─── Responsive ───────────────────────────────────────────────────────────────
+@media (max-width: 767px) {
+  .school-hero  { padding: 2rem 0; }
+  .hero-inner   { gap: 1rem; }
+  .school-logo-wrap { width: 80px; height: 80px; }
+  .contact-grid { grid-template-columns: 1fr; }
+  .contact-card { flex-wrap: wrap; }
+  .rating-card  { gap: 1rem; padding: 1.5rem; }
+  .page-section { padding: 2.5rem 0; }
 }

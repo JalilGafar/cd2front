@@ -1,16 +1,33 @@
-<div class="card">
-    <h1 style="padding-bottom: 10px; text-align: center;" >Des articles pour mieux vous orienter.</h1>
+<div class="actu-page">
+
+    <div class="actu-header">
+        <span class="section-badge">Blog &amp; Actualités</span>
+        <h1>Des articles pour mieux vous orienter</h1>
+    </div>
+
     @if (Actualite$ | async; as data) {
-        @for (item of data; track $index) {
-            <div class="cardi">
-                <img class="image" [src]="'../../../../assets/images/article/'+item.illustration+'.webp'" alt="images">
-                <div class="card-body">
-                    <h2 class="card-title" >{{item.title}}</h2>
-                    <p style="font-size: small;" >{{item.summary | slice:0:300}}...</p>
-                    <button (click)="onViewActu(item.sujets)" type="button" class="btn btn-primary" > Consulter l'article</button>
-                </div>
-            </div>
-        }
+        <div class="actu-list">
+            @for (item of data; track $index) {
+                <article class="actu-card animate-fade-up">
+                    <img
+                        class="actu-img"
+                        [src]="'../../../../assets/images/article/'+item.illustration+'.webp'"
+                        [alt]="item.title"
+                    >
+                    <div class="actu-body">
+                        <h2>{{item.title}}</h2>
+                        <p>{{item.summary | slice:0:300}}…</p>
+                        <button
+                            (click)="onViewActu(item.sujets)"
+                            type="button"
+                            class="btn-lire"
+                        >
+                            <i class="bi bi-arrow-right-circle"></i> Consulter l'article
+                        </button>
+                    </div>
+                </article>
+            }
+        </div>
     }
 
 </div>

@@ -1,5 +1,5 @@
-import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { SharedComponentModule } from '../../../shared/shared.modules';
 import { Observable, delay, map, switchMap, tap } from 'rxjs';
 import { Ecole } from '../../models/ecole.model';
@@ -25,11 +25,15 @@ export class SingleEcoleComponent implements OnInit {
 
   constructor(private adminService : AdminService,
               private route: ActivatedRoute,
-              private router: Router) { }
+              private router: Router,
+              @Inject(PLATFORM_ID) private platformId: Object) { }
 
   ngOnInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
     this.initObservables ()
-    
+
   }
 
   initObservables(){

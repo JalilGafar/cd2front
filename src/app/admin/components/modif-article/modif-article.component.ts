@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { AdminService } from '../../admin.service';
 import { ActivatedRoute, Router } from '@angular/router';
@@ -25,9 +26,13 @@ export class ModifArticleComponent implements OnInit {
   constructor(private formBuilder: FormBuilder,
     private adminService: AdminService,
     private route: ActivatedRoute,
-    private appRout: Router) { }
+    private appRout: Router,
+    @Inject(PLATFORM_ID) private platformId: Object) { }
 
   ngOnInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
     this.onDialogShow()
     this.modifArticle = this.formBuilder.group({
       id_actu:[null],

@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { Observable } from 'rxjs';
 import { Diplome } from '../../models/diplome.model';
 import { AdminService } from '../../admin.service';
@@ -22,9 +23,13 @@ export class ListDiplomeComponent implements OnInit{
   diplomes$!: Observable<Diplome[]>;
 
   constructor(private adminService: AdminService,
-              private appRout : Router) { }
+              private appRout : Router,
+              @Inject(PLATFORM_ID) private platformId: Object) { }
               
   ngOnInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
     this.InitObservable();
     this.adminService.getDiplomeFromServer();
   }

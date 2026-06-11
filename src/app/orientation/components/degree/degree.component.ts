@@ -1,4 +1,5 @@
-import { AfterViewInit, Component, OnInit } from '@angular/core';
+import { AfterViewInit, Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { SharedComponentModule } from '../../../shared/shared.modules';
 import { Observable } from 'rxjs';
 import { degree } from '../../../model/degree-model';
@@ -48,10 +49,14 @@ export class DegreeComponent implements OnInit, AfterViewInit {
      private appRout : Router,
      private route: ActivatedRoute,
     //private topNewsService: TopNewsService,
-    private titleService:Title) {this.titleService.setTitle("quel diplome pour ma formation au Cameroun");}
+    private titleService:Title,
+    @Inject(PLATFORM_ID) private platformId: Object) {this.titleService.setTitle("quel diplome pour ma formation au Cameroun");}
 
 
   ngOnInit() {
+    if (isPlatformBrowser(this.platformId)) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 
     this.loading$ = this.orientationService.loading$;
     // this.testeur = "NgOnInit est lancé !";

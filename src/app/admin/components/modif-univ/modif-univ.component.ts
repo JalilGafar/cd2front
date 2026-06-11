@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { Router } from '@angular/router';
@@ -24,9 +25,13 @@ export class ModifUnivComponent implements OnInit{
   constructor ( private adminService : AdminService,
                 private route: ActivatedRoute,
                 private formBuilder: FormBuilder,
-                private appRout : Router) {}
+                private appRout : Router,
+                @Inject(PLATFORM_ID) private platformId: Object) {}
   
   ngOnInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
     this.universite$ = this.route.params.pipe(
       switchMap(params => this.adminService.getUniversiteById(+params['id'])),
       take(1),

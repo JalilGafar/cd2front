@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { SelectItem } from 'primeng/api';
 import { OrientationService } from '../../orientation.service';
@@ -32,7 +33,8 @@ export class ContactComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private orientationService: OrientationService,
-              private appRout : Router) {
+              private appRout : Router,
+              @Inject(PLATFORM_ID) private platformId: Object) {
                 this.items = [];
                 for (let i = 1970; i < 2010; i++) {
                     this.items.push({ label:''+ i, value: i });
@@ -40,6 +42,9 @@ export class ContactComponent implements OnInit {
               }
 
   ngOnInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
     this.newContact  = this.formBuilder.group({
       nom : [null, [Validators.required]],
       prenom: [null, [Validators.required]],

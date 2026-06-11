@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Categ } from '../../models/categ.model';
 import { Observable } from 'rxjs';
@@ -26,9 +27,13 @@ export class NewDiplomeComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private adminService: AdminService,
-              private appRout : Router){}
+              private appRout : Router,
+              @Inject(PLATFORM_ID) private platformId: Object){}
 
   ngOnInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
     this.newDiplome = this.formBuilder.group({
       id_dip: [null],
       nom_dip: [null],

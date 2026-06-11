@@ -1,13 +1,13 @@
+<app-headmsg
+    [titre]="titre"
+    [soustitre]="soustitre"
+    [photo] = "photo"
+    >
+</app-headmsg>
+<app-start></app-start>
 <div class="container">
-    <app-headmsg 
-        [titre]="titre"
-        [soustitre]="soustitre"
-        [photo] = "photo"
-        >
-    </app-headmsg>
-    <app-start ></app-start>
-   
     <div class="filiere">
+        <span class="section-badge">Filières d'étude</span>
         <h2>Découvrez les filières d'étude</h2>
         <div class="domaines">
             <div class="row py-3">
@@ -60,7 +60,10 @@
         </div>
     </div>
     <div class="une">
-        <h2>Les écoles à la une</h2>
+        <div class="section-head">
+            <span class="section-badge">Établissements partenaires</span>
+            <h2>Les écoles à la une</h2>
+        </div>
         <div class="carousel">
             <div class="card-container">
                 @for (item of schoolAdvers$ | async ; track item.id_ecol) {

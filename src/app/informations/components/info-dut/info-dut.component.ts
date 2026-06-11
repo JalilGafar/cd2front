@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { SharedComponentModule } from '../../../shared/shared.modules';
 import { Meta, Title } from '@angular/platform-browser';
 import { ActuListComponent } from '../../../actualite/components/actu-list/actu-list.component';
@@ -28,7 +29,8 @@ export class InfoDutComponent implements OnInit {
   constructor(
     private titleService:Title,
     private adversService: AdversService,
-    private meta : Meta ) 
+    private meta : Meta,
+    @Inject(PLATFORM_ID) private platformId: Object)
     {
       this.titleService.setTitle("Le DUT au Cameroun | Camerdiplome ");
       this.meta.updateTag({ name: 'description', content: 'Le Diplôme Universitaire de Technologie (DUT) se prépare dans un Institut Universitaire de Technologie (IUT)' });
@@ -37,6 +39,9 @@ export class InfoDutComponent implements OnInit {
 
 
   ngOnInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
     this.schoolAdvers$ = this.adversService.getSchoolPub();
   }
 

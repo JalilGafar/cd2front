@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { Observable, switchMap, take, tap } from 'rxjs';
 import { Campus } from '../../models/campus.model';
@@ -24,9 +25,13 @@ export class ModifCampusComponent implements OnInit{
   constructor ( private adminService : AdminService,
                 private route: ActivatedRoute,
                 private formBuilder: FormBuilder,
-                private appRout: Router) {}
+                private appRout: Router,
+                @Inject(PLATFORM_ID) private platformId: Object) {}
 
   ngOnInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
     this.campus$ = this.route.params.pipe(
       switchMap(params => this.adminService.getCampusById(+params['id'])),
       take(1),

@@ -1,10 +1,32 @@
-<article>
-    <div class="card" *ngIf="actualite$ | async as actualite">
-        <h1>{{actualite[0].title}} </h1>
-        <!-- <a routerLink="/actualites">Back</a> -->
-        <p> Mise en ligne {{actualite[0].createdDate | date }} </p>
-        <img class="center" [src]="'../../../../assets/images/article/'+actualite[0].illustration+'.webp'" [alt]="actualite[0].title" >
-        <div [innerHTML]="actualite[0].content"></div>
-        <button button type="button" class="btn btn-primary" (click)="trouverForm()" >Trouver ma future école</button>
-    </div>
-</article>
+<div class="article-page">
+
+    @if (actualite$ | async; as actualite) {
+        <article class="article-card animate-fade-up">
+
+            <header class="article-header">
+                <span class="section-badge">Article</span>
+                <h1>{{ actualite[0].title }}</h1>
+                <p class="article-date">
+                    <i class="bi bi-calendar3"></i>
+                    Mis en ligne le {{ actualite[0].createdDate | date:'dd MMMM yyyy' }}
+                </p>
+            </header>
+
+            <img
+                class="article-img"
+                [src]="'../../../../assets/images/article/'+actualite[0].illustration+'.webp'"
+                [alt]="actualite[0].title"
+            >
+
+            <div class="article-content" [innerHTML]="actualite[0].content"></div>
+
+            <footer class="article-footer">
+                <button type="button" class="btn-cta" (click)="trouverForm()">
+                    <i class="bi bi-compass-fill"></i> Trouver ma future école
+                </button>
+            </footer>
+
+        </article>
+    }
+
+</div>

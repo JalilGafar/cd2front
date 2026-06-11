@@ -1,5 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Universite } from '../../models/univ.model';
 import { Observable } from 'rxjs';
 import { Campus } from '../../models/campus.model';
@@ -26,9 +27,13 @@ export class NewEcoleComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder,
               private adminService: AdminService,
-              private appRout : Router){}
+              private appRout : Router,
+              @Inject(PLATFORM_ID) private platformId: Object){}
 
   ngOnInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
     this.newEcole = this.formBuilder.group({
       nom_e : [null],
       sigle_e : [null],
@@ -49,7 +54,16 @@ export class NewEcoleComponent implements OnInit {
       descriptif_e : [null],
       image_e : [null],
       universites_id : [null],
-      campus_id : [null]
+      campus_id : [null, [Validators.required]],
+      campus_id1 : [null],
+      campus_id2 : [null],
+      campus_id3 : [null],
+      campus_id4 : [null],
+      campus_id5 : [null],
+      campus_id6 : [null],
+      campus_id7 : [null],
+      campus_id8 : [null],
+      campus_id9 : [null]
     });
 
     this.adminService.getUniversiteFromServer();
@@ -59,8 +73,15 @@ export class NewEcoleComponent implements OnInit {
   };
 
   onSubmitForm(){
+    if (this.newEcole.invalid) {
+      return;
+    }
     this.adminService.addNewEcole(this.newEcole.value).subscribe();
     this.appRout.navigateByUrl('admin/adminStart');
-  }
+  };
+
+  onReturn(){
+    this.appRout.navigateByUrl('admin/adminStart');
+  };
 
 }

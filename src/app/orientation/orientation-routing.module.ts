@@ -9,9 +9,11 @@ import { EtudiantComponent } from "./components/etudiant/etudiant.component";
 import { DernierdiplomeComponent } from "./components/dernierdiplome/dernierdiplome.component";
 import { ContactComponent } from "./components/contact/contact.component";
 import { ResultatsComponent } from "./components/resultats/resultats.component";
+import { TestComponent } from "./components/test/test.component";
 
 const routes: Routes = [
     {path: 'degree', component: DegreeComponent },
+    {path: 'test', component: TestComponent },
     {path: 'city', component: CityComponent },
     {path: 'field', component: FieldComponent },
     {path: 'statuts', component: StatutsComponent },

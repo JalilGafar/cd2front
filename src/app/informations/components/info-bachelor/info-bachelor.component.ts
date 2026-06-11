@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { SharedComponentModule } from '../../../shared/shared.modules';
 import { Title } from '@angular/platform-browser';
 import { ActuListComponent } from '../../../actualite/components/actu-list/actu-list.component';
@@ -27,11 +28,15 @@ export class InfoBachelorComponent implements OnInit {
 
   constructor( //private infoservice :InfoServices,
     private adversService: AdversService,
-    private titleService:Title) {this.titleService.setTitle("Le bac technique au Cameroun | Camerdiplome");}
+    private titleService:Title,
+    @Inject(PLATFORM_ID) private platformId: Object) {this.titleService.setTitle("Le bac technique au Cameroun | Camerdiplome");}
 
 
 
   ngOnInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
     this.schoolAdvers$ = this.adversService.getSchoolPub();
   }
 

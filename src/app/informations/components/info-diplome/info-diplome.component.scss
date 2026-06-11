@@ -1,45 +1,59 @@
 @import '../../informations-style.module.scss';
 
-:host ::ng-deep {
-    .p-tabview-nav-content{
-        ul{
-            margin-bottom: 0;
-        }
-    }
-    .p-tabview-nav-link{
-        height: 70px;
-        padding: 0 1.25rem;
-    }
 
-    .p-tabview-title{
-        white-space: inherit;
-    }
-}
+// ─── Section filières ─────────────────────────────────────────────────────────
+.filiere {
+  background: $bg-alt;
+  border: 1.5px solid $border;
+  border-radius: 16px;
+  padding: 2.5rem 2rem;
+  margin-bottom: 2rem;
+  box-shadow: $shadow;
 
-.nav-link{
-    color: black;
+  h2 {
+    font-size: 1.35rem;
     font-weight: 700;
+    color: $text;
+    margin-bottom: 1.25rem;
+  }
+
+  .domaines {
+    margin-top: 0.5rem;
+  }
 }
 
-.nav-tabs {
-    overflow-x: auto;
-    overflow-y: hidden;
-    flex-wrap: nowrap;
-}
-.nav-link.active {
-    color: rgb(3, 3, 161);
-}
-.metier-item{
-    border: 1px solid #f6edf8;
-    cursor: pointer;
-    background-color: #f6edf8;
-    padding: 5px 10px;
-    border-radius: 15px;
-    font-weight: 300;
-    margin: 3px;
+// ─── Chips de domaine dans les onglets ────────────────────────────────────────
+// .show cible uniquement le pane actif — évite d'écraser le display:none de Bootstrap sur les panes masqués
+.tab-content .tab-pane.show {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-top: 0.75rem;
 }
 
-h2{
-    font-size: x-large;
-    margin: 0;
+// ─── Boutons de domaine (chips) ───────────────────────────────────────────────
+.metier-item {
+  @extend .cd-chip;
+  cursor: pointer;
+  border: none;
+
+  &:focus { outline: 2px solid $accent-border; }
+}
+
+
+// ─── Onglets PrimNG ───────────────────────────────────────────────────────────
+:host ::ng-deep {
+  .p-tabview-nav-content ul { margin-bottom: 0; }
+
+  .p-tabview-nav-link {
+    height: auto;
+    padding: 0.6rem 1rem;
+    font-size: 0.88rem;
+    font-weight: 600;
+  }
+
+  .p-tabview-title {
+    white-space: inherit;
+    font-size: 0.88rem;
+  }
 }

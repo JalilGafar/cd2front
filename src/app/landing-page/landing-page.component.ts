@@ -1,97 +1,93 @@
-import { Component, OnInit } from '@angular/core';
-import { HeadmsgComponent } from '../headmsg/headmsg.component';
-import { start } from 'repl';
-import { StartComponent } from '../start/start.component';
-import { SharedComponentModule } from '../shared/shared.modules';
+import { Component, OnInit, PLATFORM_ID, Inject } from '@angular/core';
+import { isPlatformBrowser, CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { Meta, Title } from '@angular/platform-browser';
-import { TopVideoSlideComponent } from '../top-video-slide/top-video-slide.component';
-import { TopNewsSlideComponent } from '../top-news-slide/top-news-slide.component';
-import { CommonModule } from '@angular/common';
-// import { FlexLayoutModule } from 'ngx-fx-layout';
-import { TopNewsService } from '../service/top-news.service';
+import { SeoService } from '../service/seo.service';
 import { map, Observable } from 'rxjs';
+import { TopNewsService } from '../service/top-news.service';
 import { ActuListComponent } from '../actualite/components/actu-list/actu-list.component';
-import { SpinerService } from '../service/spiner.service';
 import { SchoolAdvers } from '../model/school-adv';
 import { SchoolAdversComponent } from '../shared/components/school-advers/school-advers.component';
 import { AdversService } from '../service/advers.service';
+import { SharedComponentModule } from '../shared/shared.modules';
 
 @Component({
   selector: 'app-landing-page',
   standalone: true,
   imports: [
+    RouterLink,
+    CommonModule,
     ActuListComponent,
-    SharedComponentModule,
-    // TopVideoSlideComponent,
-    //  TopNewsSlideComponent,
     SchoolAdversComponent,
-    // FlexLayoutModule,
-    CommonModule
+    SharedComponentModule,
   ],
   templateUrl: './landing-page.component.html',
   styleUrl: './landing-page.component.scss'
 })
 export class LandingPageComponent implements OnInit {
 
-  titre = "Comme Hassan, rentabilise ton avenir avec une bonne orientation.";
-  soustitre = "... Le chômage est très souvent le résultat d'une mauvaise orientation.";
-  photo = "./assets/images/home.webp";
-  loading$!: Observable<boolean>;
+  schoolAdvers$!: Observable<SchoolAdvers[]>;
+  counti = 0;
+  private speed = 200;
+  private count!: number;
 
-  schoolAdvers$!: Observable<SchoolAdvers[]>
-
-  count!: number;
-  // counter = document.querySelector('.counter');
-   counti = 0 ;
-   speed = 200; // The lower the slower
-
-  constructor( 
-    private loadingService: SpinerService,
-    private service:TopNewsService,
+  constructor(
+    private service: TopNewsService,
     private adversService: AdversService,
-    private titleService:Title,
-    private meta: Meta)
-    {
-      this.titleService.setTitle("Formations Professionnelles au Cameroun | Camerdiplome");
-      this.meta.updateTag({ name: 'description', content: 'Trouvez le diplôme et l\'école de formation qui vous correspondent le mieux.' });
-      this.meta.updateTag({ name: 'keywords', content: 'formation, professionnelle, ecoles, Cameroun, bts, licence, master' });
-    }
+    private titleService: Title,
+    private meta: Meta,
+    private seoService: SeoService,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) {
+    this.seoService.setSeo({
+      title:       'Formations Professionnelles au Cameroun | Camerdiplome',
+      description: "Trouvez le diplôme et l'école de formation qui vous correspondent le mieux au Cameroun. Orientation gratuite, fiches écoles, métiers et diplômes.",
+      url:         '/',
+      image:       'https://www.camerdiplome.com/assets/images/home.webp',
+      type:        'website',
+      keywords:    'formation, professionnelle, ecoles, Cameroun, bts, licence, master, orientation'
+    });
 
-  ngOnInit(){
+    this.seoService.setSchemaJsonLd({
+      '@context': 'https://schema.org',
+      '@type':    'WebSite',
+      name:  'Camerdiplome',
+      url:   'https://www.camerdiplome.com',
+      description: "Spécialiste de l'orientation académique et professionnelle au Cameroun.",
+      potentialAction: {
+        '@type':       'SearchAction',
+        target:        'https://www.camerdiplome.com/orientation/degree',
+        'query-input': 'required name=search_term_string'
+      }
+    });
+  }
+
+  ngOnInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
     this.schoolAdvers$ = this.adversService.getSchoolPub();
     this.service.countFormation().pipe(
       map(data => {
         this.count = data[0].cont;
-        //this.updateCount(this.count, this.counti, this.speed)
-        const updateCounto = () =>{
+        const updateCount = () => {
+          const current = +this.counti;
           const target = +this.count;
-          const counta = +this.counti 
           const inc = target / this.speed;
-          if (counta < target) {
-            // Add inc to count and output in counter
-            //console.log(counta +' Je SUIS '+ target)
-            this.counti = ~~ (counta + inc);
-            // Call function every ms
-            setTimeout(updateCounto, 1);
+          if (current < target) {
+            this.counti = ~~(current + inc);
+            setTimeout(updateCount, 1);
           } else {
             this.counti = target;
           }
-        }
-        updateCounto()
-      })        
+        };
+        updateCount();
+      })
     ).subscribe();
   }
 
-  onLoadCourses() {
-    try {
-      this.loadingService.loadingOn();
-      console.log('lllllllllllllll')
-      // load courses from backend
-    } catch (error) {
-      // handle error message
-    } finally {
-      console.log('oooooooooooooo')
-      this.loadingService.loadingOff();
-    }
+  discover(): void {
+    const msg = encodeURI('Bonjour, je souhaite référencer mon établissement sur Camerdiplome !');
+    window.location.href = `https://wa.me/237679197112?text=${msg}`;
   }
 }

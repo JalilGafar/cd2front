@@ -1,0 +1,288 @@
+// ╔══════════════════════════════════════════════════════════════════════════════╗
+// ║  CAMERDIPLOME — Design System                                               ║
+// ║  Source de vérité pour les tokens, utilitaires et composants partagés.     ║
+// ║  Usage : @import 'design-system'  (fonctionne depuis n'importe quel        ║
+// ║  composant grâce à stylePreprocessorOptions.includePaths dans angular.json)║
+// ╚══════════════════════════════════════════════════════════════════════════════╝
+
+
+// ─── 1. TOKENS DE COULEURS ────────────────────────────────────────────────────
+
+// Fond
+$bg:              #f8fafc;       // fond page (gris très clair)
+$bg-alt:          #ffffff;       // fond carte / section alternée
+$bg-card:         #ffffff;       // alias de $bg-alt pour les cartes
+
+// Bordures & ombres
+$border:          #e2e8f0;
+$shadow:          0 1px 3px rgba(0,0,0,0.06), 0 4px 16px rgba(0,0,0,0.06);
+$shadow-md:       0 4px 24px rgba(0,0,0,0.10);
+
+// Texte
+$text:            #1e293b;       // titre / corps principal
+$text-muted:      #64748b;       // texte secondaire / sous-titres
+
+// Accent vert (couleur principale)
+$accent:          #059669;
+$accent-dark:     #047857;
+$accent-bg:       rgba(5, 150, 105, 0.07);
+$accent-border:   rgba(5, 150, 105, 0.20);
+
+// Accent bleu (couleur secondaire)
+$accent2:         #2563eb;
+$accent2-bg:      rgba(37,  99, 235, 0.07);
+$accent2-border:  rgba(37,  99, 235, 0.18);
+
+// Couleur WhatsApp
+$wsp-green:       #25d366;
+
+
+// ─── 2. TYPOGRAPHIE DE BASE ───────────────────────────────────────────────────
+$font-base:       'Roboto', 'Helvetica Neue', sans-serif;
+
+
+// ─── 3. UTILITAIRES TEXTE ─────────────────────────────────────────────────────
+
+// Dégradé vert→bleu sur le texte
+.text-accent {
+  background: linear-gradient(120deg, $accent, $accent2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+// Petit label de section (pill vert en uppercase)
+.section-badge {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: $accent;
+  background: $accent-bg;
+  border: 1px solid $accent-border;
+  border-radius: 20px;
+  padding: 0.3rem 0.9rem;
+  margin-bottom: 1rem;
+}
+
+// En-tête de section centré (badge + h2 + sous-titre optionnel)
+.section-header {
+  text-align: center;
+  margin-bottom: 3rem;
+
+  h2 {
+    font-size: clamp(1.5rem, 3vw, 2rem);
+    font-weight: 700;
+    color: $text;
+    margin: 0.5rem 0 0;
+  }
+
+  .section-subtitle {
+    color: $text-muted;
+    max-width: 560px;
+    margin: 0.75rem auto 0;
+    line-height: 1.75;
+  }
+}
+
+
+// ─── 4. BOUTONS ───────────────────────────────────────────────────────────────
+
+// CTA principal — dégradé vert
+.btn-primary-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: linear-gradient(135deg, $accent, $accent-dark);
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.92rem;
+  padding: 0.72rem 1.5rem;
+  border-radius: 9px;
+  text-decoration: none;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(5, 150, 105, 0.35);
+  transition: transform 0.2s, box-shadow 0.2s;
+  white-space: nowrap;
+
+  i { font-size: 1rem; }
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(5, 150, 105, 0.45);
+    color: #fff;
+    text-decoration: none;
+  }
+}
+
+// CTA secondaire — ghost
+.btn-ghost-cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: $text-muted;
+  font-weight: 500;
+  font-size: 0.92rem;
+  padding: 0.72rem 1.25rem;
+  border-radius: 9px;
+  border: 1.5px solid $border;
+  text-decoration: none;
+  background: transparent;
+  transition: color 0.2s, border-color 0.2s;
+  white-space: nowrap;
+
+  i { font-size: 1rem; }
+
+  &:hover {
+    color: $text;
+    border-color: #94a3b8;
+    text-decoration: none;
+  }
+}
+
+// CTA WhatsApp
+.btn-wsp {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: $wsp-green;
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 0.72rem 1.5rem;
+  border: none;
+  border-radius: 9px;
+  cursor: pointer;
+  box-shadow: 0 4px 14px rgba(37, 211, 102, 0.30);
+  transition: opacity 0.2s, transform 0.2s;
+
+  i { font-size: 1rem; }
+  &:hover { opacity: 0.88; transform: translateY(-2px); color: #fff; }
+}
+
+// Bouton outline neutre (ex: "Voir plus")
+.btn-outline-neutral {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: transparent;
+  border: 1.5px solid $border;
+  color: $text-muted;
+  font-size: 0.9rem;
+  font-weight: 500;
+  padding: 0.65rem 1.5rem;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: border-color 0.2s, color 0.2s;
+
+  &:hover {
+    border-color: $accent;
+    color: $accent;
+  }
+}
+
+
+// ─── 5. COMPOSANTS RÉUTILISABLES ──────────────────────────────────────────────
+
+// Icône de feature/valeur (carré arrondi avec fond vert)
+.feature-icon,
+.value-icon {
+  width: 52px;
+  height: 52px;
+  border-radius: 12px;
+  background: $accent-bg;
+  border: 1px solid $accent-border;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  i { font-size: 1.4rem; color: $accent; }
+
+  &--blue {
+    background: $accent2-bg;
+    border-color: $accent2-border;
+    i { color: $accent2; }
+  }
+
+  &--lg {
+    width: 64px;
+    height: 64px;
+    border-radius: 14px;
+    i { font-size: 1.75rem; }
+  }
+}
+
+// Carte générique avec hover
+.cd-card {
+  background: $bg-alt;
+  border: 1.5px solid $border;
+  border-radius: 14px;
+  padding: 2rem 1.5rem;
+  box-shadow: $shadow;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow: $shadow-md;
+    border-color: $accent-border;
+  }
+
+  h3 { font-size: 1.05rem; font-weight: 700; color: $text; margin-bottom: 0.5rem; }
+  p  { font-size: 0.88rem; color: $text-muted; margin: 0; line-height: 1.65; }
+}
+
+// Tag/chip (ex: fiche métier)
+.cd-chip {
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid $accent-border;
+  background: $accent-bg;
+  padding: 0.3rem 0.85rem;
+  border-radius: 20px;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: $accent-dark;
+  text-decoration: none;
+  transition: background 0.2s, border-color 0.2s, color 0.2s;
+
+  &:hover {
+    background: $accent;
+    border-color: $accent;
+    color: #fff;
+    text-decoration: none;
+  }
+}
+
+// Bloc citation / highlight (bordure gauche verte)
+.cd-highlight {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  background: $accent-bg;
+  border-left: 3px solid $accent;
+  border-radius: 0 8px 8px 0;
+  padding: 1.25rem 1.5rem;
+
+  i { font-size: 1.5rem; color: $accent; flex-shrink: 0; margin-top: 2px; }
+
+  blockquote {
+    margin: 0;
+    font-size: 0.95rem;
+    color: $text;
+    font-style: italic;
+    line-height: 1.6;
+  }
+}
+
+
+// ─── 6. ANIMATION ─────────────────────────────────────────────────────────────
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+.animate-fade-up {
+  animation: fadeInUp 0.5s ease both;
+}

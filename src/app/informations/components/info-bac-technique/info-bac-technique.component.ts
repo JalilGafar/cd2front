@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { SharedComponentModule } from '../../../shared/shared.modules';
 import { Observable } from 'rxjs';
 import { interestelt } from '../../../model/interest-item-model';
@@ -31,11 +32,12 @@ export class InfoBacTechniqueComponent implements OnInit {
   schoolAdvers$!: Observable<SchoolAdvers[]>;
   loading$!: Observable<boolean>;
 
-  constructor(  
+  constructor(
     private titleService:Title,
     private adversService: AdversService,
-    private meta : Meta) 
-    {  
+    private meta : Meta,
+    @Inject(PLATFORM_ID) private platformId: Object)
+    {
       this.titleService.setTitle("Le Bac technique et Professionnelle au Cameroun | Camerdiplome");
       this.meta.updateTag({ name: 'description', content: 'Avec près de 50 séries/spécialités, les Bac professionnels et techniques sont des diplômes donnant directement accès au marché du travail' });
       this.meta.updateTag({ name: 'keywords', content: 'métier, metier, emploie, formation, Bac, Professionnel, Professionnelle, Technique' });
@@ -364,6 +366,9 @@ export class InfoBacTechniqueComponent implements OnInit {
   ]
 
   ngOnInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
     this.schoolAdvers$ = this.adversService.getSchoolPub();
   }
 

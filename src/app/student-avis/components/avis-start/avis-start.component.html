@@ -1,97 +1,119 @@
-<div class="main">
-    <div class="hero-image-top">
-        <div class="hero-text">
-            <h1 style="font-size:20px">Donne ton avis d'étudiant sur ton établissement.</h1>
-            <p> <span class="pi pi-search" style="padding-right: 10px;" ></span> <b>RECHERCHE</b> ton établissement</p>
-            <p> <span class="pi pi-star" style="padding-right: 10px;"></span> <b>NOTE-LE</b> en partageant ton expérience</p>
-            <p> <span class="pi pi-users" style="padding-right: 10px;" ></span> <b>AIDE</b> des milliers d'étudiants à s'orienter</p>
+<!-- ═══ HERO ════════════════════════════════════════════════════════════════ -->
+<section class="hero-section">
+  <div class="container">
+    <div class="hero-content">
+      <span class="section-badge">Avis d'étudiants</span>
+      <h1>L'avis des étudiants camerounais, <span class="text-accent">pour leur orientation</span></h1>
+      <p class="lead">
+        Recherche ton établissement, note-le et partage ton expérience pour aider
+        des milliers d'étudiants à faire le bon choix.
+      </p>
+      <div class="hero-steps">
+        <div class="hero-step">
+          <div class="step-icon-sm"><i class="pi pi-search"></i></div>
+          <span><b>Recherche</b> ton établissement</span>
         </div>
+        <div class="hero-step">
+          <div class="step-icon-sm"><i class="pi pi-star"></i></div>
+          <span><b>Note-le</b> en partageant ton expérience</span>
+        </div>
+        <div class="hero-step">
+          <div class="step-icon-sm"><i class="pi pi-users"></i></div>
+          <span><b>Aide</b> des milliers d'étudiants à s'orienter</span>
+        </div>
+      </div>
     </div>
-    
-    <div class="typ">
-        <h2 class="titre">L'avis type</h2>
-        <p-card class="container">
-            <div class="persona">
-                <div class="image_c">
-                    <img src="./../../../../assets/images/school/logo/istdi.webp" alt="">
-                </div>
-                <div class="info_c">
-                    <p>Louise a donné son avis le 12/10/2024</p>
-                    <p>
-                        <span class="pi pi-star-fill not" ></span>
-                        <span class="pi pi-star-fill not" ></span>
-                        <span class="pi pi-star-fill not" ></span>
-                        <span class="pi pi-star-fill not" ></span>
-                        <span class="pi pi-star not" ></span>
-                    </p>
-                </div>
-            </div>
-            <div class="text">
-                <p>
-                    J'ai beaucoup apprécié cette formation malgré quelque petits bémols au niveau de l'administration.
-                    Je recommande cette école à ceux qui veulent une formation très axée pratique.
-                </p>
-            </div>
-        </p-card>
-    </div>
-    <div class="recherche">
-        <ng-container *ngIf="ecoleAvis$ | async as data"> 
-            <p-orderList 
-                [value]="data"
-                [metaKeySelection]="true"
-                (onSelectionChange)="elmtClick($event)"
-                header="Les avis d'établissement les plus recherchés">
-                    <ng-template let-data pTemplate="item">
-                        <div class="flex flex-wrap p-2 align-items-center gap-3">
-                            <img 
-                                [src]="data.logo_e" 
-                                [alt]="data.sigle_e" 
-                                class="dodo w-4rem shadow-2 flex-shrink-0 border-round" />
-                            <div class="flex-1 flex flex-column gap-2">
-                                <span class="nom-e">{{ data.nom_e }}</span>
-                                <div class="sigle">
-                                    <span>
-                                        {{ data.sigle_e }}
-                                    </span>
-                                </div>
-                            </div>
-                            <span class="font-bold text-900 moy">
-                                {{data.notes_moy}} / 5
-                            </span>
-                            <i class="pi pi-star not"></i>
-                            <span class="loto" >{{data.occurence}} avis</span>
-                        </div>
-                    </ng-template>
-            </p-orderList>
-        </ng-container>
-    </div>
-    <div class="ouvert">
-        <h2>Les avis d'établissement avec inscriptions ouvertes</h2>
-    </div>
-    <div class="note">
-        <h2>Les avis d'établissement les mieux notés</h2>
-    </div>
-    <div class="recent">
-        <h2>Les avis les plus récents</h2>
-    </div>
+  </div>
+</section>
 
-    <div class="hero-image-down">
-        <div class="hero-text">
-            <h3 style="font-size:20px">
-                Camerdiplome Avis est une plateforme collaborative qui répertorie les avis d'étudiants
-                sur leurs établissements. Elle compte à ce jour une centaine d'établissements notés,
-                et des milliers d'avis sur ces établissements. 
-            </h3>
-            <p>
-                Si tu es étudiant ou alumni, tu peux déposer un avis sur ton école, sur ton 
-                lycée ou sur ton université. Ainsi, chacun pourra détruire les préjugés sur 
-                son établissement et montrer son vrai visage. Si tu es en recherche de formation, 
-                tu peux découvrir les établissements qui t'intéressent grâce aux retours des 
-                étudiants qui les ont fréquenté. Tu peux ainsi comparer les écoles et trouver 
-                celles qui te correspondent grâce aux conseils de tes aînés. Note ton 
-                établissement et tu aideras des milliers de futurs étudiants à faire de bons 
-                choix d’orientation.
-             </p>
-        </div>
+<!-- ═══ EXEMPLE D'AVIS ════════════════════════════════════════════════════ -->
+<section class="example-section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-badge">Exemple</span>
+      <h2>À quoi ressemble un avis ?</h2>
     </div>
-</div>
+    <div class="example-card">
+      <div class="example-header">
+        <div class="example-avatar">
+          <img src="./../../../../assets/images/school/logo/istdi.webp" alt="ISTDI">
+        </div>
+        <div class="example-meta">
+          <p class="author-name">Louise</p>
+          <p class="author-date">a donné son avis le 12/10/2024</p>
+          <div class="stars">
+            <i class="pi pi-star-fill"></i>
+            <i class="pi pi-star-fill"></i>
+            <i class="pi pi-star-fill"></i>
+            <i class="pi pi-star-fill"></i>
+            <i class="pi pi-star"></i>
+          </div>
+        </div>
+      </div>
+      <p class="example-text">
+        J'ai beaucoup apprécié cette formation malgré quelques petits bémols au niveau de
+        l'administration. Je recommande cette école à ceux qui veulent une formation très axée pratique.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ LISTE ÉTABLISSEMENTS ════════════════════════════════════════════ -->
+<section class="schools-section">
+  <div class="container">
+    <div class="section-header">
+      <span class="section-badge">Établissements</span>
+      <h2>Les établissements les plus recherchés</h2>
+      <p class="section-subtitle">Sélectionne un établissement pour voir ses avis ou donner le tien.</p>
+    </div>
+    <ng-container *ngIf="ecoleAvis$ | async as data">
+      <p-orderList
+        [value]="data"
+        [metaKeySelection]="true"
+        (onSelectionChange)="elmtClick($event)"
+        header="">
+        <ng-template let-data pTemplate="item">
+          <div class="school-item">
+            <img
+              [src]="data.logo_e"
+              [alt]="data.sigle_e"
+              class="school-thumb" />
+            <div class="school-info">
+              <span class="school-name">{{ data.nom_e }}</span>
+              <span class="school-sigle">{{ data.sigle_e }}</span>
+            </div>
+            <div class="school-rating">
+              <span class="rating-val">{{data.notes_moy}} / 5</span>
+              <i class="pi pi-star-fill star-icon"></i>
+              <span class="rating-cnt">{{data.occurence}} avis</span>
+            </div>
+          </div>
+        </ng-template>
+      </p-orderList>
+    </ng-container>
+  </div>
+</section>
+
+<!-- ═══ À PROPOS AVIS ════════════════════════════════════════════════════ -->
+<section class="about-avis-section">
+  <div class="container">
+    <div class="about-avis-card">
+      <div class="about-avis-icon">
+        <i class="bi bi-chat-quote-fill"></i>
+      </div>
+      <div class="about-avis-content">
+        <h3>Camerdiplome Avis</h3>
+        <p>
+          Camerdiplome Avis est une plateforme collaborative qui répertorie les avis d'étudiants
+          sur leurs établissements. Elle compte à ce jour une centaine d'établissements notés
+          et des milliers d'avis sur ces établissements.
+        </p>
+        <p>
+          Si tu es étudiant ou alumni, tu peux déposer un avis sur ton école, ton lycée ou
+          ton université. Ainsi, chacun pourra montrer le vrai visage de son établissement
+          et aider de futurs étudiants à faire de bons choix d'orientation.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>

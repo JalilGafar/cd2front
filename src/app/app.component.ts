@@ -1,8 +1,9 @@
-import { Component, Inject, OnInit, PLATFORM_ID, inject } from '@angular/core';
-import { NavigationEnd, Router, RouterLink, RouterOutlet } from '@angular/router';
+import { Component, Inject, OnInit, PLATFORM_ID, inject, OnDestroy } from '@angular/core';
+import { NavigationStart, Router, RouterLink, RouterOutlet } from '@angular/router';
 import { UsertestComponent } from "./usertest/usertest.component";
 import { VommentsComponent } from './vomments/vomments.component';
 import { DatePipe, NgOptimizedImage, UpperCasePipe, isPlatformBrowser, provideImgixLoader, Location, CommonModule } from '@angular/common';
+import { Subscription, fromEvent } from 'rxjs';
 import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 // import { CarService } from './general.service';
 import { ReversePipe } from './reverse.pipe';
@@ -35,7 +36,7 @@ import { SpinerComponent } from './spiner/spiner.component';
      // provideImgixLoader('/assets/'),
     ]
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit, OnDestroy {
  // carService = inject(CarService);
  // constructor(private petCareService: CarService) {}
   items = new Array();
@@ -49,6 +50,7 @@ export class AppComponent implements OnInit {
   username!:string;
   title = 'ecolecamer';
   location!: Location;
+  private subs = new Subscription();
   
 
   profileForm = new FormGroup({
@@ -65,21 +67,51 @@ export class AppComponent implements OnInit {
     ) {
     // this.display = this.petCareService.getCars();
     this.location = location;
-    this.router.events.subscribe((event) => {
-      if (event instanceof NavigationEnd) {
-        // Fermer tous les modals et retirer le backdrop si présent
-        document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
-        document.body.classList.remove('modal-open');
-        document.body.style.removeProperty('padding-right');
-      }
+
+    if (isPlatformBrowser(this.platformId)) {
+      // Nettoie les backdrops Bootstrap laissés par le geste "retour" Android
+      // sur chaque début de navigation Angular
+      this.subs.add(
+        this.router.events.subscribe(event => {
+          if (event instanceof NavigationStart) {
+            this.cleanupBootstrapModals();
+          }
+        })
+      );
+
+      // Filet de sécurité : écoute le popstate natif du navigateur
+      // pour les cas où le back gesture Android ne déclenche pas de navigation Angular
+      this.subs.add(
+        fromEvent(window, 'popstate').subscribe(() => {
+          this.cleanupBootstrapModals();
+        })
+      );
+    }
+  }
+
+  ngOnInit(): void {}
+
+  ngOnDestroy(): void {
+    this.subs.unsubscribe();
+  }
+
+  private cleanupBootstrapModals(): void {
+    // Retire tous les backdrops résiduels (l'overlay sombre)
+    document.querySelectorAll('.modal-backdrop').forEach(el => el.remove());
+
+    // Remet les modals visibles dans un état caché proprement
+    document.querySelectorAll('.modal.show').forEach(el => {
+      el.classList.remove('show');
+      (el as HTMLElement).style.display = 'none';
+      el.setAttribute('aria-hidden', 'true');
+      el.removeAttribute('aria-modal');
     });
+
+    // Restaure le body (Bootstrap y ajoute overflow:hidden et padding-right)
+    document.body.classList.remove('modal-open');
+    document.body.style.removeProperty('overflow');
+    document.body.style.removeProperty('padding-right');
   }
-
-  ngOnInit(): void {
-    
-
-  }
-
 
   addItem(item: string) {
     this.items.push(item);

@@ -2,23 +2,27 @@
     <div class="card-body">
         <h2 class="card-title"> {{school.nom_dip}} </h2>
         <p class="card-text"> {{school.nom_e}} </p>
-        <div class="grid-container" >
+        <div class="grid-container">
             <div class="grid-content">
-                <img alt="Card" [src]="'../../../../assets/images/school/logo/'+school.logo_e"  [alt]="school.logo_e" />
-                
+                <img alt="Card" [src]="'../../../../assets/images/school/logo/'+school.logo_e" [alt]="school.logo_e" />
+
             </div>
             <div class="grid-content">
-                <button class="fas"  > {{school.groupe}} </button>
-                <button class="fas"  *ngIf="school.ville_cam" > <i class="bi-geo-alt-fill"></i> {{school.ville_cam}} </button>
-                <button class="fas"  *ngIf="school.date_debut_f" ><i class="bi-clock"></i> {{school.date_debut_f}} </button>
-                <button class="fas"  *ngIf="school.cout_f"  ><i class="bi-coin"></i> {{school.cout_f}} </button>
+                <button class="fas"> {{school.groupe}} </button>
+                <button class="fas" *ngIf="school.ville_cam"> <i class="bi-geo-alt-fill"></i> {{school.ville_cam}}
+                </button>
+                <button class="fas" *ngIf="school.date_debut_f"><i class="bi-clock"></i> {{school.date_debut_f}}
+                </button>
+                <button class="fas" *ngIf="school.cout_f"><i class="bi-coin"></i> {{school.cout_f}} </button>
             </div>
         </div>
-        <button class="btn btn-primary voir" data-toggle="modal" [attr.data-target]="'#modalDetail'+school.id_form">En savoir plus</button>
+        <button class="btn btn-primary voir" data-toggle="modal" [attr.data-target]="'#modalDetail'+school.id_form">En
+            savoir plus</button>
     </div>
 </div>
 
-<div class="modal fade" [id]="'modalDetail'+school.id_form" tabindex="-1" role="dialog" [attr.aria-labelledby]="'modalDetail'+school.id_form" aria-hidden="true">
+<div class="modal fade" [id]="'modalDetail'+school.id_form" tabindex="-1" role="dialog"
+    [attr.aria-labelledby]="'modalDetail'+school.id_form" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -31,25 +35,29 @@
                 <div class="card">
                     <h2 class="card-title"> {{school.nom_dip}} </h2>
                     <p class="card-text"> {{school.nom_e}} </p>
-                    <div class="grid-container" >
+                    <div class="grid-container">
                         <div class="grid-content">
-                            <img alt="Card" [src]="'../../../../assets/images/school/logo/'+school.logo_e" [alt]="school.logo_e" />
-                            
+                            <img alt="Card" [src]="'../../../../assets/images/school/logo/'+school.logo_e"
+                                [alt]="school.logo_e" />
+
                         </div>
                         <div class="grid-content">
-                            <button class="fas"  >school.groupe</button>
-                            <button class="fas"  *ngIf="school.ville_cam" ><i class="bi-geo-alt-fill"></i> {{school.ville_cam}} </button>
-                            <button class="fas"  *ngIf="school.date_debut_f" ><i class="bi-clock"></i> {{school.date_debut_f}} </button>
-                            <button class="fas"  *ngIf="school.cout_f"  ><i class="bi-coin"></i> {{school.cout_f}} </button>
+                            <button class="fas">school.groupe</button>
+                            <button class="fas" *ngIf="school.ville_cam"><i class="bi-geo-alt-fill"></i>
+                                {{school.ville_cam}} </button>
+                            <button class="fas" *ngIf="school.date_debut_f"><i class="bi-clock"></i>
+                                {{school.date_debut_f}} </button>
+                            <button class="fas" *ngIf="school.cout_f"><i class="bi-coin"></i> {{school.cout_f}}
+                            </button>
                         </div>
                     </div>
                 </div>
                 <div class="training-card-show">
                     <div class="more-info">
                         <div class="accreditation">
-                            <h5>Accréditation</h5> 
+                            <h5>Accréditation</h5>
                             <br>
-                            <hr>                           
+                            <hr>
                         </div>
                         <ng-container>
                             <h3>A propos de {{school.nom_e}} </h3>
@@ -69,18 +77,52 @@
                             <br>
                             <hr>
                         </ng-container>
-                        
-                        <div>
-                            <strong>Contact : </strong> <button type="button" class="btn btn-success" (click)="discover()"> <i class="bi-telephone"></i>  Numéro WhatsApp  </button>
+
+                        <div class="container">
+                            <div class="row mb-4 justify-content-start">
+                                <div class="col text-center">
+                                    <strong>Contacter un conseiller d'orientation de Camerdiplome</strong>
+                                </div>
+                                <div class="col">
+                                    <button type="button" class="btn btn-success" (click)="discover()">
+                                        <i class="bi-telephone"></i>
+                                        Numéro WhatsApp
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row mb-4 justify-content-start">
+                                <div class="col text-center">
+                                    <strong>Contact de l'école</strong>
+                                </div>
+                                <div class="col">
+                                    @if (school.tel_1_e) {
+                                    {{school.tel_1_e}}
+                                    } @else {
+                                    no contact upload
+                                    }
+                                </div>
+                            </div>
+
+                            <div class="row justify-content-start">
+                                <div class="col text-center">
+                                    <strong>Site Web</strong>
+                                </div>
+                                <div class="col">
+                                    @if (school.siteweb_e) {
+                                        <a [href]="school.siteweb_e" target="_blank" rel="noopener noreferrer"><i
+                                                class="bi-globe"></i> Cliquez ici</a>
+                                    }@else {
+                                        no site web found
+                                    }
+                                </div>
+                            </div>
+
                         </div>
                         <!-- <div  *ngIf="school.email_e"  ><i class="bi-envelope-at-fill"></i> <a [href]="school.email_e" target="_blank" rel="noopener noreferrer"></a> {{school.email_e}} </div> -->
-                        @if (school.siteweb_e) {
-                            <strong>Site Web</strong> <a [href]="school.siteweb_e" target="_blank" rel="noopener noreferrer"><i class="bi-globe"></i> Cliquez ici</a>
-                        }
                     </div>
                     <div class="footer">
-                        <a (click)="toSchool()" data-dismiss="modal" >
-                            <button class="btn btn-primary" >Voir l'établissement</button>
+                        <a (click)="toSchool()" data-dismiss="modal">
+                            <button class="btn btn-primary">Voir l'établissement</button>
                         </a>
                         <!-- <p-button label="Demander des informaions" (click)="sendNumber()"  styleClass="p-button-warning" ></p-button> -->
                     </div>
@@ -101,7 +143,7 @@
 
 
 
-    <!-- <p-card [header]="school.nom_dip" 
+<!-- <p-card [header]="school.nom_dip" 
             [subheader]="school.nom_e" 
             class="training-card"  
             (click)="showDialog()" 
@@ -124,7 +166,7 @@
         </ng-template>
     </p-card> -->
 
-    <!-- <p-dialog   header="Détail de la formation" 
+<!-- <p-dialog   header="Détail de la formation" 
                 [(visible)]="visible" 
                 [style]="{width: '90vw'}"
                 [modal]="true"  
@@ -175,7 +217,7 @@
                 </div>
     </p-dialog> 
     -->
-    <!-- <p-dialog   header="Vous souhaitez vous informer sans engagement sur la formation :" 
+<!-- <p-dialog   header="Vous souhaitez vous informer sans engagement sur la formation :" 
                 [(visible)]="visibleCall" 
                 [style]="{width: '90vw'}" 
                 [modal]="true"  
@@ -188,7 +230,7 @@
                         </div>
                     </div>
                 </p-card> -->
-                <!-- 
+<!-- 
                 <form #telForm="ngForm" (ngSubmit)="onSubmitPhone(telForm)">
                     <label for="telInput">Faites-vous rappeler par l'école !*</label>
                     <input type="tel" id="telInput" name="userPhone" [(ngModel)]="userPhone"> 
@@ -209,4 +251,4 @@
                 </form>
             -->
 
-    <!-- </p-dialog> -->
+<!-- </p-dialog> -->

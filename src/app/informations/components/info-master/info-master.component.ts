@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { SharedComponentModule } from '../../../shared/shared.modules';
 import { Meta, Title } from '@angular/platform-browser';
 import { ActuListComponent } from '../../../actualite/components/actu-list/actu-list.component';
@@ -28,7 +29,8 @@ export class InfoMasterComponent implements OnInit {
   constructor( //private infoservice :InfoServices,
     private titleService:Title,
     private adversService: AdversService,
-    private meta : Meta) 
+    private meta : Meta,
+    @Inject(PLATFORM_ID) private platformId: Object)
     {
       this.titleService.setTitle("Les Master au Cameroun  | Camerdiplome");
       this.meta.updateTag({ name: 'description', content: 'Le Cycle Master est une formation qui peut s\'intégrer directement après l\'obtention d\'une licence. '});
@@ -38,6 +40,9 @@ export class InfoMasterComponent implements OnInit {
 
 
   ngOnInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
     this.schoolAdvers$ = this.adversService.getSchoolPub();
   }
 

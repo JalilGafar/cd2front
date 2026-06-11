@@ -1,7 +1,8 @@
-<div class="header-hero">
-    <img [src]="photo" [alt]="photo">    
-    <div class="content">
-        <h1 class="title">{{titre}} </h1>
-        <div class="subtitle">{{soustitre}} </div>
-    </div>
+<div class="hero-wrap">
+  <img class="hero-img" [src]="photo" [alt]="titre">
+  <div class="hero-overlay"></div>
+  <div class="hero-content">
+    <h1 class="hero-title">{{ titre }}</h1>
+    <p class="hero-sub">{{ soustitre }}</p>
+  </div>
 </div>

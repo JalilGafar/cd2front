@@ -6,7 +6,6 @@ export class Avis {
     diplo_id!: number;
     promotion!: number;
     date!: Date;
-    id_diplo!: Number;
     visible!:boolean;
     content!: string;
     note!: number;

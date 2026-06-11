@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { SharedComponentModule } from '../../../shared/shared.modules';
 import { Meta, Title } from '@angular/platform-browser';
 import { SchoolAdversComponent } from '../../../shared/components/school-advers/school-advers.component';
@@ -26,10 +27,11 @@ export class InfoBtsComponent implements OnInit {
   schoolAdvers$!: Observable<SchoolAdvers[]>;
 
 
-  constructor( 
+  constructor(
     private titleService:Title,
     private adversService: AdversService,
-    private meta : Meta) 
+    private meta : Meta,
+    @Inject(PLATFORM_ID) private platformId: Object)
     {
       this.titleService.setTitle("Liste des BTS | Camerdiplome");
       this.meta.updateTag({ name: 'description', content: 'BTS signification, niveau, débouchés et listes des différents de BTS' });
@@ -39,6 +41,9 @@ export class InfoBtsComponent implements OnInit {
 
 
   ngOnInit(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
     this.schoolAdvers$ = this.adversService.getSchoolPub();
 
   }

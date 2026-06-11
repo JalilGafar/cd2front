@@ -1,6 +1,111 @@
-@if (metier) {
+@if (!metier) {
+  <div class="metier-loading">
     <div class="container">
-        <h1> {{metier[0].titre}} </h1>
-        <h2> {{metier[0].intro}} </h2>
+      <div class="loading-skeleton">
+        <div class="sk sk-badge"></div>
+        <div class="sk sk-title"></div>
+        <div class="sk sk-intro"></div>
+        <div class="sk sk-block"></div>
+      </div>
     </div>
+  </div>
+}
+
+@if (metier) {
+  <article class="metier-page animate-fade-up">
+
+    <!-- ── Hero ──────────────────────────────────────────────────────── -->
+    <header class="metier-hero">
+      <div class="container">
+
+        <nav class="breadcrumb-nav" aria-label="Fil d'Ariane">
+          <a routerLink="/info/metier" class="breadcrumb-link">
+            <i class="bi bi-briefcase-fill"></i> Fiches métiers
+          </a>
+          <i class="bi bi-chevron-right breadcrumb-sep"></i>
+          <span class="breadcrumb-current">{{ metier[0].titre }}</span>
+        </nav>
+
+        <div class="hero-inner">
+
+          @if (metier[0].image_me) {
+            <div class="metier-image-wrap">
+              <img
+                [src]="'assets/images/metier/' + metier[0].image_me"
+                [alt]="'Illustration du métier ' + metier[0].titre"
+                class="metier-img"
+              />
+            </div>
+          } @else {
+            <div class="metier-icon-wrap">
+              <div class="feature-icon feature-icon--lg">
+                <i class="bi bi-person-workspace"></i>
+              </div>
+            </div>
+          }
+
+          <div class="hero-text">
+            <span class="section-badge">Fiche métier</span>
+            <h1 class="hero-title">{{ metier[0].titre }}</h1>
+            @if (metier[0].intro) {
+              <p class="hero-intro">{{ metier[0].intro }}</p>
+            }
+            <a routerLink="/trouver-ma-formation" class="btn-primary-cta hero-cta">
+              <i class="bi bi-compass-fill"></i> Trouver ma formation
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </header>
+
+    <!-- ── Présentation (HTML venant de la BDD) ───────────────────── -->
+    @if (metier[0].presentation) {
+      <section class="metier-body">
+        <div class="container">
+          <div class="content-grid">
+
+            <div
+              class="presentation-html"
+              [innerHTML]="metier[0].presentation"
+            ></div>
+
+            <aside class="metier-aside">
+              <div class="cd-card aside-cta">
+                <div class="feature-icon feature-icon--blue aside-icon">
+                  <i class="bi bi-compass-fill"></i>
+                </div>
+                <h3>Tu veux travailler dans ce domaine&nbsp;?</h3>
+                <p>Trouve la formation idéale près de chez toi au Cameroun, gratuitement.</p>
+                <a routerLink="/trouver-ma-formation" class="btn-primary-cta aside-btn">
+                  <i class="bi bi-compass-fill"></i> Trouver ma formation
+                </a>
+              </div>
+
+              <div class="cd-highlight aside-tip">
+                <i class="bi bi-lightbulb-fill"></i>
+                <blockquote>
+                  L'orientation, ce n'est pas choisir un parcours pour faire un métier, mais bien choisir un métier puis effectuer les bonnes études.
+                </blockquote>
+              </div>
+            </aside>
+
+          </div>
+        </div>
+      </section>
+    }
+
+    <!-- ── Footer navigation ──────────────────────────────────────── -->
+    <div class="metier-nav-footer">
+      <div class="container metier-nav-inner">
+        <a routerLink="/info/metier" class="btn-ghost-cta">
+          <i class="bi bi-arrow-left"></i> Retour aux fiches métiers
+        </a>
+        <a routerLink="/trouver-ma-formation" class="btn-primary-cta">
+          <i class="bi bi-compass-fill"></i> Trouver ma formation
+        </a>
+      </div>
+    </div>
+
+  </article>
 }
