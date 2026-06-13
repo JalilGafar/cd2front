@@ -22,9 +22,11 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { RatingModule } from 'primeng/rating';
 import { FileUploadModule } from 'primeng/fileupload';
 import { TreeSelectModule } from 'primeng/treeselect'
+import { MessageModule } from 'primeng/message'
 
 @NgModule({
     exports:[
+      MessageModule,
       DialogModule,
       TreeSelectModule,
       FileUploadModule,

@@ -1,0 +1,65 @@
+import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser, CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Observable, switchMap, take, tap } from 'rxjs';
+import { SharedComponentModule } from '../../../shared/shared.modules';
+import { ModeratorService } from '../../moderator.service';
+import { Article } from '../../../admin/models/article.model';
+
+@Component({
+    selector: 'app-modif-article-mod',
+    standalone: true,
+    imports: [CommonModule, SharedComponentModule],
+    templateUrl: './modif-article-mod.component.html',
+    styleUrl: './modif-article-mod.component.scss'
+})
+export class ModifArticleModComponent implements OnInit {
+
+    modifArticle!: FormGroup;
+    article$!: Observable<Article>;
+    errorMessage = '';
+
+    constructor(
+        private formBuilder: FormBuilder,
+        private moderatorService: ModeratorService,
+        private route: ActivatedRoute,
+        private router: Router,
+        @Inject(PLATFORM_ID) private platformId: Object
+    ) {}
+
+    ngOnInit(): void {
+        if (isPlatformBrowser(this.platformId)) {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        this.modifArticle = this.formBuilder.group({
+            id_actu:      [null],
+            title:        [null, Validators.required],
+            auteur:       [null, Validators.required],
+            visible:      [false],
+            summary:      [null],
+            illustration: [null],
+            sujets:       [null],
+            keywords:     [null],
+            content:      [null]
+        });
+        this.moderatorService.getArticlesFromServer();
+        this.article$ = this.route.params.pipe(
+            switchMap(params => this.moderatorService.getArticleById(+params['id'])),
+            take(1),
+            tap(val => this.modifArticle.patchValue(val))
+        );
+    }
+
+    onSubmitForm(): void {
+        if (this.modifArticle.invalid) return;
+        this.moderatorService.editArticle(this.modifArticle.value).subscribe({
+            next: () => this.router.navigateByUrl('moderator/modStart'),
+            error: (err) => { this.errorMessage = err.error?.message || 'Erreur lors de la mise à jour.'; }
+        });
+    }
+
+    onCancel(): void {
+        this.router.navigateByUrl('moderator/modStart');
+    }
+}

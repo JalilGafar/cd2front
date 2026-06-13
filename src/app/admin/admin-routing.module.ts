@@ -19,6 +19,10 @@ import { ModifUnivComponent } from './components/modif-univ/modif-univ.component
 import { SingleArticleComponent } from './components/single-article/single-article.component';
 import { NewArticleComponent } from './components/new-article/new-article.component';
 import { ModifArticleComponent } from './components/modif-article/modif-article.component';
+import { ListModeratorsComponent } from './components/list-moderators/list-moderators.component';
+import { NewModeratorComponent } from './components/new-moderator/new-moderator.component';
+import { ListAdvisorsComponent } from './components/list-advisors/list-advisors.component';
+import { NewAdvisorComponent } from './components/new-advisor/new-advisor.component';
 
 const routes: Routes = [
     { path: '', component: AdminStartComponent},
@@ -41,6 +45,10 @@ const routes: Routes = [
     { path: 'modif-campus/:id', component: ModifCampusComponent },
     { path: 'modif-formation/:id', component: ModifFormationComponent },
     { path: 'modif-article/:id', component: ModifArticleComponent },
+    { path: 'moderateurs', component: ListModeratorsComponent },
+    { path: 'new-moderateur', component: NewModeratorComponent },
+    { path: 'advisors', component: ListAdvisorsComponent },
+    { path: 'new-advisor', component: NewAdvisorComponent },
     { path:'**', redirectTo:'adminStart'}
   
 

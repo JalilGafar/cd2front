@@ -1,0 +1,318 @@
+<div *ngIf="isLoggedIn" class="adv-dashboard">
+
+    <!-- ── En-tête ─────────────────────────────────────────────────────── -->
+    <header class="adv-header">
+        <div class="adv-header-left">
+            <span class="adv-badge">
+                <i class="pi pi-briefcase"></i>
+                Conseiller
+            </span>
+            <h1>Espace Conseiller</h1>
+        </div>
+        <div class="adv-header-right">
+            <span class="adv-username">
+                <i class="pi pi-user"></i>
+                {{ username }}
+            </span>
+            <button pButton type="button" label="Déconnexion"
+                icon="pi pi-sign-out"
+                class="p-button-danger p-button-outlined p-button-sm"
+                (click)="signOut()">
+            </button>
+        </div>
+    </header>
+
+    <main class="adv-content">
+
+        <!-- ── Formulaire de recherche ───────────────────────────────────── -->
+        <section class="adv-search-panel" [formGroup]="searchForm">
+            <h2 class="adv-panel-title">
+                <i class="pi pi-search"></i> Recherche rapide
+            </h2>
+
+            <div class="adv-search-fields">
+                <div class="adv-field">
+                    <label>Diplôme</label>
+                    <p-dropdown
+                        formControlName="diplome"
+                        [options]="(categories$ | async) ?? []"
+                        optionLabel="nom_cat"
+                        optionValue="nom_cat"
+                        [filter]="true"
+                        [showClear]="true"
+                        placeholder="Tous les diplômes"
+                        styleClass="adv-dropdown">
+                    </p-dropdown>
+                </div>
+
+                <div class="adv-field">
+                    <label>Domaine</label>
+                    <p-dropdown
+                        formControlName="domaine"
+                        [options]="(domaines$ | async) ?? []"
+                        optionLabel="nom_dom"
+                        optionValue="nom_dom"
+                        [filter]="true"
+                        [showClear]="true"
+                        placeholder="Tous les domaines"
+                        styleClass="adv-dropdown">
+                    </p-dropdown>
+                </div>
+
+                <div class="adv-field">
+                    <label>Ville</label>
+                    <p-dropdown
+                        formControlName="ville"
+                        [options]="(villes$ | async) ?? []"
+                        optionLabel="ville_cam"
+                        optionValue="ville_cam"
+                        [filter]="true"
+                        [showClear]="true"
+                        placeholder="Toutes les villes"
+                        styleClass="adv-dropdown">
+                    </p-dropdown>
+                </div>
+
+                <div class="adv-field">
+                    <label>Budget max (FCFA)</label>
+                    <input type="number"
+                        formControlName="budget"
+                        class="adv-budget-input"
+                        placeholder="ex: 500 000"
+                        min="0">
+                </div>
+            </div>
+
+            <div class="adv-search-actions">
+                <button pButton type="button"
+                    label="Rechercher"
+                    icon="pi pi-search"
+                    class="p-button-warning"
+                    [disabled]="isFormEmpty || (loading$ | async)"
+                    (click)="onSearch()">
+                </button>
+                <button pButton type="button"
+                    label="Effacer"
+                    icon="pi pi-times"
+                    class="p-button-outlined p-button-secondary"
+                    (click)="onClear()">
+                </button>
+            </div>
+        </section>
+
+        <!-- ── Résultats ─────────────────────────────────────────────────── -->
+        <section class="adv-results-panel">
+
+            <!-- Loading -->
+            <div *ngIf="loading$ | async" class="adv-spinner-wrap">
+                <p-progressSpinner strokeWidth="4" styleClass="adv-spinner"></p-progressSpinner>
+                <span>Recherche en cours…</span>
+            </div>
+
+            <!-- Erreur -->
+            <p-message *ngIf="(error$ | async) as errMsg"
+                severity="danger"
+                [text]="errMsg"
+                styleClass="adv-error-msg">
+            </p-message>
+
+            <!-- État initial -->
+            <div *ngIf="!(hasSearched$ | async) && !(loading$ | async)"
+                class="adv-state-msg adv-state-invite">
+                <i class="pi pi-info-circle"></i>
+                Saisissez au moins un critère pour lancer une recherche.
+            </div>
+
+            <!-- Compteur + table -->
+            <ng-container *ngIf="(hasSearched$ | async) && !(loading$ | async) && !(error$ | async)">
+
+                <ng-container *ngIf="results$ | async as results">
+
+                    <!-- Compteur -->
+                    <div class="adv-result-count">
+                        <i class="pi pi-list"></i>
+                        <strong>{{ results.length }}</strong> formation(s) trouvée(s)
+                    </div>
+
+                    <!-- Aucun résultat -->
+                    <div *ngIf="results.length === 0" class="adv-state-msg adv-state-empty">
+                        <i class="pi pi-search-minus"></i>
+                        Aucune formation trouvée pour ces critères.
+                    </div>
+
+                    <!-- Table -->
+                    <p-table *ngIf="results.length > 0"
+                        [value]="results"
+                        dataKey="id_form"
+                        [expandedRowKeys]="expandedRows"
+                        [paginator]="true"
+                        [rows]="20"
+                        [sortMode]="'multiple'"
+                        [rowHover]="true"
+                        styleClass="p-datatable-sm adv-table">
+
+                        <ng-template pTemplate="header">
+                            <tr>
+                                <th style="width:3rem"></th>
+                                <th pSortableColumn="nom_e">
+                                    École <p-sortIcon field="nom_e"></p-sortIcon>
+                                </th>
+                                <th pSortableColumn="nom_dip">
+                                    Diplôme <p-sortIcon field="nom_dip"></p-sortIcon>
+                                </th>
+                                <th pSortableColumn="nom_cat">
+                                    Filière / Catégorie <p-sortIcon field="nom_cat"></p-sortIcon>
+                                </th>
+                                <th pSortableColumn="ville_cam">
+                                    Ville <p-sortIcon field="ville_cam"></p-sortIcon>
+                                </th>
+                                <th>Durée</th>
+                                <th pSortableColumn="cout_f">
+                                    Coût <p-sortIcon field="cout_f"></p-sortIcon>
+                                </th>
+                                <th>Contacts</th>
+                            </tr>
+                        </ng-template>
+
+                        <ng-template pTemplate="body" let-row let-expanded="expanded">
+                            <tr (click)="onSchoolSelect(row)" style="cursor: pointer;">
+                                <!-- Expand toggle — arrête la propagation pour ne pas ouvrir 2× -->
+                                <td (click)="$event.stopPropagation()">
+                                    <button pButton type="button"
+                                        [pRowToggler]="row"
+                                        [icon]="expanded ? 'pi pi-chevron-down' : 'pi pi-chevron-right'"
+                                        class="p-button-text p-button-rounded p-button-plain adv-toggle-btn">
+                                    </button>
+                                </td>
+
+                                <!-- École -->
+                                <td>
+                                    <div class="adv-school-cell">
+                                        <ng-container *ngIf="row.logo_e; else showInitials">
+                                            <img [src]="row.logo_e"
+                                                alt="{{ row.sigle_e }}"
+                                                class="adv-logo"
+                                                width="40" height="40">
+                                        </ng-container>
+                                        <ng-template #showInitials>
+                                            <div class="adv-initials">{{ getInitials(row.sigle_e) }}</div>
+                                        </ng-template>
+                                        <div class="adv-school-names">
+                                            <span class="adv-school-name">{{ row.nom_e }}</span>
+                                            <span class="adv-school-sigle">{{ row.sigle_e }}</span>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <!-- Diplôme -->
+                                <td>{{ row.nom_dip }}</td>
+
+                                <!-- Filière -->
+                                <td>{{ row.nom_cat }}</td>
+
+                                <!-- Ville -->
+                                <td>
+                                    <span class="adv-ville-tag">
+                                        <i class="pi pi-map-marker"></i>
+                                        {{ row.ville_cam }}
+                                    </span>
+                                </td>
+
+                                <!-- Durée -->
+                                <td>{{ row.duree_f || '—' }}</td>
+
+                                <!-- Coût -->
+                                <td class="adv-cout">
+                                    {{ row.cout_f | number:'1.0-0' }} <span class="adv-fcfa">FCFA</span>
+                                </td>
+
+                                <!-- Contacts -->
+                                <td>
+                                    <div class="adv-contacts">
+                                        <a *ngIf="row.tel_1_e"
+                                            [href]="'tel:' + row.tel_1_e"
+                                            class="adv-contact-icon"
+                                            title="{{ row.tel_1_e }}">
+                                            <i class="pi pi-phone"></i>
+                                        </a>
+                                        <a *ngIf="row.email_e"
+                                            [href]="'mailto:' + row.email_e"
+                                            class="adv-contact-icon"
+                                            title="{{ row.email_e }}">
+                                            <i class="pi pi-envelope"></i>
+                                        </a>
+                                        <a *ngIf="row.siteweb_e"
+                                            [href]="row.siteweb_e"
+                                            target="_blank"
+                                            rel="noopener"
+                                            class="adv-contact-icon"
+                                            title="Site web">
+                                            <i class="pi pi-globe"></i>
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        </ng-template>
+
+                        <!-- Ligne expandée -->
+                        <ng-template pTemplate="rowexpansion" let-row>
+                            <tr>
+                                <td colspan="8">
+                                    <div class="adv-expansion">
+
+                                        <div *ngIf="row.descriptif_f" class="adv-exp-section">
+                                            <h4><i class="pi pi-book"></i> Description de la formation</h4>
+                                            <p>{{ row.descriptif_f }}</p>
+                                        </div>
+
+                                        <div *ngIf="row.conditions_f" class="adv-exp-section">
+                                            <h4><i class="pi pi-check-circle"></i> Conditions d'admission</h4>
+                                            <p>{{ row.conditions_f }}</p>
+                                        </div>
+
+                                        <div *ngIf="row.descriptif_e" class="adv-exp-section">
+                                            <h4><i class="pi pi-building"></i> À propos de l'école</h4>
+                                            <p>{{ row.descriptif_e }}</p>
+                                        </div>
+
+                                        <div class="adv-exp-section adv-exp-contacts">
+                                            <h4><i class="pi pi-phone"></i> Contacts</h4>
+                                            <ul class="adv-contacts-list">
+                                                <li *ngIf="row.tel_1_e">
+                                                    <i class="pi pi-phone"></i>
+                                                    <a [href]="'tel:' + row.tel_1_e">{{ row.tel_1_e }}</a>
+                                                </li>
+                                                <li *ngIf="row.email_e">
+                                                    <i class="pi pi-envelope"></i>
+                                                    <a [href]="'mailto:' + row.email_e">{{ row.email_e }}</a>
+                                                </li>
+                                                <li *ngIf="row.siteweb_e">
+                                                    <i class="pi pi-globe"></i>
+                                                    <a [href]="row.siteweb_e" target="_blank" rel="noopener">
+                                                        {{ row.siteweb_e }}
+                                                    </a>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                    </div>
+                                </td>
+                            </tr>
+                        </ng-template>
+
+                    </p-table>
+
+                </ng-container>
+            </ng-container>
+
+        </section>
+    </main>
+
+</div>
+
+<!-- ── Panneau latéral fiche école ──────────────────────────────────────── -->
+<app-school-panel
+    [(visible)]="sidebarVisible"
+    [schoolId]="selectedSchoolId"
+    (visibleChange)="onSidebarClose()">
+</app-school-panel>

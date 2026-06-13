@@ -1,0 +1,30 @@
+<div *ngIf="isLoggedIn" class="mod-dashboard">
+    <header class="mod-header">
+        <h1>Espace Modérateur</h1>
+        <span class="mod-username">{{ username }}</span>
+    </header>
+
+    <nav class="mod-nav">
+        <button pButton type="button" label="Modération des avis"
+            icon="pi pi-star"
+            [ngClass]="avisView ? 'p-button-primary' : 'p-button-secondary'"
+            (click)="showAvis()">
+        </button>
+        <button pButton type="button" label="Articles"
+            icon="pi pi-file-edit"
+            [ngClass]="articlesView ? 'p-button-primary' : 'p-button-secondary'"
+            (click)="showArticles()">
+        </button>
+        <button pButton type="button" label="Données (lecture seule)"
+            icon="pi pi-database"
+            [ngClass]="donneesView ? 'p-button-primary' : 'p-button-secondary'"
+            (click)="showDonnees()">
+        </button>
+    </nav>
+
+    <main class="mod-content">
+        <app-moderation-avis  *ngIf="avisView" />
+        <app-list-article-mod *ngIf="articlesView" />
+        <app-view-data-mod    *ngIf="donneesView" />
+    </main>
+</div>

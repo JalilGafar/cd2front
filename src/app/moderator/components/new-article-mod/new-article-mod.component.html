@@ -1,0 +1,56 @@
+<div class="article-form-container">
+    <h2>Nouvel article</h2>
+
+    <form [formGroup]="newArticle" (ngSubmit)="onSubmitForm()">
+
+        <div class="field">
+            <label for="title">Titre *</label>
+            <input pInputText id="title" formControlName="title" placeholder="Titre de l'article" />
+        </div>
+
+        <div class="field">
+            <label for="auteur">Auteur *</label>
+            <input pInputText id="auteur" formControlName="auteur" placeholder="Nom de l'auteur" />
+        </div>
+
+        <div class="field">
+            <label for="summary">Résumé</label>
+            <textarea pInputTextarea id="summary" formControlName="summary" rows="3"
+                placeholder="Résumé court de l'article"></textarea>
+        </div>
+
+        <div class="field">
+            <label for="illustration">URL illustration</label>
+            <input pInputText id="illustration" formControlName="illustration" placeholder="https://…" />
+        </div>
+
+        <div class="field">
+            <label for="sujets">Sujets</label>
+            <input pInputText id="sujets" formControlName="sujets" placeholder="ex: bourse, orientation" />
+        </div>
+
+        <div class="field">
+            <label for="keywords">Mots-clés</label>
+            <input pInputText id="keywords" formControlName="keywords" placeholder="ex: licence, master" />
+        </div>
+
+        <div class="field">
+            <label for="content">Contenu</label>
+            <textarea pInputTextarea id="content" formControlName="content" rows="8"
+                placeholder="Corps de l'article"></textarea>
+        </div>
+
+        <div class="field-check">
+            <input type="checkbox" id="visible" formControlName="visible" />
+            <label for="visible">Publier immédiatement</label>
+        </div>
+
+        <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+
+        <div class="form-actions">
+            <button pButton type="button" label="Annuler" class="p-button-secondary" (click)="onCancel()"></button>
+            <button pButton type="submit" label="Créer l'article" icon="pi pi-check" [disabled]="newArticle.invalid"></button>
+        </div>
+
+    </form>
+</div>

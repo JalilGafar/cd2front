@@ -1,0 +1,34 @@
+.mod-dashboard {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.mod-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1.5rem;
+    background: var(--surface-card, #fff);
+    border-bottom: 1px solid var(--surface-border, #e0e0e0);
+
+    h1 { margin: 0; font-size: 1.4rem; }
+}
+
+.mod-username {
+    font-weight: 600;
+    color: var(--primary-color, #3b82f6);
+}
+
+.mod-nav {
+    display: flex;
+    gap: 0.75rem;
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid var(--surface-border, #e0e0e0);
+    flex-wrap: wrap;
+}
+
+.mod-content {
+    padding: 1.5rem;
+    flex: 1;
+}

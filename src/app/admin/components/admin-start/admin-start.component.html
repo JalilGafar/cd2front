@@ -1,13 +1,27 @@
 <h1>Admin Start</h1>
 <div *ngIf="isLoggedIn">
-    <div >
-        <button pButton type="button" label="Université" (click)="univClick()"></button>
-        <button pButton type="button" label="Campus" (click)="campusClick()"></button>
-        <button pButton type="button" label="Ecoles" (click)="ecoleClick()"></button>
-        <button pButton type="button" label="Diplômes" (click)="diplomeClick()"></button>
-        <button pButton type="button" label="Formations" (click)="formationClick()"></button>
-        <button pButton type="button" label="Articles" (click)="ArticleClick()"></button>
-        <button pButton type="button" label="Avis" (click)="AvisClick()"></button>
+    <div class="admin-nav">
+        <div class="admin-nav-tabs">
+            <button pButton type="button" label="Université" (click)="univClick()"></button>
+            <button pButton type="button" label="Campus" (click)="campusClick()"></button>
+            <button pButton type="button" label="Ecoles" (click)="ecoleClick()"></button>
+            <button pButton type="button" label="Diplômes" (click)="diplomeClick()"></button>
+            <button pButton type="button" label="Formations" (click)="formationClick()"></button>
+            <button pButton type="button" label="Articles" (click)="ArticleClick()"></button>
+            <button pButton type="button" label="Avis" (click)="AvisClick()"></button>
+            <button *ngIf="showAdminBoard" pButton type="button" label="Modérateurs"
+                icon="pi pi-users" class="p-button-secondary"
+                (click)="moderateurClick()">
+            </button>
+            <button *ngIf="showAdminBoard" pButton type="button" label="Conseillers"
+                icon="pi pi-briefcase" class="p-button-secondary"
+                (click)="advisorClick()">
+            </button>
+        </div>
+        <button pButton type="button" label="Déconnexion" icon="pi pi-sign-out"
+            class="p-button-danger p-button-outlined"
+            (click)="signOut()">
+        </button>
     </div>
     <app-list-univ *ngIf="univView" />
     <app-list-campus *ngIf="campusView" />
@@ -16,5 +30,6 @@
     <app-list-formation *ngIf="formationView"/>
     <app-list-article *ngIf="articleView"/>
     <app-list-avis *ngIf="avisView"/>
-
-<div>
+    <app-list-moderators *ngIf="moderateurView" />
+    <app-list-advisors *ngIf="advisorView" />
+</div>

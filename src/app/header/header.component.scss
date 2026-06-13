@@ -7,6 +7,18 @@ $accent:    #10b981;
 $accent2:   #3b82f6;
 $border:    rgba(255, 255, 255, 0.07);
 
+// Mode modérateur
+$mod-bg:        #1a0f2e;
+$mod-bg-scroll: rgba(26, 15, 46, 0.97);
+$mod-accent:    #a855f7;
+$mod-border:    rgba(168, 85, 247, 0.25);
+
+// Mode conseiller (advisor)
+$adv-bg:        #1a1300;
+$adv-bg-scroll: rgba(26, 19, 0, 0.97);
+$adv-accent:    #f59e0b;
+$adv-border:    rgba(245, 158, 11, 0.25);
+
 // ─── Host ─────────────────────────────────────────────────────────────────────
 :host {
   display: block;
@@ -29,6 +41,19 @@ $border:    rgba(255, 255, 255, 0.07);
     backdrop-filter: blur(6px);
     -webkit-backdrop-filter: blur(6px);
   }
+}
+
+// ─── Thèmes mode connecté ─────────────────────────────────────────────────────
+.navbar.moderator-mode {
+  background: $mod-bg;
+  border-bottom-color: $mod-border;
+  &.scrolled { background: $mod-bg-scroll; border-bottom-color: $mod-border; }
+}
+
+.navbar.advisor-mode {
+  background: $adv-bg;
+  border-bottom-color: $adv-border;
+  &.scrolled { background: $adv-bg-scroll; border-bottom-color: $adv-border; }
 }
 
 // ─── Brand ────────────────────────────────────────────────────────────────────
@@ -79,9 +104,7 @@ $border:    rgba(255, 255, 255, 0.07);
     transition: background 0.2s ease;
   }
 
-  &:hover .toggler-icon {
-    background: $text-hover;
-  }
+  &:hover .toggler-icon { background: $text-hover; }
 }
 
 // ─── Nav links ────────────────────────────────────────────────────────────────
@@ -117,12 +140,10 @@ $border:    rgba(255, 255, 255, 0.07);
   &:hover {
     color: $text-hover !important;
     background: rgba(255, 255, 255, 0.04);
-
     &::after { transform: scaleX(1); }
   }
 }
 
-// Le caret du dropdown-toggle ne doit pas avoir l'underline
 .dropdown-toggle::after {
   display: inline-block;
   content: '';
@@ -173,7 +194,6 @@ $border:    rgba(255, 255, 255, 0.07);
   min-width: 230px;
   margin-top: 0.5rem;
 
-  // Animation d'entrée
   display: none;
   &.show {
     display: block;
@@ -182,14 +202,8 @@ $border:    rgba(255, 255, 255, 0.07);
 }
 
 @keyframes dropdownIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px) scale(0.97);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
+  from { opacity: 0; transform: translateY(-10px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
 }
 
 .dropdown-section-label {
@@ -220,12 +234,121 @@ $border:    rgba(255, 255, 255, 0.07);
   margin: 0.3rem 0;
 }
 
+// ─── Barre utilisateur (modérateur / conseiller) ──────────────────────────────
+// Placée hors du collapse → toujours visible, desktop ET mobile
+
+.user-bar {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-left: auto;     // pousse vers la droite sur desktop
+  padding: 0 0.75rem;
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  flex-shrink: 0;
+  order: 3;              // après la navbar-collapse sur desktop (flex order)
+}
+
+// Identité : badge rôle + nom
+.user-identity {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+}
+
+.user-role-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  border-radius: 20px;
+  padding: 0.22rem 0.65rem;
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  white-space: nowrap;
+  text-transform: uppercase;
+}
+
+.user-name {
+  font-size: 0.82rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+// Actions : dashboard + déconnexion
+.user-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+.user-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  border-radius: 20px;
+  padding: 0.28rem 0.75rem;
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, border-color 0.2s ease;
+  white-space: nowrap;
+  border: 1px solid transparent;
+
+  i { font-size: 0.75rem; }
+}
+
+.btn-dashboard {
+  color: #a5fcaf;
+  background: rgba(34, 197, 94, 0.08);
+  border-color: rgba(34, 197, 94, 0.22);
+
+  &:hover {
+    background: rgba(34, 197, 94, 0.18);
+    border-color: rgba(34, 197, 94, 0.45);
+  }
+}
+
+.btn-logout {
+  color: #fca5a5;
+  background: rgba(239, 68, 68, 0.08);
+  border-color: rgba(239, 68, 68, 0.22);
+
+  &:hover {
+    background: rgba(239, 68, 68, 0.18);
+    border-color: rgba(239, 68, 68, 0.45);
+  }
+}
+
+// Couleurs du badge rôle selon le mode
+.navbar.moderator-mode {
+  .user-bar { border-left-color: $mod-border; }
+
+  .user-role-pill {
+    background: rgba(168, 85, 247, 0.14);
+    border: 1px solid $mod-border;
+    color: #c4b5fd;
+    i { color: $mod-accent; }
+  }
+
+  .user-name { color: #e9d5ff; }
+}
+
+.navbar.advisor-mode {
+  .user-bar { border-left-color: $adv-border; }
+
+  .user-role-pill {
+    background: rgba(245, 158, 11, 0.14);
+    border: 1px solid $adv-border;
+    color: #fde68a;
+    i { color: $adv-accent; }
+  }
+
+  .user-name { color: #fef3c7; }
+}
+
 // ─── Mobile ───────────────────────────────────────────────────────────────────
 @media (max-width: 991px) {
 
-  // Position fixe : le header reste visible en permanence pendant le scroll.
-  // On ne peut pas utiliser sticky car html/body ont height:100% (Angular Material),
-  // ce qui supprime le conteneur scrollable nécessaire au sticky.
   :host {
     position: fixed;
     left: 0;
@@ -234,7 +357,8 @@ $border:    rgba(255, 255, 255, 0.07);
   }
 
   .navbar {
-    padding: 0.65rem 1rem;
+    padding: 0.55rem 0.75rem;
+    flex-wrap: nowrap;   // brand + user-bar + toggler sur une seule ligne
   }
 
   .navbar-collapse {
@@ -253,7 +377,6 @@ $border:    rgba(255, 255, 255, 0.07);
   .nav-link {
     padding: 0.6rem 1.25rem !important;
     border-radius: 0;
-
     &::after { display: none; }
   }
 
@@ -280,4 +403,30 @@ $border:    rgba(255, 255, 255, 0.07);
     border-radius: 0;
     &:hover { transform: none; }
   }
+
+  // Sur mobile : user-bar compacte (icônes + rôle seulement, nom masqué)
+  .user-bar {
+    margin-left: auto;
+    padding: 0 0.4rem;
+    gap: 0.35rem;
+    order: 2;            // avant le toggler
+    border-left: none;
+  }
+
+  .user-name { display: none; }     // masque le nom sur petits écrans
+
+  .user-role-pill .role-text {
+    display: none;                   // masque le texte du rôle, garde l'icône
+  }
+
+  .user-role-pill {
+    padding: 0.22rem 0.45rem;
+    i { font-size: 0.8rem; }
+  }
+
+  .user-btn {
+    padding: 0.28rem 0.5rem;
+  }
+
+  .user-btn .btn-text { display: none; }  // icônes seules sur mobile
 }

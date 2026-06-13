@@ -1,0 +1,32 @@
+<ng-container *ngIf="article$ | async as article">
+    <div class="article-detail">
+
+        <div class="article-toolbar">
+            <button pButton type="button" icon="pi pi-arrow-left" label="Retour"
+                class="p-button-secondary p-button-sm" (click)="onBack()">
+            </button>
+            <div class="article-actions">
+                <button pButton type="button" icon="pi pi-pencil" label="Modifier"
+                    class="p-button-sm" (click)="onEdit()">
+                </button>
+                <button pButton type="button" icon="pi pi-trash" label="Supprimer"
+                    class="p-button-danger p-button-sm" (click)="onDelete()">
+                </button>
+            </div>
+        </div>
+
+        <article class="article-body">
+            <h1>{{ article.title }}</h1>
+            <div class="article-meta">
+                <span>Par {{ article.auteur }}</span>
+                <span>{{ article.createdDate | date:'dd MMMM yyyy' }}</span>
+                <span [ngClass]="article.visible ? 'badge-visible' : 'badge-hidden'">
+                    {{ article.visible ? 'Publié' : 'Brouillon' }}
+                </span>
+            </div>
+            <p class="article-summary">{{ article.summary }}</p>
+            <div class="article-content">{{ article.content }}</div>
+        </article>
+
+    </div>
+</ng-container>

@@ -1,9 +1,36 @@
-<nav class="navbar navbar-expand-lg"  [class.scrolled]="isScrolled">
+<nav class="navbar navbar-expand-lg"
+     [class.scrolled]="isScrolled"
+     [class.moderator-mode]="isModerator"
+     [class.advisor-mode]="isAdvisor">
 
   <a class="navbar-brand" routerLink="">
     <img src="../../assets/images/logo.webp" width="32" height="32" class="brand-logo" alt="Camerdiplome">
     <span class="brand-name">Camerdiplome</span>
   </a>
+
+  <!-- ─── Barre utilisateur — TOUJOURS VISIBLE (hors collapse) ─── -->
+  <div class="user-bar" *ngIf="isPrivilegedUser">
+
+    <div class="user-identity">
+      <span class="user-role-pill">
+        <i [ngClass]="userRoleIcon"></i>
+        <span class="role-text">{{ userRoleLabel }}</span>
+      </span>
+      <span class="user-name">{{ username }}</span>
+    </div>
+
+    <div class="user-actions">
+      <button class="user-btn btn-dashboard" (click)="goToDashboard()">
+        <i class="pi pi-th-large"></i>
+        <span class="btn-text">Dashboard</span>
+      </button>
+      <button class="user-btn btn-logout" (click)="signOut()">
+        <i class="pi pi-sign-out"></i>
+        <span class="btn-text">Déconnexion</span>
+      </button>
+    </div>
+
+  </div>
 
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
     aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -58,10 +85,11 @@
       <li class="nav-item">
         <a class="nav-link" routerLink="actualite/actues">Actualités</a>
       </li>
-      <li class="nav-item nav-item-cta">
+      <li class="nav-item nav-item-cta" *ngIf="!isPrivilegedUser">
         <a class="nav-link nav-cta" routerLink="register">Ajouter mon établissement</a>
       </li>
 
     </ul>
   </div>
+
 </nav>

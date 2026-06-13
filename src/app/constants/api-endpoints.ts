@@ -49,4 +49,10 @@ export const API = {
   TOP_NEWS_SLIDE:  `${base}/api/topNewsSlide`,
   COUNT_FORMATION: `${base}/api/countFomration`,
   ETS:             `${base}/api/ets`,
+  ADMIN_USERS:     `${base}/api/admin/users`,
+  ADMIN_ADVISORS:  `${base}/api/admin/advisors`,
+  ADVISOR: {
+    SCHOOL: `${base}/api/advisor/school`,
+    LEAD:   `${base}/api/advisor/lead`,
+  },
 } as const;

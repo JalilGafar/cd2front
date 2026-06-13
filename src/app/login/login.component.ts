@@ -48,7 +48,13 @@ export class LoginComponent implements OnInit {
         this.isLoginFailed = false;
         this.isLoggedIn = true;
         this.roles = this.tokenStorage.getUser().roles;
-        this.router.navigate(['/admin']);
+        if (this.roles.includes('ROLE_ADVISOR')) {
+          this.router.navigate(['/advisor/advisorStart']);
+        } else if (this.roles.includes('ROLE_MODERATOR')) {
+          this.router.navigate(['/moderator/modStart']);
+        } else {
+          this.router.navigate(['/admin']);
+        }
       },
       error: err => {
         this.errorMessage = err.error.message;

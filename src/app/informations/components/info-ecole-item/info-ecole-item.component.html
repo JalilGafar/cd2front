@@ -249,7 +249,9 @@
 
       <div class="avis-list">
         @for (item of avisList; track item.auteur_avis) {
-        <app-avis-single [avis]="item" />
+          @if (item.visible) {
+            <app-avis-single [avis]="item" />
+          }
         } @empty {
         <p class="no-items">Soyez le premier à donner votre avis !</p>
         }

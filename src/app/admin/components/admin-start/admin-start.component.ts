@@ -1,5 +1,6 @@
-import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
+import { Component, inject, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { Router } from '@angular/router';
 import { tokenStorageService } from '../../../service/token-storage.service';
 import { CommonModule } from '@angular/common';
 import { ListCampusComponent } from '../list-campus/list-campus.component';
@@ -12,6 +13,8 @@ import { AdminService } from '../../admin.service';
 import { BEHAVIOR } from '../../../model/behavior';
 import { ListArticleComponent } from '../list-article/list-article.component';
 import { ListAvisComponent } from '../list-avis/list-avis.component';
+import { ListModeratorsComponent } from '../list-moderators/list-moderators.component';
+import { ListAdvisorsComponent } from '../list-advisors/list-advisors.component';
 
 @Component({
   selector: 'app-admin-start',
@@ -25,6 +28,8 @@ import { ListAvisComponent } from '../list-avis/list-avis.component';
     ListUnivComponent,
     ListArticleComponent,
     ListAvisComponent,
+    ListModeratorsComponent,
+    ListAdvisorsComponent,
     SharedComponentModule
   ],
   templateUrl: './admin-start.component.html',
@@ -38,6 +43,8 @@ export class AdminStartComponent implements OnInit {
   showModeratorBoard = false;
   username!:string;
   
+  private router = inject(Router);
+
   constructor (
     private adminService: AdminService,
     private tokenStorageService: tokenStorageService,
@@ -68,6 +75,8 @@ export class AdminStartComponent implements OnInit {
   diplomeView!: boolean;
   articleView!: boolean;
   avisView!: boolean;
+  moderateurView!: boolean;
+  advisorView!: boolean;
 
   univClick(){
     this.univView = true;
@@ -137,6 +146,36 @@ export class AdminStartComponent implements OnInit {
     this.diplomeView = false;
     this.articleView = false;
     this.avisView = true;
+    this.moderateurView = false;
+  }
+
+  moderateurClick(){
+    this.univView = false;
+    this.campusView = false;
+    this.formationView = false;
+    this.ecoleView = false;
+    this.diplomeView = false;
+    this.articleView = false;
+    this.avisView = false;
+    this.moderateurView = true;
+    this.advisorView = false;
+  }
+
+  advisorClick(){
+    this.univView = false;
+    this.campusView = false;
+    this.formationView = false;
+    this.ecoleView = false;
+    this.diplomeView = false;
+    this.articleView = false;
+    this.avisView = false;
+    this.moderateurView = false;
+    this.advisorView = true;
+  }
+
+  signOut(): void {
+    this.tokenStorageService.signOut();
+    this.router.navigateByUrl('/login');
   }
 
   ngAfterViewInit(): void {

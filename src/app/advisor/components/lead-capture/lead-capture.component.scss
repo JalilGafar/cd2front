@@ -1,0 +1,113 @@
+@import 'design-system';
+
+.lc-form {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    padding: 4px 0;
+}
+
+.lc-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+}
+
+.lc-field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    label {
+        font-size: 0.8rem;
+        font-weight: 600;
+        color: $text-muted;
+        text-transform: uppercase;
+        letter-spacing: 0.03em;
+    }
+}
+
+.lc-required {
+    color: #e11d48;
+}
+
+.lc-input {
+    width: 100%;
+    padding: 8px 10px;
+    border: 1px solid $border;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    color: $text;
+    background: $bg-card;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    box-sizing: border-box;
+
+    &:focus {
+        outline: none;
+        border-color: $accent;
+        box-shadow: 0 0 0 3px $accent-bg;
+    }
+
+    &--error {
+        border-color: #e11d48;
+    }
+}
+
+.lc-select {
+    cursor: pointer;
+    appearance: auto;
+}
+
+.lc-error-hint {
+    font-size: 0.75rem;
+    color: #e11d48;
+}
+
+.lc-btn-submit {
+    margin-top: 4px;
+    padding: 10px 20px;
+    background: $accent;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    transition: background 0.15s, opacity 0.15s;
+    align-self: flex-start;
+
+    &:hover:not(:disabled) {
+        background: $accent-dark;
+    }
+
+    &:disabled {
+        opacity: 0.55;
+        cursor: not-allowed;
+    }
+}
+
+.lc-feedback {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 14px;
+    border-radius: 6px;
+    font-size: 0.9rem;
+    font-weight: 500;
+
+    &--success {
+        background: $accent-bg;
+        color: $accent;
+        border: 1px solid $accent-border;
+    }
+
+    &--error {
+        background: rgba(225, 29, 72, 0.07);
+        color: #e11d48;
+        border: 1px solid rgba(225, 29, 72, 0.2);
+    }
+}

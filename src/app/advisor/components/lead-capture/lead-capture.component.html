@@ -1,0 +1,123 @@
+<form [formGroup]="leadForm" (ngSubmit)="onSubmit()" class="lc-form" novalidate>
+
+    <!-- Prénom / Nom -->
+    <div class="lc-row">
+        <div class="lc-field">
+            <label for="lc-surname">Prénom <span class="lc-required">*</span></label>
+            <input id="lc-surname"
+                type="text"
+                formControlName="surname"
+                class="lc-input"
+                [class.lc-input--error]="leadForm.get('surname')?.invalid && leadForm.get('surname')?.touched"
+                placeholder="Prénom du prospect">
+            <span *ngIf="leadForm.get('surname')?.invalid && leadForm.get('surname')?.touched"
+                class="lc-error-hint">Champ requis</span>
+        </div>
+
+        <div class="lc-field">
+            <label for="lc-name">Nom <span class="lc-required">*</span></label>
+            <input id="lc-name"
+                type="text"
+                formControlName="name"
+                class="lc-input"
+                [class.lc-input--error]="leadForm.get('name')?.invalid && leadForm.get('name')?.touched"
+                placeholder="Nom de famille">
+            <span *ngIf="leadForm.get('name')?.invalid && leadForm.get('name')?.touched"
+                class="lc-error-hint">Champ requis</span>
+        </div>
+    </div>
+
+    <!-- Téléphone -->
+    <div class="lc-field">
+        <label for="lc-tel">Téléphone <span class="lc-required">*</span></label>
+        <input id="lc-tel"
+            type="tel"
+            formControlName="tel"
+            class="lc-input"
+            [class.lc-input--error]="leadForm.get('tel')?.invalid && leadForm.get('tel')?.touched"
+            placeholder="+237 6XX XXX XXX">
+        <span *ngIf="leadForm.get('tel')?.invalid && leadForm.get('tel')?.touched"
+            class="lc-error-hint">Champ requis</span>
+    </div>
+
+    <!-- Email / Statut -->
+    <div class="lc-row">
+        <div class="lc-field">
+            <label for="lc-email">Email</label>
+            <input id="lc-email"
+                type="email"
+                formControlName="email"
+                class="lc-input"
+                [class.lc-input--error]="leadForm.get('email')?.invalid && leadForm.get('email')?.touched"
+                placeholder="email@exemple.com">
+            <span *ngIf="leadForm.get('email')?.invalid && leadForm.get('email')?.touched"
+                class="lc-error-hint">Email invalide</span>
+        </div>
+
+        <div class="lc-field">
+            <label for="lc-statuts">Statut</label>
+            <select id="lc-statuts" formControlName="statuts" class="lc-input lc-select">
+                <option value="lycéen">Lycéen</option>
+                <option value="étudiant">Étudiant</option>
+                <option value="en activité">En activité</option>
+                <option value="sans emploi">Sans emploi</option>
+                <option value="inconnu">Inconnu</option>
+            </select>
+        </div>
+    </div>
+
+    <!-- Ville / Diplôme -->
+    <div class="lc-row">
+        <div class="lc-field">
+            <label for="lc-city">Ville cible</label>
+            <input id="lc-city"
+                type="text"
+                formControlName="city"
+                class="lc-input"
+                placeholder="ex : Douala">
+        </div>
+
+        <div class="lc-field">
+            <label for="lc-degree">Diplôme visé</label>
+            <input id="lc-degree"
+                type="text"
+                formControlName="degree"
+                class="lc-input"
+                placeholder="ex : BTS">
+        </div>
+    </div>
+
+    <!-- Domaine / Filière -->
+    <div class="lc-field">
+        <label for="lc-field">Domaine / Filière</label>
+        <input id="lc-field"
+            type="text"
+            formControlName="field"
+            class="lc-input"
+            placeholder="ex : Informatique">
+    </div>
+
+    <!-- Bouton -->
+    <button
+        type="submit"
+        class="lc-btn-submit"
+        [disabled]="leadForm.invalid || (leadSaving$ | async)">
+        <span *ngIf="!(leadSaving$ | async)">
+            <i class="pi pi-save"></i> Enregistrer le prospect
+        </span>
+        <span *ngIf="leadSaving$ | async">
+            <i class="pi pi-spin pi-spinner"></i> Enregistrement…
+        </span>
+    </button>
+
+    <!-- Succès -->
+    <div *ngIf="leadSuccess$ | async" class="lc-feedback lc-feedback--success">
+        <i class="pi pi-check-circle"></i> Lead enregistré avec succès
+    </div>
+
+    <!-- Erreur -->
+    <div *ngIf="(leadError$ | async) as errMsg" class="lc-feedback lc-feedback--error">
+        <i class="pi pi-times-circle"></i> {{ errMsg }}
+    </div>
+
+</form>

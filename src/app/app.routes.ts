@@ -1,5 +1,5 @@
 import { Routes } from '@angular/router';
-import { authGuard } from './service/auth.guard';
+import { roleGuard } from './service/role.guard';
 import { UsertestComponent } from './usertest/usertest.component';
 import { VommentsComponent } from './vomments/vomments.component';
 import { LandingPageComponent } from './landing-page/landing-page.component';
@@ -20,7 +20,9 @@ export const routes: Routes = [
     {path: 'register', component: RegisterComponent},
     { path: 'info', loadChildren: () => import('./informations/informations.module').then(m => m.InformationsModule) },
     { path: 'orientation', loadChildren: () => import('./orientation/orientation.module').then(m => m.OrientationModule) },
-    { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule), canActivate: [authGuard]  },
+    { path: 'admin', loadChildren: () => import('./admin/admin.module').then(m => m.AdminModule), canActivate: [roleGuard(['ROLE_ADMIN'])] },
+    { path: 'moderator', loadChildren: () => import('./moderator/moderator.module').then(m => m.ModeratorModule), canActivate: [roleGuard(['ROLE_MODERATOR'])] },
+    { path: 'advisor',   loadChildren: () => import('./advisor/advisor.module').then(m => m.AdvisorModule),     canActivate: [roleGuard(['ROLE_ADVISOR'])] },
     { path: 'actualite', loadChildren: () => import('./actualite/actualite.module').then(m => m.ActualiteModule) },
     { path: 'avis', loadChildren: () => import('./student-avis/student-avis.module').then(m => m.StudentAvisModule) },
     { path: 'login', component:LoginComponent},

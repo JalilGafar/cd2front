@@ -1,0 +1,60 @@
+<div class="avis-mod-container">
+    <h2>Modération des avis</h2>
+
+    <ng-container *ngIf="loading$ | async; else tableContent">
+        <p>Chargement des avis...</p>
+    </ng-container>
+
+    <ng-template #tableContent>
+        <p-table
+            [value]="(avis$ | async) || []"
+            [paginator]="true"
+            [rows]="20"
+            [showCurrentPageReport]="true"
+            currentPageReportTemplate="{first}–{last} sur {totalRecords} avis"
+            [tableStyle]="{'min-width': '60rem'}">
+
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="auteur_avis">Auteur <p-sortIcon field="auteur_avis" /></th>
+                    <th pSortableColumn="id_ecole">École ID <p-sortIcon field="id_ecole" /></th>
+                    <th pSortableColumn="note">Note <p-sortIcon field="note" /></th>
+                    <th>Avis</th>
+                    <th pSortableColumn="visible">Visible <p-sortIcon field="visible" /></th>
+                    <th>Actions</th>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="body" let-avis>
+                <tr [ngClass]="avis.visible ? '' : 'row-hidden'">
+                    <td>{{ avis.auteur_avis }}</td>
+                    <td>{{ avis.id_ecole }}</td>
+                    <td>{{ avis.note }}/5</td>
+                    <td class="avis-content">{{ avis.content | slice:0:80 }}{{ avis.content?.length > 80 ? '…' : '' }}</td>
+                    <td>
+                        <span [ngClass]="avis.visible ? 'badge-visible' : 'badge-hidden'">
+                            {{ avis.visible ? 'Visible' : 'Masqué' }}
+                        </span>
+                    </td>
+                    <td class="action-cell">
+                        <button pButton type="button"
+                            [icon]="avis.visible ? 'pi pi-eye-slash' : 'pi pi-eye'"
+                            [pTooltip]="avis.visible ? 'Masquer' : 'Rendre visible'"
+                            class="p-button-sm p-button-secondary"
+                            (click)="onToggleVisibility(avis)">
+                        </button>
+                        <button pButton type="button" icon="pi pi-trash"
+                            pTooltip="Supprimer"
+                            class="p-button-sm p-button-danger"
+                            (click)="onDelete(avis)">
+                        </button>
+                    </td>
+                </tr>
+            </ng-template>
+
+            <ng-template pTemplate="emptymessage">
+                <tr><td colspan="6">Aucun avis trouvé.</td></tr>
+            </ng-template>
+        </p-table>
+    </ng-template>
+</div>

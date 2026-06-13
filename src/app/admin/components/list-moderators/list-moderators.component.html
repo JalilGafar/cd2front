@@ -1,0 +1,43 @@
+<div class="moderators-container">
+    <div class="moderators-header">
+        <h2>Comptes Modérateurs</h2>
+        <button pButton type="button" label="Nouveau modérateur" icon="pi pi-user-plus" (click)="onAddModerator()"></button>
+    </div>
+
+    <ng-container *ngIf="loading$ | async; else tableContent">
+        <p>Chargement...</p>
+    </ng-container>
+
+    <ng-template #tableContent>
+        <p-table [value]="(moderators$ | async) || []" [tableStyle]="{'min-width': '40rem'}">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>ID</th>
+                    <th>Nom d'utilisateur</th>
+                    <th>Email</th>
+                    <th>Créé le</th>
+                    <th>Actions</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-moderator>
+                <tr>
+                    <td>{{ moderator.id }}</td>
+                    <td>{{ moderator.username }}</td>
+                    <td>{{ moderator.email }}</td>
+                    <td>{{ moderator.createdAt | date:'dd/MM/yyyy' }}</td>
+                    <td>
+                        <button pButton type="button" icon="pi pi-trash"
+                            class="p-button-danger p-button-sm"
+                            (click)="onDelete(moderator)">
+                        </button>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="5">Aucun modérateur enregistré.</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </ng-template>
+</div>

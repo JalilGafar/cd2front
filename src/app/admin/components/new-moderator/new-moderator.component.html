@@ -1,0 +1,50 @@
+<div class="new-moderator-container">
+    <h2>Créer un compte modérateur</h2>
+
+    <form [formGroup]="newModerator" (ngSubmit)="onSubmitForm()">
+
+        <div class="field">
+            <label for="username">Nom d'utilisateur *</label>
+            <input pInputText id="username" formControlName="username" placeholder="nom_utilisateur" />
+        </div>
+
+        <div class="field">
+            <label for="email">Email *</label>
+            <input pInputText id="email" type="email" formControlName="email" placeholder="email@exemple.com" />
+        </div>
+
+        <div class="field">
+            <label for="password">Mot de passe temporaire *</label>
+            <div class="password-row">
+                <input pInputText id="password" formControlName="password"
+                    placeholder="Cliquez sur Générer" readonly />
+                <button pButton type="button" label="Générer" icon="pi pi-refresh"
+                    (click)="generatePassword()">
+                </button>
+                <button pButton type="button"
+                    [label]="passwordCopied ? 'Copié !' : 'Copier'"
+                    [icon]="passwordCopied ? 'pi pi-check' : 'pi pi-copy'"
+                    [ngClass]="passwordCopied ? 'p-button-success' : 'p-button-secondary'"
+                    [disabled]="!generatedPassword"
+                    (click)="copyPassword()">
+                </button>
+            </div>
+            <small class="hint">
+                Ce mot de passe temporaire doit être transmis manuellement au modérateur.
+                Il pourra le modifier après sa première connexion.
+            </small>
+        </div>
+
+        <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+
+        <div class="form-actions">
+            <button pButton type="button" label="Annuler"
+                class="p-button-secondary" (click)="onCancel()">
+            </button>
+            <button pButton type="submit" label="Créer le compte" icon="pi pi-user-plus"
+                [disabled]="newModerator.invalid">
+            </button>
+        </div>
+
+    </form>
+</div>

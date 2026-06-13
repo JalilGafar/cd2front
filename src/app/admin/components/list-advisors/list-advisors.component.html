@@ -1,0 +1,45 @@
+<div class="advisors-container">
+    <div class="advisors-header">
+        <h2>Comptes Conseillers</h2>
+        <button pButton type="button" label="Nouveau conseiller" icon="pi pi-user-plus"
+            (click)="onAddAdvisor()">
+        </button>
+    </div>
+
+    <ng-container *ngIf="loading$ | async; else tableContent">
+        <p>Chargement...</p>
+    </ng-container>
+
+    <ng-template #tableContent>
+        <p-table [value]="(advisors$ | async) || []" [tableStyle]="{'min-width': '40rem'}">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th>ID</th>
+                    <th>Nom d'utilisateur</th>
+                    <th>Email</th>
+                    <th>Créé le</th>
+                    <th>Actions</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-advisor>
+                <tr>
+                    <td>{{ advisor.id }}</td>
+                    <td>{{ advisor.username }}</td>
+                    <td>{{ advisor.email }}</td>
+                    <td>{{ advisor.createdAt | date:'dd/MM/yyyy' }}</td>
+                    <td>
+                        <button pButton type="button" icon="pi pi-trash"
+                            class="p-button-danger p-button-sm"
+                            (click)="onDelete(advisor)">
+                        </button>
+                    </td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr>
+                    <td colspan="5">Aucun conseiller enregistré.</td>
+                </tr>
+            </ng-template>
+        </p-table>
+    </ng-template>
+</div>

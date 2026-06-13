@@ -1,0 +1,97 @@
+<div class="view-data-container">
+    <h2>Données (lecture seule)</h2>
+
+    <div class="sub-nav">
+        <button pButton type="button" label="Formations"
+            [ngClass]="formationsView ? 'p-button-primary' : 'p-button-outlined'"
+            class="p-button-sm" (click)="showFormations()">
+        </button>
+        <button pButton type="button" label="Écoles"
+            [ngClass]="ecolesView ? 'p-button-primary' : 'p-button-outlined'"
+            class="p-button-sm" (click)="showEcoles()">
+        </button>
+        <button pButton type="button" label="Universités"
+            [ngClass]="universView ? 'p-button-primary' : 'p-button-outlined'"
+            class="p-button-sm" (click)="showUniversites()">
+        </button>
+    </div>
+
+    <!-- Formations -->
+    <ng-container *ngIf="formationsView">
+        <p-table [value]="(formations$ | async) || []"
+            [paginator]="true" [rows]="15"
+            [tableStyle]="{'min-width': '40rem'}">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="id_form">ID <p-sortIcon field="id_form" /></th>
+                    <th pSortableColumn="nom_f">Nom <p-sortIcon field="nom_f" /></th>
+                    <th>Durée</th>
+                    <th>Coût</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-f>
+                <tr>
+                    <td>{{ f.id_form }}</td>
+                    <td>{{ f.nom_f }}</td>
+                    <td>{{ f.duree_f }}</td>
+                    <td>{{ f.cout_f }}</td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr><td colspan="4">Aucune formation.</td></tr>
+            </ng-template>
+        </p-table>
+    </ng-container>
+
+    <!-- Écoles -->
+    <ng-container *ngIf="ecolesView">
+        <p-table [value]="(ecoles$ | async) || []"
+            [paginator]="true" [rows]="15"
+            [tableStyle]="{'min-width': '40rem'}">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="id_ecol">ID <p-sortIcon field="id_ecol" /></th>
+                    <th pSortableColumn="nom_e">Nom <p-sortIcon field="nom_e" /></th>
+                    <th>Sigle</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-e>
+                <tr>
+                    <td>{{ e.id_ecol }}</td>
+                    <td>{{ e.nom_e }}</td>
+                    <td>{{ e.sigle_e }}</td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr><td colspan="3">Aucune école.</td></tr>
+            </ng-template>
+        </p-table>
+    </ng-container>
+
+    <!-- Universités -->
+    <ng-container *ngIf="universView">
+        <p-table [value]="(universites$ | async) || []"
+            [paginator]="true" [rows]="15"
+            [tableStyle]="{'min-width': '40rem'}">
+            <ng-template pTemplate="header">
+                <tr>
+                    <th pSortableColumn="id_univ">ID <p-sortIcon field="id_univ" /></th>
+                    <th pSortableColumn="nom_univ">Nom <p-sortIcon field="nom_univ" /></th>
+                    <th>Ville</th>
+                    <th>Type</th>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-u>
+                <tr>
+                    <td>{{ u.id_univ }}</td>
+                    <td>{{ u.nom_univ }}</td>
+                    <td>{{ u.ville_univ }}</td>
+                    <td>{{ u.type_univ }}</td>
+                </tr>
+            </ng-template>
+            <ng-template pTemplate="emptymessage">
+                <tr><td colspan="4">Aucune université.</td></tr>
+            </ng-template>
+        </p-table>
+    </ng-container>
+</div>

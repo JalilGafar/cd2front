@@ -1,0 +1,54 @@
+<div class="article-form-container" *ngIf="article$ | async">
+    <h2>Modifier l'article</h2>
+
+    <form [formGroup]="modifArticle" (ngSubmit)="onSubmitForm()">
+
+        <div class="field">
+            <label for="title">Titre *</label>
+            <input pInputText id="title" formControlName="title" />
+        </div>
+
+        <div class="field">
+            <label for="auteur">Auteur *</label>
+            <input pInputText id="auteur" formControlName="auteur" />
+        </div>
+
+        <div class="field">
+            <label for="summary">Résumé</label>
+            <textarea pInputTextarea id="summary" formControlName="summary" rows="3"></textarea>
+        </div>
+
+        <div class="field">
+            <label for="illustration">URL illustration</label>
+            <input pInputText id="illustration" formControlName="illustration" />
+        </div>
+
+        <div class="field">
+            <label for="sujets">Sujets</label>
+            <input pInputText id="sujets" formControlName="sujets" />
+        </div>
+
+        <div class="field">
+            <label for="keywords">Mots-clés</label>
+            <input pInputText id="keywords" formControlName="keywords" />
+        </div>
+
+        <div class="field">
+            <label for="content">Contenu</label>
+            <textarea pInputTextarea id="content" formControlName="content" rows="8"></textarea>
+        </div>
+
+        <div class="field-check">
+            <input type="checkbox" id="visible" formControlName="visible" />
+            <label for="visible">Publié</label>
+        </div>
+
+        <div *ngIf="errorMessage" class="error-message">{{ errorMessage }}</div>
+
+        <div class="form-actions">
+            <button pButton type="button" label="Annuler" class="p-button-secondary" (click)="onCancel()"></button>
+            <button pButton type="submit" label="Enregistrer" icon="pi pi-save" [disabled]="modifArticle.invalid"></button>
+        </div>
+
+    </form>
+</div>

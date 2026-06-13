@@ -1,5 +1,24 @@
 # CLAUDE.md — Camerdiplome Frontend
-> Généré le 2026-04-21 · Mis à jour le 2026-05-15. Source de vérité pour l'AI Architect du projet.
+> Généré le 2026-04-21 · Mis à jour le 2026-06-11. Source de vérité pour l'AI Architect du projet.
+
+---
+
+## ⚡ DERNIÈRES MODIFICATIONS — Module Modérateur (2026-06-11)
+
+| Fichier | Changement |
+|---|---|
+| `src/app/app.routes.ts` | Route `/moderator` (lazy) + `roleGuard(['ROLE_MODERATOR'])` ; route `/admin` passe de `authGuard` à `roleGuard(['ROLE_ADMIN'])` |
+| `src/app/login/login.component.ts` | Après login : redirect `/moderator/modStart` si `ROLE_MODERATOR`, sinon `/admin` |
+| `src/app/header/header.component.ts` | Détecte `ROLE_MODERATOR` via `tokenStorageService`, expose `isModerator`, `username`, méthodes `signOut()` et `toModerator()` |
+| `src/app/header/header.component.html` | Affiche `.moderator-bar` (badge nom + bouton Dashboard + bouton Déconnexion) si `isModerator` ; masque le CTA "Ajouter mon établissement" |
+| `src/app/header/header.component.scss` | Thème `moderator-mode` : fond `#1a0f2e` (violet foncé) ; styles `.mod-badge`, `.mod-dashboard`, `.mod-logout` |
+| `src/app/service/role.guard.ts` | Nouveau guard paramétrable `roleGuard(allowedRoles[])` remplaçant `authGuard` |
+| `src/app/moderator/` | Nouveau module complet (voir architecture) |
+| `src/app/admin/users-admin.service.ts` | Nouveau service pour la gestion des modérateurs |
+| `src/app/admin/models/moderator.model.ts` | Interface `Moderator { id, username, email, createdAt }` |
+| `src/app/admin/components/list-moderators/` | Tableau PrimeNG liste des modérateurs + bouton créer/supprimer |
+| `src/app/admin/components/new-moderator/` | Formulaire création modérateur avec génération de mot de passe aléatoire |
+| `src/app/constants/api-endpoints.ts` | Ajout `ADMIN_USERS: \`${base}/api/admin/users\`` |
 
 ---
 
@@ -32,7 +51,8 @@ cd2front/
 ├── src/
 │   ├── app/
 │   │   ├── [feature modules - lazy loaded]
-│   │   │   ├── admin/              ← CRUD backoffice complet
+│   │   │   ├── admin/              ← CRUD backoffice + gestion modérateurs
+│   │   │   ├── moderator/          ← Backoffice modérateur (avis, articles, lecture données)
 │   │   │   ├── actualite/          ← Blog/Actualités
 │   │   │   ├── informations/       ← Pages info diplômes/filières/écoles
 │   │   │   ├── orientation/        ← Tunnel orientation multi-étapes
@@ -43,8 +63,14 @@ cd2front/
 │   │   │   ├── header/ footer/     ← Layout
 │   │   │   ├── spiner/             ← Spinner global
 │   │   │   ├── about/ faq/ legal/  ← Pages statiques
-│   │   │   └── condition/ politique/
-│   │   ├── service/                ← Services core (auth, user, token, spinner)
+│   │   │   ├── condition/ politique/
+│   │   │   ├── orientation-v2/     ← Tunnel orientation simplifié (3 phases, standalone, OnPush)
+│   │   │   ├── top-news-slide/     ← Carrousel actualités (WIP, non routé)
+│   │   │   ├── top-video-slide/    ← Carrousel vidéos (WIP, non routé)
+│   │   │   ├── headmsg/            ← Composant message header (WIP, non routé)
+│   │   │   ├── home/               ← Composant page home alternatif (WIP, non routé)
+│   │   │   └── start/              ← Composant start (WIP, non routé)
+│   │   ├── service/                ← Services core (auth, user, token, spinner, seo)
 │   │   ├── interceptors/           ← AuthInterceptor (actif), LoadingInterceptor
 │   │   ├── model/                  ← Interfaces/classes métier partagées
 │   │   ├── shared/                 ← SharedModule (pipes, composants réutilisables)
@@ -113,7 +139,7 @@ cd2front/
 | `/orientation/dernierDiplome` | `orientation/components/dernierdiplome/` | Public | CSR | Étape 7 : dernier diplôme |
 | `/orientation/contact` | `orientation/components/contact/` | Public | CSR | Étape 8 : contact (nom, tel, email) |
 | `/orientation/resultats` | `orientation/components/resultats/` | Public | CSR | Résultats de recherche |
-| `/admin` | `admin/admin.module.ts` | **Protégé (authGuard)** | CSR | Backoffice admin (lazy) |
+| `/admin` | `admin/admin.module.ts` | **Protégé (`roleGuard(['ROLE_ADMIN'])`)** | CSR | Backoffice admin (lazy) |
 | `/admin` (default) | `admin/components/admin-start/` | Admin | CSR | Dashboard admin |
 | `/admin/new-campus` | `admin/components/new-campus/` | Admin | CSR | Créer un campus |
 | `/admin/new-ecole` | `admin/components/new-ecole/` | Admin | CSR | Créer une école |
@@ -121,8 +147,15 @@ cd2front/
 | `/admin/new-formation` | `admin/components/new-formation/` | Admin | CSR | Créer une formation |
 | `/admin/new-universite` | `admin/components/new-univ/` | Admin | CSR | Créer une université |
 | `/admin/new-article` | `admin/components/new-article/` | Admin | CSR | Créer un article |
+| `/admin/moderateurs` | `admin/components/list-moderators/` | Admin | CSR | Liste des comptes modérateurs |
+| `/admin/new-moderateur` | `admin/components/new-moderator/` | Admin | CSR | Créer un compte modérateur (mot de passe généré par l'admin) |
 | `/admin/:id` | `admin/components/single-*/` | Admin | CSR | Détail d'une ressource |
 | `/admin/modif-*/:id` | `admin/components/modif-*/` | Admin | CSR | Modification d'une ressource |
+| `/moderator` | `moderator/moderator.module.ts` | **Protégé (`roleGuard(['ROLE_MODERATOR'])`)** | CSR | Backoffice modérateur (lazy) |
+| `/moderator/modStart` | `moderator/components/moderator-start/` | Modérateur | CSR | Dashboard modérateur — 3 onglets : Avis, Articles, Données |
+| `/moderator/new-article` | `moderator/components/new-article-mod/` | Modérateur | CSR | Créer un article |
+| `/moderator/article/:id` | `moderator/components/single-article-mod/` | Modérateur | CSR | Détail d'un article |
+| `/moderator/modif-article/:id` | `moderator/components/modif-article-mod/` | Modérateur | CSR | Modifier un article |
 | `/actualite` | `actualite/actualite.module.ts` | Public | SSR | Module news (lazy) |
 | `/actualite/actues` | `actualite/components/actu/` | Public | SSR | Liste des actualités |
 | `/actualite/blog/:subject` | `actualite/components/single-actu/` | Public | SSR | Article de blog par sujet |
@@ -131,6 +164,7 @@ cd2front/
 | `/avis/avisSchool/:id` | `student-avis/components/avis-school/` | Public | CSR | Avis pour une école |
 | `/avis/monAvis/:id` | `student-avis/components/mon-avis/` | Public | CSR | Formulaire avis étudiant |
 | `/avis/merci` | `student-avis/components/merci/` | Public | CSR | Page confirmation avis |
+| `/trouver-ma-formation` | `orientation-v2/orientation-v2.component.ts` | Public | CSR | Tunnel orientation v2 simplifié (3 phases) |
 | `**` | — | — | — | Redirect vers `/` |
 
 ---
@@ -147,6 +181,8 @@ cd2front/
 - **Chemin** : `src/app/header/header.component.ts`
 - **Rôle** : Barre de navigation principale avec toggle mobile
 - **Standalone** : Oui
+- **Moderator mode** : Au `ngOnInit`, lit `tokenStorageService.getUser()` — si le rôle `ROLE_MODERATOR` est présent, active `isModerator = true` et expose `username`. Le template applique la classe CSS `.moderator-mode` (fond violet `#1a0f2e`) et affiche `.moderator-bar` : badge nom, bouton Dashboard (`toModerator()` → `/moderator`), bouton Déconnexion (`signOut()`). Le CTA "Ajouter mon établissement" est masqué quand `isModerator` est vrai.
+- **Dépendances injectées** : `tokenStorageService` (inject), `Router` (inject)
 
 ### LandingPageComponent
 - **Chemin** : `src/app/landing-page/landing-page.component.ts`
@@ -173,6 +209,32 @@ cd2front/
 ### AdminStartComponent
 - **Chemin** : `src/app/admin/components/admin-start/`
 - **Rôle** : Dashboard d'entrée admin, liste les entités et accès rapides CRUD
+- **Notable** : Bouton "Modérateurs" (conditionnel `showAdminBoard`) → onglet `ListModeratorsComponent`. Bouton "Déconnexion" (`signOut()` → `/login`). `Router` injecté via `inject(Router)` (champ de classe) — PAS en paramètre de constructeur (incompatibilité Vite + Angular 17 `emitDecoratorMetadata`).
+
+### ModeratorStartComponent
+- **Chemin** : `src/app/moderator/components/moderator-start/`
+- **Rôle** : Dashboard modérateur — affiche le nom d'utilisateur connecté, 3 onglets : Avis (défaut), Articles, Données
+- **Sous-composants** : `ModerationAvisComponent`, `ListArticleModComponent`, `ViewDataModComponent`
+
+### ModerationAvisComponent
+- **Chemin** : `src/app/moderator/components/moderation-avis/`
+- **Rôle** : Table paginée des avis étudiants (20/page, triable). Toggle visibilité (badge vert/rouge) + suppression. Lignes masquées à `opacity: 0.5`.
+
+### ListArticleModComponent
+- **Chemin** : `src/app/moderator/components/list-article-mod/`
+- **Rôle** : Table des articles avec badges Publié/Brouillon. Sélection d'une ligne → `moderator/article/:id`. Bouton "Nouvel article".
+
+### ViewDataModComponent
+- **Chemin** : `src/app/moderator/components/view-data-mod/`
+- **Rôle** : Lecture seule des données de référence (sous-onglets : Formations, Écoles, Universités). Aucune action de modification.
+
+### ListModeratorsComponent
+- **Chemin** : `src/app/admin/components/list-moderators/`
+- **Rôle** : Tableau admin des comptes modérateurs. Colonnes : ID, username, email, createdAt, bouton supprimer.
+
+### NewModeratorComponent
+- **Chemin** : `src/app/admin/components/new-moderator/`
+- **Rôle** : Formulaire création d'un compte modérateur. Le mot de passe est généré automatiquement (12 chars, charset sans ambiguïté) — champ `readonly` + bouton copier. L'admin transmet le mot de passe manuellement au modérateur.
 
 ### NewEcoleComponent / ModifEcoleComponent
 - **Chemin** : `src/app/admin/components/new-ecole/` et `modif-ecole/`
@@ -188,6 +250,15 @@ cd2front/
 - **Chemin** : `src/app/student-avis/components/avis-school/`
 - **Rôle** : Page principale des avis pour une école — affiche notes moyennes et liste d'avis
 - **Route param** : `id` (id école)
+
+### OrientationV2Component
+- **Chemin** : `src/app/orientation-v2/orientation-v2.component.ts`
+- **Rôle** : Tunnel orientation simplifié en 3 phases linéaires (A: ville → B: domaine → C: résultats)
+- **Route** : `/trouver-ma-formation` (standalone, `ChangeDetectionStrategy.OnPush`)
+- **Lead capture** : Affiche 3 résultats librement, le reste est verrouillé derrière un formulaire (prénom + téléphone + email). POST vers `/api/result` avant de débloquer.
+- **Filtre diplôme** : PrimNG Dropdown côté client sur les résultats, bloqué tant que le lead n'est pas soumis
+- **APIs** : `GET /api/cyties`, `GET /api/field/page`, `GET /api/result` (+ POST lead)
+- **Notable** : `ChangeDetectionStrategy.OnPush` — toujours appeler `cdr.markForCheck()` après un changement d'état
 
 ---
 
@@ -208,6 +279,8 @@ Service (BehaviorSubject) → Observable$ → Component (async pipe / subscribe)
 | Service | BehaviorSubjects | Responsabilité |
 |---|---|---|
 | `AdminService` | `_formation$`, `_universite$`, `_ecole$`, `_diplome$`, `_campus$`, `_categ$`, `_domaine$`, `_article$`, `_avis$`, `_loading$` | Cache et CRUD de toutes les entités admin |
+| `UsersAdminService` | `_moderators$`, `_loading$` | CRUD des comptes modérateurs (endpoint `/api/admin/users`) |
+| `ModeratorService` | `_articles$`, `_avis$`, `_formations$`, `_ecoles$`, `_universites$`, `_loading$` | Données du module modérateur (articles CRUD, avis modération, données lecture seule) |
 | `OrientationService` | `_cyties$`, `_school$`, `_domaine$`, `_degree$`, `_loading$` | Données du tunnel + profil utilisateur (`initialUser`) |
 | `AvisService` | `_ecoleAvis$` | Cache liste écoles avec leurs notes |
 | `SpinerService` | `loadingSubject` | État global du spinner HTTP |
@@ -296,6 +369,30 @@ Service (BehaviorSubject) → Observable$ → Component (async pipe / subscribe)
 | `getCursusForSchool(id)` | GET | `/api/ecoleavis/cursus?idSchool={id}` | `Cursus[]` |
 | `getOneCursus(idDip)` | GET | `/api/ecoleavis/diplo?idDip={id}` | `Cursus[]` |
 
+### UsersAdminService (`src/app/admin/users-admin.service.ts`)
+
+| Méthode | HTTP | Endpoint | Payload | Retour |
+|---|---|---|---|---|
+| `getModeratorsFromServer()` | GET | `API.ADMIN_USERS` | — | `Moderator[]` |
+| `createModerator(form)` | POST | `API.ADMIN_USERS` | `{ username, email, password }` | Confirmation |
+| `deleteModerator(id)` | DELETE | `API.ADMIN_USERS/${id}` | — | — |
+
+### ModeratorService (`src/app/moderator/moderator.service.ts`)
+
+| Méthode | HTTP | Endpoint | Payload | Retour |
+|---|---|---|---|---|
+| `getArticlesFromServer()` | GET | `API.ACTUALITE.BASE` | — | `Article[]` |
+| `getArticleById(id)` | — | BehaviorSubject | — | `Article \| undefined` |
+| `addNewArticle(form)` | POST | `API.ACTUALITE.BASE` | `Article` | — |
+| `editArticle(form)` | PUT | `API.ACTUALITE.BASE` | `Article` | — |
+| `deleteArticle(id)` | DELETE | `API.ACTUALITE.BASE?idArti=` | — | — |
+| `getAvisFromServer()` | GET | `API.AVIS` | — | `Avis[]` |
+| `toggleAvisVisibility(id, visible)` | PUT | `API.AVIS` | `{ id_avis, visible }` | — |
+| `deleteAvis(id)` | DELETE | `API.AVIS?idAvis=` | — | — |
+| `getFormationsFromServer()` | GET | `API.FORMATIONS` | — | `Formation[]` |
+| `getEcolesFromServer()` | GET | `API.ECOLES` | — | `Ecole[]` |
+| `getUniversitesFromServer()` | GET | `API.UNIVERSITES` | — | `Universite[]` |
+
 ### ActuService (`src/app/actualite/actu.service.ts`)
 
 | Méthode | HTTP | Endpoint | Retour |
@@ -320,6 +417,31 @@ Service (BehaviorSubject) → Observable$ → Component (async pipe / subscribe)
 | `getAllTopNews()` | GET | `/api/topNewsSlide` | `TopNews[]` |
 | `countFormation()` | GET | `/api/countFomration` | `counter[]` |
 
+### SeoService (`src/app/service/seo.service.ts`)
+
+Service centralisé pour tous les tags SEO. Fournit `providedIn: 'root'`.
+
+| Méthode | Description |
+|---|---|
+| `setSeo(config: SeoConfig)` | Pose `<title>`, `description`, `keywords`, Open Graph complet, Twitter Card et `<link rel="canonical">` |
+| `setSchemaJsonLd(schema, key)` | Injecte un script `application/ld+json` dans le `<head>` (remplace s'il existe déjà) |
+| `setBreadcrumb(items)` | Injecte un `BreadcrumbList` Schema.org |
+| `setJsonLd(items)` | Alias déprécié vers `setBreadcrumb()` |
+
+**Interface** :
+```typescript
+interface SeoConfig {
+  title: string;       // requis
+  description: string; // requis, tronqué à 160 chars
+  url: string;         // requis, relatif (ex: '/info/ecole/...')
+  image?: string;      // défaut: https://www.camerdiplome.com/assets/images/home.webp
+  type?: string;       // défaut: 'website'
+  keywords?: string;
+}
+```
+
+**Composants qui l'utilisent** : `LandingPageComponent`, `AboutComponent`, `FaqComponent`, `LegalComponent`, `PolitiqueComponent`, `ConditionComponent`, `InfoEcoleComponent`, `InfoEcoleItemComponent`, `InfoDomaineItemComponent`, `InfoFormationItemComponent`, `InfoMetierComponent`, `InfoMetierItemComponent`, `SingleActuComponent`.
+
 ---
 
 ## 7. AUTHENTIFICATION
@@ -339,7 +461,9 @@ Service (BehaviorSubject) → Observable$ → Component (async pipe / subscribe)
    tokenStorageService.saveUser(data)
        → sessionStorage["auth_user"] = JSON.stringify(data)
        ↓
-5. router.navigate(['/admin'])  ← (avant : window.location.reload)
+5. Redirection selon le rôle :
+   - roles.includes('ROLE_MODERATOR') → router.navigate(['/moderator/modStart'])
+   - sinon → router.navigate(['/admin'])
        ↓
 6. AppComponent lit sessionStorage pour initialiser isLoggedIn et roles
 ```
@@ -361,9 +485,13 @@ Flags utilisés dans l'UI : `showAdminBoard`, `showModeratorBoard`.
 
 ### Sécurité — POINTS CRITIQUES
 
-> **Routes admin PROTÉGÉES depuis le 2026-05-09**
+> **Routes admin ET modérateur PROTÉGÉES**
 > - `AuthInterceptor` **enregistré** dans `app.config.ts` via `withInterceptorsFromDi()` — le token JWT est envoyé automatiquement dans tous les headers HTTP.
-> - `authGuard` (fonctionnel `CanActivateFn`) appliqué sur la route `/admin` → redirige vers `/login` si non connecté. Fichier : `src/app/service/auth.guard.ts`.
+> - `roleGuard(allowedRoles[])` (fonctionnel `CanActivateFn` paramétrable) appliqué sur `/admin` et `/moderator`. Fichier : `src/app/service/role.guard.ts`. Redirige vers `/login` si pas de token, vers `/` si token présent mais rôle insuffisant.
+>   ```
+>   canActivate: [roleGuard(['ROLE_ADMIN'])]       ← route /admin
+>   canActivate: [roleGuard(['ROLE_MODERATOR'])]   ← route /moderator
+>   ```
 
 > **Risque résiduel**
 > - Token stocké en sessionStorage : vulnérable aux attaques XSS. Plus sécurisé : cookie HttpOnly.
@@ -446,11 +574,23 @@ Cela est possible grâce à `stylePreprocessorOptions.includePaths: ["src/styles
 | `.cd-highlight` | Bloc citation avec bordure gauche verte |
 | `.animate-fade-up` | Animation `fadeInUp` 0.5s |
 
-#### Composants utilisant le design-system
+#### Composants utilisant le design-system (15 fichiers)
 
-- `landing-page.component.scss` — `@import 'design-system'`
-- `about.component.scss` — `@import 'design-system'`
-- `info-metier.component.scss` — `@import 'design-system'`
+- `landing-page.component.scss`
+- `about.component.scss`
+- `orientation-v2.component.scss`
+- `info-metier.component.scss`
+- `info-metier-item.component.scss`
+- `info-ecole-item.component.scss`
+- `mon-avis.component.scss`
+- `avis-start.component.scss`
+- `single-actu.component.scss`
+- `actu.component.scss`
+- `register.component.scss`
+- `legal.component.scss`
+- `condition.component.scss`
+- `politique.component.scss`
+- `informations-style.module.scss`
 
 > Pour tout nouveau composant public, ajouter `@import 'design-system'` en première ligne du `.scss`.
 
@@ -522,7 +662,7 @@ Dialog, TreeSelect, FileUpload, Rating, InputTextarea, OrderList, RadioButton, E
 
 1. ~~**`AuthInterceptor` non enregistré**~~ **CORRIGÉ (2026-05-09)** : `AuthInterceptor` enregistré dans `app.config.ts` via `withInterceptorsFromDi()`. Le token JWT est désormais envoyé automatiquement dans les headers HTTP.
 
-2. ~~**Aucun route guard sur `/admin`**~~ **CORRIGÉ (2026-05-09)** : `authGuard` (fonctionnel `CanActivateFn`) créé dans `src/app/service/auth.guard.ts` et appliqué sur la route `/admin` dans `app.routes.ts`.
+2. ~~**Aucun route guard sur `/admin`**~~ **CORRIGÉ (2026-06-11)** : `roleGuard(allowedRoles[])` (fonctionnel `CanActivateFn` paramétrable) créé dans `src/app/service/role.guard.ts`, appliqué sur `/admin` (`ROLE_ADMIN`) et `/moderator` (`ROLE_MODERATOR`). Remplace l'ancien `authGuard` qui ne vérifiait que la présence du token sans contrôle de rôle.
 
 3. **Token en sessionStorage** : Vulnérable aux attaques XSS. Plus sécurisé : cookie HttpOnly.
 
@@ -538,7 +678,7 @@ Dialog, TreeSelect, FileUpload, Rating, InputTextarea, OrderList, RadioButton, E
 
 7. **Services LoaderService et SpinerService redondants** : Deux services pour la même responsabilité (loading state). `LoaderService` semble être l'ancien, `SpinerService` l'actuel.
 
-8. **`GeneralService`** (`src/app/general.service.ts`) : Service legacy apparent, semble inutilisé.
+8. **`GeneralService`** (`src/app/general.service.ts`) : Service legacy, encore importé dans `student-avis/components/avis-start/`. À évaluer avant suppression.
 
 ### Performance
 
@@ -639,15 +779,34 @@ Dialog, TreeSelect, FileUpload, Rating, InputTextarea, OrderList, RadioButton, E
 | Interface de formulaire | suffixe `Form` | `EtsForm` |
 | Pipe | camelCase | `myfilter.pipe.ts` → `MyFilterPipe` |
 
-### Authentification — état actuel (2026-05-09)
+### Authentification — état actuel (2026-06-11)
 
 L'authentification est **entièrement opérationnelle** :
 
-- **Guard** : `src/app/service/auth.guard.ts` — guard fonctionnel (`CanActivateFn`) appliqué sur `/admin` dans `app.routes.ts`. Redirige vers `/login` si pas de token.
-- **Interceptor** : `AuthInterceptor` enregistré dans `app.config.ts` via `provideHttpClient(withInterceptorsFromDi())`. Le token JWT est injecté automatiquement dans tous les headers `Authorization`.
-- **Login** : Après connexion réussie, `router.navigate(['/admin'])` (plus de `window.location.reload`).
+- **Guard** : `src/app/service/role.guard.ts` — guard paramétrable `roleGuard(allowedRoles[])` appliqué sur `/admin` et `/moderator`. Redirige vers `/login` si pas de token, vers `/` si rôle insuffisant.
+- **Interceptor** : `AuthInterceptor` enregistré dans `app.config.ts` via `provideHttpClient(withInterceptorsFromDi())`. Le token JWT est injecté automatiquement dans tous les headers `x-access-token`.
+- **Login** : Après connexion réussie, redirection basée sur le rôle : `ROLE_MODERATOR` → `/moderator/modStart`, sinon → `/admin`.
 
-Pour protéger une nouvelle route, ajouter `canActivate: [authGuard]` dans la définition de route.
+Pour protéger une nouvelle route par rôle :
+```typescript
+{ path: 'ma-route', ..., canActivate: [roleGuard(['ROLE_ADMIN'])] }
+{ path: 'autre', ..., canActivate: [roleGuard(['ROLE_MODERATOR'])] }
+{ path: 'mixte', ..., canActivate: [roleGuard(['ROLE_ADMIN', 'ROLE_MODERATOR'])] }
+```
+
+### Règle DI Angular 17+ avec Vite
+
+**Ne jamais injecter `Router` en paramètre de constructeur dans les composants standalone** — Vite ne génère pas `emitDecoratorMetadata`, ce qui provoque `TS-992003`. Utiliser systématiquement `inject()` en champ de classe :
+
+```typescript
+// ✅ Correct (Angular 17+ avec Vite)
+private router = inject(Router);
+
+// ❌ Incorrect pour les composants standalone avec Vite
+constructor(private router: Router) {}
+```
+
+Cette règle s'applique à `Router`. Les services internes (AdminService, tokenStorageService) fonctionnent en constructeur car ils ont `@Injectable()` avec les métadonnées appropriées.
 
 ---
 
@@ -690,7 +849,7 @@ La stratégie SEO repose sur trois piliers :
 2. **Prerendering statique** — génération des pages au build pour les URL connues
 3. **Title/Meta service** — injection dynamique des balises `<title>` et `<meta>` par composant
 
-Il n'y a **pas** de balises Open Graph (`og:`), pas de balises Twitter Card, pas de liens `canonical`, et pas de données structurées JSON-LD. Ces éléments sont des axes d'amélioration identifiés.
+Depuis la création du `SeoService` (`src/app/service/seo.service.ts`), les balises Open Graph, Twitter Card, liens `canonical` et données structurées JSON-LD sont gérées de manière centralisée. 13 composants l'utilisent désormais.
 
 ---
 
@@ -777,40 +936,38 @@ Tous ces composants font le `setTitle()` dans le **constructeur** avec une valeu
 
 ---
 
-### Balises meta utilisées
-
-Seules trois balises `<meta>` sont gérées dynamiquement :
+### Balises meta gérées via SeoService
 
 | Balise | Gérée | Note |
 |---|---|---|
-| `<title>` | ✅ | Via `Title.setTitle()` |
-| `<meta name="description">` | ✅ partiellement | Via `Meta.updateTag()` |
-| `<meta name="keywords">` | ✅ partiellement | Via `Meta.updateTag()` |
-| `<meta property="og:title">` | ❌ absent | Aucun composant |
-| `<meta property="og:description">` | ❌ absent | Aucun composant |
-| `<meta property="og:image">` | ❌ absent | Aucun composant |
-| `<meta name="twitter:*">` | ❌ absent | Aucun composant |
-| `<link rel="canonical">` | ❌ absent | Aucun composant |
-| JSON-LD / schema.org | ❌ absent | Aucun composant |
+| `<title>` | ✅ | Via `SeoService.setSeo()` → `Title.setTitle()` |
+| `<meta name="description">` | ✅ | Via `SeoService.setSeo()`, tronqué à 160 chars |
+| `<meta name="keywords">` | ✅ partiellement | Via `SeoService.setSeo()` si fourni |
+| `<meta property="og:title">` | ✅ | Via `SeoService.setSeo()` |
+| `<meta property="og:description">` | ✅ | Via `SeoService.setSeo()` |
+| `<meta property="og:image">` | ✅ | Via `SeoService.setSeo()` (défaut: `home.webp`) |
+| `<meta property="og:url">` | ✅ | Via `SeoService.setSeo()` |
+| `<meta name="twitter:card">` | ✅ | `summary_large_image` |
+| `<meta name="twitter:title/description/image">` | ✅ | Via `SeoService.setSeo()` |
+| `<link rel="canonical">` | ✅ | Via `SeoService.setSeo()` |
+| JSON-LD BreadcrumbList | ✅ | Via `SeoService.setBreadcrumb()` |
 
 ---
 
-### Patron d'implémentation recommandé pour les pages de détail manquantes
+### Patron d'implémentation recommandé pour les pages SEO
 
-Pour `InfoDomaineItemComponent`, `InfoFormationItemComponent`, `InfoMetierItemComponent`, appliquer le même pattern que `InfoEcoleItemComponent` :
+Utiliser `SeoService.setSeo()` — ne plus injecter `Title`/`Meta` directement :
 
 ```typescript
-// Dans le constructeur
-constructor(
-  private titleService: Title,
-  private meta: Meta,
-  // ... autres injections
-) {}
+constructor(private seo: SeoService) {}
 
-// Méthode appelée après le fetch des données
 private initMeta(): void {
-  this.titleService.setTitle(`${this.domaine.nom_dom} au Cameroun | Camerdiplome`);
-  this.meta.updateTag({ name: 'description', content: `Formations en ${this.domaine.nom_dom}...` });
+  this.seo.setSeo({
+    title:       `${this.domaine.nom_dom} au Cameroun | Camerdiplome`,
+    description: `Formations en ${this.domaine.nom_dom} dans les meilleures écoles du Cameroun...`,
+    url:         `/info/domaine/${this.slug}/${this.id}`,
+    keywords:    `${this.domaine.nom_dom}, formation, Cameroun`,
+  });
 }
 ```
 
