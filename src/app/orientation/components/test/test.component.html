@@ -1,5 +1,8 @@
+<!-- ═══════════════════════════════ PHASE INTRO ═══════════════════════════════ -->
+<ng-container *ngIf="phase === 'intro'">
+
 <!-- ===== HERO SECTION ===== -->
-<section class="hero-riasec d-flex flex-column">
+<section id="test-riasec-top" class="hero-riasec d-flex flex-column">
   <div class="flex-grow-1 d-flex align-items-center justify-content-center px-3 pb-5 pt-4">
     <div class="text-center text-white w-100" style="max-width: 640px;">
 
@@ -33,12 +36,9 @@
         </div>
       </div>
 
-      <!-- Boutons -->
-      <button class="btn btn-hero-start btn-lg px-5 mb-3 d-block mx-auto">
+      <!-- Bouton -->
+      <button type="button" class="btn btn-hero-start btn-lg px-5 mb-3 d-block mx-auto" (click)="demarrerTest()">
         Commencer le test
-      </button>
-      <button class="btn btn-danger btn-sm px-4 d-block mx-auto">
-        Simulation rapide (admin)
       </button>
       <p class="mt-4 small hero-muted">
         Répondez spontanément, il n'y a pas de bonnes ou mauvaises réponses.
@@ -71,7 +71,7 @@
         </a>
       </li>
       <li class="breadcrumb-item">
-        <a href="/tests">Tests Professionnels</a>
+        <span>Tests Professionnels</span>
       </li>
       <li class="breadcrumb-item active" aria-current="page">Test RIASEC</li>
     </ol>
@@ -88,7 +88,7 @@
       Le <strong>test RIASEC</strong>, également appelé test de Holland, est un outil d'orientation
       professionnelle développé par le psychologue américain <strong>John L. Holland</strong> dans
       les années 1950. C'est l'un des modèles les plus utilisés au monde pour identifier les intérêts
-      professionnels et trouver les <a href="/guide-metiers">métiers</a> adaptés à chaque personnalité.
+      professionnels et trouver les métiers adaptés à chaque personnalité.
     </p>
     <p>
       Le modèle repose sur l'idée que les individus et les environnements de travail peuvent être
@@ -101,58 +101,58 @@
     <h3 class="font-weight-bold mt-5 mb-4">Les 6 profils du modèle RIASEC</h3>
     <div class="row">
       <div class="col-12 col-md-6 mb-3">
-        <a href="/test-orientation/profil-realiste" class="profil-card d-flex align-items-center p-3 rounded">
+        <div class="profil-card d-flex align-items-center p-3 rounded">
           <div class="profil-badge bg-danger mr-3">R</div>
           <div>
             <div class="font-weight-bold text-dark">Réaliste</div>
-            <small class="text-muted">30 métiers</small>
+            <small class="text-muted">Concret, manuel, technique</small>
           </div>
-        </a>
+        </div>
       </div>
       <div class="col-12 col-md-6 mb-3">
-        <a href="/test-orientation/profil-investigateur" class="profil-card d-flex align-items-center p-3 rounded">
+        <div class="profil-card d-flex align-items-center p-3 rounded">
           <div class="profil-badge riasec-i mr-3">I</div>
           <div>
             <div class="font-weight-bold text-dark">Investigateur</div>
-            <small class="text-muted">15 métiers</small>
+            <small class="text-muted">Analytique, scientifique</small>
           </div>
-        </a>
+        </div>
       </div>
       <div class="col-12 col-md-6 mb-3">
-        <a href="/test-orientation/profil-artistique" class="profil-card d-flex align-items-center p-3 rounded">
+        <div class="profil-card d-flex align-items-center p-3 rounded">
           <div class="profil-badge bg-warning mr-3">A</div>
           <div>
             <div class="font-weight-bold text-dark">Artistique</div>
-            <small class="text-muted">17 métiers</small>
+            <small class="text-muted">Créatif, original</small>
           </div>
-        </a>
+        </div>
       </div>
       <div class="col-12 col-md-6 mb-3">
-        <a href="/test-orientation/profil-social" class="profil-card d-flex align-items-center p-3 rounded">
+        <div class="profil-card d-flex align-items-center p-3 rounded">
           <div class="profil-badge bg-primary mr-3">S</div>
           <div>
             <div class="font-weight-bold text-dark">Social</div>
-            <small class="text-muted">22 métiers</small>
+            <small class="text-muted">À l'écoute, aidant</small>
           </div>
-        </a>
+        </div>
       </div>
       <div class="col-12 col-md-6 mb-3">
-        <a href="/test-orientation/profil-entreprenant" class="profil-card d-flex align-items-center p-3 rounded">
+        <div class="profil-card d-flex align-items-center p-3 rounded">
           <div class="profil-badge bg-success mr-3">E</div>
           <div>
             <div class="font-weight-bold text-dark">Entreprenant</div>
-            <small class="text-muted">24 métiers</small>
+            <small class="text-muted">Persuasif, meneur</small>
           </div>
-        </a>
+        </div>
       </div>
       <div class="col-12 col-md-6 mb-3">
-        <a href="/test-orientation/profil-conventionnel" class="profil-card d-flex align-items-center p-3 rounded">
+        <div class="profil-card d-flex align-items-center p-3 rounded">
           <div class="profil-badge riasec-c mr-3">C</div>
           <div>
             <div class="font-weight-bold text-dark">Conventionnel</div>
-            <small class="text-muted">39 métiers</small>
+            <small class="text-muted">Organisé, méthodique</small>
           </div>
-        </a>
+        </div>
       </div>
     </div>
 
@@ -165,15 +165,13 @@
     </p>
     <p>
       À la fin du test, vous obtenez votre <strong>profil RIASEC personnalisé</strong> avec un
-      graphique radar, une description détaillée de vos 3 types dominants, et une sélection de
-      métiers compatibles parmi nos <a href="/guide-metiers">41 fiches métiers</a>. Combinez
-      ces résultats avec un <a href="/bilan-de-competences">bilan de compétences</a> pour un
-      accompagnement complet de votre projet professionnel.
+      graphique radar, une description de vos types dominants, et une sélection de métiers
+      compatibles parmi nos fiches métiers.
     </p>
 
     <!-- Bouton CTA -->
     <div class="text-center mt-5 mb-2">
-      <button class="btn btn-riasec-cta btn-lg px-5">
+      <button type="button" class="btn btn-riasec-cta btn-lg px-5" (click)="demarrerTest()">
         Commencer le test RIASEC
       </button>
     </div>
@@ -194,35 +192,17 @@
       Nos guides complets
     </h3>
     <div class="row">
-      <div class="col-12 col-md-6 mb-3">
-        <a href="/bilan-de-competences" class="guide-card d-flex align-items-center p-3 rounded border">
-          <div class="guide-badge guide-bc mr-3">BC</div>
-          <div>
-            <div class="font-weight-semibold text-dark">Bilan de Compétences</div>
-            <small class="text-muted">Guide complet du bilan</small>
-          </div>
-        </a>
-      </div>
-      <div class="col-12 col-md-6 mb-3">
-        <a href="/reconversion-professionnelle" class="guide-card d-flex align-items-center p-3 rounded border">
-          <div class="guide-badge guide-rp mr-3">RP</div>
-          <div>
-            <div class="font-weight-semibold text-dark">Reconversion Professionnelle</div>
-            <small class="text-muted">Changer de carrière</small>
-          </div>
-        </a>
-      </div>
-      <div class="col-12 col-md-6 mb-3">
-        <a href="/guide-metiers" class="guide-card d-flex align-items-center p-3 rounded border">
+      <div class="col-12 col-md-4 mb-3">
+        <a routerLink="/info/metier" class="guide-card d-flex align-items-center p-3 rounded border">
           <div class="guide-badge guide-gm mr-3">GM</div>
           <div>
             <div class="font-weight-semibold text-dark">Guide des Métiers</div>
-            <small class="text-muted">11 045 fiches métiers</small>
+            <small class="text-muted">Explorez nos fiches métiers</small>
           </div>
         </a>
       </div>
-      <div class="col-12 col-md-6 mb-3">
-        <a href="/test-orientation" class="guide-card d-flex align-items-center p-3 rounded border">
+      <div class="col-12 col-md-4 mb-3">
+        <a href="#test-riasec-top" class="guide-card d-flex align-items-center p-3 rounded border">
           <div class="guide-badge guide-to mr-3">TO</div>
           <div>
             <div class="font-weight-semibold text-dark">Test d'Orientation</div>
@@ -230,6 +210,87 @@
           </div>
         </a>
       </div>
+      <div class="col-12 col-md-4 mb-3">
+        <a routerLink="/trouver-ma-formation" class="guide-card d-flex align-items-center p-3 rounded border">
+          <div class="guide-badge guide-tf mr-3">TF</div>
+          <div>
+            <div class="font-weight-semibold text-dark">Trouver ma formation</div>
+            <small class="text-muted">Écoles &amp; formations au Cameroun</small>
+          </div>
+        </a>
+      </div>
     </div>
   </div>
 </div>
+
+</ng-container>
+
+<!-- ═══════════════════════════════ PHASE QUIZ ═══════════════════════════════ -->
+<section *ngIf="phase === 'quiz'" class="quiz-riasec py-5">
+  <div class="container" style="max-width: 640px;">
+
+    <div class="quiz-progress-wrapper mb-4">
+      <div class="quiz-progress-bar">
+        <div class="quiz-progress-fill" [style.width.%]="progression"></div>
+      </div>
+      <p class="quiz-progress-label">
+        Question {{ questionActuelle + 1 }} / {{ totalQuestions }}
+      </p>
+    </div>
+
+    <div class="quiz-carte">
+      <p class="quiz-question">{{ question.texte }}</p>
+
+      <div class="quiz-echelle" role="group" aria-label="Votre degré d'accord">
+        <button
+          *ngFor="let valeur of echelle"
+          type="button"
+          class="quiz-echelle-btn"
+          [class.quiz-echelle-btn--active]="reponses[question.id] === valeur"
+          (click)="repondre(valeur)">
+          <span class="quiz-echelle-chiffre">{{ valeur }}</span>
+          <span class="quiz-echelle-libelle">{{ libellesEchelle[valeur] }}</span>
+        </button>
+      </div>
+
+      <button
+        *ngIf="peutReculer"
+        type="button"
+        class="quiz-btn-precedent"
+        (click)="questionPrecedente()">
+        <i class="bi bi-arrow-left" aria-hidden="true"></i> Question précédente
+      </button>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════════════════════ PHASE RÉSULTAT ═══════════════════════════════ -->
+<section *ngIf="phase === 'resultat'" class="resultat-riasec py-5">
+  <div class="container" style="max-width: 720px;">
+
+    <div class="resultat-entete text-center mb-4">
+      <span class="resultat-badge" [ngClass]="'riasec-badge-' + typeDominant">{{ typeDominant }}</span>
+      <h1 class="mt-3">Vous êtes plutôt <strong>{{ dimensionsInfo[typeDominant].nom }}</strong></h1>
+      <p class="resultat-code">Votre code RIASEC : <strong>{{ codeRiasec }}</strong></p>
+      <p class="resultat-description">{{ dimensionsInfo[typeDominant].description }}</p>
+    </div>
+
+    <div class="resultat-radar-wrapper mb-4">
+      <p-chart
+        type="radar"
+        [data]="radarData"
+        [options]="radarOptions"
+        [style]="{width: '100%', maxWidth: '420px', margin: '0 auto', display: 'block'}">
+      </p-chart>
+    </div>
+
+    <div class="text-center">
+      <button type="button" class="btn-riasec-cta" (click)="refaireLeTest()">
+        <i class="bi bi-arrow-counterclockwise" aria-hidden="true"></i>
+        Refaire le test
+      </button>
+    </div>
+
+  </div>
+</section>

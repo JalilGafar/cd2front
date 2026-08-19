@@ -195,3 +195,147 @@
     font-size: 1rem;
   }
 }
+
+/* ===== NOUVELLE CARTE GUIDE "Trouver ma formation" ===== */
+.guide-tf { background-color: #0ea5e9; }
+
+/* ===== QUIZ ===== */
+.quiz-riasec {
+  min-height: 60vh;
+  background: #f9fafb;
+}
+
+.quiz-progress-bar {
+  height: 8px;
+  background: #e5e7eb;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.quiz-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #7c3aed, #4f46e5);
+  transition: width 0.3s ease;
+}
+
+.quiz-progress-label {
+  text-align: center;
+  color: #6b7280;
+  font-size: 0.875rem;
+  margin-top: 8px;
+}
+
+.quiz-carte {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+  padding: 32px 24px;
+}
+
+.quiz-question {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #1f2937;
+  text-align: center;
+  margin-bottom: 28px;
+}
+
+.quiz-echelle {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.quiz-echelle-btn {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  padding: 14px 18px;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  background: #fff;
+  text-align: left;
+  transition: border-color 0.15s, background-color 0.15s;
+
+  &:hover {
+    border-color: #c4b5fd;
+    background: #f5f3ff;
+  }
+
+  &--active {
+    border-color: #7c3aed;
+    background: #f5f3ff;
+  }
+}
+
+.quiz-echelle-chiffre {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  min-width: 28px;
+  border-radius: 50%;
+  background: #ede9fe;
+  color: #6d28d9;
+  font-weight: 700;
+  font-size: 0.875rem;
+}
+
+.quiz-echelle-libelle {
+  color: #374151;
+}
+
+.quiz-btn-precedent {
+  display: block;
+  margin: 24px auto 0;
+  background: none;
+  border: none;
+  color: #6d28d9;
+  font-size: 0.875rem;
+
+  &:hover {
+    text-decoration: underline;
+  }
+}
+
+/* ===== RÉSULTAT ===== */
+.resultat-riasec {
+  min-height: 60vh;
+}
+
+.resultat-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  font-size: 1.75rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.riasec-badge-R { background-color: #dc3545; }
+.riasec-badge-I { background-color: #8b5cf6; }
+.riasec-badge-A { background-color: #ffc107; }
+.riasec-badge-S { background-color: #007bff; }
+.riasec-badge-E { background-color: #28a745; }
+.riasec-badge-C { background-color: #f97316; }
+
+.resultat-code {
+  color: #6d28d9;
+  font-weight: 600;
+}
+
+.resultat-description {
+  color: #4b5563;
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+.resultat-radar-wrapper {
+  display: flex;
+  justify-content: center;
+}
