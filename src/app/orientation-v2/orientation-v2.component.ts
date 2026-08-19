@@ -22,6 +22,7 @@ import {
 import { DropdownModule } from 'primeng/dropdown';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
+import { PhoneNumberUtil } from 'google-libphonenumber';
 
 import { environment } from '../../environments/environment';
 
@@ -29,6 +30,10 @@ import { environment } from '../../environments/environment';
 
 interface Ville {
   ville_cam: string;
+}
+
+interface Categ {
+  nom_cat: string;
 }
 
 interface Domaine {
@@ -79,6 +84,23 @@ type Phase = 'A' | 'B' | 'C';
 const VILLES_COURANTES: string[] = [
   'Yaoundé', 'Douala', 'Bafoussam', 'Bamenda', 'Ngaoundéré', 'Garoua',
 ];
+
+const STATUTS_OPTIONS: OptionSelect[] = [
+  { label: 'Lycéen / Collégien', value: 'lycéen' },
+  { label: 'Étudiant',           value: 'étudiant' },
+  { label: 'En activité',        value: 'en activité' },
+  { label: 'Sans emploi',        value: 'sans emploi' },
+];
+
+const DIPLOME_INCONNU_OPTION: OptionSelect = { label: 'Je ne sais pas encore', value: 'Indécis' };
+
+const ANNEES_OPTIONS: OptionSelect[] = Array.from(
+  { length: 2009 - 1970 + 1 },
+  (_, i) => {
+    const annee = String(2009 - i);
+    return { label: annee, value: annee };
+  }
+);
 
 const ICONES_PARENT: Record<string, string> = {
   'Agriculture & Environnement':       'bi-tree',
@@ -220,9 +242,18 @@ export class OrientationV2Component implements OnInit {
   // ── Lead capture ──────────────────────────────────────────────────────
   leadSoumis     = false;
   leadChargement = false;
+  leadNom        = '';
   leadPrenom     = '';
   leadTelObj: any = null;
   leadEmail      = '';
+  leadErreur     = false;
+  leadDiplome: OptionSelect | null = null;
+  leadStatut: OptionSelect | null  = null;
+  leadAnnee: OptionSelect | null   = null;
+
+  readonly statutsOptions = STATUTS_OPTIONS;
+  readonly anneesOptions  = ANNEES_OPTIONS;
+  categoriesOptions: OptionSelect[] = [DIPLOME_INCONNU_OPTION];
 
   // ── Filtre bloqué (tentative de filtre avant soumission lead) ─────────
   filtreBloque = false;
@@ -291,7 +322,7 @@ export class OrientationV2Component implements OnInit {
   }
 
   get afficherFormulaireLead(): boolean {
-    return this.resultatsFiltres.length > 3 && !this.leadSoumis;
+    return !this.leadSoumis;
   }
 
   // ── Pagination ────────────────────────────────────────────────────────
@@ -335,6 +366,7 @@ export class OrientationV2Component implements OnInit {
 
   ngOnInit(): void {
     this.chargerVilles();
+    this.chargerCategories();
     if (isPlatformBrowser(this.platformId)) {
           window.scrollTo({ top: 0, behavior: 'smooth' });
         }
@@ -354,6 +386,16 @@ export class OrientationV2Component implements OnInit {
         this.chargement = false;
         this.cdr.markForCheck();
       },
+    });
+  }
+
+  chargerCategories(): void {
+    this.http.get<Categ[]>(`${this.apiBase}/api/categ`).subscribe({
+      next: (data) => {
+        this.categoriesOptions = [DIPLOME_INCONNU_OPTION, ...data.map(c => ({ label: c.nom_cat, value: c.nom_cat }))];
+        this.cdr.markForCheck();
+      },
+      error: () => this.cdr.markForCheck(),
     });
   }
 
@@ -387,6 +429,7 @@ export class OrientationV2Component implements OnInit {
     this.domaineSelectionne        = domaine;
     this.tousDomainesSelectionnes  = false;
     this.phase                     = 'C';
+    this.scrollVersHautPage();
     this.chargerResultats();
     this.cdr.markForCheck();
   }
@@ -395,8 +438,15 @@ export class OrientationV2Component implements OnInit {
     this.domaineSelectionne        = null;
     this.tousDomainesSelectionnes  = true;
     this.phase                     = 'C';
+    this.scrollVersHautPage();
     this.chargerResultats();
     this.cdr.markForCheck();
+  }
+
+  private scrollVersHautPage(): void {
+    if (isPlatformBrowser(this.platformId)) {
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
   }
 
   // ── Phase C ──────────────────────────────────────────────────────────
@@ -479,9 +529,14 @@ export class OrientationV2Component implements OnInit {
     this.diplomesOptions   = [];
     this.diplomeFiltre     = null;
     this.leadSoumis        = false;
+    this.leadErreur        = false;
+    this.leadNom           = '';
     this.leadPrenom        = '';
     this.leadTelObj        = null;
     this.leadEmail         = '';
+    this.leadDiplome       = null;
+    this.leadStatut        = null;
+    this.leadAnnee         = null;
     this.filtreBloque      = false;
     this.pageActuelle      = 1;
     this.erreur                   = null;
@@ -492,33 +547,64 @@ export class OrientationV2Component implements OnInit {
 
   // ── Lead capture ──────────────────────────────────────────────────────
 
+  private readonly phoneUtil = PhoneNumberUtil.getInstance();
+
+  // Les métadonnées embarquées dans google-libphonenumber (dépendance de
+  // ngx-intl-tel-input) ne couvrent pas encore les tranches mobiles 63X/64X
+  // attribuées par l'ART au Cameroun : isValidNumber() les rejette à tort.
+  // On retombe sur un contrôle de forme (9 chiffres, préfixe fixe "2" ou
+  // mobile "6") plutôt que sur la liste d'opérateurs figée de la lib.
+  private numeroCamerounaisPlausible(nationalNumber: string): boolean {
+    return /^[26]\d{8}$/.test(nationalNumber);
+  }
+
+  telephoneInvalide(): boolean {
+    if (!this.leadTelObj?.e164Number) return false;
+    try {
+      const parsed = this.phoneUtil.parse(this.leadTelObj.e164Number);
+      if (this.phoneUtil.isValidNumber(parsed)) return false;
+      if (this.leadTelObj.countryCode === 'CM') {
+        return !this.numeroCamerounaisPlausible(String(parsed.getNationalNumber()));
+      }
+      return true;
+    } catch {
+      return true;
+    }
+  }
+
   soumettreLead(): void {
-    if (!this.leadPrenom.trim() || !this.leadTelObj) return;
+    if (
+      !this.leadNom.trim() || !this.leadPrenom.trim() || !this.leadTelObj || this.telephoneInvalide() ||
+      !this.leadDiplome || !this.leadStatut
+    ) return;
     this.leadChargement = true;
+    this.leadErreur     = false;
 
     const payload = {
-      name:     '',
+      name:     this.leadNom.trim(),
       surname:  this.leadPrenom.trim(),
-      statuts:  '',
+      statuts:  this.leadStatut.value,
       level:    '',
-      bornDate: 0,
+      bornDate: this.leadAnnee?.value ?? 0,
       email:    this.leadEmail.trim(),
       tel:      this.leadTelObj?.e164Number ?? this.leadTelObj?.internationalNumber ?? '',
       country:  '',
       city:     this.villeSelectionnee,
-      degree:   '',
+      degree:   this.leadDiplome.value,
       field:    this.domaineSelectionne?.nom_dom ?? '',
     };
 
-    this.http.post(`${this.apiBase}/api/result`, payload).subscribe({
-      next:  () => this.debloquerApresLead(),
-      // En cas d'erreur réseau on débloque quand même pour ne pas bloquer l'utilisateur
-      error: () => this.debloquerApresLead(),
+    this.http.post(`${this.apiBase}/api/result`, payload).subscribe({ 
+      next:  () => this.debloquerApresLead(false),
+      // L'enregistrement a échoué (réseau/serveur) : on débloque quand même l'accès
+      // aux résultats pour ne pas bloquer l'utilisateur, mais sans afficher un faux succès.
+      error: () => this.debloquerApresLead(true),
     });
   }
 
-  private debloquerApresLead(): void {
+  private debloquerApresLead(echec: boolean): void {
     this.leadSoumis     = true;
+    this.leadErreur     = echec;
     this.leadChargement = false;
     this.pageActuelle   = 1;
     this.cdr.markForCheck();
@@ -544,7 +630,7 @@ export class OrientationV2Component implements OnInit {
       `Bonjour, je souhaite avoir plus d'informations sur le diplôme "${r.nom_dip}" ` +
       `à l'école ${r.sigle_e || r.nom_e} dans la ville de ${r.ville_cam}.`
     );
-    window.open(`https://wa.me/237679197112?text=${msg}`, '_blank', 'noopener,noreferrer');
+    window.open(`https://wa.me/237676476096?text=${msg}`, '_blank', 'noopener,noreferrer');
   }
 
   allerEcole(r: ResultatFormation): void {

@@ -322,9 +322,18 @@
       id="resultats-contenu">
 
       <!-- Bandeau de confirmation (après soumission lead) -->
-      <div *ngIf="leadSoumis" @successBannerIn role="alert" class="banniere-succes">
+      <div *ngIf="leadSoumis && !leadErreur" @successBannerIn role="alert" class="banniere-succes">
         <i class="bi bi-check-circle-fill" aria-hidden="true"></i>
         Merci <strong>{{ leadPrenom }}</strong> ! Un conseiller vous contactera pour vous accompagner dans votre choix.
+      </div>
+
+      <!-- Bandeau d'avertissement (enregistrement du lead échoué) -->
+      <div *ngIf="leadSoumis && leadErreur" @successBannerIn role="alert" class="bloc-erreur">
+        <i class="bi bi-exclamation-triangle-fill" aria-hidden="true"></i>
+        <span>
+          Vos coordonnées n'ont pas pu être enregistrées suite à un problème technique.
+          Voici tout de même vos résultats — vous pouvez contacter un conseiller directement via WhatsApp.
+        </span>
       </div>
 
       <!-- ── AVANT soumission lead ──────────────────────────────────────── -->
@@ -343,11 +352,11 @@
           </article>
         </div>
 
-        <!-- Zone de verrouillage (si plus de 3 résultats) -->
-        <div *ngIf="nombreRestants > 0" class="zone-lock">
+        <!-- Zone de capture lead (toujours affichée tant que le lead n'est pas soumis) -->
+        <div *ngIf="afficherFormulaireLead" class="zone-lock">
 
-          <!-- Cartes fantômes -->
-          <div class="fantomes-conteneur" aria-hidden="true">
+          <!-- Cartes fantômes (uniquement s'il reste des formations verrouillées) -->
+          <div *ngIf="nombreRestants > 0" class="fantomes-conteneur" aria-hidden="true">
             <div class="grille-formations">
               <div
                 *ngFor="let r of cartesFantomes"
@@ -366,10 +375,13 @@
             [class.carte-lead--highlight]="filtreBloque"
             aria-label="Formulaire pour accéder à toutes les formations">
 
-            <h2 class="lead-titre">
+            <h2 class="lead-titre" *ngIf="nombreRestants > 0">
               Voir les <strong>{{ nombreRestants }}</strong>
               autre{{ nombreRestants > 1 ? 's' : '' }}
               formation{{ nombreRestants > 1 ? 's' : '' }}
+            </h2>
+            <h2 class="lead-titre" *ngIf="nombreRestants === 0">
+              Recevez un accompagnement gratuit
             </h2>
             <p class="lead-description">
               Recevez la liste complète et bénéficiez de l'accompagnement gratuit
@@ -377,6 +389,23 @@
             </p>
 
             <form (ngSubmit)="soumettreLead()" class="form-lead" novalidate>
+
+              <div class="form-group">
+                <label for="lead-nom">
+                  Nom <span class="requis" aria-label="champ requis">*</span>
+                </label>
+                <input
+                  id="lead-nom"
+                  type="text"
+                  class="form-control"
+                  [(ngModel)]="leadNom"
+                  name="leadNom"
+                  placeholder="Votre nom"
+                  required
+                  aria-required="true"
+                  autocomplete="family-name"
+                />
+              </div>
 
               <div class="form-group">
                 <label for="lead-prenom">
@@ -406,18 +435,68 @@
                   [enablePlaceholder]="true"
                   [searchCountryFlag]="true"
                   [selectFirstCountry]="true"
-                  [phoneValidation]="true"
+                  [phoneValidation]="false"
                   [maxLength]="15"
                   name="leadTel"
                   [(ngModel)]="leadTelObj"
                   #telCtrl="ngModel"
                 ></ngx-intl-tel-input>
                 <span
-                  *ngIf="telCtrl.invalid && (telCtrl.dirty || telCtrl.touched)"
+                  *ngIf="telephoneInvalide() && (telCtrl.dirty || telCtrl.touched)"
                   class="champ-erreur">
                   <i class="bi bi-exclamation-circle" aria-hidden="true"></i>
                   Numéro invalide pour le pays sélectionné
                 </span>
+              </div>
+
+              <div class="form-group">
+                <label for="lead-diplome">
+                  Diplôme cible <span class="requis" aria-label="champ requis">*</span>
+                </label>
+                <p-dropdown
+                  inputId="lead-diplome"
+                  [options]="categoriesOptions"
+                  [(ngModel)]="leadDiplome"
+                  name="leadDiplome"
+                  optionLabel="label"
+                  placeholder="Sélectionnez un diplôme"
+                  styleClass="lead-dropdown"
+                  aria-label="Diplôme cible"
+                  [required]="true">
+                </p-dropdown>
+              </div>
+
+              <div class="form-group">
+                <label for="lead-statut">
+                  Statut <span class="requis" aria-label="champ requis">*</span>
+                </label>
+                <p-dropdown
+                  inputId="lead-statut"
+                  [options]="statutsOptions"
+                  [(ngModel)]="leadStatut"
+                  name="leadStatut"
+                  optionLabel="label"
+                  placeholder="Sélectionnez votre statut"
+                  styleClass="lead-dropdown"
+                  aria-label="Statut"
+                  [required]="true">
+                </p-dropdown>
+              </div>
+
+              <div class="form-group">
+                <label for="lead-annee">
+                  Année de naissance <span class="optionnel">(optionnel)</span>
+                </label>
+                <p-dropdown
+                  inputId="lead-annee"
+                  [options]="anneesOptions"
+                  [(ngModel)]="leadAnnee"
+                  name="leadAnnee"
+                  optionLabel="label"
+                  placeholder="Sélectionnez une année"
+                  styleClass="lead-dropdown"
+                  aria-label="Année de naissance">
+                </p-dropdown>
               </div>
 
               <div class="form-group">
@@ -438,10 +517,10 @@
               <button
                 type="submit"
                 class="btn-debloquer"
-                [disabled]="leadChargement || !leadPrenom.trim() || !leadTelObj || telCtrl.invalid">
+                [disabled]="leadChargement || !leadNom.trim() || !leadPrenom.trim() || !leadTelObj || telephoneInvalide() || !leadDiplome || !leadStatut">
                 <ng-container *ngIf="!leadChargement">
-                  <i class="bi bi-unlock-fill" aria-hidden="true"></i>
-                  Débloquer toutes les formations
+                  <i class="bi" [class.bi-unlock-fill]="nombreRestants > 0" [class.bi-send-fill]="nombreRestants === 0" aria-hidden="true"></i>
+                  {{ nombreRestants > 0 ? 'Débloquer toutes les formations' : 'Voir mes résultats' }}
                 </ng-container>
                 <p-progressSpinner
                   *ngIf="leadChargement"
@@ -650,13 +729,13 @@
           Contact établissement
         </h3>
         <div class="modal-contact-items">
-          <a
+          <!-- <a
             *ngIf="formationSelectionnee.tel_1_e"
             [href]="'tel:' + formationSelectionnee.tel_1_e"
             class="modal-contact-item">
             <i class="bi bi-telephone-fill" aria-hidden="true"></i>
             {{ formationSelectionnee.tel_1_e }}
-          </a>
+          </a> -->
           <a
             *ngIf="formationSelectionnee.email_e"
             [href]="'mailto:' + formationSelectionnee.email_e"

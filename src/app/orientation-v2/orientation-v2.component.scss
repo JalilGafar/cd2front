@@ -645,6 +645,33 @@ $spinner-color:   $accent;
     }
   }
 
+  // Dropdowns du formulaire de capture lead — alignés sur les inputs voisins
+  .lead-dropdown {
+    width: 100%;
+
+    .p-dropdown {
+      width: 100%;
+      border-radius: 0.375rem;
+      border: 1.5px solid $border;
+      background: $bg-card;
+
+      &:hover { border-color: $accent; }
+
+      &.p-focus {
+        border-color: $accent;
+        box-shadow: 0 0 0 3px $accent-bg;
+      }
+
+      .p-dropdown-label {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.9rem;
+        color: $text;
+
+        &.p-placeholder { color: $text-muted; }
+      }
+    }
+  }
+
   // ngx-intl-tel-input — intégration dans le design system
   .iti {
     width: 100%;
