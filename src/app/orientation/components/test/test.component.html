@@ -285,12 +285,146 @@
       </p-chart>
     </div>
 
-    <div class="text-center">
-      <button type="button" class="btn-riasec-cta" (click)="refaireLeTest()">
-        <i class="bi bi-arrow-counterclockwise" aria-hidden="true"></i>
-        Refaire le test
-      </button>
-    </div>
+    <!-- ── AVANT soumission lead : détails verrouillés + formulaire ─────── -->
+    <ng-container *ngIf="!leadSoumis">
+
+      <div class="zone-verrouillee mb-4" aria-hidden="true">
+        <div class="verrou-flou">
+          <div class="verrou-flou-item" *ngFor="let d of typesSecondaires">
+            <h3>{{ dimensionsInfo[d].nom }}</h3>
+            <p>{{ dimensionsInfo[d].descriptionLongue }}</p>
+          </div>
+        </div>
+        <div class="verrou-masque"></div>
+        <div class="verrou-message">
+          <i class="bi bi-lock-fill" aria-hidden="true"></i>
+          Remplissez le formulaire pour débloquer votre rapport complet et vos métiers suggérés
+        </div>
+      </div>
+
+      <div class="carte-lead-riasec">
+        <h2 class="lead-titre">Recevez votre rapport complet</h2>
+        <p class="lead-description">
+          Description détaillée de votre profil, métiers suggérés parmi nos fiches, et
+          accompagnement gratuit par un conseiller.
+        </p>
+
+        <form (ngSubmit)="soumettreLead()" class="form-lead" novalidate>
+
+          <div class="form-group">
+            <label for="riasec-nom">Nom <span class="requis" aria-label="champ requis">*</span></label>
+            <input id="riasec-nom" type="text" class="form-control" [(ngModel)]="leadNom" name="leadNom"
+              placeholder="Votre nom" required aria-required="true" autocomplete="family-name" />
+          </div>
+
+          <div class="form-group">
+            <label for="riasec-prenom">Prénom <span class="requis" aria-label="champ requis">*</span></label>
+            <input id="riasec-prenom" type="text" class="form-control" [(ngModel)]="leadPrenom" name="leadPrenom"
+              placeholder="Votre prénom" required aria-required="true" autocomplete="given-name" />
+          </div>
+
+          <div class="form-group">
+            <label>Téléphone <span class="requis" aria-label="champ requis">*</span></label>
+            <ngx-intl-tel-input
+              [cssClass]="'form-control lead-tel-input'"
+              [preferredCountries]="['cm', 'fr', 'sn', 'ci', 'ga', 'cd', 'ng']"
+              [enableAutoCountrySelect]="false"
+              [enablePlaceholder]="true"
+              [searchCountryFlag]="true"
+              [selectFirstCountry]="true"
+              [phoneValidation]="false"
+              [maxLength]="15"
+              name="leadTel"
+              [(ngModel)]="leadTelObj"
+              #telCtrl="ngModel"
+            ></ngx-intl-tel-input>
+            <span *ngIf="telephoneInvalide() && (telCtrl.dirty || telCtrl.touched)" class="champ-erreur">
+              <i class="bi bi-exclamation-circle" aria-hidden="true"></i>
+              Numéro invalide pour le pays sélectionné
+            </span>
+          </div>
+
+          <div class="form-group">
+            <label for="riasec-statut">Statut <span class="optionnel">(optionnel)</span></label>
+            <p-dropdown inputId="riasec-statut" [options]="statutsOptions" [(ngModel)]="leadStatut"
+              name="leadStatut" optionLabel="label" placeholder="Sélectionnez votre statut"
+              styleClass="lead-dropdown" aria-label="Statut"></p-dropdown>
+          </div>
+
+          <div class="form-group">
+            <label for="riasec-annee">Année de naissance <span class="optionnel">(optionnel)</span></label>
+            <p-dropdown inputId="riasec-annee" [options]="anneesOptions" [(ngModel)]="leadAnnee"
+              name="leadAnnee" optionLabel="label" placeholder="Sélectionnez une année"
+              styleClass="lead-dropdown" aria-label="Année de naissance"></p-dropdown>
+          </div>
+
+          <div class="form-group">
+            <label for="riasec-email">Email <span class="optionnel">(optionnel)</span></label>
+            <input id="riasec-email" type="email" class="form-control" [(ngModel)]="leadEmail" name="leadEmail"
+              placeholder="votre@email.com" autocomplete="email" />
+          </div>
+
+          <button type="submit" class="btn-debloquer"
+            [disabled]="leadChargement || !leadNom.trim() || !leadPrenom.trim() || !leadTelObj || telephoneInvalide()">
+            <ng-container *ngIf="!leadChargement">
+              <i class="bi bi-unlock-fill" aria-hidden="true"></i>
+              Débloquer mon rapport complet
+            </ng-container>
+            <p-progressSpinner *ngIf="leadChargement" [style]="{'width':'22px','height':'22px'}"></p-progressSpinner>
+          </button>
+
+        </form>
+
+        <p class="mention-confidentialite">
+          <i class="bi bi-shield-check" aria-hidden="true"></i>
+          Vos informations sont confidentielles et ne sont jamais revendues.
+        </p>
+      </div>
+
+    </ng-container>
+
+    <!-- ── APRÈS soumission lead : rapport complet débloqué ─────────────── -->
+    <ng-container *ngIf="leadSoumis">
+
+      <div *ngIf="leadErreur" role="alert" class="bloc-erreur mb-4">
+        <i class="bi bi-exclamation-triangle-fill" aria-hidden="true"></i>
+        <span>
+          Vos coordonnées n'ont pas pu être enregistrées suite à un problème technique.
+          Voici tout de même votre résultat complet.
+        </span>
+      </div>
+
+      <div class="resultat-details mb-4">
+        <div class="resultat-detail-item" *ngFor="let d of codeRiasecLettres">
+          <h3>
+            <span class="mini-badge" [ngClass]="'riasec-badge-' + d">{{ d }}</span>
+            {{ dimensionsInfo[d].nom }}
+          </h3>
+          <p>{{ dimensionsInfo[d].descriptionLongue }}</p>
+        </div>
+      </div>
+
+      <div *ngIf="metiersSuggeres.length > 0" class="metiers-suggeres mb-4">
+        <h2 class="metiers-titre">Métiers qui pourraient vous correspondre</h2>
+        <div class="metiers-grille">
+          <a *ngFor="let m of metiersSuggeres" [routerLink]="['/info/metier', m.id_metier]" class="metier-carte">
+            {{ m.titre }}
+          </a>
+        </div>
+      </div>
+
+      <div class="resultat-ctas">
+        <a routerLink="/trouver-ma-formation" class="btn-riasec-cta">
+          <i class="bi bi-compass-fill" aria-hidden="true"></i>
+          Trouver ma formation
+        </a>
+        <button type="button" class="btn-outline-neutral-riasec" (click)="refaireLeTest()">
+          <i class="bi bi-arrow-counterclockwise" aria-hidden="true"></i>
+          Refaire le test
+        </button>
+      </div>
+
+    </ng-container>
 
   </div>
 </section>

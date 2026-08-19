@@ -8,9 +8,16 @@ import {
   inject,
 } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { HttpClient } from '@angular/common/http';
 import { RouterLink } from '@angular/router';
 import { ChartModule } from 'primeng/chart';
+import { DropdownModule } from 'primeng/dropdown';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
 
+import { environment } from '../../../../environments/environment';
+import { telephoneInvalide as estTelephoneInvalide, TelephoneIntl } from '../../../shared/utils/phone-validation.util';
 import {
   DIMENSIONS_INFO,
   Dimension,
@@ -24,18 +31,54 @@ import {
 
 type Phase = 'intro' | 'quiz' | 'resultat';
 
+interface OptionSelect {
+  label: string;
+  value: string;
+}
+
+interface MetierSuggere {
+  id_metier: number;
+  titre: string;
+  pertinence: number;
+}
+
 const SCORES_VIDES: ScoresRiasec = { R: 0, I: 0, A: 0, S: 0, E: 0, C: 0 };
+
+const STATUTS_OPTIONS: OptionSelect[] = [
+  { label: 'Lycéen / Collégien', value: 'lycéen' },
+  { label: 'Étudiant',           value: 'étudiant' },
+  { label: 'En activité',        value: 'en activité' },
+  { label: 'Sans emploi',        value: 'sans emploi' },
+];
+
+const ANNEES_OPTIONS: OptionSelect[] = Array.from(
+  { length: 2009 - 1970 + 1 },
+  (_, i) => {
+    const annee = String(2009 - i);
+    return { label: annee, value: annee };
+  }
+);
 
 @Component({
   selector: 'app-test',
   standalone: true,
-  imports: [CommonModule, RouterLink, ChartModule],
+  imports: [
+    CommonModule,
+    FormsModule,
+    RouterLink,
+    ChartModule,
+    DropdownModule,
+    ProgressSpinnerModule,
+    NgxIntlTelInputModule,
+  ],
   changeDetection: ChangeDetectionStrategy.OnPush,
   templateUrl: './test.component.html',
   styleUrl: './test.component.scss',
 })
 export class TestComponent implements OnInit {
-  private readonly cdr = inject(ChangeDetectorRef);
+  private readonly cdr     = inject(ChangeDetectorRef);
+  private readonly http    = inject(HttpClient);
+  private readonly apiBase = environment.apiUrl;
 
   constructor(
     @Inject(PLATFORM_ID) private platformId: Object
@@ -107,6 +150,12 @@ export class TestComponent implements OnInit {
   private terminerQuiz(): void {
     this.scores = calculerScores(this.reponses);
     this.codeRiasec = determinerCodeHolland(this.scores);
+    // Calculé une seule fois ici (et non via un getter) : radarData est lié à
+    // [data] sur <p-chart>, or le formulaire de capture lead ajouté dans cette
+    // même phase résultat (ngModel) déclenche une passe de change detection à
+    // chaque frappe. Un getter renverrait un nouvel objet à chaque passe et
+    // ferait détruire/reconstruire le graphique à chaque touche pressée dans
+    // le formulaire (bug déjà corrigé côté Task 5, à ne pas réintroduire ici).
     this.radarData = {
       labels: ORDRE_DIMENSIONS.map(d => DIMENSIONS_INFO[d].nom),
       datasets: [
@@ -141,6 +190,14 @@ export class TestComponent implements OnInit {
     return (this.codeRiasec[0] as Dimension) ?? 'R';
   }
 
+  get codeRiasecLettres(): Dimension[] {
+    return this.codeRiasec.split('') as Dimension[];
+  }
+
+  get typesSecondaires(): Dimension[] {
+    return this.codeRiasecLettres.slice(1);
+  }
+
   radarData: any = null;
 
   readonly radarOptions = {
@@ -161,6 +218,71 @@ export class TestComponent implements OnInit {
     this.scores = SCORES_VIDES;
     this.codeRiasec = '';
     this.radarData = null;
+    this.leadSoumis = false;
+    this.leadErreur = false;
+    this.leadNom = '';
+    this.leadPrenom = '';
+    this.leadTelObj = null;
+    this.leadEmail = '';
+    this.leadStatut = null;
+    this.leadAnnee = null;
+    this.metiersSuggeres = [];
+    this.scrollHaut();
+    this.cdr.markForCheck();
+  }
+
+  // ── Capture lead ────────────────────────────────────────────────────
+  readonly statutsOptions = STATUTS_OPTIONS;
+  readonly anneesOptions  = ANNEES_OPTIONS;
+
+  leadNom         = '';
+  leadPrenom      = '';
+  leadTelObj: any = null;
+  leadEmail       = '';
+  leadStatut: OptionSelect | null = null;
+  leadAnnee: OptionSelect | null  = null;
+  leadSoumis      = false;
+  leadChargement  = false;
+  leadErreur      = false;
+  metiersSuggeres: MetierSuggere[] = [];
+
+  telephoneInvalide(): boolean {
+    return estTelephoneInvalide(this.leadTelObj as TelephoneIntl | null);
+  }
+
+  soumettreLead(): void {
+    if (!this.leadNom.trim() || !this.leadPrenom.trim() || !this.leadTelObj || this.telephoneInvalide()) return;
+    this.leadChargement = true;
+    this.leadErreur     = false;
+
+    const payload = {
+      name:     this.leadNom.trim(),
+      surname:  this.leadPrenom.trim(),
+      tel:      this.leadTelObj?.e164Number ?? this.leadTelObj?.internationalNumber ?? '',
+      email:    this.leadEmail.trim(),
+      statuts:  this.leadStatut?.value ?? '',
+      bornDate: this.leadAnnee?.value ?? '',
+      scores: {
+        r: this.scores.R, i: this.scores.I, a: this.scores.A,
+        s: this.scores.S, e: this.scores.E, c: this.scores.C,
+      },
+    };
+
+    this.http.post<{ success: boolean; metiers: MetierSuggere[] }>(
+      `${this.apiBase}/api/riasec/submit`, payload
+    ).subscribe({
+      next: (reponse) => {
+        this.metiersSuggeres = reponse.metiers ?? [];
+        this.debloquerApresLead(false);
+      },
+      error: () => this.debloquerApresLead(true),
+    });
+  }
+
+  private debloquerApresLead(echec: boolean): void {
+    this.leadSoumis     = true;
+    this.leadErreur     = echec;
+    this.leadChargement = false;
     this.scrollHaut();
     this.cdr.markForCheck();
   }
