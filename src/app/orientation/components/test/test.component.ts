@@ -107,6 +107,18 @@ export class TestComponent implements OnInit {
   private terminerQuiz(): void {
     this.scores = calculerScores(this.reponses);
     this.codeRiasec = determinerCodeHolland(this.scores);
+    this.radarData = {
+      labels: ORDRE_DIMENSIONS.map(d => DIMENSIONS_INFO[d].nom),
+      datasets: [
+        {
+          label: 'Votre profil',
+          data: ORDRE_DIMENSIONS.map(d => scorePourcentage(this.scores[d])),
+          backgroundColor: 'rgba(124, 58, 237, 0.2)',
+          borderColor: '#7c3aed',
+          pointBackgroundColor: '#7c3aed',
+        },
+      ],
+    };
     this.phase = 'resultat';
     this.scrollHaut();
   }
@@ -129,20 +141,7 @@ export class TestComponent implements OnInit {
     return (this.codeRiasec[0] as Dimension) ?? 'R';
   }
 
-  get radarData() {
-    return {
-      labels: ORDRE_DIMENSIONS.map(d => DIMENSIONS_INFO[d].nom),
-      datasets: [
-        {
-          label: 'Votre profil',
-          data: ORDRE_DIMENSIONS.map(d => scorePourcentage(this.scores[d])),
-          backgroundColor: 'rgba(124, 58, 237, 0.2)',
-          borderColor: '#7c3aed',
-          pointBackgroundColor: '#7c3aed',
-        },
-      ],
-    };
-  }
+  radarData: any = null;
 
   readonly radarOptions = {
     plugins: { legend: { display: false } },
@@ -161,6 +160,7 @@ export class TestComponent implements OnInit {
     this.reponses = {};
     this.scores = SCORES_VIDES;
     this.codeRiasec = '';
+    this.radarData = null;
     this.scrollHaut();
     this.cdr.markForCheck();
   }
