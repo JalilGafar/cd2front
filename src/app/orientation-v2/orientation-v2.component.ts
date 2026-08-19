@@ -22,7 +22,7 @@ import {
 import { DropdownModule } from 'primeng/dropdown';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
-import { PhoneNumberUtil } from 'google-libphonenumber';
+import { telephoneInvalide as estTelephoneInvalide } from '../shared/utils/phone-validation.util';
 
 import { environment } from '../../environments/environment';
 
@@ -547,29 +547,8 @@ export class OrientationV2Component implements OnInit {
 
   // ── Lead capture ──────────────────────────────────────────────────────
 
-  private readonly phoneUtil = PhoneNumberUtil.getInstance();
-
-  // Les métadonnées embarquées dans google-libphonenumber (dépendance de
-  // ngx-intl-tel-input) ne couvrent pas encore les tranches mobiles 63X/64X
-  // attribuées par l'ART au Cameroun : isValidNumber() les rejette à tort.
-  // On retombe sur un contrôle de forme (9 chiffres, préfixe fixe "2" ou
-  // mobile "6") plutôt que sur la liste d'opérateurs figée de la lib.
-  private numeroCamerounaisPlausible(nationalNumber: string): boolean {
-    return /^[26]\d{8}$/.test(nationalNumber);
-  }
-
   telephoneInvalide(): boolean {
-    if (!this.leadTelObj?.e164Number) return false;
-    try {
-      const parsed = this.phoneUtil.parse(this.leadTelObj.e164Number);
-      if (this.phoneUtil.isValidNumber(parsed)) return false;
-      if (this.leadTelObj.countryCode === 'CM') {
-        return !this.numeroCamerounaisPlausible(String(parsed.getNationalNumber()));
-      }
-      return true;
-    } catch {
-      return true;
-    }
+    return estTelephoneInvalide(this.leadTelObj);
   }
 
   soumettreLead(): void {
