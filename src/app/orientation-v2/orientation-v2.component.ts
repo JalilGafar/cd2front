@@ -23,6 +23,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
 import { telephoneInvalide as estTelephoneInvalide } from '../shared/utils/phone-validation.util';
+import { OptionSelect, STATUTS_OPTIONS, ANNEES_OPTIONS } from '../shared/utils/lead-options';
 
 import { environment } from '../../environments/environment';
 
@@ -72,11 +73,6 @@ interface ResultatFormation {
   descriptif_e: string;
 }
 
-interface OptionSelect {
-  label: string;
-  value: string;
-}
-
 type Phase = 'A' | 'B' | 'C';
 
 // ── Constantes ───────────────────────────────────────────────────────────────
@@ -85,22 +81,7 @@ const VILLES_COURANTES: string[] = [
   'Yaoundé', 'Douala', 'Bafoussam', 'Bamenda', 'Ngaoundéré', 'Garoua',
 ];
 
-const STATUTS_OPTIONS: OptionSelect[] = [
-  { label: 'Lycéen / Collégien', value: 'lycéen' },
-  { label: 'Étudiant',           value: 'étudiant' },
-  { label: 'En activité',        value: 'en activité' },
-  { label: 'Sans emploi',        value: 'sans emploi' },
-];
-
 const DIPLOME_INCONNU_OPTION: OptionSelect = { label: 'Je ne sais pas encore', value: 'Indécis' };
-
-const ANNEES_OPTIONS: OptionSelect[] = Array.from(
-  { length: 2009 - 1970 + 1 },
-  (_, i) => {
-    const annee = String(2009 - i);
-    return { label: annee, value: annee };
-  }
-);
 
 const ICONES_PARENT: Record<string, string> = {
   'Agriculture & Environnement':       'bi-tree',

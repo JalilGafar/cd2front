@@ -413,11 +413,19 @@
         </div>
       </div>
 
+      <p *ngIf="metiersSuggeres.length === 0" class="metiers-vide mb-4">
+        Aucune suggestion de métier disponible pour votre profil pour le moment.
+      </p>
+
       <div class="resultat-ctas">
         <a routerLink="/trouver-ma-formation" class="btn-riasec-cta">
           <i class="bi bi-compass-fill" aria-hidden="true"></i>
           Trouver ma formation
         </a>
+        <button type="button" class="btn-whatsapp-riasec" (click)="contacterConseillerRiasec()">
+          <i class="bi bi-whatsapp" aria-hidden="true"></i>
+          Parler à un conseiller
+        </button>
         <button type="button" class="btn-outline-neutral-riasec" (click)="refaireLeTest()">
           <i class="bi bi-arrow-counterclockwise" aria-hidden="true"></i>
           Refaire le test

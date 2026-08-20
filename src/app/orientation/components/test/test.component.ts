@@ -18,6 +18,7 @@ import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
 
 import { environment } from '../../../../environments/environment';
 import { telephoneInvalide as estTelephoneInvalide, TelephoneIntl } from '../../../shared/utils/phone-validation.util';
+import { OptionSelect, STATUTS_OPTIONS, ANNEES_OPTIONS } from '../../../shared/utils/lead-options';
 import {
   DIMENSIONS_INFO,
   Dimension,
@@ -31,11 +32,6 @@ import {
 
 type Phase = 'intro' | 'quiz' | 'resultat';
 
-interface OptionSelect {
-  label: string;
-  value: string;
-}
-
 interface MetierSuggere {
   id_metier: number;
   titre: string;
@@ -43,21 +39,6 @@ interface MetierSuggere {
 }
 
 const SCORES_VIDES: ScoresRiasec = { R: 0, I: 0, A: 0, S: 0, E: 0, C: 0 };
-
-const STATUTS_OPTIONS: OptionSelect[] = [
-  { label: 'Lycéen / Collégien', value: 'lycéen' },
-  { label: 'Étudiant',           value: 'étudiant' },
-  { label: 'En activité',        value: 'en activité' },
-  { label: 'Sans emploi',        value: 'sans emploi' },
-];
-
-const ANNEES_OPTIONS: OptionSelect[] = Array.from(
-  { length: 2009 - 1970 + 1 },
-  (_, i) => {
-    const annee = String(2009 - i);
-    return { label: annee, value: annee };
-  }
-);
 
 @Component({
   selector: 'app-test',
@@ -272,6 +253,10 @@ export class TestComponent implements OnInit {
       `${this.apiBase}/api/riasec/submit`, payload
     ).subscribe({
       next: (reponse) => {
+        if (!reponse.success) {
+          this.debloquerApresLead(true);
+          return;
+        }
         this.metiersSuggeres = reponse.metiers ?? [];
         this.debloquerApresLead(false);
       },
@@ -285,5 +270,17 @@ export class TestComponent implements OnInit {
     this.leadChargement = false;
     this.scrollHaut();
     this.cdr.markForCheck();
+  }
+
+  // ── CTA WhatsApp (rapport débloqué) ────────────────────────────────────
+  // Même pattern que OrientationV2Component.contacterConseiller() : lien
+  // WhatsApp pré-rempli, même numéro, garde SSR identique.
+  contacterConseillerRiasec(): void {
+    if (typeof window === 'undefined') return;
+    const msg = encodeURIComponent(
+      `Bonjour, j'ai fait le test RIASEC et mon profil est "${this.dimensionsInfo[this.typeDominant].nom}" ` +
+      `(code ${this.codeRiasec}). Je souhaite être accompagné(e) par un conseiller pour trouver ma formation.`
+    );
+    window.open(`https://wa.me/237676476096?text=${msg}`, '_blank', 'noopener,noreferrer');
   }
 }
