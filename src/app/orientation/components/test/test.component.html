@@ -238,28 +238,45 @@
       </p>
     </div>
 
-    <div class="quiz-carte">
-      <p class="quiz-question">{{ question.texte }}</p>
+    <div [@questionAnim]="cleAnimationQuiz">
 
-      <div class="quiz-echelle" role="group" aria-label="Votre degré d'accord">
+      <!-- ── Carte question ─────────────────────────────────────────── -->
+      <div *ngIf="!pauseActive" class="quiz-carte">
+        <p class="quiz-question">{{ question.texte }}</p>
+
+        <div class="quiz-echelle" role="group" aria-label="Votre degré d'accord">
+          <button
+            *ngFor="let valeur of echelle"
+            type="button"
+            class="quiz-echelle-btn"
+            [class.quiz-echelle-btn--active]="reponses[question.id] === valeur"
+            (click)="repondre(valeur, $event)">
+            <span class="quiz-echelle-chiffre">{{ valeur }}</span>
+            <span class="quiz-echelle-libelle">{{ libellesEchelle[valeur] }}</span>
+          </button>
+        </div>
+
         <button
-          *ngFor="let valeur of echelle"
+          *ngIf="peutReculer"
           type="button"
-          class="quiz-echelle-btn"
-          [class.quiz-echelle-btn--active]="reponses[question.id] === valeur"
-          (click)="repondre(valeur)">
-          <span class="quiz-echelle-chiffre">{{ valeur }}</span>
-          <span class="quiz-echelle-libelle">{{ libellesEchelle[valeur] }}</span>
+          class="quiz-btn-precedent"
+          (click)="questionPrecedente()">
+          <i class="bi bi-arrow-left" aria-hidden="true"></i> Question précédente
         </button>
       </div>
 
-      <button
-        *ngIf="peutReculer"
-        type="button"
-        class="quiz-btn-precedent"
-        (click)="questionPrecedente()">
-        <i class="bi bi-arrow-left" aria-hidden="true"></i> Question précédente
-      </button>
+      <!-- ── Pause d'encouragement (toutes les 12 questions) ───────────── -->
+      <div *ngIf="pauseActive" class="pause-carte">
+        <div class="pause-icone" aria-hidden="true"><i class="bi bi-emoji-smile"></i></div>
+        <h2 class="pause-titre">
+          Déjà {{ questionActuelle }} questions sur {{ totalQuestions }} !
+        </h2>
+        <p class="pause-message">{{ messagePause }}</p>
+        <button type="button" class="btn-riasec-cta" (click)="continuerApresPause()">
+          Continuer <i class="bi bi-arrow-right" aria-hidden="true"></i>
+        </button>
+      </div>
+
     </div>
 
   </div>
@@ -269,38 +286,42 @@
 <section *ngIf="phase === 'resultat'" class="resultat-riasec py-5">
   <div class="container" style="max-width: 720px;">
 
-    <div class="resultat-entete text-center mb-4">
-      <span class="resultat-badge" [ngClass]="'riasec-badge-' + typeDominant">{{ typeDominant }}</span>
-      <h1 class="mt-3">Vous êtes plutôt <strong>{{ dimensionsInfo[typeDominant].nom }}</strong></h1>
-      <p class="resultat-code">Votre code RIASEC : <strong>{{ codeRiasec }}</strong></p>
-      <p class="resultat-description">{{ dimensionsInfo[typeDominant].description }}</p>
-    </div>
-
-    <div class="resultat-radar-wrapper mb-4">
-      <p-chart
-        type="radar"
-        [data]="radarData"
-        [options]="radarOptions"
-        [style]="{width: '100%', maxWidth: '420px', margin: '0 auto', display: 'block'}">
-      </p-chart>
-    </div>
-
-    <!-- ── AVANT soumission lead : détails verrouillés + formulaire ─────── -->
-    <ng-container *ngIf="!leadSoumis">
-
-      <div class="zone-verrouillee mb-4" aria-hidden="true">
-        <div class="verrou-flou">
-          <div class="verrou-flou-item" *ngFor="let d of typesSecondaires">
-            <h3>{{ dimensionsInfo[d].nom }}</h3>
-            <p>{{ dimensionsInfo[d].descriptionLongue }}</p>
-          </div>
+    <!-- Contenu du résultat : flouté et recouvert d'une invitation tant que
+         le lead n'est pas soumis, dévoilé une fois le formulaire validé. -->
+    <div class="zone-verrouillee-globale" [class.zone-verrouillee-globale--debloquee]="leadSoumis">
+      <div class="contenu-resultat" [class.contenu-resultat--floute]="!leadSoumis" [attr.aria-hidden]="!leadSoumis">
+        <div class="resultat-entete text-center mb-4">
+          <span class="resultat-badge" [ngClass]="'riasec-badge-' + typeDominant">{{ typeDominant }}</span>
+          <h1 class="mt-3">Vous êtes plutôt <strong>{{ dimensionsInfo[typeDominant].nom }}</strong></h1>
+          <p class="resultat-code">Votre code RIASEC : <strong>{{ codeRiasec }}</strong></p>
+          <p class="resultat-description">{{ dimensionsInfo[typeDominant].description }}</p>
         </div>
-        <div class="verrou-masque"></div>
-        <div class="verrou-message">
-          <i class="bi bi-lock-fill" aria-hidden="true"></i>
-          Remplissez le formulaire pour débloquer votre rapport complet et vos métiers suggérés
+
+        <div class="resultat-radar-wrapper mb-4">
+          <p-chart
+            type="radar"
+            [data]="radarData"
+            [options]="radarOptions"
+            [style]="{width: '100%', maxWidth: '420px', margin: '0 auto', display: 'block'}">
+          </p-chart>
         </div>
       </div>
+
+      <div *ngIf="!leadSoumis" class="verrou-message-globale">
+        <div class="verrou-icone" aria-hidden="true"><i class="bi bi-stars"></i></div>
+        <h2>Votre profil RIASEC est prêt&nbsp;!</h2>
+        <p>
+          Il ne vous reste qu'une dernière étape pour découvrir qui vous êtes vraiment
+          et les métiers faits pour vous.
+        </p>
+        <p class="verrou-souligne">
+          Remplissez le formulaire ci-dessous — ça prend 30 secondes&nbsp;⏱️
+        </p>
+      </div>
+    </div>
+
+    <!-- ── AVANT soumission lead : formulaire ────────────────────────────── -->
+    <ng-container *ngIf="!leadSoumis">
 
       <div class="carte-lead-riasec">
         <h2 class="lead-titre">Recevez votre rapport complet</h2>
@@ -342,6 +363,10 @@
               <i class="bi bi-exclamation-circle" aria-hidden="true"></i>
               Numéro invalide pour le pays sélectionné
             </span>
+            <span *ngIf="!telephoneInvalide() && telephoneIncomplet() && (telCtrl.dirty || telCtrl.touched)" class="champ-erreur champ-erreur--neutre">
+              <i class="bi bi-info-circle" aria-hidden="true"></i>
+              Numéro incomplet (au moins 9 chiffres)
+            </span>
           </div>
 
           <div class="form-group">
@@ -365,7 +390,7 @@
           </div>
 
           <button type="submit" class="btn-debloquer"
-            [disabled]="leadChargement || !leadNom.trim() || !leadPrenom.trim() || !leadTelObj || telephoneInvalide()">
+            [disabled]="leadChargement || !leadNom.trim() || !leadPrenom.trim() || !leadTelObj || telephoneIncomplet() || telephoneInvalide()">
             <ng-container *ngIf="!leadChargement">
               <i class="bi bi-unlock-fill" aria-hidden="true"></i>
               Débloquer mon rapport complet
@@ -425,6 +450,10 @@
         <button type="button" class="btn-whatsapp-riasec" (click)="contacterConseillerRiasec()">
           <i class="bi bi-whatsapp" aria-hidden="true"></i>
           Parler à un conseiller
+        </button>
+        <button type="button" class="btn-outline-neutral-riasec" (click)="telechargerPdf()">
+          <i class="bi bi-file-earmark-pdf" aria-hidden="true"></i>
+          Télécharger mon résultat (PDF)
         </button>
         <button type="button" class="btn-outline-neutral-riasec" (click)="refaireLeTest()">
           <i class="bi bi-arrow-counterclockwise" aria-hidden="true"></i>

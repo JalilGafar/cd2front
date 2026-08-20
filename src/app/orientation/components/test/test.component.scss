@@ -271,6 +271,19 @@
     border-color: #7c3aed;
     background: #f5f3ff;
   }
+
+  // Le focus par défaut du navigateur reste sur le bouton cliqué (même nœud
+  // DOM réutilisé par *ngFor pour la question suivante) : on le neutralise
+  // visuellement pour la souris/tactile tout en gardant un indicateur net
+  // au clavier (:focus-visible), pour ne pas le confondre avec --active.
+  &:focus {
+    outline: none;
+  }
+
+  &:focus-visible {
+    outline: 2px solid #7c3aed;
+    outline-offset: 2px;
+  }
 }
 
 .quiz-echelle-chiffre {
@@ -303,6 +316,42 @@
   &:hover {
     text-decoration: underline;
   }
+}
+
+/* ===== PAUSE D'ENCOURAGEMENT (toutes les 12 questions) ===== */
+.pause-carte {
+  background: #fff;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+  padding: 40px 28px;
+  text-align: center;
+}
+
+.pause-icone {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: #ede9fe;
+  color: #7c3aed;
+  font-size: 1.75rem;
+  margin: 0 auto 16px;
+}
+
+.pause-titre {
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 12px;
+}
+
+.pause-message {
+  color: #6b7280;
+  max-width: 420px;
+  margin: 0 auto 24px;
+  line-height: 1.5;
 }
 
 /* ===== RÉSULTAT ===== */
@@ -345,47 +394,71 @@
   justify-content: center;
 }
 
-/* ===== VERROU RÉSULTAT ===== */
-.zone-verrouillee {
+/* ===== VERROU RÉSULTAT (global : tout le profil est flouté avant le lead) ===== */
+.zone-verrouillee-globale {
   position: relative;
-  overflow: hidden;
   border-radius: 16px;
+  overflow: hidden;
+  margin-bottom: 32px;
+
+  &--debloquee {
+    margin-bottom: 0;
+  }
 }
 
-.verrou-flou {
-  filter: blur(4px);
-  pointer-events: none;
-  user-select: none;
+.contenu-resultat {
+  transition: filter 0.3s ease;
+
+  &--floute {
+    filter: blur(8px);
+    pointer-events: none;
+    user-select: none;
+  }
 }
 
-.verrou-flou-item {
-  background: #fff;
-  border: 1px solid #e5e7eb;
-  border-radius: 12px;
-  padding: 20px;
-  margin-bottom: 12px;
-}
-
-.verrou-masque {
+.verrou-message-globale {
   position: absolute;
   inset: 0;
-  background: linear-gradient(180deg, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0.92) 70%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 32px 24px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.55) 0%, rgba(255, 255, 255, 0.94) 45%);
+  border-radius: 16px;
+
+  h2 {
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #1f2937;
+    margin-bottom: 10px;
+  }
+
+  p {
+    color: #4b5563;
+    max-width: 420px;
+    margin: 0 auto 4px;
+    line-height: 1.5;
+  }
 }
 
-.verrou-message {
-  position: absolute;
-  left: 50%;
-  bottom: 16px;
-  transform: translateX(-50%);
-  background: #1f2937;
-  color: #fff;
-  padding: 10px 18px;
-  border-radius: 50px;
-  font-size: 0.875rem;
-  white-space: nowrap;
-  display: flex;
+.verrou-icone {
+  display: inline-flex;
   align-items: center;
-  gap: 8px;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: linear-gradient(90deg, #7c3aed, #4f46e5);
+  color: #fff;
+  font-size: 1.5rem;
+  margin-bottom: 14px;
+}
+
+.verrou-souligne {
+  font-weight: 600;
+  color: #6d28d9 !important;
 }
 
 /* ===== FORMULAIRE LEAD ===== */
@@ -433,6 +506,12 @@
   color: #dc2626;
   font-size: 0.8rem;
   margin-top: 4px;
+
+  // Variante non-bloquante : signale un champ encore incomplet plutôt
+  // qu'invalide (ex. numéro de téléphone en cours de saisie).
+  &--neutre {
+    color: #6b7280;
+  }
 }
 
 .btn-debloquer {
