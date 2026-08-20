@@ -69,7 +69,6 @@ const MESSAGES_ENCOURAGEMENT: string[] = [
   "Le métier d'avocat commence rarement à l'audience : la majeure partie du travail se fait en amont, dans la recherche et la stratégie.",
   "Les géologues ont permis de dater l'âge de la Terre à environ 4,5 milliards d'années.",
   'Un professeur touche en moyenne plusieurs milliers de vies au fil de sa carrière.',
-  "Le métier de développeur informatique existait à peine il y a 50 ans — c'est aujourd'hui l'un des plus recherchés au monde.",
   "L'architecture est l'un des rares métiers qui demande à la fois la sensibilité d'un artiste et la rigueur d'un ingénieur.",
   'Les métiers de la santé recrutent massivement au Cameroun et dans toute l\'Afrique : la demande dépasse largement l\'offre de formation.',
   "La comptabilité est l'un des plus vieux métiers organisés : les premières traces datent de plus de 5000 ans, en Mésopotamie.",
@@ -564,26 +563,51 @@ export class TestComponent implements OnInit {
       doc.rect(xScores, rowY + 2, (largeurScores * pct) / 100, 2.2, 'F');
     });
 
-    // ── Votre profil ───────────────────────────────────────────────────
+    // ── Votre profil : les 3 lettres du code, comme sur l'écran de
+    // résultat (voir .resultat-detail-item dans le template) — description
+    // complète pour la lettre dominante, résumé court pour les deux autres.
     const profileY = 158;
+    const [lettreDominante, ...lettresSecondaires] = this.codeRiasecLettres;
+
     doc.setFontSize(13);
     doc.setFont('helvetica', 'bold');
     doc.setTextColor(109, 40, 217);
-    doc.text(
-      `Votre profil : ${this.dimensionsInfo[this.typeDominant].nom} (${this.codeRiasec})`,
-      margeGauche, profileY
-    );
+    doc.text(`Votre profil : ${this.codeRiasec}`, margeGauche, profileY);
+
+    doc.setFontSize(10.5);
+    doc.setFont('helvetica', 'bold');
+    doc.setTextColor(31, 41, 55);
+    doc.text(this.dimensionsInfo[lettreDominante].nom, margeGauche, profileY + 8);
 
     doc.setFontSize(9.5);
     doc.setFont('helvetica', 'normal');
     doc.setTextColor(55, 65, 81);
-    const descriptionProfil = doc.splitTextToSize(
-      this.dimensionsInfo[this.typeDominant].descriptionLongue, largeurUtile
+    const descriptionDominante = doc.splitTextToSize(
+      this.dimensionsInfo[lettreDominante].descriptionLongue, largeurUtile
     );
-    doc.text(descriptionProfil, margeGauche, profileY + 7);
+    doc.text(descriptionDominante, margeGauche, profileY + 14);
+
+    let ySecondaire = profileY + 14 + descriptionDominante.length * 4.6 + 4;
+    for (const lettre of lettresSecondaires) {
+      const [r, g, b] = COULEURS_DIMENSION[lettre];
+      doc.setFillColor(r, g, b);
+      doc.rect(margeGauche, ySecondaire - 3, 3.5, 3.5, 'F');
+
+      doc.setFontSize(9.5);
+      doc.setFont('helvetica', 'bold');
+      doc.setTextColor(31, 41, 55);
+      doc.text(`${this.dimensionsInfo[lettre].nom} — `, margeGauche + 6, ySecondaire);
+      const largeurNom = doc.getTextWidth(`${this.dimensionsInfo[lettre].nom} — `);
+
+      doc.setFont('helvetica', 'normal');
+      doc.setTextColor(75, 85, 99);
+      doc.text(this.dimensionsInfo[lettre].description, margeGauche + 6 + largeurNom, ySecondaire);
+
+      ySecondaire += 6;
+    }
 
     // ── Métiers suggérés (tableau, 4 par ligne) ────────────────────────
-    const metiersY = 195;
+    const metiersY = 208;
     doc.setFontSize(12);
     doc.setFont('helvetica', 'bold');
     doc.setTextColor(31, 41, 55);
