@@ -22,7 +22,10 @@ import {
 import { DropdownModule } from 'primeng/dropdown';
 import { ProgressSpinnerModule } from 'primeng/progressspinner';
 import { NgxIntlTelInputModule } from 'ngx-intl-tel-input';
-import { telephoneInvalide as estTelephoneInvalide } from '../shared/utils/phone-validation.util';
+import {
+  telephoneIncomplet as estTelephoneIncomplet,
+  telephoneInvalide as estTelephoneInvalide,
+} from '../shared/utils/phone-validation.util';
 import { OptionSelect, STATUTS_OPTIONS, ANNEES_OPTIONS } from '../shared/utils/lead-options';
 
 import { environment } from '../../environments/environment';
@@ -532,9 +535,18 @@ export class OrientationV2Component implements OnInit {
     return estTelephoneInvalide(this.leadTelObj);
   }
 
+  // Distinct de telephoneInvalide() : un numéro tapé sur un seul chiffre
+  // n'est pas encore "invalide" au sens du parseur, mais n'est pas non plus
+  // complet — les deux gardes sont nécessaires pour désactiver correctement
+  // le bouton de soumission (voir phone-validation.util.ts).
+  telephoneIncomplet(): boolean {
+    return estTelephoneIncomplet(this.leadTelObj);
+  }
+
   soumettreLead(): void {
     if (
-      !this.leadNom.trim() || !this.leadPrenom.trim() || !this.leadTelObj || this.telephoneInvalide() ||
+      !this.leadNom.trim() || !this.leadPrenom.trim() || !this.leadTelObj ||
+      this.telephoneIncomplet() || this.telephoneInvalide() ||
       !this.leadDiplome || !this.leadStatut
     ) return;
     this.leadChargement = true;

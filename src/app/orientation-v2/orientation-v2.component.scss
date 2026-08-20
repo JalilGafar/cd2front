@@ -1410,6 +1410,11 @@ $spinner-color:   $accent;
   font-weight: 500;
 
   i { font-size: 0.75rem; }
+
+  // Variante non-bloquante : champ encore incomplet plutôt qu'invalide.
+  &--neutre {
+    color: #6b7280;
+  }
 }
 
 .mention-confidentialite {

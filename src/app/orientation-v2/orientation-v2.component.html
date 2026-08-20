@@ -442,6 +442,12 @@
                   #telCtrl="ngModel"
                 ></ngx-intl-tel-input>
                 <span
+                  *ngIf="!telephoneInvalide() && telephoneIncomplet() && (telCtrl.dirty || telCtrl.touched)"
+                  class="champ-erreur champ-erreur--neutre">
+                  <i class="bi bi-info-circle" aria-hidden="true"></i>
+                  Numéro incomplet (au moins 9 chiffres)
+                </span>
+                <span
                   *ngIf="telephoneInvalide() && (telCtrl.dirty || telCtrl.touched)"
                   class="champ-erreur">
                   <i class="bi bi-exclamation-circle" aria-hidden="true"></i>
@@ -517,7 +523,7 @@
               <button
                 type="submit"
                 class="btn-debloquer"
-                [disabled]="leadChargement || !leadNom.trim() || !leadPrenom.trim() || !leadTelObj || telephoneInvalide() || !leadDiplome || !leadStatut">
+                [disabled]="leadChargement || !leadNom.trim() || !leadPrenom.trim() || !leadTelObj || telephoneIncomplet() || telephoneInvalide() || !leadDiplome || !leadStatut">
                 <ng-container *ngIf="!leadChargement">
                   <i class="bi" [class.bi-unlock-fill]="nombreRestants > 0" [class.bi-send-fill]="nombreRestants === 0" aria-hidden="true"></i>
                   {{ nombreRestants > 0 ? 'Débloquer toutes les formations' : 'Voir mes résultats' }}
