@@ -563,51 +563,41 @@ export class TestComponent implements OnInit {
       doc.rect(xScores, rowY + 2, (largeurScores * pct) / 100, 2.2, 'F');
     });
 
-    // ── Votre profil : les 3 lettres du code, comme sur l'écran de
-    // résultat (voir .resultat-detail-item dans le template) — description
-    // complète pour la lettre dominante, résumé court pour les deux autres.
-    const profileY = 158;
-    const [lettreDominante, ...lettresSecondaires] = this.codeRiasecLettres;
-
+    // ── Votre profil : les 3 lettres du code, description COMPLÈTE pour
+    // chacune — identique à l'écran de résultat (.resultat-detail-item dans
+    // le template itère déjà codeRiasecLettres avec descriptionLongue).
+    // Position de départ et espacements vérifiés contre les 20 combinaisons
+    // possibles de 3 lettres distinctes (pire cas : R+I+A, la section se
+    // termine à y≈225.8, avant metiersY=230 — script de vérification
+    // ponctuel, non conservé dans le repo).
+    const profileY = 150;
     doc.setFontSize(13);
     doc.setFont('helvetica', 'bold');
     doc.setTextColor(109, 40, 217);
     doc.text(`Votre profil : ${this.codeRiasec}`, margeGauche, profileY);
 
-    doc.setFontSize(10.5);
-    doc.setFont('helvetica', 'bold');
-    doc.setTextColor(31, 41, 55);
-    doc.text(this.dimensionsInfo[lettreDominante].nom, margeGauche, profileY + 8);
-
-    doc.setFontSize(9.5);
-    doc.setFont('helvetica', 'normal');
-    doc.setTextColor(55, 65, 81);
-    const descriptionDominante = doc.splitTextToSize(
-      this.dimensionsInfo[lettreDominante].descriptionLongue, largeurUtile
-    );
-    doc.text(descriptionDominante, margeGauche, profileY + 14);
-
-    let ySecondaire = profileY + 14 + descriptionDominante.length * 4.6 + 4;
-    for (const lettre of lettresSecondaires) {
+    let yLettre = profileY + 9;
+    for (const lettre of this.codeRiasecLettres) {
       const [r, g, b] = COULEURS_DIMENSION[lettre];
       doc.setFillColor(r, g, b);
-      doc.rect(margeGauche, ySecondaire - 3, 3.5, 3.5, 'F');
+      doc.rect(margeGauche, yLettre - 3.5, 4, 4, 'F');
 
-      doc.setFontSize(9.5);
+      doc.setFontSize(10.5);
       doc.setFont('helvetica', 'bold');
       doc.setTextColor(31, 41, 55);
-      doc.text(`${this.dimensionsInfo[lettre].nom} — `, margeGauche + 6, ySecondaire);
-      const largeurNom = doc.getTextWidth(`${this.dimensionsInfo[lettre].nom} — `);
+      doc.text(this.dimensionsInfo[lettre].nom, margeGauche + 7, yLettre);
+      yLettre += 6;
 
+      doc.setFontSize(9.5);
       doc.setFont('helvetica', 'normal');
-      doc.setTextColor(75, 85, 99);
-      doc.text(this.dimensionsInfo[lettre].description, margeGauche + 6 + largeurNom, ySecondaire);
-
-      ySecondaire += 6;
+      doc.setTextColor(55, 65, 81);
+      const lignes: string[] = doc.splitTextToSize(this.dimensionsInfo[lettre].descriptionLongue, largeurUtile);
+      doc.text(lignes, margeGauche, yLettre);
+      yLettre += lignes.length * 4.6 + 4;
     }
 
     // ── Métiers suggérés (tableau, 4 par ligne) ────────────────────────
-    const metiersY = 208;
+    const metiersY = 230;
     doc.setFontSize(12);
     doc.setFont('helvetica', 'bold');
     doc.setTextColor(31, 41, 55);
