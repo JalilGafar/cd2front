@@ -26,6 +26,7 @@ import {
   TelephoneIntl,
 } from '../../../shared/utils/phone-validation.util';
 import { OptionSelect, STATUTS_OPTIONS, ANNEES_OPTIONS } from '../../../shared/utils/lead-options';
+import { WhatsappTrackingService } from '../../../service/whatsapp-tracking.service';
 import {
   DIMENSIONS_INFO,
   Dimension,
@@ -185,6 +186,7 @@ export class TestComponent implements OnInit {
   @ViewChild(UIChart) chartRef?: UIChart;
 
   constructor(
+    private whatsappTracking: WhatsappTrackingService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
@@ -463,13 +465,12 @@ export class TestComponent implements OnInit {
   // ── CTA WhatsApp (rapport débloqué) ────────────────────────────────────
   // Même pattern que OrientationV2Component.contacterConseiller() : lien
   // WhatsApp pré-rempli, même numéro, garde SSR identique.
-  contacterConseillerRiasec(): void {
-    if (typeof window === 'undefined') return;
+  contacterConseillerRiasec(event?: Event): void {
     const msg = encodeURIComponent(
       `Bonjour, j'ai fait le test RIASEC et mon profil est "${this.dimensionsInfo[this.typeDominant].nom}" ` +
       `(code ${this.codeRiasec}). Je souhaite être accompagné(e) par un conseiller pour trouver ma formation.`
     );
-    window.open(`https://wa.me/237676476096?text=${msg}`, '_blank', 'noopener,noreferrer');
+    this.whatsappTracking.openWhatsapp(`https://wa.me/237676476096?text=${msg}`, event);
   }
 
   // ── Téléchargement PDF (rapport débloqué) ──────────────────────────────

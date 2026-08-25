@@ -3,7 +3,26 @@
 
 ---
 
-## ⚡ DERNIÈRES MODIFICATIONS — Module Modérateur (2026-06-11)
+## ⚡ DERNIÈRES MODIFICATIONS — Module Conseiller (2026-06-12)
+
+| Fichier | Changement |
+|---|---|
+| `src/app/advisor/` | Nouveau module complet : formulaire de recherche rapide + table de résultats (voir architecture) |
+| `src/app/advisor/advisor.service.ts` | Service complet : `loadRefData()` (categ/domaine/villes), `search(params)` (appelle `/api/result` + filtre budget client-side), `clearResults()` ; BehaviorSubjects `results$`, `error$`, `hasSearched$`, `categories$`, `domaines$`, `villes$` |
+| `src/app/advisor/models/advisor-search-result.model.ts` | Interface `AdvisorSearchResult` (id_form, nom_e, sigle_e, logo_e, nom_dip, nom_cat, ville_cam, duree_f, cout_f, descriptif_f, conditions_f, descriptif_e, contacts) |
+| `src/app/advisor/components/advisor-start/` | Composant central : header conseiller + panneau "Recherche rapide" (4 champs : Diplôme/Domaine/Ville/Budget) + `p-table` paginée 20/page sortable multi-colonnes avec expansion de ligne |
+| `src/app/app.routes.ts` | Route `/advisor` (lazy) + `roleGuard(['ROLE_ADVISOR'])` |
+| `src/app/login/login.component.ts` | Après login : redirect `/advisor/advisorStart` si `ROLE_ADVISOR` (avant le check ROLE_MODERATOR) |
+| `src/app/admin/users-admin.service.ts` | Ajout section conseillers : `getAdvisorsFromServer()`, `createAdvisor()`, `deleteAdvisor()` via `API.ADMIN_ADVISORS` |
+| `src/app/admin/models/advisor.model.ts` | Interface `Advisor { id, username, email, createdAt }` |
+| `src/app/admin/components/list-advisors/` | Tableau admin des comptes conseillers + bouton créer/supprimer |
+| `src/app/admin/components/new-advisor/` | Formulaire création compte conseiller (mot de passe généré par l'admin) |
+| `src/app/shared/primeng.modules.ts` | Ajout `MessageModule` (pour `p-message severity="danger"`) |
+| `src/app/constants/api-endpoints.ts` | `ADMIN_ADVISORS: \`${base}/api/admin/advisors\`` (déjà présent) |
+
+---
+
+## Historique — Module Modérateur (2026-06-11)
 
 | Fichier | Changement |
 |---|---|
@@ -51,7 +70,8 @@ cd2front/
 ├── src/
 │   ├── app/
 │   │   ├── [feature modules - lazy loaded]
-│   │   │   ├── admin/              ← CRUD backoffice + gestion modérateurs
+│   │   │   ├── admin/              ← CRUD backoffice + gestion modérateurs/conseillers
+│   │   │   ├── advisor/            ← Espace conseiller (recherche rapide formations)
 │   │   │   ├── moderator/          ← Backoffice modérateur (avis, articles, lecture données)
 │   │   │   ├── actualite/          ← Blog/Actualités
 │   │   │   ├── informations/       ← Pages info diplômes/filières/écoles
@@ -139,6 +159,8 @@ cd2front/
 | `/orientation/dernierDiplome` | `orientation/components/dernierdiplome/` | Public | CSR | Étape 7 : dernier diplôme |
 | `/orientation/contact` | `orientation/components/contact/` | Public | CSR | Étape 8 : contact (nom, tel, email) |
 | `/orientation/resultats` | `orientation/components/resultats/` | Public | CSR | Résultats de recherche |
+| `/advisor` | `advisor/advisor.module.ts` | **Protégé (`roleGuard(['ROLE_ADVISOR'])`)** | CSR | Espace conseiller (lazy) |
+| `/advisor/advisorStart` | `advisor/components/advisor-start/` | Conseiller | CSR | Recherche rapide de formations (formulaire + table résultats) |
 | `/admin` | `admin/admin.module.ts` | **Protégé (`roleGuard(['ROLE_ADMIN'])`)** | CSR | Backoffice admin (lazy) |
 | `/admin` (default) | `admin/components/admin-start/` | Admin | CSR | Dashboard admin |
 | `/admin/new-campus` | `admin/components/new-campus/` | Admin | CSR | Créer un campus |
@@ -149,6 +171,8 @@ cd2front/
 | `/admin/new-article` | `admin/components/new-article/` | Admin | CSR | Créer un article |
 | `/admin/moderateurs` | `admin/components/list-moderators/` | Admin | CSR | Liste des comptes modérateurs |
 | `/admin/new-moderateur` | `admin/components/new-moderator/` | Admin | CSR | Créer un compte modérateur (mot de passe généré par l'admin) |
+| `/admin/advisors` | `admin/components/list-advisors/` | Admin | CSR | Liste des comptes conseillers |
+| `/admin/new-advisor` | `admin/components/new-advisor/` | Admin | CSR | Créer un compte conseiller (mot de passe généré par l'admin) |
 | `/admin/:id` | `admin/components/single-*/` | Admin | CSR | Détail d'une ressource |
 | `/admin/modif-*/:id` | `admin/components/modif-*/` | Admin | CSR | Modification d'une ressource |
 | `/moderator` | `moderator/moderator.module.ts` | **Protégé (`roleGuard(['ROLE_MODERATOR'])`)** | CSR | Backoffice modérateur (lazy) |
@@ -211,6 +235,16 @@ cd2front/
 - **Rôle** : Dashboard d'entrée admin, liste les entités et accès rapides CRUD
 - **Notable** : Bouton "Modérateurs" (conditionnel `showAdminBoard`) → onglet `ListModeratorsComponent`. Bouton "Déconnexion" (`signOut()` → `/login`). `Router` injecté via `inject(Router)` (champ de classe) — PAS en paramètre de constructeur (incompatibilité Vite + Angular 17 `emitDecoratorMetadata`).
 
+### AdvisorStartComponent
+- **Chemin** : `src/app/advisor/components/advisor-start/`
+- **Rôle** : Composant central de l'espace conseiller — affiche en une seule page : header (badge + username + Déconnexion), formulaire de recherche rapide et table de résultats inline
+- **Formulaire** : 4 champs optionnels — `p-dropdown` Diplôme (`/api/categ` → `nom_cat`), Domaine (`/api/domaine` → `nom_dom`), Ville (`/api/cyties` → `ville_cam`), input natif Budget max (FCFA). Bouton "Rechercher" désactivé tant que tous les champs sont vides ou pendant loading.
+- **Table résultats** : `p-table` PrimeNG, paginée 20/page, tri multiple (`sortMode="multiple"`), lignes expandables avec `dataKey="id_form"`. Colonnes : École (logo/initiales + sigle), Diplôme, Filière, Ville (tag bleu), Durée, Coût (FCFA), Contacts (icônes cliquables tel/mail/web). Ligne expandée : descriptif_f, conditions_f, descriptif_e, contacts détaillés.
+- **États** : invite initiale / spinner loading / `p-message severity="danger"` erreur / "Aucune formation trouvée" / résultats
+- **Dépendances injectées** : `tokenStorageService`, `AdvisorService`, `PLATFORM_ID`
+- **Reactive forms** : `FormGroup` avec `FormControl<string|null>` pour les dropdowns, `FormControl<number|null>` pour le budget
+- **Notable** : budget filtré **côté client** (le backend `/api/result` ne supporte pas de param `budget`)
+
 ### ModeratorStartComponent
 - **Chemin** : `src/app/moderator/components/moderator-start/`
 - **Rôle** : Dashboard modérateur — affiche le nom d'utilisateur connecté, 3 onglets : Avis (défaut), Articles, Données
@@ -235,6 +269,14 @@ cd2front/
 ### NewModeratorComponent
 - **Chemin** : `src/app/admin/components/new-moderator/`
 - **Rôle** : Formulaire création d'un compte modérateur. Le mot de passe est généré automatiquement (12 chars, charset sans ambiguïté) — champ `readonly` + bouton copier. L'admin transmet le mot de passe manuellement au modérateur.
+
+### ListAdvisorsComponent
+- **Chemin** : `src/app/admin/components/list-advisors/`
+- **Rôle** : Tableau admin des comptes conseillers. Colonnes : ID, username, email, createdAt, bouton supprimer. Bouton "Nouveau conseiller" → `admin/new-advisor`. Dépendance : `UsersAdminService.advisors$`.
+
+### NewAdvisorComponent
+- **Chemin** : `src/app/admin/components/new-advisor/`
+- **Rôle** : Formulaire création d'un compte conseiller. Même pattern que `NewModeratorComponent` (mot de passe généré, champ readonly, bouton copier). L'admin transmet les credentials manuellement au conseiller.
 
 ### NewEcoleComponent / ModifEcoleComponent
 - **Chemin** : `src/app/admin/components/new-ecole/` et `modif-ecole/`
@@ -279,7 +321,8 @@ Service (BehaviorSubject) → Observable$ → Component (async pipe / subscribe)
 | Service | BehaviorSubjects | Responsabilité |
 |---|---|---|
 | `AdminService` | `_formation$`, `_universite$`, `_ecole$`, `_diplome$`, `_campus$`, `_categ$`, `_domaine$`, `_article$`, `_avis$`, `_loading$` | Cache et CRUD de toutes les entités admin |
-| `UsersAdminService` | `_moderators$`, `_loading$` | CRUD des comptes modérateurs (endpoint `/api/admin/users`) |
+| `UsersAdminService` | `_moderators$`, `_loadingMod$`, `_advisors$`, `_loadingAdv$` | CRUD des comptes modérateurs (`/api/admin/users`) ET conseillers (`/api/admin/advisors`) |
+| `AdvisorService` | `_results$`, `_error$`, `_hasSearched$`, `_categories$`, `_domaines$`, `_villes$`, `_loading$` | Recherche de formations (module conseiller) : données de référence + résultats de recherche |
 | `ModeratorService` | `_articles$`, `_avis$`, `_formations$`, `_ecoles$`, `_universites$`, `_loading$` | Données du module modérateur (articles CRUD, avis modération, données lecture seule) |
 | `OrientationService` | `_cyties$`, `_school$`, `_domaine$`, `_degree$`, `_loading$` | Données du tunnel + profil utilisateur (`initialUser`) |
 | `AvisService` | `_ecoleAvis$` | Cache liste écoles avec leurs notes |
@@ -376,6 +419,19 @@ Service (BehaviorSubject) → Observable$ → Component (async pipe / subscribe)
 | `getModeratorsFromServer()` | GET | `API.ADMIN_USERS` | — | `Moderator[]` |
 | `createModerator(form)` | POST | `API.ADMIN_USERS` | `{ username, email, password }` | Confirmation |
 | `deleteModerator(id)` | DELETE | `API.ADMIN_USERS/${id}` | — | — |
+| `getAdvisorsFromServer()` | GET | `API.ADMIN_ADVISORS` | — | `Advisor[]` |
+| `createAdvisor(form)` | POST | `API.ADMIN_ADVISORS` | `{ username, email, password }` | Confirmation |
+| `deleteAdvisor(id)` | DELETE | `API.ADMIN_ADVISORS/${id}` | — | — |
+
+### AdvisorService (`src/app/advisor/advisor.service.ts`)
+
+| Méthode | HTTP | Endpoint | Retour |
+|---|---|---|---|
+| `loadRefData()` | GET x3 | `/api/categ`, `/api/domaine`, `/api/cyties` | Remplit `categories$`, `domaines$`, `villes$` (une seule fois au chargement) |
+| `search(params)` | GET | `/api/result?diplome=&domaine=&city=` | `AdvisorSearchResult[]` (filtre budget côté client si param `budget` présent) |
+| `clearResults()` | — | — | Remet `results$`, `error$`, `hasSearched$` à leur état initial |
+
+**BehaviorSubjects exposés** : `loading$`, `results$` (`AdvisorSearchResult[]`), `error$` (`string|null`), `hasSearched$` (`boolean`), `categories$` (`Categ[]`), `domaines$` (`Domaine[]`), `villes$` (`ville[]`).
 
 ### ModeratorService (`src/app/moderator/moderator.service.ts`)
 
@@ -461,7 +517,8 @@ interface SeoConfig {
    tokenStorageService.saveUser(data)
        → sessionStorage["auth_user"] = JSON.stringify(data)
        ↓
-5. Redirection selon le rôle :
+5. Redirection selon le rôle (ordre de priorité) :
+   - roles.includes('ROLE_ADVISOR')   → router.navigate(['/advisor/advisorStart'])
    - roles.includes('ROLE_MODERATOR') → router.navigate(['/moderator/modStart'])
    - sinon → router.navigate(['/admin'])
        ↓
@@ -480,17 +537,18 @@ interface SeoConfig {
 ### Gestion des rôles
 
 Les rôles sont lus depuis `sessionStorage["auth_user"].roles[]` au chargement de `AppComponent`.  
-Valeurs attendues : `"ROLE_ADMIN"`, `"ROLE_MODERATOR"`, `"ROLE_USER"`.  
+Valeurs attendues : `"ROLE_ADMIN"`, `"ROLE_MODERATOR"`, `"ROLE_ADVISOR"`, `"ROLE_USER"`.  
 Flags utilisés dans l'UI : `showAdminBoard`, `showModeratorBoard`.
 
 ### Sécurité — POINTS CRITIQUES
 
-> **Routes admin ET modérateur PROTÉGÉES**
+> **Routes admin, modérateur ET conseiller PROTÉGÉES**
 > - `AuthInterceptor` **enregistré** dans `app.config.ts` via `withInterceptorsFromDi()` — le token JWT est envoyé automatiquement dans tous les headers HTTP.
-> - `roleGuard(allowedRoles[])` (fonctionnel `CanActivateFn` paramétrable) appliqué sur `/admin` et `/moderator`. Fichier : `src/app/service/role.guard.ts`. Redirige vers `/login` si pas de token, vers `/` si token présent mais rôle insuffisant.
+> - `roleGuard(allowedRoles[])` (fonctionnel `CanActivateFn` paramétrable) appliqué sur `/admin`, `/moderator` et `/advisor`. Fichier : `src/app/service/role.guard.ts`. Redirige vers `/login` si pas de token, vers `/` si token présent mais rôle insuffisant.
 >   ```
 >   canActivate: [roleGuard(['ROLE_ADMIN'])]       ← route /admin
 >   canActivate: [roleGuard(['ROLE_MODERATOR'])]   ← route /moderator
+>   canActivate: [roleGuard(['ROLE_ADVISOR'])]     ← route /advisor
 >   ```
 
 > **Risque résiduel**
@@ -618,7 +676,7 @@ Hérités de Bootstrap 4 :
 
 ### Composants UI disponibles (via PrimNG)
 
-Dialog, TreeSelect, FileUpload, Rating, InputTextarea, OrderList, RadioButton, Editor (Quill), Image, Carousel, ProgressSpinner, ProgressBar, Menubar, Fieldset, Divider, Card, Accordion, TabView, Table, Button, OrganizationChart, Tag, Dropdown.
+Dialog, TreeSelect, FileUpload, Rating, InputTextarea, OrderList, RadioButton, Editor (Quill), Image, Carousel, ProgressSpinner, ProgressBar, Menubar, Fieldset, Divider, Card, Accordion, TabView, Table, Button, OrganizationChart, Tag, Dropdown, **Message** (`severity` valide : `success | info | warning | danger | help | primary | secondary | contrast` — ⚠️ PAS `"error"`). 
 
 ### Styles propres au projet
 
@@ -779,18 +837,19 @@ Dialog, TreeSelect, FileUpload, Rating, InputTextarea, OrderList, RadioButton, E
 | Interface de formulaire | suffixe `Form` | `EtsForm` |
 | Pipe | camelCase | `myfilter.pipe.ts` → `MyFilterPipe` |
 
-### Authentification — état actuel (2026-06-11)
+### Authentification — état actuel (2026-06-12)
 
 L'authentification est **entièrement opérationnelle** :
 
-- **Guard** : `src/app/service/role.guard.ts` — guard paramétrable `roleGuard(allowedRoles[])` appliqué sur `/admin` et `/moderator`. Redirige vers `/login` si pas de token, vers `/` si rôle insuffisant.
+- **Guard** : `src/app/service/role.guard.ts` — guard paramétrable `roleGuard(allowedRoles[])` appliqué sur `/admin`, `/moderator` et `/advisor`. Redirige vers `/login` si pas de token, vers `/` si rôle insuffisant.
 - **Interceptor** : `AuthInterceptor` enregistré dans `app.config.ts` via `provideHttpClient(withInterceptorsFromDi())`. Le token JWT est injecté automatiquement dans tous les headers `x-access-token`.
-- **Login** : Après connexion réussie, redirection basée sur le rôle : `ROLE_MODERATOR` → `/moderator/modStart`, sinon → `/admin`.
+- **Login** : Après connexion réussie, redirection basée sur le rôle (ordre de priorité) : `ROLE_ADVISOR` → `/advisor/advisorStart`, `ROLE_MODERATOR` → `/moderator/modStart`, sinon → `/admin`.
 
 Pour protéger une nouvelle route par rôle :
 ```typescript
 { path: 'ma-route', ..., canActivate: [roleGuard(['ROLE_ADMIN'])] }
 { path: 'autre', ..., canActivate: [roleGuard(['ROLE_MODERATOR'])] }
+{ path: 'conseil', ..., canActivate: [roleGuard(['ROLE_ADVISOR'])] }
 { path: 'mixte', ..., canActivate: [roleGuard(['ROLE_ADMIN', 'ROLE_MODERATOR'])] }
 ```
 

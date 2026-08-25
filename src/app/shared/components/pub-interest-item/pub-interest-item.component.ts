@@ -2,6 +2,7 @@ import { Component, Input, OnInit } from '@angular/core';
 import { interestelt } from '../../../model/interest-item-model';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
+import { WhatsappTrackingService } from '../../../service/whatsapp-tracking.service';
 
 @Component({
   selector: 'app-pub-interest-item',
@@ -19,7 +20,10 @@ export class PubInterestItemComponent implements OnInit {
   name!:string;
 
 
-  constructor( private  appRout : Router ){}
+  constructor(
+    private appRout: Router,
+    private whatsappTracking: WhatsappTrackingService
+  ){}
  
   ngOnInit(): void {
 
@@ -37,10 +41,10 @@ export class PubInterestItemComponent implements OnInit {
     this.appRout.navigate(['etablissement/'], { queryParams: {school:school} } );
   }
 
-  discover(){
+  discover(event?: Event){
     let c = encodeURI(`Je souhaite avoir plus d'information sur le diplôme ${this.school.nom_dip}  de l'école ${this.school.sigle} || ${this.school.nom_e} dans la ville de ${this.school.ville_cam} `);
-    let url = `https://wa.me/237679197112?text=${c}`
-    window.location.href = url;
+    let url = `https://wa.me/237676476096?text=${c}`
+    this.whatsappTracking.openWhatsapp(url, event);
   }
 
   toSchool(){

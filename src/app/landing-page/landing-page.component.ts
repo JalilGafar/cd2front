@@ -3,6 +3,7 @@ import { isPlatformBrowser, CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { Meta, Title } from '@angular/platform-browser';
 import { SeoService } from '../service/seo.service';
+import { WhatsappTrackingService } from '../service/whatsapp-tracking.service';
 import { map, Observable } from 'rxjs';
 import { TopNewsService } from '../service/top-news.service';
 import { ActuListComponent } from '../actualite/components/actu-list/actu-list.component';
@@ -37,6 +38,7 @@ export class LandingPageComponent implements OnInit {
     private titleService: Title,
     private meta: Meta,
     private seoService: SeoService,
+    private whatsappTracking: WhatsappTrackingService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.seoService.setSeo({
@@ -86,8 +88,8 @@ export class LandingPageComponent implements OnInit {
     ).subscribe();
   }
 
-  discover(): void {
+  discover(event?: Event): void {
     const msg = encodeURI('Bonjour, je souhaite référencer mon établissement sur Camerdiplome !');
-    window.location.href = `https://wa.me/237679197112?text=${msg}`;
+    this.whatsappTracking.openWhatsapp(`https://wa.me/237676476096?text=${msg}`, event);
   }
 }

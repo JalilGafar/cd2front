@@ -16,6 +16,7 @@ import { Meta, Title } from '@angular/platform-browser';
 import { Formus } from '../../../model/formus-model';
 import { BEHAVIOR } from '../../../model/behavior';
 import { SeoService } from '../../../service/seo.service';
+import { WhatsappTrackingService } from '../../../service/whatsapp-tracking.service';
 
 @Component({
   selector: 'app-info-ecole-item',
@@ -54,6 +55,7 @@ export class InfoEcoleItemComponent implements OnInit{
     private appRout : Router,
     private meta : Meta,
     private seoService: SeoService,
+    private whatsappTracking: WhatsappTrackingService,
     @Inject(PLATFORM_ID) private platformId: Object
   ){}
 
@@ -158,10 +160,10 @@ export class InfoEcoleItemComponent implements OnInit{
     this.appRout.navigate(['./trouver-ma-formation']); 
   }
 
-  discover(){
+  discover(event?: Event){
     let c = encodeURI(`Je souhaite avoir plus d'information sur ${this.ecole[0].nom_e} ${this.ecole[0].sigle_e}`);
-    let url = `https://wa.me/237679197112?text=${c}`
-    window.location.href = url;
+    let url = `https://wa.me/237676476096?text=${c}`
+    this.whatsappTracking.openWhatsapp(url, event);
   }
 
   tonAvis(){

@@ -2,6 +2,7 @@ import { Component, OnInit, AfterViewInit, PLATFORM_ID, Inject } from '@angular/
 import { isPlatformBrowser, NgFor, NgIf } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { SeoService } from '../service/seo.service';
+import { WhatsappTrackingService } from '../service/whatsapp-tracking.service';
 
 @Component({
   selector: 'app-about',
@@ -40,6 +41,7 @@ export class AboutComponent implements OnInit, AfterViewInit {
 
   constructor(
     private seoService: SeoService,
+    private whatsappTracking: WhatsappTrackingService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {
     this.seoService.setSeo({
@@ -66,9 +68,9 @@ export class AboutComponent implements OnInit, AfterViewInit {
     // }
   }
 
-  discover(): void {
+  discover(event?: Event): void {
     const msg = encodeURI('Je souhaite améliorer la visibilité de mon établissement sur Camerdiplome !');
-    window.location.href = `https://wa.me/237679197112?text=${msg}`;
+    this.whatsappTracking.openWhatsapp(`https://wa.me/237676476096?text=${msg}`, event);
   }
 
   private initCounterObserver(): void {

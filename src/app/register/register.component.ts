@@ -1,5 +1,6 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser } from '@angular/common';
+import { WhatsappTrackingService } from '../service/whatsapp-tracking.service';
 
 @Component({
   selector: 'app-register',
@@ -13,7 +14,10 @@ export class RegisterComponent implements OnInit {
 
 
 
-  constructor (@Inject(PLATFORM_ID) private platformId: Object) { }
+  constructor (
+    private whatsappTracking: WhatsappTrackingService,
+    @Inject(PLATFORM_ID) private platformId: Object
+  ) { }
 
 
   ngOnInit(){
@@ -22,9 +26,9 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  discover(){
+  discover(event?: Event){
     let c = encodeURI(`Je souhaite avoir plus d'information sur l'Enregistrement ou la modification d'un établissement sur Camerdiplome`);
-    let url = `https://wa.me/237679197112?text=${c}`
-    window.location.href = url;
+    let url = `https://wa.me/237676476096?text=${c}`
+    this.whatsappTracking.openWhatsapp(url, event);
   }
 }

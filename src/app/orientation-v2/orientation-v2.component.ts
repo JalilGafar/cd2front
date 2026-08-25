@@ -27,6 +27,7 @@ import {
   telephoneInvalide as estTelephoneInvalide,
 } from '../shared/utils/phone-validation.util';
 import { OptionSelect, STATUTS_OPTIONS, ANNEES_OPTIONS } from '../shared/utils/lead-options';
+import { WhatsappTrackingService } from '../service/whatsapp-tracking.service';
 
 import { environment } from '../../environments/environment';
 
@@ -198,6 +199,7 @@ export class OrientationV2Component implements OnInit {
   private readonly apiBase = environment.apiUrl;
 
   constructor(
+    private whatsappTracking: WhatsappTrackingService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
 
@@ -596,13 +598,12 @@ export class OrientationV2Component implements OnInit {
     this.cdr.markForCheck();
   }
 
-  contacterConseiller(r: ResultatFormation): void {
-    if (typeof window === 'undefined') return;
+  contacterConseiller(r: ResultatFormation, event?: Event): void {
     const msg = encodeURIComponent(
       `Bonjour, je souhaite avoir plus d'informations sur le diplôme "${r.nom_dip}" ` +
       `à l'école ${r.sigle_e || r.nom_e} dans la ville de ${r.ville_cam}.`
     );
-    window.open(`https://wa.me/237676476096?text=${msg}`, '_blank', 'noopener,noreferrer');
+    this.whatsappTracking.openWhatsapp(`https://wa.me/237676476096?text=${msg}`, event);
   }
 
   allerEcole(r: ResultatFormation): void {

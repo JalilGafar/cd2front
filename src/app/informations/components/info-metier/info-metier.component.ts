@@ -13,6 +13,7 @@ import { SchoolAdversComponent } from '../../../shared/components/school-advers/
 import { SchoolAdvers } from '../../../model/school-adv';
 import { ActuListComponent } from '../../../actualite/components/actu-list/actu-list.component';
 import { SeoService } from '../../../service/seo.service';
+import { WhatsappTrackingService } from '../../../service/whatsapp-tracking.service';
 
 
 @Component({
@@ -52,8 +53,13 @@ export class InfoMetierComponent implements OnInit{
     private adversService: AdversService,
     private infoService: InfoServices,
     private seoService: SeoService,
+    private whatsappTracking: WhatsappTrackingService,
     @Inject(PLATFORM_ID) private platformId: Object
   ) {}
+
+  contacterWhatsapp(event: Event): void {
+    this.whatsappTracking.openWhatsapp('https://wa.me/237676476096', event);
+  }
     
 
   private initMetaForMyPage(): void {
